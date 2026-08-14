@@ -109,9 +109,9 @@ export default function Hero() {
       const dist = Math.hypot(e.clientX - last.x, e.clientY - last.y)
       const speed = dist / Math.max(now - last.t, 1)
       last = { x: e.clientX, y: e.clientY, t: now }
-      oTo(Math.min(0.35 + speed * 0.35, 0.85))
+      oTo(Math.min(0.2 + speed * 0.35, 0.65))
       clearTimeout(fadeTimer)
-      fadeTimer = setTimeout(() => oTo(0.35), 350)
+      fadeTimer = setTimeout(() => oTo(0.2), 350)
 
       mxTo(e.clientX)
       myTo(e.clientY - r.top)
@@ -184,7 +184,7 @@ export default function Hero() {
       <div
         ref={glowRef}
         className="pointer-events-none absolute inset-0 z-20"
-        style={{ '--edge-a': 0, '--edge-o': 0.4 }}
+        style={{ '--edge-a': 0, '--edge-o': 0.2 }}
       >
         <div className="glow-ring absolute inset-0" />
       </div>

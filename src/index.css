@@ -83,17 +83,19 @@ body {
   color: transparent;
 }
 
-/* oryzo-style reactive edge glow: conic ring, only the border band visible */
+/* reactive edge glow: single mint arc travels the border toward the cursor;
+   near-invisible at rest, brightens with mouse speed */
 .glow-ring {
+  /* +90deg: conic 0 is north while atan2 0 is east; -55deg centers the arc */
   background: conic-gradient(
-    from calc(var(--edge-a, 0) * 1deg) at 50% 50%,
-    #2fd39a,
-    #59c8e8,
-    #a78bfa,
-    #f5a623,
-    #2fd39a
+    from calc(var(--edge-a, 0) * 1deg + 35deg) at 50% 50%,
+    transparent 0deg,
+    rgba(47, 211, 154, 0.55) 40deg,
+    rgba(89, 224, 184, 0.75) 55deg,
+    rgba(47, 211, 154, 0.55) 70deg,
+    transparent 110deg
   );
-  padding: 22px;
+  padding: 16px;
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -102,8 +104,8 @@ body {
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   mask-composite: exclude;
-  filter: blur(16px);
-  opacity: var(--edge-o, 0.4);
+  filter: blur(14px);
+  opacity: var(--edge-o, 0.25);
 }
 
 /* glass surfaces */
