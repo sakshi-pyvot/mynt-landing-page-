@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { motion } from 'motion/react'
 import Magnetic from '@/components/MagneticButton'
+import { reducedMotion } from '@/lib/utils'
 
 const HeroCanvas = lazy(() => import('./HeroCanvas'))
 
@@ -51,6 +52,8 @@ const CHIPS = [
 
 export default function Hero() {
   const root = useRef(null)
+  const glowRef = useRef(null)
+  const spotRef = useRef(null)
   // mount WebGL only on desktop viewports; fall back to static image if the
   // browser evicts the context (background tabs, GPU pressure)
   const [showCanvas, setShowCanvas] = useState(
@@ -77,6 +80,49 @@ export default function Hero() {
     }
   }, [showCanvas])
 
+  // reactive edge glow + cursor spotlight (desktop pointers only)
+  useEffect(() => {
+    if (!window.matchMedia('(pointer: fine)').matches || reducedMotion()) return undefined
+    const glow = glowRef.current
+    const spot = spotRef.current
+    const aTo = gsap.quickTo(glow, '--edge-a', { duration: 0.9, ease: 'power3.out' })
+    const oTo = gsap.quickTo(glow, '--edge-o', { duration: 0.5, ease: 'power2.out' })
+    const mxTo = gsap.quickTo(spot, 'x', { duration: 0.7, ease: 'power3.out' })
+    const myTo = gsap.quickTo(spot, 'y', { duration: 0.7, ease: 'power3.out' })
+
+    let angle = 0
+    let last = { x: innerWidth / 2, y: innerHeight / 2, t: performance.now() }
+    let fadeTimer
+
+    const onMove = (e) => {
+      const r = root.current.getBoundingClientRect()
+      if (e.clientY > r.bottom) return
+      // continuous angle (no -180/180 snap): accumulate shortest delta
+      const raw = (Math.atan2(e.clientY - r.height / 2, e.clientX - r.width / 2) * 180) / Math.PI
+      let delta = raw - (((angle % 360) + 540) % 360) + 180
+      delta = ((delta % 360) + 540) % 360 - 180
+      angle += delta
+      aTo(angle)
+
+      // intensity follows cursor speed, decays back to calm
+      const now = performance.now()
+      const dist = Math.hypot(e.clientX - last.x, e.clientY - last.y)
+      const speed = dist / Math.max(now - last.t, 1)
+      last = { x: e.clientX, y: e.clientY, t: now }
+      oTo(Math.min(0.35 + speed * 0.35, 0.85))
+      clearTimeout(fadeTimer)
+      fadeTimer = setTimeout(() => oTo(0.35), 350)
+
+      mxTo(e.clientX)
+      myTo(e.clientY - r.top)
+    }
+    window.addEventListener('mousemove', onMove)
+    return () => {
+      clearTimeout(fadeTimer)
+      window.removeEventListener('mousemove', onMove)
+    }
+  }, [])
+
   useGSAP(
     () => {
       // entrance
@@ -87,10 +133,9 @@ export default function Hero() {
         ease: 'power3.out',
         delay: 2.1, // after preloader wipe
       })
-      gsap.from('.hero-sub, .hero-ctas', {
+      gsap.from('.hero-ctas', {
         opacity: 0,
         y: 24,
-        stagger: 0.12,
         duration: 0.7,
         ease: 'power2.out',
         delay: 2.6,
@@ -115,7 +160,7 @@ export default function Hero() {
 
   return (
     <section ref={root} className="relative min-h-screen overflow-hidden pt-[72px]">
-      {/* V1 ambient video (drops in when generated) over dot field */}
+      {/* V1 ambient video over dot field */}
       <div className="dot-field absolute inset-0" />
       <BgVideo
         src="/videos/hero-ambient.mp4"
@@ -123,28 +168,41 @@ export default function Hero() {
       />
       <div className="absolute inset-0 bg-gradient-to-b from-bg/40 via-transparent to-bg" />
 
-      <div className="relative mx-auto flex max-w-7xl flex-col items-center px-6 pt-14 text-center md:pt-20">
+      {/* cursor spotlight */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          ref={spotRef}
+          className="absolute -left-[560px] -top-[560px] h-[1120px] w-[1120px] rounded-full"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(47,211,154,0.11), transparent 62%)',
+          }}
+        />
+      </div>
+
+      {/* reactive edge glow frame */}
+      <div
+        ref={glowRef}
+        className="pointer-events-none absolute inset-0 z-20"
+        style={{ '--edge-a': 0, '--edge-o': 0.4 }}
+      >
+        <div className="glow-ring absolute inset-0" />
+      </div>
+
+      <div className="relative mx-auto flex max-w-7xl flex-col items-center px-6 pt-12 text-center md:pt-16">
         <div className="hero-copy">
           <div className="overflow-hidden">
             <p className="hero-line text-xs font-semibold uppercase tracking-[0.3em] text-mint">
-              Mynt — by Pyvot
+              Your restaurant has the data
             </p>
           </div>
           <h1 className="mt-5 text-4xl font-bold leading-[1.05] tracking-tight md:text-7xl">
             <span className="block overflow-hidden">
-              <span className="hero-line block">Your restaurant</span>
-            </span>
-            <span className="block overflow-hidden">
-              <span className="hero-line block">has the data.</span>
-            </span>
-            <span className="block overflow-hidden">
-              <span className="hero-line text-gradient block pb-2">Mynt finds the money in it.</span>
+              <span className="hero-line text-gradient block pb-2">
+                Mynt finds the money in it.
+              </span>
             </span>
           </h1>
-          <p className="hero-sub mx-auto mt-6 max-w-xl text-base text-mute md:text-lg">
-            Connect marketplace, payout, discount, ad and outlet data — and turn it
-            into decisions your team can act on.
-          </p>
           <div className="hero-ctas mt-8 flex items-center justify-center gap-4">
             <Magnetic>
               <a
@@ -163,11 +221,11 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* stage: 3D card on desktop, static screenshot on mobile */}
-        <div className="hero-stage relative mt-10 w-full max-w-4xl md:mt-4">
+        {/* stage: physics canvas on desktop, static screenshot on mobile */}
+        <div className="hero-stage relative mt-8 w-full max-w-4xl md:mt-2">
           <div className="mint-glow absolute inset-[-20%]" />
           {showCanvas ? (
-            <div className="relative h-[520px]">
+            <div className="relative h-[560px]">
               <Suspense
                 fallback={
                   <img

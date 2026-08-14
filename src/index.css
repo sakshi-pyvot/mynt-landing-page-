@@ -83,6 +83,29 @@ body {
   color: transparent;
 }
 
+/* oryzo-style reactive edge glow: conic ring, only the border band visible */
+.glow-ring {
+  background: conic-gradient(
+    from calc(var(--edge-a, 0) * 1deg) at 50% 50%,
+    #2fd39a,
+    #59c8e8,
+    #a78bfa,
+    #f5a623,
+    #2fd39a
+  );
+  padding: 22px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  filter: blur(16px);
+  opacity: var(--edge-o, 0.4);
+}
+
 /* glass surfaces */
 .glass {
   background: rgba(16, 20, 28, 0.72);
