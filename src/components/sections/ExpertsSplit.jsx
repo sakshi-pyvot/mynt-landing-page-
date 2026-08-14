@@ -20,7 +20,8 @@ function CinematicPanel() {
         // fallback until the Higgsfield film lands: warm kitchen-light gradient
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_70%,rgba(245,166,35,0.25),transparent_60%),radial-gradient(ellipse_at_75%_25%,rgba(240,82,78,0.16),transparent_55%)] bg-surface" />
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-bg/90 via-bg/30 to-transparent" />
+      <div className="absolute inset-0 bg-black/25" />
+      <div className="absolute inset-0 bg-gradient-to-t from-bg/95 via-bg/40 to-transparent" />
       <div className="absolute bottom-0 p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber">Pyvot Experts</p>
         <h3 className="mt-2 text-2xl font-bold">Experts when you want acceleration.</h3>
