@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { motion } from 'motion/react'
 import Magnetic from '@/components/MagneticButton'
+import NetworkCanvas from './NetworkCanvas'
 
 function PulseRings() {
   return (
@@ -19,25 +19,14 @@ function PulseRings() {
 }
 
 export default function FinalCTA() {
-  const [videoOk, setVideoOk] = useState(true)
-
   return (
     <section id="cta" className="relative overflow-hidden py-36 md:py-48">
-      {videoOk && (
-        <video
-          className="absolute inset-0 h-full w-full object-cover opacity-30"
-          src="/videos/cta-pulse.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          onError={() => setVideoOk(false)}
-        />
-      )}
-      <div className="mint-glow absolute inset-0" />
+      {/* interactive network: outlets + platforms connecting into Mynt */}
+      <NetworkCanvas />
+      <div className="mint-glow pointer-events-none absolute inset-0" />
       <PulseRings />
 
-      <div className="relative mx-auto max-w-3xl px-6 text-center">
+      <div className="pointer-events-none relative mx-auto max-w-3xl px-6 text-center">
         <div className="text-3xl font-bold">
           mynt<span className="text-mint">.</span>
         </div>
@@ -45,7 +34,7 @@ export default function FinalCTA() {
           Your restaurant already has the answers.
           <span className="text-gradient block">Mynt helps you see them.</span>
         </h2>
-        <div className="mt-10 flex items-center justify-center gap-4">
+        <div className="pointer-events-auto mt-10 flex items-center justify-center gap-4">
           <Magnetic strength={0.45}>
             <a
               href="https://pyvot.in/contact-us/"
@@ -58,7 +47,7 @@ export default function FinalCTA() {
           </Magnetic>
         </div>
         <p className="mt-6 text-xs uppercase tracking-[0.25em] text-mute">
-          Built from real restaurant operations
+          Built from real restaurant operations · move your cursor
         </p>
       </div>
     </section>

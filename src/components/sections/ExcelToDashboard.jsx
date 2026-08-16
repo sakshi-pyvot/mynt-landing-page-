@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import ExcelSheet from './ExcelSheet'
 
 // KPI cards: fly from spreadsheet scatter → dashboard slots, restyling mid-flight.
 const CARDS = [
@@ -131,7 +132,12 @@ export default function ExcelToDashboard() {
     <section id="data" ref={root} className="relative overflow-hidden">
       <div className="relative flex h-screen min-h-[720px] flex-col items-center justify-center">
         {/* spreadsheet world (desktop scroll story only) */}
-        <div className="sheet excel-grid absolute inset-0 hidden [transform:perspective(1200px)_rotateX(4deg)_scale(1.04)] md:block" />
+        <div className="sheet absolute inset-0 hidden overflow-hidden [transform:perspective(1200px)_rotateX(4deg)_scale(1.06)] md:block">
+          <ExcelSheet highlight={CARDS.map((c) => c.cell)} />
+          {/* dim + vignette so flying cards and copy stay legible over the sheet */}
+          <div className="absolute inset-0 bg-bg/60" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(10,13,19,0.85)_90%)]" />
+        </div>
         {PILLS.map((p) => (
           <div
             key={p.text}

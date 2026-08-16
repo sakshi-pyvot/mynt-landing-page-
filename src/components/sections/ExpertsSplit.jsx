@@ -88,8 +88,8 @@ export default function ExpertsSplit() {
             </a>
           </div>
           <img
-            src="/shots/outlets-insights.jpg"
-            alt="Mynt outlet performance and AI insights"
+            src="/shots/outlets.jpg"
+            alt="Mynt earnings dashboard — sales trends and ticket-size analysis"
             loading="lazy"
             className="mt-2 w-full rounded-tl-xl border-l border-t border-line object-cover pl-8"
           />
