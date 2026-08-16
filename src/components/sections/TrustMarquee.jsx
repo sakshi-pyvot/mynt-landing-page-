@@ -17,20 +17,26 @@ const LOGOS = [
 const rowA = LOGOS.slice(0, 16)
 const rowB = LOGOS.slice(16)
 
-function Row({ logos, className }) {
+// Each row renders its set 3× so a full set-width can scroll by before the
+// tween wraps — no visible gap at the seam.
+function Row({ logos, reverse }) {
   return (
-    <div className={`marquee-row flex w-max items-center gap-6 ${className}`}>
-      {[...logos, ...logos].map((file, i) => (
-        <div
-          key={i}
-          className="flex h-16 w-32 shrink-0 items-center justify-center rounded-xl bg-white/[0.92] p-3 opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
-        >
-          <img
-            src={`/brand/curated/${file}`}
-            alt={file.replace(/\.(png|jpe?g)$/, '').replaceAll('-', ' ')}
-            loading="lazy"
-            className="max-h-full max-w-full object-contain"
-          />
+    <div className="marquee-row flex w-max items-center gap-6" data-reverse={reverse ? '1' : '0'}>
+      {[0, 1, 2].map((rep) => (
+        <div key={rep} className="marquee-set flex shrink-0 items-center gap-6">
+          {logos.map((file) => (
+            <div
+              key={file}
+              className="flex h-24 w-44 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white p-4 shadow-[0_8px_30px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:-translate-y-1"
+            >
+              <img
+                src={`/brand/curated/${file}`}
+                alt={file.replace(/\.(png|jpe?g)$/, '').replaceAll('-', ' ')}
+                loading="lazy"
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+          ))}
         </div>
       ))}
     </div>
@@ -43,15 +49,21 @@ export default function TrustMarquee() {
   useGSAP(
     () => {
       const rows = gsap.utils.toArray('.marquee-row')
-      const tweens = rows.map((row, i) =>
-        gsap.to(row, {
-          xPercent: i % 2 ? 50 : -50,
-          duration: 42,
+      const tweens = rows.map((row) => {
+        const set = row.querySelector('.marquee-set')
+        const gap = 24 // matches gap-6
+        const dist = set.offsetWidth + gap
+        const reverse = row.dataset.reverse === '1'
+        // reverse row starts one set in so it can travel "backwards" and wrap cleanly
+        gsap.set(row, { x: reverse ? -dist : 0 })
+        return gsap.to(row, {
+          x: reverse ? 0 : -dist,
+          duration: 46,
           ease: 'none',
           repeat: -1,
-        }),
-      )
-      // scroll velocity nudges marquee speed (lusion touch)
+        })
+      })
+      // scroll velocity nudges marquee speed
       ScrollTrigger.create({
         start: 0,
         end: 'max',
@@ -60,18 +72,20 @@ export default function TrustMarquee() {
           tweens.forEach((t) => gsap.to(t, { timeScale: boost, duration: 0.3, overwrite: true }))
         },
       })
+      // recompute widths on resize/refresh
+      ScrollTrigger.addEventListener('refreshInit', () => tweens.forEach((t) => t.invalidate()))
     },
     { scope: root },
   )
 
   return (
-    <section ref={root} className="relative overflow-hidden border-y border-line/60 py-14">
-      <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.3em] text-mute">
+    <section ref={root} className="relative overflow-hidden border-y border-line/60 py-16">
+      <p className="mb-10 text-center text-xs font-semibold uppercase tracking-[0.3em] text-mute">
         Built from real restaurant operations · 100+ brands
       </p>
-      <div className="flex flex-col gap-5 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+      <div className="flex flex-col gap-6 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
         <Row logos={rowA} />
-        <Row logos={rowB} className="-translate-x-1/4" />
+        <Row logos={rowB} reverse />
       </div>
     </section>
   )
