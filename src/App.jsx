@@ -11,6 +11,7 @@ import ProductCanvas from '@/components/sections/ProductCanvas'
 import MyntAI from '@/components/sections/MyntAI'
 import DetectChain from '@/components/sections/DetectChain'
 import ProofBand from '@/components/sections/ProofBand'
+import ClientVoices from '@/components/sections/ClientVoices'
 import ExpertsSplit from '@/components/sections/ExpertsSplit'
 import FinalCTA from '@/components/sections/FinalCTA'
 import Footer from '@/components/sections/Footer'
@@ -36,6 +37,7 @@ function Page() {
         <MyntAI />
         <DetectChain />
         <ProofBand />
+        <ClientVoices />
         <ExpertsSplit />
         <FinalCTA />
       </main>

@@ -8,6 +8,7 @@ const LINKS = [
   { href: '#data', label: 'Data' },
   { href: '#product', label: 'Product' },
   { href: '#ai', label: 'Mynt AI' },
+  { href: '#voices', label: 'Clients' },
   { href: '#experts', label: 'Experts' },
 ]
 
