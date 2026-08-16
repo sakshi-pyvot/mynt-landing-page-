@@ -102,6 +102,7 @@ function RowCells({ r, hl }) {
           <div
             key={key}
             data-num={isNum ? '1' : undefined}
+            data-src={hl.has(key) ? key : undefined}
             className={
               'flex items-center border-b border-r border-[#dfe3ea] px-2 ' +
               (isHeader ? 'bg-[#eef1f6] font-semibold text-[#2b3341]' : '') +

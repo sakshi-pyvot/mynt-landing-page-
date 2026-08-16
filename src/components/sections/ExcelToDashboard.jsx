@@ -63,42 +63,79 @@ export default function ExcelToDashboard() {
           defaults: { ease: 'power2.inOut' },
         })
 
-        // beat 1 → 2: dashboard chrome arrives, copy swaps
-        tl.fromTo('.dash-chrome', { opacity: 0, y: 46, scale: 0.965 }, { opacity: 1, y: 0, scale: 1, duration: 0.8 }, 1)
-          .to('.copy-1', { opacity: 0, y: -18, duration: 0.4 }, 1)
-          .fromTo('.copy-2', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4 }, 1.25)
-
-        // beat 2: cards fly from scatter into their slots, restyling mid-flight
-        tl.fromTo(
+        // beat 1: cells lift off the sheet — cards start flat, cell-sized and
+        // invisible on the sheet, then peel up (scale, tilt, shadow) into their
+        // scattered floating positions
+        tl.set('.fly-card', {
+          x: (i) => SCATTER[i].x,
+          y: (i) => SCATTER[i].y,
+          rotation: 0,
+          scale: 0.55,
+          opacity: 0,
+          boxShadow: '0 0 0 rgba(0,0,0,0)',
+        })
+        tl.to(
           '.fly-card',
           {
-            x: (i) => SCATTER[i].x,
-            y: (i) => SCATTER[i].y,
-            rotation: (i) => SCATTER[i].r,
-            scale: 0.94,
+            opacity: 1,
+            duration: 0.25,
+            stagger: { each: 0.1 },
+            ease: 'power1.out',
           },
+          0.15,
+        )
+        tl.to(
+          '.fly-card',
+          {
+            scale: 0.94,
+            rotation: (i) => SCATTER[i].r,
+            y: (i) => SCATTER[i].y - 26, // lift slightly off the surface
+            boxShadow: '0 30px 60px rgba(0,0,0,0.55)',
+            duration: 0.6,
+            stagger: { each: 0.1 },
+            ease: 'back.out(1.6)',
+          },
+          0.3,
+        )
+        // source cells on the sheet flash then hollow out as their card leaves
+        tl.fromTo(
+          '[data-src]',
+          { backgroundColor: '#2fd39a', color: '#06251a' },
+          { backgroundColor: '#e6faf2', color: 'transparent', duration: 0.5, stagger: { each: 0.1 } },
+          0.2,
+        )
+
+        // beat 1 → 2: dashboard chrome arrives, copy swaps
+        tl.fromTo('.dash-chrome', { opacity: 0, y: 46, scale: 0.965 }, { opacity: 1, y: 0, scale: 1, duration: 0.8 }, 1.1)
+          .to('.copy-1', { opacity: 0, y: -18, duration: 0.4 }, 1.1)
+          .fromTo('.copy-2', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4 }, 1.35)
+
+        // beat 2: floating cards fly into their dashboard slots, restyling mid-flight
+        tl.to(
+          '.fly-card',
           {
             x: 0,
             y: 0,
             rotation: 0,
             scale: 1,
+            boxShadow: '0 0 0 rgba(0,0,0,0)',
             duration: 1.2,
             stagger: { each: 0.12 },
             ease: 'power2.inOut',
           },
-          1.6,
+          1.7,
         )
           .fromTo(
             '.raw-face',
             { opacity: 1 },
             { opacity: 0, duration: 0.3, stagger: { each: 0.12 } },
-            2.15,
+            2.25,
           )
           .fromTo(
             '.clean-face',
             { opacity: 0 },
             { opacity: 1, duration: 0.3, stagger: { each: 0.12 } },
-            2.15,
+            2.25,
           )
 
         // beat 2 → 3: sheet dies, dashboard wakes
