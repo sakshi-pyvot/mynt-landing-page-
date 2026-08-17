@@ -30,9 +30,8 @@ function CinematicPanel() {
           team that has run it inside 250+ restaurants.
         </p>
         <a
-          href="https://pyvot.in/"
-          target="_blank"
-          rel="noreferrer"
+          href="/about"
+          title="About Pyvot — coming soon"
           className="mt-5 inline-flex h-11 items-center rounded-full border border-amber/50 px-6 text-sm font-medium text-amber transition-colors hover:bg-amber/10"
         >
           Meet Pyvot Experts

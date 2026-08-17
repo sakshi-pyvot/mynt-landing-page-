@@ -3,10 +3,10 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 const STATS = [
-  { value: 250, suffix: '+', label: 'restaurant brands guided' },
-  { value: 3, suffix: '', label: 'platforms unified per brand' },
-  { value: 13.8, suffix: 'L+', prefix: '₹', decimals: 1, label: 'monthly GOV tracked per brand' },
-  { value: 48.8, suffix: '%', decimals: 1, label: 'net margin visibility' },
+  { value: 250, suffix: '+', label: 'restaurant brands' },
+  { value: 2000, suffix: '+', label: 'outlets' },
+  { value: 1.3, suffix: ' Cr+', decimals: 1, label: 'orders tracked' },
+  { value: 0, suffix: '%', label: 'data error' },
 ]
 
 export default function ProofBand() {
@@ -23,7 +23,7 @@ export default function ProofBand() {
           ease: 'power2.out',
           scrollTrigger: { trigger: root.current, start: 'top 75%', once: true },
           onUpdate: () => {
-            const n = s.decimals ? o.v.toFixed(s.decimals) : Math.round(o.v)
+            const n = s.decimals ? o.v.toFixed(s.decimals) : Math.round(o.v).toLocaleString('en-IN')
             el.textContent = `${s.prefix || ''}${n}${s.suffix}`
           },
         })

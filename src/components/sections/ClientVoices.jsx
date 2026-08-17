@@ -38,15 +38,24 @@ function VoiceCard({ v, onOpen }) {
   const videoRef = useRef(null)
   const cardRef = useRef(null)
 
-  // autoplay preview only while on screen; tilt toward the cursor
+  // fast first paint: poster only until the card is near the viewport, then
+  // attach the preview src and autoplay while on screen
   useEffect(() => {
     const vid = videoRef.current
+    const src = vid.dataset.src
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) vid.play().catch(() => {})
-        else vid.pause()
+        if (e.isIntersecting) {
+          if (!vid.src) {
+            vid.src = src
+            vid.load()
+          }
+          vid.play().catch(() => {})
+        } else {
+          vid.pause()
+        }
       },
-      { threshold: 0.35 },
+      { threshold: 0.2, rootMargin: '300px 600px' },
     )
     io.observe(vid)
     return () => io.disconnect()
@@ -76,12 +85,12 @@ function VoiceCard({ v, onOpen }) {
       >
         <video
           ref={videoRef}
-          src={`/testimonials/preview/${v.slug}.mp4`}
+          data-src={`/testimonials/preview/${v.slug}.mp4`}
           poster={`/testimonials/poster/${v.slug}.jpg`}
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg/95 via-bg/20 to-bg/10" />
@@ -268,9 +277,8 @@ export default function ClientVoices() {
             ))}
             {/* end card */}
             <a
-              href="https://pyvot.in/case-studies/"
-              target="_blank"
-              rel="noreferrer"
+              href="/case-studies"
+              title="Case studies — coming soon"
               className="flex aspect-[9/16] shrink-0 snap-center flex-col items-center justify-center rounded-[28px] border border-dashed border-mint/40 text-center transition-colors hover:bg-mint/5"
               style={{ width: 'clamp(200px, 19vw, 260px)' }}
             >

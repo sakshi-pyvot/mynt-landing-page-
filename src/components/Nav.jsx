@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Magnetic from './MagneticButton'
+import CtaPair from './CtaPair'
 import { cn } from '@/lib/utils'
 
 const LINKS = [
@@ -52,14 +52,13 @@ export default function Nav() {
           ))}
         </div>
 
-        <Magnetic>
-          <a
-            href="#cta"
-            className="inline-flex h-10 items-center rounded-full bg-mint px-5 text-sm font-semibold text-[#06251a] transition-shadow hover:shadow-[0_0_24px_rgba(47,211,154,0.45)]"
-          >
-            Book a Mynt Demo
-          </a>
-        </Magnetic>
+        <CtaPair size="sm" className="hidden sm:flex" />
+        <a
+          href="#cta"
+          className="inline-flex h-10 items-center rounded-full bg-mint px-4 text-sm font-semibold text-[#06251a] sm:hidden"
+        >
+          Get started
+        </a>
       </nav>
     </header>
   )

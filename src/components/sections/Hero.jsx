@@ -2,7 +2,7 @@ import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { motion } from 'motion/react'
-import Magnetic from '@/components/MagneticButton'
+import CtaPair from '@/components/CtaPair'
 import HeroDashboard from './HeroDashboard'
 import { reducedMotion } from '@/lib/utils'
 
@@ -185,22 +185,7 @@ export default function Hero() {
             Marketplace, payout, ad and discount data — unified, explained, and turned into
             the next action.
           </p>
-          <div className="hero-ctas mt-8 flex flex-wrap items-center gap-4">
-            <Magnetic>
-              <a
-                href="#cta"
-                className="inline-flex h-12 items-center rounded-full bg-mint px-7 font-semibold text-[#06251a] hover:shadow-[0_0_32px_rgba(47,211,154,0.5)]"
-              >
-                Book a Mynt Demo
-              </a>
-            </Magnetic>
-            <a
-              href="#data"
-              className="inline-flex h-12 items-center rounded-full border border-line px-7 font-medium text-ink transition-colors hover:border-mint/60"
-            >
-              Explore Mynt
-            </a>
-          </div>
+          <CtaPair size="md" className="hero-ctas mt-8" />
         </div>
 
         {/* stage: right, bleeds off the edge, CSS-3D lean + spring follow */}

@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import Magnetic from '@/components/MagneticButton'
+import CtaPair from '@/components/CtaPair'
 import NetworkCanvas from './NetworkCanvas'
 
 function PulseRings() {
@@ -34,18 +34,7 @@ export default function FinalCTA() {
           Your restaurant already has the answers.
           <span className="text-gradient block">Mynt helps you see them.</span>
         </h2>
-        <div className="pointer-events-auto mt-10 flex items-center justify-center gap-4">
-          <Magnetic strength={0.45}>
-            <a
-              href="https://pyvot.in/contact-us/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-14 items-center rounded-full bg-mint px-9 text-base font-semibold text-[#06251a] hover:shadow-[0_0_48px_rgba(47,211,154,0.55)]"
-            >
-              Book a Mynt Demo
-            </a>
-          </Magnetic>
-        </div>
+        <CtaPair size="lg" className="pointer-events-auto mt-10 justify-center" />
         <p className="mt-6 text-xs uppercase tracking-[0.25em] text-mute">
           Built from real restaurant operations · move your cursor
         </p>
