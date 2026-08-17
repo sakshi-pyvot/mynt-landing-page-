@@ -4,26 +4,31 @@ import { useGSAP } from '@gsap/react'
 import { motion } from 'motion/react'
 import { cn } from '@/lib/utils'
 
+// hue = rgb triplet for the halo/frame tint of each step
 const STEPS = [
   {
     title: 'Command Centre',
     line: 'Every platform, every outlet — one P&L view.',
     shot: '/shots/overview.jpg',
+    hue: '47,211,154',
   },
   {
     title: 'Ads Intelligence',
     line: 'Spend vs sales, daily. Know what ads actually return.',
     shot: '/shots/ads.jpg',
+    hue: '167,139,250',
   },
   {
     title: 'Refunds & Cancellations',
     line: 'Leakage caught early — before ratings fall.',
     shot: '/shots/refunds.jpg',
+    hue: '240,82,78',
   },
   {
     title: 'Discount Intelligence',
     line: 'Which coupon actually pays. Stop the burn.',
     shot: '/shots/discounts.jpg',
+    hue: '245,166,35',
   },
 ]
 
@@ -48,12 +53,20 @@ export default function ProductCanvas() {
               if (idx === stepRef.current) return
               stepRef.current = idx
               setActive(idx)
-              // step change: pulse the frame glow
+              // step change: halo + frame shift to the module's hue with a bright pulse
+              const hue = STEPS[idx].hue
+              // rgb triplet can't interpolate — dip, swap, rise (framer keeps breathing on top)
+              gsap
+                .timeline()
+                .to('.pc-halo', { filter: 'blur(64px) brightness(0.6)', duration: 0.25 })
+                .set('.pc-halo', { '--halo': hue })
+                .to('.pc-halo', { filter: 'blur(64px) brightness(1)', duration: 0.5, ease: 'power2.out' })
               gsap.fromTo(
                 '.pc-frame',
-                { boxShadow: '0 0 160px rgba(47,211,154,0.42), 0 24px 80px rgba(0,0,0,0.5)' },
+                { boxShadow: `0 0 160px rgba(${hue},0.45), 0 24px 80px rgba(0,0,0,0.5)` },
                 {
-                  boxShadow: '0 0 120px rgba(47,211,154,0.18), 0 24px 80px rgba(0,0,0,0.5)',
+                  boxShadow: `0 0 120px rgba(${hue},0.2), 0 24px 80px rgba(0,0,0,0.5)`,
+                  borderColor: `rgba(${hue},0.35)`,
                   duration: 0.8,
                   ease: 'power2.out',
                   overwrite: true,
@@ -86,12 +99,12 @@ export default function ProductCanvas() {
         {/* ambient glow field behind the product frame */}
         <div className="pointer-events-none absolute inset-0">
           <motion.div
-            className="absolute right-[-10%] top-[10%] h-[70vh] w-[55vw] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(47,211,154,0.16),transparent_65%)] blur-2xl"
+            className="absolute right-[-10%] top-[10%] h-[70vh] w-[55vw] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(47,211,154,0.10),transparent_65%)] blur-2xl"
             animate={{ x: [0, -40, 20, 0], y: [0, 30, -20, 0] }}
             transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
           />
           <motion.div
-            className="absolute bottom-[-10%] right-[20%] h-[50vh] w-[35vw] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(167,139,250,0.10),transparent_65%)] blur-2xl"
+            className="absolute bottom-[-10%] right-[20%] h-[50vh] w-[35vw] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(167,139,250,0.07),transparent_65%)] blur-2xl"
             animate={{ x: [0, 30, -30, 0], y: [0, -25, 15, 0] }}
             transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut' }}
           />
@@ -129,16 +142,32 @@ export default function ProductCanvas() {
             </div>
           </div>
 
-          <div className="pc-frame relative aspect-[1280/743] overflow-hidden rounded-2xl border border-mint/25 bg-surface shadow-[0_0_120px_rgba(47,211,154,0.18),0_24px_80px_rgba(0,0,0,0.5)]">
-            {STEPS.map((s, i) => (
-              <img
-                key={s.shot}
-                src={s.shot}
-                alt={s.title}
-                className="pc-shot absolute inset-0 h-full w-full object-cover object-top"
-                style={i > 0 ? { clipPath: 'inset(100% 0 0 0)' } : undefined}
-              />
-            ))}
+          <div className="relative">
+            {/* breathing halo behind the frame; colour follows the active step */}
+            <motion.div
+              className="pc-halo pointer-events-none absolute -inset-[12%] rounded-[48px] blur-3xl"
+              style={{
+                '--halo': STEPS[0].hue,
+                background:
+                  'radial-gradient(ellipse at center, rgba(var(--halo),0.38), rgba(var(--halo),0.12) 45%, transparent 70%)',
+              }}
+              animate={{ scale: [1, 1.08, 1], opacity: [0.55, 0.9, 0.55] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            {/* bezel: padding + surface so the screenshot sits inside a visible frame */}
+            <div className="pc-frame relative overflow-hidden rounded-2xl border border-mint/35 bg-surface p-2 shadow-[0_0_120px_rgba(47,211,154,0.2),0_24px_80px_rgba(0,0,0,0.5)]">
+              <div className="relative aspect-[1280/800] overflow-hidden rounded-xl bg-bg">
+                {STEPS.map((s, i) => (
+                  <img
+                    key={s.shot}
+                    src={s.shot}
+                    alt={s.title}
+                    className="pc-shot absolute inset-0 h-full w-full object-contain"
+                    style={i > 0 ? { clipPath: 'inset(100% 0 0 0)' } : undefined}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

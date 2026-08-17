@@ -27,7 +27,7 @@ function CinematicPanel() {
         <h3 className="mt-2 text-2xl font-bold">Experts when you want acceleration.</h3>
         <p className="mt-2 max-w-sm text-sm text-mute">
           Strategy, marketplace growth, profitability and governance — executed by the
-          team that has run it inside 100+ restaurants.
+          team that has run it inside 250+ restaurants.
         </p>
         <a
           href="https://pyvot.in/"

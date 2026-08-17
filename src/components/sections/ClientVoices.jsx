@@ -274,7 +274,7 @@ export default function ClientVoices() {
               className="flex aspect-[9/16] shrink-0 snap-center flex-col items-center justify-center rounded-[28px] border border-dashed border-mint/40 text-center transition-colors hover:bg-mint/5"
               style={{ width: 'clamp(200px, 19vw, 260px)' }}
             >
-              <span className="text-4xl font-bold text-mint">100+</span>
+              <span className="text-4xl font-bold text-mint">250+</span>
               <span className="mt-2 text-sm text-mute">restaurant brands</span>
               <span className="mt-6 rounded-full border border-mint/50 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-mint">
                 All case studies

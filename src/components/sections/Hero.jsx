@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { motion } from 'motion/react'
 import Magnetic from '@/components/MagneticButton'
 import HeroDashboard from './HeroDashboard'
 import { reducedMotion } from '@/lib/utils'
@@ -108,6 +109,14 @@ export default function Hero() {
         ease: 'power2.out',
         delay: 2.5,
       })
+      // scroll cue: enter with the ctas, leave as soon as the user scrolls
+      gsap.from('.scroll-cue', { opacity: 0, y: 8, duration: 0.6, delay: 3.0 })
+      gsap.to('.scroll-cue', {
+        opacity: 0,
+        y: 8,
+        duration: 0.35,
+        scrollTrigger: { start: 40, end: 120, scrub: true },
+      })
       // glass sweep across the dashboard every ~8s
       gsap.to('.hd-sweep > div', { x: '380%', duration: 1.6, ease: 'power2.inOut', repeat: -1, repeatDelay: 6.5, delay: 4.5 })
 
@@ -205,8 +214,8 @@ export default function Hero() {
             <HeroDashboard boot />
             {/* floating chips off the bezel, at different depths */}
             <div className="glass absolute -left-14 top-[30%] hidden rounded-xl border border-line px-3 py-2 shadow-xl [transform:translateZ(90px)] md:block">
-              <div className="text-[9px] font-semibold uppercase tracking-[0.18em] text-mute">Zomato · share</div>
-              <div className="text-sm font-bold text-ink">100% <span className="text-mint text-[10px] font-medium">↗</span></div>
+              <div className="text-[9px] font-semibold uppercase tracking-[0.18em] text-mute">Net Margin</div>
+              <div className="text-sm font-bold text-ink">56.5% <span className="text-mint text-[10px] font-medium">↗ +1.0%</span></div>
             </div>
             <div className="glass absolute -bottom-9 left-[6%] hidden rounded-xl border border-line px-3 py-2 shadow-xl [transform:translateZ(70px)] md:block">
               <div className="text-[9px] font-semibold uppercase tracking-[0.18em] text-mute">Outlets</div>
@@ -216,9 +225,21 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-[10px] uppercase tracking-[0.3em] text-mute md:block">
-        Scroll
-      </div>
+      {/* scroll cue: mouse pill with a dropping wheel dot; fades once the user scrolls */}
+      <a
+        href="#data"
+        aria-label="Scroll to explore"
+        className="scroll-cue absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex"
+      >
+        <span className="relative block h-[38px] w-6 rounded-full border border-line/80">
+          <motion.span
+            className="absolute left-1/2 top-1.5 h-1.5 w-[3px] -translate-x-1/2 rounded-full bg-mint"
+            animate={{ y: [0, 14, 14], opacity: [1, 1, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut', times: [0, 0.7, 1] }}
+          />
+        </span>
+        <span className="text-[9px] uppercase tracking-[0.3em] text-mute">explore</span>
+      </a>
     </section>
   )
 }

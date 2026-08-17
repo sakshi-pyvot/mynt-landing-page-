@@ -81,7 +81,7 @@ export default function TrustMarquee() {
   return (
     <section ref={root} className="relative overflow-hidden border-y border-line/60 py-16">
       <p className="mb-10 text-center text-xs font-semibold uppercase tracking-[0.3em] text-mute">
-        Built from real restaurant operations · 100+ brands
+        Built from real restaurant operations · 250+ brands
       </p>
       <div className="flex flex-col gap-6 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
         <Row logos={rowA} />

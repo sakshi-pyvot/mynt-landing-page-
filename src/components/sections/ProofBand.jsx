@@ -3,7 +3,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 const STATS = [
-  { value: 100, suffix: '+', label: 'restaurant brands guided' },
+  { value: 250, suffix: '+', label: 'restaurant brands guided' },
   { value: 3, suffix: '', label: 'platforms unified per brand' },
   { value: 13.8, suffix: 'L+', prefix: '₹', decimals: 1, label: 'monthly GOV tracked per brand' },
   { value: 48.8, suffix: '%', decimals: 1, label: 'net margin visibility' },
