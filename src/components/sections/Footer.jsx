@@ -28,7 +28,8 @@ export default function Footer() {
             <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-mute">
               Contact
             </span>
-            <a href="https://pyvot.in/contact-us/" target="_blank" rel="noreferrer" className="text-mute hover:text-ink">Book a demo</a>
+            <a href="#cta" className="text-mute hover:text-ink">Get started with Mynt</a>
+            <a href="https://pyvot.in/contact-us/" target="_blank" rel="noreferrer" className="text-mute hover:text-ink">Talk to an expert</a>
             <a href="https://pyvot.in/career/" target="_blank" rel="noreferrer" className="text-mute hover:text-ink">Careers</a>
             <a href="https://pyvot.in/privacy-policy/" target="_blank" rel="noreferrer" className="text-mute hover:text-ink">Privacy</a>
           </div>
