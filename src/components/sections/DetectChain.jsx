@@ -6,17 +6,17 @@ const STAGES = [
   {
     tag: 'Detect',
     tone: 'text-coral border-coral/40',
-    text: 'Margin dropped 4% on Swiggy — Salt Lake outlet.',
+    text: 'Salt Lake has the weakest profitability at 46.2% net payout vs 53.7% brand average.',
   },
   {
     tag: 'Explain',
     tone: 'text-amber border-amber/40',
-    text: 'Driver: coupon burn up 18%, ad returns flat.',
+    text: 'Main drivers: discount burn +3.8 pp and ad spend +2.4 pp.',
   },
   {
     tag: 'Act',
     tone: 'text-mint border-mint/40',
-    text: 'Pause FLAT175. Rebalance to the benchmark coupon.',
+    text: 'Pause FLAT175 and reduce weekday ad spend for the Salt Lake outlet.',
   },
 ]
 
