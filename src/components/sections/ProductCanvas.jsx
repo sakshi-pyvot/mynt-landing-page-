@@ -121,7 +121,7 @@ export default function ProductCanvas() {
             { clipPath: 'inset(100% 0 0 0)', yPercent: 6 },
             { clipPath: 'inset(0% 0 0 0)', yPercent: 0, duration: 0.6, ease: 'power2.inOut' },
             i,
-          ).to(shots[i - 1], { yPercent: -4, scale: 0.985, duration: 0.6 }, i)
+          ).to(shots[i - 1], { opacity: 0, duration: 0.6 }, i)
         })
         tl.to({}, { duration: 1 }, 3) // hold last shot for the final quarter
       })
