@@ -231,14 +231,21 @@ export default function Hero() {
         aria-label="Scroll to explore"
         className="scroll-cue absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex"
       >
-        <span className="relative block h-[38px] w-6 rounded-full border border-line/80">
-          <motion.span
-            className="absolute left-1/2 top-1.5 h-1.5 w-[3px] -translate-x-1/2 rounded-full bg-mint"
-            animate={{ y: [0, 14, 14], opacity: [1, 1, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut', times: [0, 0.7, 1] }}
-          />
-        </span>
-        <span className="text-[9px] uppercase tracking-[0.3em] text-mute">explore</span>
+        {/* iOS-style chevron, gentle bounce */}
+        <motion.svg
+          viewBox="0 0 24 24"
+          className="h-7 w-7 text-mute"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          animate={{ y: [0, 6, 0], opacity: [0.55, 1, 0.55] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          aria-hidden
+        >
+          <path d="m6 9 6 6 6-6" />
+        </motion.svg>
       </a>
     </section>
   )
