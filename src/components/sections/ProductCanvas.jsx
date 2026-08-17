@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { motion } from 'motion/react'
-import { cn } from '@/lib/utils'
+import { cn, reducedMotion } from '@/lib/utils'
 
 // hue = rgb triplet for the halo/frame tint of each step
 const STEPS = [
@@ -34,8 +34,45 @@ const STEPS = [
 
 export default function ProductCanvas() {
   const root = useRef(null)
+  const frameRef = useRef(null)
   const stepRef = useRef(0)
   const [active, setActive] = useState(0)
+
+  // glassy cursor tilt: ±6° rotation + small parallax, springs back on leave
+  const tilt = useRef(null)
+  const getTilt = () => {
+    if (!tilt.current && frameRef.current) {
+      const el = frameRef.current
+      const o = { duration: 0.6, ease: 'power3.out' }
+      tilt.current = {
+        rx: gsap.quickTo(el, 'rotationX', o),
+        ry: gsap.quickTo(el, 'rotationY', o),
+        x: gsap.quickTo(el, 'x', o),
+        y: gsap.quickTo(el, 'y', o),
+      }
+    }
+    return tilt.current
+  }
+  const onFrameMove = (e) => {
+    if (reducedMotion() || !window.matchMedia('(pointer: fine)').matches) return
+    const t = getTilt()
+    if (!t) return
+    const r = frameRef.current.getBoundingClientRect()
+    const nx = ((e.clientX - r.left) / r.width - 0.5) * 2
+    const ny = ((e.clientY - r.top) / r.height - 0.5) * 2
+    t.rx(-ny * 6)
+    t.ry(nx * 6)
+    t.x(nx * 10)
+    t.y(ny * 10)
+  }
+  const onFrameLeave = () => {
+    const t = getTilt()
+    if (!t) return
+    t.rx(0)
+    t.ry(0)
+    t.x(0)
+    t.y(0)
+  }
 
   useGSAP(
     () => {
@@ -154,18 +191,27 @@ export default function ProductCanvas() {
               animate={{ scale: [1, 1.08, 1], opacity: [0.55, 0.9, 0.55] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             />
-            {/* bezel: padding + surface so the screenshot sits inside a visible frame */}
-            <div className="pc-frame relative overflow-hidden rounded-2xl border border-mint/35 bg-surface p-2 shadow-[0_0_120px_rgba(47,211,154,0.2),0_24px_80px_rgba(0,0,0,0.5)]">
-              <div className="relative aspect-[1280/800] overflow-hidden rounded-xl bg-bg">
-                {STEPS.map((s, i) => (
-                  <img
-                    key={s.shot}
-                    src={s.shot}
-                    alt={s.title}
-                    className="pc-shot absolute inset-0 h-full w-full object-contain"
-                    style={i > 0 ? { clipPath: 'inset(100% 0 0 0)' } : undefined}
-                  />
-                ))}
+            {/* glass slab that tilts with the cursor; screenshot floats inside with breathing room */}
+            <div className="[perspective:1400px]">
+              <div
+                ref={frameRef}
+                onMouseMove={onFrameMove}
+                onMouseLeave={onFrameLeave}
+                className="pc-frame glass relative overflow-hidden rounded-3xl border border-white/10 p-4 shadow-[0_0_120px_rgba(47,211,154,0.2),0_30px_90px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)] [transform-style:preserve-3d] md:p-5"
+              >
+                {/* top-edge glass highlight */}
+                <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                <div className="relative aspect-[1280/1000] overflow-hidden rounded-2xl bg-bg p-2 [transform:translateZ(24px)]">
+                  {STEPS.map((s, i) => (
+                    <img
+                      key={s.shot}
+                      src={s.shot}
+                      alt={s.title}
+                      className="pc-shot absolute inset-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] rounded-xl object-contain"
+                      style={i > 0 ? { clipPath: 'inset(100% 0 0 0)' } : undefined}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
