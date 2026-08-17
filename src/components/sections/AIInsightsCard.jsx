@@ -33,7 +33,7 @@ function Row({ row, pulse }) {
   const t = TONE[row.tone]
   return (
     <motion.li
-      layout
+      layout="position"
       initial={{ opacity: 0, y: 14, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -10, scale: 0.98, transition: { duration: 0.3 } }}
@@ -121,8 +121,18 @@ export default function AIInsightsCard({ start }) {
       })
     }, 5000)
     const fresh = setInterval(() => {
-      const f = FRESH[fi++ % FRESH.length]
-      setRows((prev) => [...prev.slice(prev.length >= 6 ? 1 : 0), { id: nextId++, ...f }])
+      setRows((prev) => {
+        // pick the next fresh line that isn't already showing
+        let f = null
+        for (let k = 0; k < FRESH.length && !f; k++) {
+          const cand = FRESH[(fi + k) % FRESH.length]
+          if (!prev.some((r) => r.text === cand.text)) f = cand
+        }
+        fi += 1
+        if (!f) return prev
+        const next = [...prev, { id: nextId++, ...f }]
+        return next.slice(Math.max(0, next.length - 6)) // hard cap: 6 visible
+      })
     }, 9000)
     return () => {
       clearInterval(pulse)
@@ -228,13 +238,13 @@ export default function AIInsightsCard({ start }) {
             )}
           </AnimatePresence>
           {phase === 'live' && (
-            <motion.ul layout className="space-y-2">
+            <ul className="space-y-2">
               <AnimatePresence initial={false}>
                 {rows.map((r) => (
                   <Row key={r.id} row={r} pulse={pulseId === r.id} />
                 ))}
               </AnimatePresence>
-            </motion.ul>
+            </ul>
           )}
         </div>
       </div>
