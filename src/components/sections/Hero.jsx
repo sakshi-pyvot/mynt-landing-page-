@@ -47,8 +47,8 @@ export default function Hero() {
     // resting pose has a deliberate 3D lean; cursor adds ±7° on top
     const REST_X = 8
     const REST_Y = -12
-    const rxTo = gsap.quickTo(stage, 'rotateX', { duration: 0.9, ease: 'elastic.out(1, 0.55)' })
-    const ryTo = gsap.quickTo(stage, 'rotateY', { duration: 0.9, ease: 'elastic.out(1, 0.55)' })
+    const rxTo = gsap.quickTo(stage, 'rotationX', { duration: 0.9, ease: 'elastic.out(1, 0.55)' })
+    const ryTo = gsap.quickTo(stage, 'rotationY', { duration: 0.9, ease: 'elastic.out(1, 0.55)' })
     const aTo = gsap.quickTo(glow, '--edge-a', { duration: 0.9, ease: 'power3.out' })
     const oTo = gsap.quickTo(glow, '--edge-o', { duration: 0.5, ease: 'power2.out' })
     const mxTo = gsap.quickTo(spot, 'x', { duration: 0.7, ease: 'power3.out' })

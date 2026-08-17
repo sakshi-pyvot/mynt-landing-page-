@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import FluidTrail from './FluidTrail'
 
 const clampDt = (dt) => Math.min(dt, 0.033)
 
@@ -78,97 +79,6 @@ function ParticleField({ count = 1500 }) {
   )
 }
 
-// Cursor trail: a small pool of short-lived particles emitted at the pointer
-// while it moves. Emission rate scales with pointer speed; idle emits nothing.
-function createTrail(count) {
-  return {
-    dummy: new THREE.Object3D(),
-    last: new THREE.Vector3(),
-    hasLast: false,
-    head: 0,
-    parts: Array.from({ length: count }, () => ({
-      pos: new THREE.Vector3(),
-      vel: new THREE.Vector3(),
-      life: 0, // seconds remaining; 0 = dead
-      max: 1,
-    })),
-  }
-}
-
-function CursorTrail({ count = 220 }) {
-  const mesh = useRef()
-  const sim = useRef(null)
-
-  useFrame(({ pointer, viewport }, dt) => {
-    const m = mesh.current
-    if (!m) return
-    if (!sim.current) sim.current = createTrail(count)
-    const s = sim.current
-    const d = clampDt(dt)
-    const px = (pointer.x * viewport.width) / 2
-    const py = (pointer.y * viewport.height) / 2
-
-    // emit based on distance travelled since last frame; carry the fractional
-    // remainder so slow, steady movement still trickles particles
-    if (s.hasLast) {
-      const dx = px - s.last.x
-      const dy = py - s.last.y
-      const dist = Math.hypot(dx, dy)
-      s.acc = (s.acc || 0) + dist * 60
-      const n = Math.min(14, Math.floor(s.acc))
-      s.acc -= n
-      for (let k = 0; k < n; k++) {
-        const p = s.parts[s.head]
-        s.head = (s.head + 1) % count
-        const t = k / Math.max(n, 1)
-        p.pos.set(s.last.x + dx * t, s.last.y + dy * t, 0.3)
-        // inherit some pointer velocity + spread
-        p.vel.set(
-          (dx / d) * 0.12 + (Math.random() - 0.5) * 1.6,
-          (dy / d) * 0.12 + (Math.random() - 0.5) * 1.6,
-          (Math.random() - 0.5) * 0.6,
-        )
-        p.max = 0.55 + Math.random() * 0.5
-        p.life = p.max
-      }
-    }
-    s.last.set(px, py, 0)
-    s.hasLast = true
-
-    for (let i = 0; i < count; i++) {
-      const p = s.parts[i]
-      if (p.life <= 0) {
-        s.dummy.scale.setScalar(0)
-        s.dummy.position.set(0, 0, -50)
-      } else {
-        p.life -= d
-        p.vel.multiplyScalar(1 - 3.2 * d) // drag
-        p.vel.y -= 0.6 * d // slight fall
-        p.pos.addScaledVector(p.vel, d)
-        const a = Math.max(p.life / p.max, 0)
-        s.dummy.position.copy(p.pos)
-        s.dummy.scale.setScalar(0.03 * a * a + 0.004)
-      }
-      s.dummy.updateMatrix()
-      m.setMatrixAt(i, s.dummy.matrix)
-    }
-    m.instanceMatrix.needsUpdate = true
-  })
-
-  return (
-    <instancedMesh ref={mesh} args={[null, null, count]} frustumCulled={false}>
-      <sphereGeometry args={[1, 6, 6]} />
-      <meshBasicMaterial
-        color="#59e0b8"
-        transparent
-        opacity={0.85}
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </instancedMesh>
-  )
-}
-
 export default function HeroCanvas() {
   return (
     <Canvas
@@ -179,8 +89,8 @@ export default function HeroCanvas() {
       eventSource={document.body}
       eventPrefix="client"
     >
+      <FluidTrail />
       <ParticleField />
-      <CursorTrail />
     </Canvas>
   )
 }

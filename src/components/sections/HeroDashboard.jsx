@@ -81,7 +81,7 @@ export default function HeroDashboard({ boot = true }) {
     () => {
       if (!boot) return
       const tl = gsap.timeline({ delay: 2.35, defaults: { ease: 'power3.out' } })
-      tl.from(root.current, { opacity: 0, rotateX: 18, y: 60, z: -400, duration: 1.1 })
+      tl.from(root.current, { opacity: 0, rotationX: 18, y: 60, z: -400, duration: 1.1 })
         .from('.hd-top', { opacity: 0, y: -10, duration: 0.4 }, '-=0.5')
         .from('.hd-tile', { opacity: 0, y: 26, scale: 0.94, stagger: 0.07, duration: 0.5 }, '-=0.3')
         .from('.hd-chart', { opacity: 0, y: 20, duration: 0.5 }, '-=0.2')
