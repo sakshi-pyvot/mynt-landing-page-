@@ -231,21 +231,35 @@ export default function Hero() {
         aria-label="Scroll to explore"
         className="scroll-cue absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex"
       >
-        {/* iOS-style chevron, gentle bounce */}
-        <motion.svg
-          viewBox="0 0 24 24"
-          className="h-7 w-7 text-mute"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          animate={{ y: [0, 6, 0], opacity: [0.55, 1, 0.55] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          aria-hidden
-        >
-          <path d="m6 9 6 6 6-6" />
-        </motion.svg>
+        {/* iOS-style chevron: drops, warms to mint as it lands, soft pulse ring on the hit */}
+        <span className="relative flex h-12 w-12 items-center justify-center">
+          <motion.span
+            className="absolute bottom-0 h-8 w-8 rounded-full bg-mint/40"
+            style={{ filter: 'blur(6px)' }}
+            initial={{ scale: 0.4, opacity: 0 }}
+            animate={{ scale: [0.4, 0.4, 1.6], opacity: [0, 0.7, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeOut', times: [0, 0.6, 1] }}
+            aria-hidden
+          />
+          <motion.svg
+            viewBox="0 0 24 24"
+            className="relative h-7 w-7"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            animate={{
+              y: [-6, 8, 8, -6],
+              color: ['#8f99a8', '#8f99a8', '#7ff0c7', '#8f99a8'],
+              opacity: [0.35, 1, 1, 0.35],
+            }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', times: [0, 0.55, 0.7, 1] }}
+            aria-hidden
+          >
+            <path d="m6 9 6 6 6-6" />
+          </motion.svg>
+        </span>
       </a>
     </section>
   )
