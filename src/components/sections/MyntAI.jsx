@@ -13,7 +13,9 @@ const DRIVERS = [
   { label: 'Ad-day sales', value: '+1.0%', tone: 'text-mint' },
 ]
 
-function useTypewriter(text, start, speed = 38) {
+// human-paced typing: ~75ms/char with jitter, a small pause before the first
+// key and a slightly longer one after the space that starts the last word
+function useTypewriter(text, start, speed = 75) {
   const [out, setOut] = useState('')
   useEffect(() => {
     if (!start) return undefined
@@ -22,12 +24,17 @@ function useTypewriter(text, start, speed = 38) {
       return () => clearTimeout(t)
     }
     let i = 0
-    const id = setInterval(() => {
+    let t
+    const tick = () => {
       i += 1
       setOut(text.slice(0, i))
-      if (i >= text.length) clearInterval(id)
-    }, speed)
-    return () => clearInterval(id)
+      if (i >= text.length) return
+      const ch = text[i - 1]
+      const pause = ch === ' ' ? speed * 1.6 : speed
+      t = setTimeout(tick, pause + (Math.random() - 0.5) * speed * 0.6)
+    }
+    t = setTimeout(tick, 500)
+    return () => clearTimeout(t)
   }, [text, start, speed])
   return out
 }
