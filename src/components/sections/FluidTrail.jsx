@@ -90,13 +90,14 @@ const DISPLAY = /* glsl */ `
     float bb = texture2D(uDen, vUv - dir).x;
 
     // ribbon body: translucent mint glass; edge: bright fresnel-ish rim
+    // minimal: hairline glass rim, almost no body
     float body = smoothstep(0.02, 0.5, d);
-    float edge = smoothstep(0.012, 0.18, length(grad)) * smoothstep(0.01, 0.2, d);
-    vec3 glass = uTint * (0.09 * body) + vec3(0.85, 1.0, 0.95) * (0.7 * edge);
-    vec3 split = (vec3(0.35,1.0,0.75) * rr + vec3(0.45,0.85,1.0) * bb) * 0.10 * body;
+    float edge = smoothstep(0.02, 0.2, length(grad)) * smoothstep(0.01, 0.15, d);
+    vec3 glass = uTint * (0.03 * body) + vec3(0.85, 1.0, 0.95) * (0.5 * edge);
+    vec3 split = (vec3(0.35,1.0,0.75) * rr + vec3(0.45,0.85,1.0) * bb) * 0.04 * body;
 
     vec3 col = back + glass + split;
-    float alpha = clamp(smoothstep(0.3, 0.8, n) * 0.25 + body * 0.4 + edge * 0.9, 0.0, 1.0);
+    float alpha = clamp(smoothstep(0.3, 0.8, n) * 0.18 + body * 0.14 + edge * 0.7, 0.0, 1.0);
     gl_FragColor = vec4(col, alpha);
   }
 `
@@ -190,14 +191,14 @@ export default function FluidTrail({ velocityRef }) {
       if (speed > 0.0005) {
         s.splat.uniforms.uPoint.value.set(px, py)
         s.splat.uniforms.uAspect.value = aspect
-        s.splat.uniforms.uRadius.value = 0.0006 + Math.min(speed, 0.08) * 0.012
+        s.splat.uniforms.uRadius.value = 0.00022 + Math.min(speed, 0.08) * 0.004
         // velocity
         s.splat.uniforms.uSrc.value = s.vel[0].texture
-        s.splat.uniforms.uValue.value.set(dx * 180, dy * 180, 0)
+        s.splat.uniforms.uValue.value.set(dx * 120, dy * 120, 0)
         run(s.splat, s.vel[1]); [s.vel[0], s.vel[1]] = [s.vel[1], s.vel[0]]
         // density
         s.splat.uniforms.uSrc.value = s.den[0].texture
-        s.splat.uniforms.uValue.value.set(Math.min(0.45 + speed * 8, 1.2), 0, 0)
+        s.splat.uniforms.uValue.value.set(Math.min(0.35 + speed * 5, 0.8), 0, 0)
         run(s.splat, s.den[1]); [s.den[0], s.den[1]] = [s.den[1], s.den[0]]
       }
     }
@@ -213,7 +214,7 @@ export default function FluidTrail({ velocityRef }) {
 
     s.advect.uniforms.uVel.value = s.vel[0].texture
     s.advect.uniforms.uSrc.value = s.den[0].texture
-    s.advect.uniforms.uDissipate.value = 0.98
+    s.advect.uniforms.uDissipate.value = 0.965
     run(s.advect, s.den[1]); [s.den[0], s.den[1]] = [s.den[1], s.den[0]]
 
     gl.setRenderTarget(null)
