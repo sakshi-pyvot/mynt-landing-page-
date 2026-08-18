@@ -6,9 +6,8 @@ import { reducedMotion } from '@/lib/utils'
 
 // Pyvot wordmark loader — the V's mint stroke is the event.
 //  1. letters rise in; V's white right stroke with them
-//  2. one silky ribbon (a twisting gradient band with a glass sheen) glides in
-//     from the left on a gentle arc and pours into the V's left stroke, which
-//     fills bottom → top from white to mint as the ribbon drains
+//  2. a short silky ribbon orbits the V while loading (its sheen loops); when
+//     the load completes it pours into the V's left stroke, filling white → mint
 //  3. the "vot" underline is a dashed progress bar bound to real load signals;
 //     over the last 10% the dashes merge into the solid bar
 //  4. exit: the mint stroke drains down into the bar, then the curtain lifts
@@ -33,6 +32,8 @@ export default function PyvotLoader({ onDone }) {
   const progress = useRef({ v: 0 })
   const vLeftRef = useRef(null)
   const ribbonSvgRef = useRef(null)
+  const idleRef = useRef(null)
+  const pourRef = useRef(null)
 
   // real load progress → underline dashes + status word
   useEffect(() => {
@@ -83,9 +84,10 @@ export default function PyvotLoader({ onDone }) {
     }, 60)
 
     function exit() {
+      idleRef.current?.kill()
       const tl = gsap.timeline({ onComplete: onDone, defaults: { ease: 'power3.inOut' } })
-      // the pour drains: stroke clip slides down + out; bar brightens as it "receives" it
-      tl.to('.pl-bar', { attr: { 'stroke-width': 6.5 }, duration: 0.25 })
+      if (pourRef.current) tl.add(pourRef.current.play(), 0)
+      tl.to('.pl-bar', { attr: { 'stroke-width': 6.5 }, duration: 0.25 }, 0.55)
         .to('.pl-bar', { attr: { 'stroke-width': 4.5 }, duration: 0.3 })
         .to('.pl-vignette', { opacity: 0, duration: 0.4 }, '<')
         .to(root.current, { clipPath: 'inset(0 0 100% 0)', duration: 0.7 }, '-=0.1')
@@ -110,19 +112,22 @@ export default function PyvotLoader({ onDone }) {
         gsap.set('.pl-ribbon', { opacity: 0 })
         return
       }
-      // ribbon geometry in pixel space: a gentle arc from the left edge into
-      // the V. Width along the arc is modulated (narrow → wide → narrow) so the
-      // band reads as twisting; two offset outlines are joined into one shape.
+      // reduced-motion path handled above; below builds the animated ribbon
+      // ribbon lives around the V: a short twisting band that wraps behind the
+      // V from lower-left to upper-right and ends at the left stroke's foot
       const W = innerWidth
       const H = innerHeight
       const svg = ribbonSvgRef.current
       svg.setAttribute('viewBox', `0 0 ${W} ${H}`)
       const r = vLeftRef.current.getBoundingClientRect()
+      const cx = r.left + r.width * 0.5
+      const cy = r.top + r.height * 0.5
+      const R = Math.max(50, r.height * 1.5) // orbit radius scales with the mark
       const ex = r.left + r.width * 0.5
-      const ey = r.top + r.height * 0.85
-      const P0 = { x: -0.08 * W, y: 0.78 * H }
-      const P1 = { x: 0.22 * W, y: 0.36 * H }
-      const P2 = { x: ex - 0.14 * W, y: ey - 0.03 * H }
+      const ey = r.top + r.height * 0.9
+      const P0 = { x: cx - R * 1.0, y: cy + R * 1.05 }
+      const P1 = { x: cx - R * 1.15, y: cy - R * 0.5 }
+      const P2 = { x: cx + R * 0.3, y: cy - R * 1.0 }
       const P3 = { x: ex, y: ey }
       const bez = (t) => {
         const u = 1 - t
@@ -132,7 +137,7 @@ export default function PyvotLoader({ onDone }) {
         }
       }
       const N = 60
-      const base = Math.max(14, Math.min(34, W * 0.022))
+      const base = Math.max(5, Math.min(12, r.height * 0.26))
       const top = []
       const bot = []
       for (let i = 0; i <= N; i++) {
@@ -144,28 +149,32 @@ export default function PyvotLoader({ onDone }) {
         const len = Math.hypot(dx, dy) || 1
         const nx = -dy / len
         const ny = dx / len
-        // twist: width breathes twice along the arc, and tapers to a point at the V
-        const twist = 0.55 + 0.45 * Math.abs(Math.cos(t * Math.PI * 2 + 0.6))
-        const taper = 1 - Math.pow(t, 3)
-        const w = base * twist * taper + 1
+        const twist = 0.5 + 0.5 * Math.abs(Math.cos(t * Math.PI * 1.6 + 0.4))
+        const taper = 1 - Math.pow(t, 4)
+        const w = base * twist * taper + 0.8
         top.push(`${(p.x + nx * w).toFixed(1)} ${(p.y + ny * w).toFixed(1)}`)
         bot.push(`${(p.x - nx * w).toFixed(1)} ${(p.y - ny * w).toFixed(1)}`)
       }
       const shape = `M ${top.join(' L ')} L ${bot.reverse().join(' L ')} Z`
       svg.querySelectorAll('.pl-ribbon-body, .pl-ribbon-shadow, .pl-ribbon-shape').forEach((el) => el.setAttribute('d', shape))
+      const x0 = P0.x - 20
+      const x1 = P3.x + 20
 
       const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } })
       tl.from('.pl-letter', { y: 10, opacity: 0, stagger: 0.06, duration: 0.5, ease: 'power3.out' })
-        // ribbon glides in: reveal sweeps left → right along the arc
-        .set('.pl-ribbon', { opacity: 1 }, 0.3)
-        .fromTo('.pl-ribbon-reveal', { attr: { x: 0, width: 0 } }, { attr: { width: ex + 40 }, duration: 1.1, ease: 'power2.inOut' }, 0.3)
-        // sheen travels the band while it moves
-        .fromTo('.pl-ribbon-sheen', { attr: { x: -0.3 * W } }, { attr: { x: ex }, duration: 1.4, ease: 'power1.inOut' }, 0.35)
-        // pour: the reveal window slides right (tail follows head into the V) while the stroke fills
-        .to('.pl-ribbon-reveal', { attr: { x: ex + 40, width: 0 }, duration: 0.75, ease: 'power2.in' }, 1.35)
-        .fromTo('.pl-fill-clip', { attr: { y: 31.2, height: 0 } }, { attr: { y: 5.9, height: 25.4 }, duration: 0.75, ease: 'power2.in' }, 1.35)
-        .fromTo('.pl-vignette', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.9, ease: 'sine.out' }, 1.4)
-        .to('.pl-ribbon', { opacity: 0, duration: 0.15 }, 2.1)
+        // ribbon appears around the V (reveal along the band) and idles
+        .set('.pl-ribbon', { opacity: 1 }, 0.35)
+        .fromTo('.pl-ribbon-reveal', { attr: { x: x0, width: 0 } }, { attr: { width: x1 - x0 }, duration: 0.7 }, 0.35)
+      // idle: sheen loops along the band, band breathes slightly, until the pour
+      idleRef.current = gsap.timeline({ repeat: -1, defaults: { ease: 'sine.inOut' } })
+        .fromTo('.pl-ribbon-sheen', { attr: { x: x0 - 40 } }, { attr: { x: x1 }, duration: 1.4, ease: 'power1.inOut' })
+        .fromTo('.pl-ribbon-body', { attr: { opacity: 0.85 } }, { attr: { opacity: 1 }, duration: 0.7, yoyo: true, repeat: 1 }, 0)
+      // the pour, played by exit(): tail follows head into the stroke; stroke fills
+      pourRef.current = gsap.timeline({ paused: true, defaults: { ease: 'power2.in' } })
+        .to('.pl-ribbon-reveal', { attr: { x: x1, width: 0 }, duration: 0.7 }, 0)
+        .fromTo('.pl-fill-clip', { attr: { y: 31.2, height: 0 } }, { attr: { y: 5.9, height: 25.4 }, duration: 0.7 }, 0)
+        .fromTo('.pl-vignette', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.8, ease: 'sine.out' }, 0.05)
+        .to('.pl-ribbon', { opacity: 0, duration: 0.15 }, 0.7)
     },
     { scope: root },
   )
@@ -211,7 +220,7 @@ export default function PyvotLoader({ onDone }) {
           </g>
         </g>
       </svg>
-      <div className="pl-mark relative w-[min(58vw,320px)]">
+      <div className="pl-mark relative z-10 w-[min(58vw,320px)]">
         <svg viewBox={VIEWBOX} className="relative w-full overflow-visible" fill="none">
           {/* letters */}
           <path className="pl-letter" d={PATHS.p} fill="#fff" />
