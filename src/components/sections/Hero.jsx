@@ -19,6 +19,7 @@ export default function Hero() {
   const spotRef = useRef(null)
   const [desktop] = useState(() => window.matchMedia('(min-width: 768px)').matches)
   const [showCanvas, setShowCanvas] = useState(desktop)
+  const [warpOK] = useState(() => window.matchMedia('(pointer: fine)').matches && !reducedMotion() && CSS.supports('backdrop-filter', 'url(#x)'))
 
   // WebGL fallback: drop the particle canvas if the browser evicts the context
   useEffect(() => {
@@ -134,6 +135,21 @@ export default function Hero() {
             <HeroCanvas />
           </Suspense>
         </div>
+      )}
+      {/* the fluid also bends the DOM under it: a full-hero overlay whose backdrop is
+          displaced by a map the sim writes each frame (Chromium honours SVG filters
+          in backdrop-filter; other engines simply never see this layer) */}
+      {showCanvas && warpOK && (
+        <>
+          <svg width="0" height="0" className="absolute" aria-hidden>
+            <filter id="hero-warp" x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB">
+              <feImage id="hero-warp-image" preserveAspectRatio="none" result="map" />
+              <feGaussianBlur in="map" stdDeviation="4" result="smooth" />
+              <feDisplacementMap in="SourceGraphic" in2="smooth" scale="24" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+          </svg>
+          <div className="hero-warp pointer-events-none absolute inset-0 z-20" style={{ backdropFilter: 'url(#hero-warp)', WebkitBackdropFilter: 'url(#hero-warp)' }} />
+        </>
       )}
       <div className="absolute inset-0 bg-gradient-to-b from-bg/30 via-transparent to-bg" />
 

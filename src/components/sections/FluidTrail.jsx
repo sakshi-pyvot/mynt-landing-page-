@@ -71,32 +71,54 @@ const DISPLAY = /* glsl */ `
     float dt = texture2D(uDen, vUv + vec2(0.,uTexel.y)).x;
     vec2 grad = vec2(dr - dl, dt - db);
 
-    // glass tube: thickness from density, curvature from its gradient
-    float body = smoothstep(0.01, 0.35, d);
+    // clear liquid: almost no body colour — the effect is what bends through it
+    float body = smoothstep(0.01, 0.4, d);
     if (body < 0.002) { gl_FragColor = vec4(0.0); return; }
     vec3 n = normalize(vec3(-grad * 7.0, 1.0));
-    float fres = pow(1.0 - clamp(n.z, 0.0, 1.0), 2.5);          // bright skin at the edges
+    float fres = pow(1.0 - clamp(n.z, 0.0, 1.0), 3.0);
     vec3 l = normalize(vec3(-0.55, 0.85, 0.75));
-    float ndl = max(dot(n, l), 0.0);
-    float specSoft = pow(ndl, 6.0);                              // broad wet sheen
-    float specHard = pow(ndl, 48.0);                             // tight highlight streak
+    float spec = pow(max(dot(n, l), 0.0), 40.0);
 
-    // refraction: whatever the canvas drew behind (particles, glow) bends through the tube
     vec2 offs = grad * 1.1 + v * 0.02;
     vec4 sc = texture2D(uScene, vUv + offs);
     float r = texture2D(uScene, vUv + offs * 1.3).r;
     float bch = texture2D(uScene, vUv + offs * 0.7).b;
-    vec3 refr = vec3(r, sc.g, bch) * 1.3;
+    vec3 refr = vec3(r, sc.g, bch) * 1.25;
 
-    vec3 milk = mix(vec3(0.92, 0.98, 0.96), uTint, 0.35);
+    // thin iridescent skin: hue drifts with the flow direction
+    float ang = atan(v.y, v.x + 1e-4);
+    vec3 irid = 0.5 + 0.5 * cos(vec3(0.0, 2.1, 4.2) + ang + uTime * 0.6);
     vec3 col = refr * body
-             + milk * (0.07 * body)                              // faint translucent body
-             + vec3(0.9, 1.0, 0.96) * (0.55 * fres * body)       // fresnel rim
-             + vec3(1.0) * (0.12 * specSoft * body + 0.5 * specHard * body);
-    float alpha = clamp(sc.a * body * 1.2 + 0.07 * body + 0.6 * fres * body + 0.5 * specHard * body, 0.0, 1.0);
+             + mix(vec3(0.9, 1.0, 0.96), irid, 0.5) * (0.22 * fres * body)
+             + vec3(1.0) * (0.18 * spec * body);
+    float alpha = clamp(sc.a * body * 1.2 + 0.015 * body + 0.28 * fres * body + 0.18 * spec * body, 0.0, 1.0);
     gl_FragColor = vec4(col, alpha);
   }
 `
+
+// displacement map for the DOM warp overlay: R/G encode the offset (128 = none),
+// rows flipped so a GPU readback comes out top-down like a 2D canvas
+const MAP = /* glsl */ `
+  precision highp float;
+  varying vec2 vUv;
+  uniform sampler2D uVel;
+  uniform sampler2D uDen;
+  uniform vec2 uTexel;
+  void main(){
+    vec2 uv = vec2(vUv.x, 1.0 - vUv.y);
+    vec2 v = texture2D(uVel, uv).xy;
+    float dl = texture2D(uDen, uv - vec2(uTexel.x,0.)).x;
+    float dr = texture2D(uDen, uv + vec2(uTexel.x,0.)).x;
+    float db = texture2D(uDen, uv - vec2(0.,uTexel.y)).x;
+    float dt = texture2D(uDen, uv + vec2(0.,uTexel.y)).x;
+    vec2 grad = vec2(dr - dl, dt - db);
+    float d = texture2D(uDen, uv).x;
+    vec2 disp = clamp((grad * 3.0 + v * 0.05) * smoothstep(0.005, 0.2, d), -1.0, 1.0);
+    // screen y is down; flip the y component to match
+    gl_FragColor = vec4(disp.x * 0.5 + 0.5, -disp.y * 0.5 + 0.5, 0.0, 1.0);
+  }
+`
+const MAP_RES = 128
 
 function makeTarget() {
   return new THREE.WebGLRenderTarget(SIM, SIM, {
@@ -134,12 +156,29 @@ export default function FluidTrail({ velocityRef }) {
       depthTest: false,
       depthWrite: false,
     })
+    const map = new THREE.ShaderMaterial({
+      vertexShader: VERT,
+      fragmentShader: MAP,
+      uniforms: { uVel: { value: null }, uDen: { value: null }, uTexel: { value: texel } },
+      depthTest: false,
+      depthWrite: false,
+    })
+    const mapRT = new THREE.WebGLRenderTarget(MAP_RES, MAP_RES, { depthBuffer: false, stencilBuffer: false })
+    const mapCanvas = document.createElement('canvas')
+    mapCanvas.width = MAP_RES
+    mapCanvas.height = MAP_RES
     return {
       scene, cam, quad, advect, splat, texel,
       vel: [makeTarget(), makeTarget()],
       den: [makeTarget(), makeTarget()],
       last: new THREE.Vector2(-1, -1),
       hasLast: false,
+      map, mapRT, mapCanvas,
+      mapCtx: mapCanvas.getContext('2d'),
+      mapPixels: new Uint8Array(MAP_RES * MAP_RES * 4),
+      mapImage: null, // ImageData, created lazily
+      mapTick: 0,
+      quiet: 0,
     }
   }
   const makeDisplay = () =>
@@ -187,16 +226,18 @@ export default function FluidTrail({ velocityRef }) {
       const dy = py - s.last.y
       const speed = Math.hypot(dx * aspect, dy)
       if (speed > 0.0005) {
+        // deposit per unit *distance*, not per frame — 120 Hz and 60 Hz screens draw the same trail
+        const vel = speed / d // uv units per second
         s.splat.uniforms.uPoint.value.set(px, py)
         s.splat.uniforms.uAspect.value = aspect
-        s.splat.uniforms.uRadius.value = 0.00032 + Math.min(speed, 0.08) * 0.005
+        s.splat.uniforms.uRadius.value = 0.00028 + Math.min(vel, 3) * 0.00012
         // velocity
         s.splat.uniforms.uSrc.value = s.vel[0].texture
         s.splat.uniforms.uValue.value.set(dx * 120, dy * 120, 0)
         run(s.splat, s.vel[1]); [s.vel[0], s.vel[1]] = [s.vel[1], s.vel[0]]
         // density
         s.splat.uniforms.uSrc.value = s.den[0].texture
-        s.splat.uniforms.uValue.value.set(Math.min(0.45 + speed * 6, 1.0), 0, 0)
+        s.splat.uniforms.uValue.value.set(Math.min(speed * 28, 0.9), 0, 0)
         run(s.splat, s.den[1]); [s.den[0], s.den[1]] = [s.den[1], s.den[0]]
       }
     }
@@ -204,18 +245,38 @@ export default function FluidTrail({ velocityRef }) {
     s.hasLast = true
 
     // 2) advect velocity by itself, then density by velocity
+    const frames = d * 60 // dissipation tuned at 60 Hz, scaled to real frame time
     s.advect.uniforms.uDt.value = d
     s.advect.uniforms.uVel.value = s.vel[0].texture
     s.advect.uniforms.uSrc.value = s.vel[0].texture
-    s.advect.uniforms.uDissipate.value = 0.975
+    s.advect.uniforms.uDissipate.value = Math.pow(0.975, frames)
     run(s.advect, s.vel[1]); [s.vel[0], s.vel[1]] = [s.vel[1], s.vel[0]]
 
     s.advect.uniforms.uVel.value = s.vel[0].texture
     s.advect.uniforms.uSrc.value = s.den[0].texture
-    s.advect.uniforms.uDissipate.value = 0.98
+    s.advect.uniforms.uDissipate.value = Math.pow(0.975, frames)
     run(s.advect, s.den[1]); [s.den[0], s.den[1]] = [s.den[1], s.den[0]]
 
-    // 3) snapshot the rest of the scene (particles) so the ribbon can refract it
+    // 3) DOM warp: push the displacement map into the hero overlay's SVG filter (every 2nd frame)
+    const feImage = document.getElementById('hero-warp-image')
+    if (feImage && (s.mapTick++ & 1) === 0) {
+      s.map.uniforms.uVel.value = s.vel[0].texture
+      s.map.uniforms.uDen.value = s.den[0].texture
+      run(s.map, s.mapRT)
+      gl.readRenderTargetPixels(s.mapRT, 0, 0, MAP_RES, MAP_RES, s.mapPixels)
+      // skip the (comparatively costly) upload while the field is flat
+      let active = false
+      for (let i = 0; i < s.mapPixels.length; i += 64) if (Math.abs(s.mapPixels[i] - 128) > 2 || Math.abs(s.mapPixels[i + 1] - 128) > 2) { active = true; break }
+      if (active || s.quiet < 3) {
+        s.quiet = active ? 0 : s.quiet + 1
+        if (!s.mapImage) s.mapImage = s.mapCtx.createImageData(MAP_RES, MAP_RES)
+        s.mapImage.data.set(s.mapPixels)
+        s.mapCtx.putImageData(s.mapImage, 0, 0)
+        feImage.setAttribute('href', s.mapCanvas.toDataURL('image/png'))
+      }
+    }
+
+    // 4) snapshot the rest of the scene (particles) so the ribbon can refract it
     gl.getDrawingBufferSize(st.sceneSize)
     if (!st.sceneRT || st.sceneRT.width !== st.sceneSize.x || st.sceneRT.height !== st.sceneSize.y) {
       st.sceneRT?.dispose()
@@ -229,7 +290,7 @@ export default function FluidTrail({ velocityRef }) {
     if (quadMesh) quadMesh.visible = true
     gl.setRenderTarget(null)
 
-    // 4) publish + display
+    // 5) publish + display
     if (velocityRef) velocityRef.current = { vel: s.vel[0].texture, den: s.den[0].texture }
     const u = display.uniforms
     u.uVel.value = s.vel[0].texture
