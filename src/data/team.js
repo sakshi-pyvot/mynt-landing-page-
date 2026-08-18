@@ -34,9 +34,9 @@ export const TEAM = [
 ]
 
 export const TECH = [
-  { name: "Deep Chakraborty", role: "Tech Lead", slug: "deep-chakraborty", linkedin: "https://www.linkedin.com/in/xelcior/", quote: "Ten-plus years of shipping taught me one thing: the best architecture is the one nobody has to think about at 2 a.m." },
-  { name: "Sakshi Kumari", role: "Software Developer 2", slug: "sakshi-kumari", linkedin: "https://www.linkedin.com/in/sakshi-kumari-dev/", quote: "I turn payout PDFs into pixels that make sense. I have read more Zomato statements than most restaurant owners." },
-  { name: "Abhishek Kumar", role: "Software Developer 2", slug: "abhishek-kumar", linkedin: "https://www.linkedin.com/in/allworkdone/", quote: "MERN by day, edge cases by night. If it isn’t null-safe, it isn’t done." },
+  { name: "Deep Chakraborty", role: "Tech Lead", slug: "deep-chakraborty", linkedin: "https://www.linkedin.com/in/xelcior/", quote: "Architecture is a promise you make to the next engineer. I try to keep mine." },
+  { name: "Sakshi Kumari", role: "Software Developer 2", slug: "sakshi-kumari", linkedin: "https://www.linkedin.com/in/sakshi-kumari-dev/", quote: "Frontend that feels alive, backend that never lies. That’s the whole job." },
+  { name: "Abhishek Kumar", role: "Software Developer 2", slug: "abhishek-kumar", linkedin: "https://www.linkedin.com/in/allworkdone/", quote: "I build the screens Mynt owners wake up to. If a number is wrong, I hear about it before coffee." },
 ]
 
 const by = (...slugs) => slugs.map((x) => TEAM.find((p) => p.slug === x)).filter(Boolean)
