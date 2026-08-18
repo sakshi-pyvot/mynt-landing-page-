@@ -143,6 +143,7 @@ export default function Nav() {
           <CtaPair size="sm" className="hidden flex-nowrap min-[1360px]:flex" />
           <SmartLink
             to={CTA.start}
+            target="_self"
             className="inline-flex h-10 items-center whitespace-nowrap rounded-full bg-mint px-4 text-sm font-semibold text-[#06251a] min-[1360px]:hidden"
           >
             Get started
@@ -183,6 +184,7 @@ export default function Nav() {
                 {panel.cta && (
                   <SmartLink
                     to={panel.cta.to}
+                    target="_self"
                     className="mt-6 inline-flex h-10 items-center rounded-full bg-mint px-4 text-sm font-semibold text-[#06251a] hover:shadow-[0_0_28px_rgba(47,211,154,0.45)]"
                   >
                     {panel.cta.label}

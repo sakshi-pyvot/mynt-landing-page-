@@ -266,7 +266,7 @@ export default function Mynt() {
             <Eyebrow className="justify-center">Pricing</Eyebrow>
             <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">Simple annual licence. Priced by outlets, not by seats.</h2>
             <p className="mt-4 text-mute">Every module included. Add outlets as you grow. Pyvot Experts are a separate engagement — you decide if and when.</p>
-            <Button to={CTA.start} className="mt-8">Get a quote for your brand</Button>
+            <Button to={CTA.start} target="_self" className="mt-8">Get a quote for your brand</Button>
           </Card>
         </div>
       </Section>

@@ -17,9 +17,9 @@ export const SOCIALS = [
   { key: 'mail', label: 'Email', href: `mailto:${CONTACT.email}` },
 ]
 
-// CTA targets used by CtaPair everywhere
+// CTA targets used by CtaPair everywhere. "Get started" goes straight to Mynt signup (same tab).
 export const CTA = {
-  start: '/contact?intent=mynt',
+  start: 'https://pyvotmynt.in/signup',
   expert: '/contact?intent=expert',
 }
 

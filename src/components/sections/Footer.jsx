@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { PyvotLogo, MyntMark } from '@/components/Brand'
 import { SmartLink } from '@/components/ui'
-import { FOOTER, SOCIALS, CONTACT } from '@/lib/site'
+import { FOOTER, SOCIALS, CONTACT, CTA } from '@/lib/site'
 
 const ICONS = {
   instagram: (
@@ -68,7 +68,7 @@ export default function Footer() {
               <ul className="mt-4 flex flex-col gap-2.5" role="list">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <SmartLink to={l.to} className="text-sm text-ink/80 transition-colors hover:text-mint">
+                    <SmartLink to={l.to} target={l.to === CTA.start ? '_self' : undefined} className="text-sm text-ink/80 transition-colors hover:text-mint">
                       {l.label}
                     </SmartLink>
                   </li>

@@ -16,6 +16,7 @@ export default function CtaPair({ size = 'md', className = '', magnetic = true }
   const primary = (
     <SmartLink
       to={CTA.start}
+      target="_self"
       className={cn(
         'inline-flex items-center whitespace-nowrap rounded-full bg-mint font-semibold text-[#06251a] transition-shadow hover:shadow-[0_0_32px_rgba(47,211,154,0.5)]',
         s.btn,
