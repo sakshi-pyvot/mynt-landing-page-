@@ -54,6 +54,41 @@ body {
   }
 }
 
+/* liquid-glass cursor lens: refracts the page under it (Chromium honours the SVG
+   displacement in backdrop-filter; other engines keep the plain glass blur) */
+.cursor-lens {
+  -webkit-backdrop-filter: blur(1.6px) saturate(1.25) brightness(1.06);
+  backdrop-filter: blur(1.6px) saturate(1.25) brightness(1.06);
+  backdrop-filter: url(#cursor-lens) blur(0.35px) saturate(1.25) brightness(1.06);
+  background: radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 45%, rgba(47, 211, 154, 0.07) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+    inset 0 -10px 16px -8px rgba(255, 255, 255, 0.1),
+    inset 0 10px 16px -10px rgba(47, 211, 154, 0.22),
+    0 8px 24px rgba(0, 0, 0, 0.28);
+  transition: box-shadow 0.25s ease, background 0.25s ease;
+  will-change: transform;
+}
+.cursor-lens.is-hover {
+  background: radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.12), rgba(47, 211, 154, 0.06) 45%, rgba(47, 211, 154, 0.14) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(47, 211, 154, 0.6),
+    inset 0 -10px 16px -8px rgba(255, 255, 255, 0.12),
+    0 0 24px rgba(47, 211, 154, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.28);
+}
+.cursor-lens-spec {
+  position: absolute;
+  left: 18%;
+  top: 11%;
+  width: 36%;
+  height: 22%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0));
+  filter: blur(1px);
+  transform: rotate(-18deg);
+}
+
 /* excel-style grid backdrop for the S3 sheet */
 .excel-grid {
   background-image:

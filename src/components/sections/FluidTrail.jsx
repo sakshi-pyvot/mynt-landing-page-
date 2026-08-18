@@ -48,56 +48,52 @@ const SPLAT = /* glsl */ `
   }
 `
 
-// display: refract a soft nebula backdrop through the fluid, tint the ribbon,
-// split RGB along the flow direction, add a bright edge where density gradients are steep
+// display: a clear liquid-glass ribbon. Whatever the canvas drew behind it (particle
+// field, ambient glow) is looked up through a displacement built from velocity + density
+// gradient, split slightly per channel, with a specular streak and a bright fresnel rim.
 const DISPLAY = /* glsl */ `
   precision highp float;
   varying vec2 vUv;
   uniform sampler2D uVel;
   uniform sampler2D uDen;
+  uniform sampler2D uScene;
   uniform vec2 uTexel;
   uniform float uTime;
   uniform vec3 uTint;
-
-  // cheap value noise for the nebula backdrop so refraction has something to bend
-  float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
-  float noise(vec2 p){
-    vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
-    return mix(mix(hash(i), hash(i+vec2(1,0)), f.x), mix(hash(i+vec2(0,1)), hash(i+vec2(1,1)), f.x), f.y);
-  }
-  float fbm(vec2 p){ float a=0.5, s=0.0; for(int i=0;i<4;i++){ s+=a*noise(p); p*=2.03; a*=0.5; } return s; }
 
   void main(){
     vec2 v = texture2D(uVel, vUv).xy;
     float d = texture2D(uDen, vUv).x;
 
-    // refraction: bend the backdrop lookup by velocity + density gradient
     float dl = texture2D(uDen, vUv - vec2(uTexel.x,0.)).x;
     float dr = texture2D(uDen, vUv + vec2(uTexel.x,0.)).x;
     float db = texture2D(uDen, vUv - vec2(0.,uTexel.y)).x;
     float dt = texture2D(uDen, vUv + vec2(0.,uTexel.y)).x;
     vec2 grad = vec2(dr - dl, dt - db);
-    vec2 offs = v * 0.012 + grad * 0.35;
 
-    // backdrop nebula (dark, faint mint) sampled with the offset
-    vec2 p = (vUv + offs) * 3.0;
-    float n = fbm(p + uTime * 0.03);
-    vec3 back = mix(vec3(0.0), uTint * 0.10, smoothstep(0.35, 0.8, n));
+    // glass tube: thickness from density, curvature from its gradient
+    float body = smoothstep(0.01, 0.35, d);
+    if (body < 0.002) { gl_FragColor = vec4(0.0); return; }
+    vec3 n = normalize(vec3(-grad * 7.0, 1.0));
+    float fres = pow(1.0 - clamp(n.z, 0.0, 1.0), 2.5);          // bright skin at the edges
+    vec3 l = normalize(vec3(-0.55, 0.85, 0.75));
+    float ndl = max(dot(n, l), 0.0);
+    float specSoft = pow(ndl, 6.0);                              // broad wet sheen
+    float specHard = pow(ndl, 48.0);                             // tight highlight streak
 
-    // rgb split along the flow direction, strength ∝ density
-    vec2 dir = normalize(v + 1e-4) * uTexel * 6.0 * clamp(d, 0.0, 1.0);
-    float rr = texture2D(uDen, vUv + dir).x;
-    float bb = texture2D(uDen, vUv - dir).x;
+    // refraction: whatever the canvas drew behind (particles, glow) bends through the tube
+    vec2 offs = grad * 1.1 + v * 0.02;
+    vec4 sc = texture2D(uScene, vUv + offs);
+    float r = texture2D(uScene, vUv + offs * 1.3).r;
+    float bch = texture2D(uScene, vUv + offs * 0.7).b;
+    vec3 refr = vec3(r, sc.g, bch) * 1.3;
 
-    // ribbon body: translucent mint glass; edge: bright fresnel-ish rim
-    // minimal: hairline glass rim, almost no body
-    float body = smoothstep(0.02, 0.5, d);
-    float edge = smoothstep(0.02, 0.2, length(grad)) * smoothstep(0.01, 0.15, d);
-    vec3 glass = uTint * (0.03 * body) + vec3(0.85, 1.0, 0.95) * (0.5 * edge);
-    vec3 split = (vec3(0.35,1.0,0.75) * rr + vec3(0.45,0.85,1.0) * bb) * 0.04 * body;
-
-    vec3 col = back + glass + split;
-    float alpha = clamp(smoothstep(0.3, 0.8, n) * 0.18 + body * 0.14 + edge * 0.7, 0.0, 1.0);
+    vec3 milk = mix(vec3(0.92, 0.98, 0.96), uTint, 0.35);
+    vec3 col = refr * body
+             + milk * (0.07 * body)                              // faint translucent body
+             + vec3(0.9, 1.0, 0.96) * (0.55 * fres * body)       // fresnel rim
+             + vec3(1.0) * (0.12 * specSoft * body + 0.5 * specHard * body);
+    float alpha = clamp(sc.a * body * 1.2 + 0.07 * body + 0.6 * fres * body + 0.5 * specHard * body, 0.0, 1.0);
     gl_FragColor = vec4(col, alpha);
   }
 `
@@ -114,7 +110,7 @@ function makeTarget() {
 }
 
 export default function FluidTrail({ velocityRef }) {
-  const { gl, size } = useThree()
+  const { gl, size, scene, camera } = useThree()
   const meshRef = useRef()
 
   const build = () => {
@@ -153,6 +149,7 @@ export default function FluidTrail({ velocityRef }) {
         uniforms: {
           uVel: { value: null },
           uDen: { value: null },
+          uScene: { value: null },
           uTexel: { value: new THREE.Vector2(1 / SIM, 1 / SIM) },
           uTime: { value: 0 },
           uTint: { value: new THREE.Color('#2fd39a') },
@@ -169,10 +166,11 @@ export default function FluidTrail({ velocityRef }) {
     const d = Math.min(dt, 0.033)
     if (!stateRef.current) {
       const display = makeDisplay()
-      stateRef.current = { sim: build(), display }
+      stateRef.current = { sim: build(), display, sceneRT: null, sceneSize: new THREE.Vector2() }
       if (meshRef.current) meshRef.current.material = display
     }
-    const { sim: s, display } = stateRef.current
+    const st = stateRef.current
+    const { sim: s, display } = st
     const aspect = size.width / size.height
     const px = pointer.x * 0.5 + 0.5
     const py = pointer.y * 0.5 + 0.5
@@ -191,14 +189,14 @@ export default function FluidTrail({ velocityRef }) {
       if (speed > 0.0005) {
         s.splat.uniforms.uPoint.value.set(px, py)
         s.splat.uniforms.uAspect.value = aspect
-        s.splat.uniforms.uRadius.value = 0.00022 + Math.min(speed, 0.08) * 0.004
+        s.splat.uniforms.uRadius.value = 0.00032 + Math.min(speed, 0.08) * 0.005
         // velocity
         s.splat.uniforms.uSrc.value = s.vel[0].texture
         s.splat.uniforms.uValue.value.set(dx * 120, dy * 120, 0)
         run(s.splat, s.vel[1]); [s.vel[0], s.vel[1]] = [s.vel[1], s.vel[0]]
         // density
         s.splat.uniforms.uSrc.value = s.den[0].texture
-        s.splat.uniforms.uValue.value.set(Math.min(0.35 + speed * 5, 0.8), 0, 0)
+        s.splat.uniforms.uValue.value.set(Math.min(0.45 + speed * 6, 1.0), 0, 0)
         run(s.splat, s.den[1]); [s.den[0], s.den[1]] = [s.den[1], s.den[0]]
       }
     }
@@ -214,16 +212,29 @@ export default function FluidTrail({ velocityRef }) {
 
     s.advect.uniforms.uVel.value = s.vel[0].texture
     s.advect.uniforms.uSrc.value = s.den[0].texture
-    s.advect.uniforms.uDissipate.value = 0.965
+    s.advect.uniforms.uDissipate.value = 0.98
     run(s.advect, s.den[1]); [s.den[0], s.den[1]] = [s.den[1], s.den[0]]
 
+    // 3) snapshot the rest of the scene (particles) so the ribbon can refract it
+    gl.getDrawingBufferSize(st.sceneSize)
+    if (!st.sceneRT || st.sceneRT.width !== st.sceneSize.x || st.sceneRT.height !== st.sceneSize.y) {
+      st.sceneRT?.dispose()
+      st.sceneRT = new THREE.WebGLRenderTarget(st.sceneSize.x, st.sceneSize.y, { depthBuffer: false, stencilBuffer: false })
+    }
+    const quadMesh = meshRef.current
+    if (quadMesh) quadMesh.visible = false
+    gl.setRenderTarget(st.sceneRT)
+    gl.clear()
+    gl.render(scene, camera)
+    if (quadMesh) quadMesh.visible = true
     gl.setRenderTarget(null)
 
-    // 3) publish + display
+    // 4) publish + display
     if (velocityRef) velocityRef.current = { vel: s.vel[0].texture, den: s.den[0].texture }
     const u = display.uniforms
     u.uVel.value = s.vel[0].texture
     u.uDen.value = s.den[0].texture
+    u.uScene.value = st.sceneRT.texture
     u.uTime.value = clock.elapsedTime
   }, -1) // run before other frame callbacks so particles see this frame's field
 

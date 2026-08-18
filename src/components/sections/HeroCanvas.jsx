@@ -23,7 +23,20 @@ function createSim(count) {
   }
 }
 
-function ParticleField({ count = 1500 }) {
+// particles fade out under the glass ribbon so the refracted copy reads as *the*
+// particles bending through the lens, not a double image
+const DEN_UNIFORM = { uDen: { value: null } }
+function fadeUnderRibbon(shader) {
+  shader.uniforms.uDen = DEN_UNIFORM.uDen
+  shader.vertexShader = shader.vertexShader
+    .replace('#include <common>', '#include <common>\nvarying vec2 vScr;')
+    .replace('#include <project_vertex>', '#include <project_vertex>\nvScr = gl_Position.xy / gl_Position.w * 0.5 + 0.5;')
+  shader.fragmentShader = shader.fragmentShader
+    .replace('#include <common>', '#include <common>\nuniform sampler2D uDen;\nvarying vec2 vScr;')
+    .replace('#include <dithering_fragment>', '#include <dithering_fragment>\ngl_FragColor.a *= 1.0 - smoothstep(0.015, 0.45, texture2D(uDen, vScr).x) * 0.9;')
+}
+
+function ParticleField({ count = 1500, field }) {
   const mesh = useRef()
   const sim = useRef(null)
 
@@ -31,6 +44,7 @@ function ParticleField({ count = 1500 }) {
     const m = mesh.current
     if (!m) return
     if (!sim.current) sim.current = createSim(count)
+    DEN_UNIFORM.uDen.value = field?.current?.den || null
     const { dummy, pointer3, particles } = sim.current
     const d = clampDt(dt)
     pointer3.set((pointer.x * viewport.width) / 2, (pointer.y * viewport.height) / 2, 0)
@@ -74,12 +88,14 @@ function ParticleField({ count = 1500 }) {
         opacity={0.42}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
+        onBeforeCompile={fadeUnderRibbon}
       />
     </instancedMesh>
   )
 }
 
 export default function HeroCanvas() {
+  const field = useRef(null) // fluid textures shared with the particles
   return (
     <Canvas
       dpr={[1, 1.5]}
@@ -89,8 +105,8 @@ export default function HeroCanvas() {
       eventSource={document.body}
       eventPrefix="client"
     >
-      <FluidTrail />
-      <ParticleField />
+      <FluidTrail velocityRef={field} />
+      <ParticleField field={field} />
     </Canvas>
   )
 }
