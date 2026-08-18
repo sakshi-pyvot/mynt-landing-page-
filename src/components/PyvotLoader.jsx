@@ -119,7 +119,7 @@ export default function PyvotLoader({ onDone }) {
     >
       <div className="pl-vignette pointer-events-none absolute inset-0 opacity-0 [background:radial-gradient(ellipse_40%_35%_at_50%_50%,rgba(51,190,134,0.14),transparent_70%)]" />
 
-      <div className="pl-mark relative w-[min(60vw,340px)]">
+      <div className="pl-mark relative w-[min(48vw,240px)]">
         {/* 3D letters (or flat SVG fallback) */}
         <div className="relative aspect-[137/45]">
           {use3d ? (
