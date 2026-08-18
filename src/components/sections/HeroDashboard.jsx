@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { reducedMotion } from '@/lib/utils'
+import { onLoaded } from '@/lib/loaded'
 
 // Live command-centre mock: numbers tick, sparkline redraws, alerts slide in,
 // AI line types itself. All DOM — no React re-renders on tick.
@@ -80,26 +81,24 @@ export default function HeroDashboard({ boot = true }) {
   useGSAP(
     () => {
       if (!boot) return
-      const tl = gsap.timeline({ delay: 2.35, defaults: { ease: 'power3.out' } })
-      tl.from(root.current, { opacity: 0, rotationX: 18, y: 60, z: -400, duration: 1.1 })
+      // paused timeline; `from` renders its start state immediately so the
+      // stage sits hidden until the loader lifts
+      const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } })
+      tl.fromTo(root.current, { opacity: 0, rotationX: 18, y: 60, z: -400 }, { opacity: 1, rotationX: 0, y: 0, z: 0, duration: 1.1, immediateRender: true })
         .from('.hd-top', { opacity: 0, y: -10, duration: 0.4 }, '-=0.5')
         .from('.hd-tile', { opacity: 0, y: 26, scale: 0.94, stagger: 0.07, duration: 0.5 }, '-=0.3')
         .from('.hd-chart', { opacity: 0, y: 20, duration: 0.5 }, '-=0.2')
         .fromTo(lineRef.current, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.2, ease: 'power1.inOut' }, '-=0.1')
         .from(areaRef.current, { opacity: 0, duration: 0.6 }, '-=0.6')
         .from('.hd-ai', { opacity: 0, x: 16, duration: 0.5 }, '-=0.6')
-      // count-ups
+      // count-ups ride on the same timeline
       gsap.utils.toArray('.hd-val').forEach((el, i) => {
         const k = KPIS[i]
         const o = { v: 0 }
-        gsap.to(o, {
-          v: k.value,
-          duration: 1.4,
-          delay: 3.0 + i * 0.07,
-          ease: 'power2.out',
-          onUpdate: () => (el.textContent = fmt(o.v, k)),
-        })
+        tl.to(o, { v: k.value, duration: 1.4, ease: 'power2.out', onUpdate: () => (el.textContent = fmt(o.v, k)) }, 0.9 + i * 0.07)
       })
+      const off = onLoaded(() => tl.delay(0.3).play())
+      return () => off()
     },
     { scope: root, dependencies: [boot] },
   )
@@ -108,7 +107,6 @@ export default function HeroDashboard({ boot = true }) {
   useEffect(() => {
     if (reducedMotion()) return undefined
     const vals = root.current.querySelectorAll('.hd-val')
-    const startAt = boot ? 4600 : 0
     const timers = []
 
     const tick = setInterval(() => {
@@ -153,15 +151,16 @@ export default function HeroDashboard({ boot = true }) {
       }, 42)
       timers.push(t)
     }
-    const boot1 = setTimeout(() => {
+    const startLive = () => {
       cycleAlert()
       typeAI()
       timers.push(setInterval(cycleAlert, 5200))
       timers.push(setInterval(typeAI, 6400))
-    }, startAt)
-    timers.push(boot1)
+    }
+    const off = boot ? onLoaded(() => timers.push(setTimeout(startLive, 2400))) : (startLive(), () => {})
 
     return () => {
+      off()
       clearInterval(tick)
       timers.forEach((t) => {
         clearTimeout(t)

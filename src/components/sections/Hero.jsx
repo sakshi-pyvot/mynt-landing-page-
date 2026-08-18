@@ -5,6 +5,7 @@ import { motion } from 'motion/react'
 import CtaPair from '@/components/CtaPair'
 import HeroDashboard from './HeroDashboard'
 import { reducedMotion } from '@/lib/utils'
+import { onLoaded } from '@/lib/loaded'
 
 const HeroCanvas = lazy(() => import('./HeroCanvas'))
 
@@ -91,34 +92,24 @@ export default function Hero() {
 
   useGSAP(
     () => {
-      // headline: word by word, blur → sharp; mint word lands last with a pop
-      gsap.from('.hw', {
-        opacity: 0,
-        y: 28,
-        filter: 'blur(10px)',
-        stagger: 0.09,
-        duration: 0.8,
-        ease: 'power3.out',
-        delay: 2.05,
+      // intro plays once the loader curtain lifts (whatever the load took)
+      const intro = () => {
+        gsap.from('.hw', { opacity: 0, y: 28, filter: 'blur(10px)', stagger: 0.09, duration: 0.8, ease: 'power3.out', delay: 0.05 })
+        gsap.from('.hero-eyebrow, .hero-sub, .hero-ctas', { opacity: 0, y: 16, stagger: 0.12, duration: 0.6, ease: 'power2.out', delay: 0.5 })
+        gsap.from('.scroll-cue', { opacity: 0, y: 8, duration: 0.6, delay: 1.0 })
+        gsap.to('.hd-sweep > div', { x: '380%', duration: 1.6, ease: 'power2.inOut', repeat: -1, repeatDelay: 6.5, delay: 2.5 })
+      }
+      gsap.set('.hw, .hero-eyebrow, .hero-sub, .hero-ctas, .scroll-cue', { opacity: 0 })
+      const off = onLoaded(() => {
+        gsap.set('.hw, .hero-eyebrow, .hero-sub, .hero-ctas, .scroll-cue', { clearProps: 'opacity' })
+        intro()
       })
-      gsap.from('.hero-eyebrow, .hero-sub, .hero-ctas', {
-        opacity: 0,
-        y: 16,
-        stagger: 0.12,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay: 2.5,
-      })
-      // scroll cue: enter with the ctas, leave as soon as the user scrolls
-      gsap.from('.scroll-cue', { opacity: 0, y: 8, duration: 0.6, delay: 3.0 })
       gsap.to('.scroll-cue', {
         opacity: 0,
         y: 8,
         duration: 0.35,
         scrollTrigger: { start: 40, end: 120, scrub: true },
       })
-      // glass sweep across the dashboard every ~8s
-      gsap.to('.hd-sweep > div', { x: '380%', duration: 1.6, ease: 'power2.inOut', repeat: -1, repeatDelay: 6.5, delay: 4.5 })
 
       // scroll exit: camera push — stage grows past the viewport, copy drifts up
       gsap.matchMedia().add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
@@ -128,6 +119,7 @@ export default function Hero() {
         tl.to('.hero-stage-wrap', { scale: 1.5, xPercent: 8, yPercent: -10, opacity: 0, ease: 'power1.in' }, 0)
           .to('.hero-copy', { yPercent: -30, opacity: 0, ease: 'power1.in' }, 0)
       })
+      return () => off()
     },
     { scope: root },
   )

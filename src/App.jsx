@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { ScrollProvider, getLenis } from '@/lib/scroll'
 import CustomCursor from '@/components/CustomCursor'
-import Preloader from '@/components/Preloader'
+import PyvotLoader from '@/components/PyvotLoader'
+import { markLoaded } from '@/lib/loaded'
 import ProgressBar from '@/components/ProgressBar'
 import Nav from '@/components/Nav'
 import Hero from '@/components/sections/Hero'
@@ -25,7 +26,7 @@ function Page() {
 
   return (
     <div id="top">
-      {loading && <Preloader onDone={() => setLoading(false)} />}
+      {loading && <PyvotLoader onDone={() => { setLoading(false); markLoaded() }} />}
       <CustomCursor />
       <ProgressBar />
       <Nav />
