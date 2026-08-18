@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -48,6 +48,7 @@ const NAV_H = 96 // 72px bar + breathing room
 export function scrollTo(target, { immediate = false } = {}) {
   const l = lenis
   if (l) {
+    l.resize() // page height may have just changed (route swap) — refresh lenis' limit first
     l.scrollTo(target, { immediate, offset: typeof target === 'number' ? 0 : -NAV_H, force: true })
     return
   }
@@ -59,19 +60,26 @@ export function scrollTo(target, { immediate = false } = {}) {
 // (pinned sections need a beat to register their spacers).
 export function RouteScroll() {
   const { pathname, hash } = useLocation()
+  const prevPath = useRef(null)
   useEffect(() => {
-    let t
+    const samePage = prevPath.current === pathname
+    prevPath.current = pathname
+    const timers = []
     if (hash) {
-      t = setTimeout(() => {
+      // new page: jump straight there once pins/spacers exist; same page: glide
+      const go = (immediate) => {
         ScrollTrigger.refresh()
         const el = document.getElementById(hash.slice(1))
-        if (el) scrollTo(el)
-      }, 180)
+        if (el) scrollTo(el, { immediate })
+      }
+      timers.push(setTimeout(() => go(!samePage), samePage ? 0 : 200))
+      // pinned sections can still shift layout after first paint — settle once more
+      if (!samePage) timers.push(setTimeout(() => go(true), 700))
     } else {
       scrollTo(0, { immediate: true })
-      t = setTimeout(() => ScrollTrigger.refresh(), 120)
+      timers.push(setTimeout(() => ScrollTrigger.refresh(), 120))
     }
-    return () => clearTimeout(t)
+    return () => timers.forEach(clearTimeout)
   }, [pathname, hash])
   return null
 }
