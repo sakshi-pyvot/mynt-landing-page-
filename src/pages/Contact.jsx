@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Button, Card, Field, PageHero, Section } from '@/components/ui'
 import { CONTACT, SOCIALS } from '@/lib/site'
+import { submitForm, STATUS_TEXT } from '@/lib/forms'
 import { cn } from '@/lib/utils'
 
 const INTENTS = [
@@ -72,23 +73,22 @@ const INTENTS = [
 
 export default function Contact() {
   const [params, setParams] = useSearchParams()
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState('idle')
   const q = params.get('intent')
   const intent = INTENTS.some((i) => i.key === q) ? q : 'mynt'
   const active = INTENTS.find((i) => i.key === intent)
 
   const pick = (k) => {
-    setSent(false)
+    setStatus('idle')
     setParams({ intent: k }, { replace: true })
   }
 
-  // ponytail: no backend yet — hand the enquiry to the mail client with the intent as subject.
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
-    const f = new FormData(e.currentTarget)
-    const lines = [...f.entries()].map(([k, v]) => `${k}: ${v}`).join('\n')
-    window.location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(active.subject)}&body=${encodeURIComponent(lines)}`
-    setSent(true)
+    const form = e.currentTarget
+    setStatus('sending')
+    setStatus(await submitForm(form, active.subject))
+    if (form.isConnected) form.reset()
   }
 
   return (
@@ -134,8 +134,10 @@ export default function Contact() {
               />
             ))}
             <div className="flex flex-col items-start gap-3 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-              <Button type="submit">{sent ? 'Opened in your mail app' : active.cta}</Button>
-              <span className="text-xs text-mute">We reply within one working day.</span>
+              <Button type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : active.cta}</Button>
+              <span className={cn('text-xs', status === 'sent' ? 'text-mint' : 'text-mute')} role="status">
+                {STATUS_TEXT[status] || 'We reply within one working day.'}
+              </span>
             </div>
           </form>
 

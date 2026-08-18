@@ -217,7 +217,7 @@ export default function AIInsightsCard({ start }) {
         </motion.div>
 
         {/* scanning shimmer → rows */}
-        <div className="mt-3 min-h-[300px]">
+        <div className="mt-3 min-h-[564px]">{/* reserves the 6-row height so the reveal never shifts sections below */}
           <AnimatePresence mode="wait">
             {phase === 'scanning' && (
               <motion.div

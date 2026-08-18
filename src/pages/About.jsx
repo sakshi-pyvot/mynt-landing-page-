@@ -170,7 +170,7 @@ export default function About() {
 
       {/* team */}
       <Section id="team">
-        <SectionHead eyebrow="Our team" title="Operators, analysts, strategists, creators, engineers — people who have sat on both sides of the pass." lede="Hover a card for what they believe. Leaders open to a full bio." />
+        <SectionHead eyebrow="Our team" title="Operators, analysts, strategists, creators, engineers — people who have sat on both sides of the pass." lede="Hover or tap a card for what they believe. Leaders open to a full bio." />
         <TeamGrid groups={GROUPS} />
         <Reveal className="mt-16">
           <figure className="relative overflow-hidden rounded-3xl border border-line/70">

@@ -103,7 +103,6 @@ export default function Footer() {
           <span>© {new Date().getFullYear()} Pyvot Consultancy & Analytics Pvt. Ltd. All rights reserved.</span>
           <div className="flex items-center gap-5">
             <a href="https://pyvot.in/privacy-policy/" target="_blank" rel="noreferrer" className="hover:text-ink">Privacy</a>
-            <a href="https://pyvot.in/privacy-policy/" target="_blank" rel="noreferrer" className="hover:text-ink">Terms</a>
             <a href="https://app.pyvotmynt.in" target="_blank" rel="noreferrer" className="hover:text-ink">Sign in to Mynt</a>
           </div>
         </div>

@@ -108,7 +108,8 @@ export function HeroMosaic({ people }) {
 }
 
 function PersonCard({ p, index = 0, open = false, onOpen }) {
-  const clickable = !!p.bio
+  // leaders open a bio drawer; everyone with a quote toggles it on tap (touch has no hover)
+  const clickable = !!p.bio || !!p.quote
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -126,7 +127,12 @@ function PersonCard({ p, index = 0, open = false, onOpen }) {
         <LinkedIn href={p.linkedin} className="absolute right-3 top-3 opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100" />
         {/* quote slides up on hover */}
         {p.quote && (
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-3 rounded-b-2xl bg-gradient-to-t from-bg via-bg/90 to-transparent p-4 pt-10 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          <div
+            className={cn(
+              'pointer-events-none absolute inset-x-0 bottom-0 rounded-b-2xl bg-gradient-to-t from-bg via-bg/90 to-transparent p-4 pt-10 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100',
+              open ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0',
+            )}
+          >
             <p className="text-[12px] leading-snug text-ink/90">“{p.quote}”</p>
           </div>
         )}
@@ -135,7 +141,7 @@ function PersonCard({ p, index = 0, open = false, onOpen }) {
         <div className="text-[15px] font-semibold leading-tight">{p.name}</div>
         <div className="mt-0.5 flex items-center justify-between gap-2 text-[13px] text-mute">
           <span>{p.role}</span>
-          {clickable && <span className={cn('text-xs text-mint transition-opacity', open ? 'opacity-100' : 'opacity-0 group-hover:opacity-100')}>{open ? 'Close' : 'Read bio'}</span>}
+          {p.bio && <span className={cn('text-xs text-mint transition-opacity', open ? 'opacity-100' : 'opacity-0 group-hover:opacity-100')}>{open ? 'Close' : 'Read bio'}</span>}
         </div>
       </div>
     </motion.div>
@@ -146,7 +152,7 @@ export function TeamGrid({ groups }) {
   const [tab, setTab] = useState(0)
   const [openSlug, setOpenSlug] = useState(null)
   const g = groups[tab]
-  const openPerson = g.people.find((p) => p.slug === openSlug)
+  const openPerson = g.people.find((p) => p.slug === openSlug && p.bio)
 
   return (
     <div>

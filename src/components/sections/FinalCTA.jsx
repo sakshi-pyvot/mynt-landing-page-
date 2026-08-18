@@ -35,7 +35,7 @@ export default function FinalCTA() {
         </h2>
         <CtaPair size="lg" className="pointer-events-auto mt-10 justify-center" />
         <p className="mt-6 text-xs uppercase tracking-[0.25em] text-mute">
-          Built from real restaurant operations · move your cursor
+          Built from real restaurant operations<span className="hidden md:inline"> · move your cursor</span>
         </p>
       </div>
     </section>

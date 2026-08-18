@@ -23,10 +23,11 @@ export const CTA = {
   expert: '/contact?intent=expert',
 }
 
-// Top navigation. `items` → dropdown; plain `to` → direct link.
+// Top navigation. `items` → dropdown panel; plain `to` → direct link.
 export const NAV = [
   {
-    label: 'Mynt by Pyvot',
+    label: 'Mynt',
+    title: 'Mynt by Pyvot',
     intro: 'Restaurant intelligence — every platform, payout and outlet in one place.',
     items: [
       { label: 'Data', to: '/#data', hint: 'From spreadsheets to one command centre' },
@@ -50,26 +51,29 @@ export const NAV = [
     cta: { label: 'Talk to an expert', to: CTA.expert },
   },
   {
-    label: 'About Us',
+    label: 'About',
+    title: 'About Pyvot',
     intro: 'We spent years inside the restaurant industry. Then we built what was missing.',
     items: [
-      { label: 'Our Story', to: '/about#story' },
-      { label: 'Our Philosophy', to: '/about#philosophy' },
-      { label: 'Our Team', to: '/about#team' },
-      { label: 'Why Choose Us', to: '/about#why-us' },
+      { label: 'Our Story', to: '/about#story', hint: '20+ years around restaurants' },
+      { label: 'Our Philosophy', to: '/about#philosophy', hint: 'Growth is a system' },
+      { label: 'Our Team', to: '/about#team', hint: 'Leadership, tech, consulting, creative' },
+      { label: 'Why Choose Us', to: '/about#why-us', hint: 'Four reasons operators stay' },
+      { label: 'Why Join Us', to: '/join#why-join', hint: 'How we work, life at Pyvot' },
+      { label: 'Open Positions', to: '/join#open-positions', hint: 'Roles + application' },
     ],
+    cta: { label: 'See open roles', to: '/join#open-positions' },
   },
   {
-    label: 'Join Us',
-    intro: 'Build the intelligence layer for restaurants.',
+    label: 'Customers',
+    intro: 'Built on outcomes, not presentations.',
     items: [
-      { label: 'Why Join Us', to: '/join#why-join' },
-      { label: 'Open Positions & Application', to: '/join#open-positions' },
+      { label: 'Success Stories', to: '/#voices', hint: 'Client voices — owners on film' },
+      { label: 'Case Studies', to: '/case-studies', hint: 'Quantified results, brand by brand' },
     ],
+    cta: { label: 'Talk to an expert', to: CTA.expert },
   },
-  { label: 'Success Stories', to: '/#voices' },
-  { label: 'Case Studies', to: '/case-studies' },
-  { label: 'Contact Us', to: '/contact' },
+  { label: 'Contact', to: '/contact' },
 ]
 
 export const FOOTER = [

@@ -9,7 +9,7 @@ import { getLenis } from '@/lib/scroll'
 import { cn } from '@/lib/utils'
 
 // Mega-nav: Mynt-by-Pyvot lockup · grouped dropdowns · CTA pair.
-// Desktop (xl+): hover/click panels; below: full-screen sheet with accordions.
+// Desktop (lg+): hover/click panels; below: full-screen sheet with accordions.
 
 const Chevron = ({ className }) => (
   <svg viewBox="0 0 16 16" className={cn('h-3.5 w-3.5', className)} fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
@@ -100,20 +100,34 @@ export default function Nav() {
         scrolled || open >= 0 || sheet ? 'glass border-b border-line/60' : 'bg-transparent',
       )}
     >
-      <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-6 px-6" aria-label="Main">
+      <nav className="mx-auto flex h-[68px] max-w-7xl items-center justify-between gap-8 px-6" aria-label="Main">
         <Link to="/" className="shrink-0" aria-label="Mynt by Pyvot — home" onMouseEnter={leave}>
           <Lockup size="sm" />
         </Link>
 
         {/* desktop items */}
-        <ul className="hidden items-center gap-0.5 whitespace-nowrap xl:flex" role="list">
+        <ul className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-7" role="list">
           {NAV.map((item, i) => {
             const active = groupActive(item, location.pathname)
+            const lit = active || open === i
             const cls = cn(
-              'relative inline-flex h-10 items-center gap-1 rounded-full px-2.5 text-[13px] transition-colors',
-              active || open === i ? 'text-ink' : 'text-mute hover:text-ink',
+              'group relative inline-flex h-10 items-center gap-1 px-1 text-[14px] transition-colors',
+              lit ? 'text-ink' : 'text-mute hover:text-ink',
             )
-            const underline = active && <span className="absolute inset-x-2.5 -bottom-0.5 h-px bg-mint" aria-hidden />
+            const label = (
+              <span className="relative">
+                {item.label}
+                {/* hover underline grows from the left; active shows a mint dot */}
+                <span
+                  aria-hidden
+                  className={cn(
+                    'absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-ink/60 transition-transform duration-300 group-hover:scale-x-100',
+                    active && 'hidden',
+                  )}
+                />
+                {active && <span aria-hidden className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-mint" />}
+              </span>
+            )
             return (
               <li key={item.label} onMouseEnter={() => (item.items ? enter(i) : leave())}>
                 {item.items ? (
@@ -124,14 +138,12 @@ export default function Nav() {
                     aria-haspopup="true"
                     onClick={() => setOpen(open === i ? -1 : i)}
                   >
-                    {item.label}
-                    <Chevron className={cn('transition-transform', open === i && 'rotate-180 text-mint')} />
-                    {underline}
+                    {label}
+                    <Chevron className={cn('h-[11px] w-[11px] opacity-60 transition-transform', open === i && 'rotate-180 text-mint opacity-100')} />
                   </button>
                 ) : (
                   <SmartLink to={item.to} className={cls}>
-                    {item.label}
-                    {underline}
+                    {label}
                   </SmartLink>
                 )}
               </li>
@@ -139,18 +151,22 @@ export default function Nav() {
           })}
         </ul>
 
-        <div className="flex items-center gap-3" onMouseEnter={leave}>
-          <CtaPair size="sm" className="hidden flex-nowrap min-[1360px]:flex" />
+        <div className="flex items-center gap-5" onMouseEnter={leave}>
+          <SmartLink to={CTA.expert} className="group hidden items-center gap-1.5 whitespace-nowrap text-sm text-ink/80 transition-colors hover:text-mint lg:inline-flex">
+            Talk to an expert
+            <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
+          </SmartLink>
           <SmartLink
             to={CTA.start}
             target="_self"
-            className="inline-flex h-10 items-center whitespace-nowrap rounded-full bg-mint px-4 text-sm font-semibold text-[#06251a] min-[1360px]:hidden"
+            className="inline-flex h-10 items-center whitespace-nowrap rounded-full bg-mint px-5 text-sm font-semibold text-[#06251a] transition-shadow hover:shadow-[0_0_28px_rgba(47,211,154,0.45)]"
           >
-            Get started
+            <span className="hidden sm:inline">Get started with Mynt</span>
+            <span className="sm:hidden">Get started</span>
           </SmartLink>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink xl:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink lg:hidden"
             aria-label={sheet ? 'Close menu' : 'Open menu'}
             aria-expanded={sheet}
             onClick={() => setSheet((s) => !s)}
@@ -175,11 +191,11 @@ export default function Nav() {
             transition={{ duration: 0.18, ease: 'easeOut' }}
             onMouseEnter={() => enter(open)}
             onClick={closeOnLink}
-            className="absolute inset-x-0 top-full hidden border-b border-line/60 bg-surface/95 backdrop-blur-xl xl:block"
+            className="absolute inset-x-0 top-full hidden border-b border-line/60 bg-surface/95 backdrop-blur-xl lg:block"
           >
             <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1.1fr)_minmax(0,2fr)] gap-10 px-6 py-8">
               <div>
-                <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-mint">{panel.label}</div>
+                <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-mint">{panel.title || panel.label}</div>
                 <p className="mt-3 max-w-xs text-[15px] leading-relaxed text-ink/90">{panel.intro}</p>
                 {panel.cta && (
                   <SmartLink
@@ -218,7 +234,7 @@ export default function Nav() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={closeOnLink}
-            className="fixed inset-x-0 bottom-0 top-[72px] overflow-y-auto bg-bg/95 backdrop-blur-xl xl:hidden"
+            className="fixed inset-x-0 bottom-0 top-[68px] overflow-y-auto bg-bg/95 backdrop-blur-xl lg:hidden"
           >
             <MobileMenu />
           </motion.div>

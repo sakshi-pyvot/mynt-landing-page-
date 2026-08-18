@@ -225,7 +225,8 @@ export default function ClientVoices() {
         const rail = railRef.current
         // rail is w-max: distance = its full width minus the viewport
         const dist = () => Math.max(0, rail.scrollWidth - window.innerWidth + 48)
-        gsap.to(rail, {
+        // fromTo: a refresh mid-scroll must not rebase the start x (keeps progress 0 ⇒ x 0)
+        gsap.fromTo(rail, { x: 0 }, {
           x: () => -dist(),
           ease: 'none',
           scrollTrigger: {

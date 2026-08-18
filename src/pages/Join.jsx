@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Button, Card, Field, PageHero, Reveal, Section, SectionHead } from '@/components/ui'
 import { CONTACT } from '@/lib/site'
+import { submitForm, STATUS_TEXT } from '@/lib/forms'
 import { cn } from '@/lib/utils'
 
 const BUILDING = [
@@ -31,15 +32,15 @@ const ROLES = [
 const PROCESS = ['Application', 'Conversation', 'Assessment (role-dependent)', 'Team / founder round', 'Decision']
 
 export default function Join() {
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState('idle')
 
-  // ponytail: no backend yet — hand the application to the mail client.
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
-    const f = new FormData(e.currentTarget)
-    const lines = [...f.entries()].map(([k, v]) => `${k}: ${v}`).join('\n')
-    window.location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(`Application — ${f.get('role') || 'General'}`)}&body=${encodeURIComponent(lines)}`
-    setSent(true)
+    const form = e.currentTarget
+    const role = new FormData(form).get('role') || 'General'
+    setStatus('sending')
+    setStatus(await submitForm(form, `Application — ${role}`))
+    if (form.isConnected) form.reset()
   }
 
   return (
@@ -137,7 +138,7 @@ export default function Join() {
             <p className="mt-3 text-mute">Tell us what you have built or grown, and why restaurants. A LinkedIn or portfolio link does more than a long cover letter.</p>
             <p className="mt-6 text-sm text-mute">Prefer email? <a href={`mailto:${CONTACT.email}?subject=Application`} className="text-mint">{CONTACT.email}</a></p>
           </div>
-          <form onSubmit={onSubmit} className={cn('grid gap-4 rounded-2xl border border-line/70 bg-card/50 p-6 sm:grid-cols-2', sent && 'opacity-70')}>
+          <form onSubmit={onSubmit} className="grid gap-4 rounded-2xl border border-line/70 bg-card/50 p-6 sm:grid-cols-2">
             <Field label="Full name" name="name" required placeholder="Your name" />
             <Field label="Email" name="email" type="email" required placeholder="you@example.com" />
             <Field label="Phone" name="phone" type="tel" placeholder="+91" />
@@ -146,8 +147,10 @@ export default function Join() {
             <Field label="CV link (Drive, Dropbox…)" name="cv" type="url" placeholder="https://" className="sm:col-span-2" />
             <Field label="Why Pyvot, and what have you built or grown?" name="message" as="textarea" required placeholder="A few honest lines." className="sm:col-span-2" />
             <div className="flex flex-col items-start gap-3 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-              <Button type="submit">{sent ? 'Opened in your mail app' : 'Send application'}</Button>
-              <span className="text-xs text-mute">We reply to every application.</span>
+              <Button type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : 'Send application'}</Button>
+              <span className={cn('text-xs', status === 'sent' ? 'text-mint' : 'text-mute')} role="status">
+                {STATUS_TEXT[status] || 'We reply to every application.'}
+              </span>
             </div>
           </form>
         </div>

@@ -42,17 +42,14 @@ export function MyntMark({ className = 'h-7', withWord = true, wordClass = 'text
   )
 }
 
-// "Mynt by Pyvot" lockup — used in nav / footer / hero eyebrow / 404
+// "Mynt by Pyvot" lockup — used in nav / 404 / final CTA
 export function Lockup({ className = '', size = 'md' }) {
   const s = size === 'sm' ? { m: 'h-5', w: 'text-base', p: 'h-4' } : { m: 'h-7', w: 'text-xl', p: 'h-5' }
   return (
-    <span className={cn('inline-flex items-center gap-3', className)}>
+    <span className={cn('inline-flex items-center gap-3', className)} aria-label="Mynt by Pyvot">
       <MyntMark className={s.m} wordClass={s.w} />
-      <span className="h-5 w-px bg-line" aria-hidden />
-      <span className="inline-flex items-center gap-1.5">
-        <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-mute">by</span>
-        <PyvotLogo className={s.p} />
-      </span>
+      <span className="h-4 w-px bg-line" aria-hidden />
+      <PyvotLogo className={cn(s.p, 'opacity-80')} />
     </span>
   )
 }
