@@ -6,15 +6,14 @@ import { reducedMotion } from '@/lib/utils'
 
 // Pyvot wordmark loader — the V's mint stroke is the event.
 //  1. letters rise in; V's white right stroke with them
-//  2. light-green ribbons pour up inside the V's left stroke and stack until it
-//     is full; a thin specular flash runs the stroke's edge when it lands
+//  2. a full-screen burst of green ribbons + confetti erupts from the V and
+//     rises across the page; as it flies the V's left stroke turns white → mint
 //  3. the "vot" underline is a dashed progress bar bound to real load signals;
 //     over the last 10% the dashes merge into the solid bar
 //  4. exit: the mint stroke drains down into the bar, then the curtain lifts
 // Pure SVG + GSAP; no video/canvas.
 
 const MINT = '#33BE86'
-const MINT_LIGHT = '#8FE3C0'
 const UNDERLINE_X1 = 64.8
 const UNDERLINE_X2 = 137
 const UNDERLINE_LEN = UNDERLINE_X2 - UNDERLINE_X1
@@ -22,15 +21,7 @@ const DASH = 5
 const GAP = 3
 const MIN_SHOW_MS = 1500
 
-// V left stroke bbox: x 57.3–70.9, y 5.9–31.2 → ribbons live in that column
-const RIBBONS = [
-  { x: 57.6, w: 2.4, tint: MINT_LIGHT, delay: 0.0 },
-  { x: 60.1, w: 2.2, tint: MINT, delay: 0.08 },
-  { x: 62.4, w: 2.6, tint: MINT_LIGHT, delay: 0.16 },
-  { x: 65.1, w: 2.1, tint: MINT, delay: 0.24 },
-  { x: 67.3, w: 2.4, tint: MINT_LIGHT, delay: 0.32 },
-  { x: 69.8, w: 1.4, tint: MINT, delay: 0.4 },
-]
+const GREENS = ['#33BE86', '#8FE3C0', '#DFFBEE', '#1F9D6D', '#5ED4A5']
 
 const STATUS = ['Waking Mynt', 'Connecting platforms', 'Reading payouts', 'Ready']
 
@@ -40,6 +31,8 @@ export default function PyvotLoader({ onDone }) {
   const statusRef = useRef(null)
   const startedAt = useRef(0)
   const progress = useRef({ v: 0 })
+  const canvasRef = useRef(null)
+  const vLeftRef = useRef(null)
 
   // real load progress → underline dashes + status word
   useEffect(() => {
@@ -92,8 +85,7 @@ export default function PyvotLoader({ onDone }) {
     function exit() {
       const tl = gsap.timeline({ onComplete: onDone, defaults: { ease: 'power3.inOut' } })
       // the pour drains: stroke clip slides down + out; bar brightens as it "receives" it
-      tl.to('.pl-vleft-clip', { attr: { y: 32, height: 0 }, duration: 0.55 })
-        .to('.pl-bar', { attr: { 'stroke-width': 6.5 }, duration: 0.25 }, '-=0.25')
+      tl.to('.pl-bar', { attr: { 'stroke-width': 6.5 }, duration: 0.25 })
         .to('.pl-bar', { attr: { 'stroke-width': 4.5 }, duration: 0.3 })
         .to('.pl-vignette', { opacity: 0, duration: 0.4 }, '<')
         .to(root.current, { clipPath: 'inset(0 0 100% 0)', duration: 0.7 }, '-=0.1')
@@ -109,39 +101,136 @@ export default function PyvotLoader({ onDone }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+
+  // full-screen ribbon + confetti burst from the V; the V's left stroke turns
+  // white → mint while it flies. Canvas 2D, ~140 particles, ~1.6s, then stops.
+  useEffect(() => {
+    if (reducedMotion()) {
+      gsap.set(vLeftRef.current, { attr: { fill: MINT } })
+      return undefined
+    }
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
+    const resize = () => {
+      canvas.width = Math.round(innerWidth * dpr)
+      canvas.height = Math.round(innerHeight * dpr)
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    let parts = []
+    let raf = 0
+    let running = false
+    let t0 = 0
+
+    const spawn = () => {
+      // origin: the V's left stroke in screen space
+      const r = vLeftRef.current.getBoundingClientRect()
+      const ox = r.left + r.width / 2
+      const oy = r.top + r.height / 2
+      parts = []
+      for (let i = 0; i < 140; i++) {
+        const ribbon = i % 3 !== 0 // 2/3 ribbons, 1/3 confetti flakes
+        const ang = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.35 // mostly upward, wide fan
+        const speed = 520 + Math.random() * 720
+        parts.push({
+          ribbon,
+          x: ox + (Math.random() - 0.5) * r.width,
+          y: oy + (Math.random() - 0.5) * r.height,
+          vx: Math.cos(ang) * speed,
+          vy: Math.sin(ang) * speed,
+          w: ribbon ? 3 + Math.random() * 3 : 6 + Math.random() * 6,
+          len: ribbon ? 40 + Math.random() * 60 : 6 + Math.random() * 6,
+          rot: Math.random() * Math.PI * 2,
+          vr: (Math.random() - 0.5) * 12,
+          phase: Math.random() * Math.PI * 2,
+          color: GREENS[(Math.random() * GREENS.length) | 0],
+          life: 1.3 + Math.random() * 0.6,
+          age: 0,
+          trail: [],
+        })
+      }
+    }
+
+    const step = (now) => {
+      if (!running) return
+      const dt = Math.min((now - t0) / 1000, 0.033)
+      t0 = now
+      ctx.clearRect(0, 0, innerWidth, innerHeight)
+      let alive = 0
+      for (const p of parts) {
+        p.age += dt
+        if (p.age > p.life) continue
+        alive++
+        // physics: gravity + drag + flutter
+        p.vy += 900 * dt
+        p.vx *= 1 - 1.6 * dt
+        p.vy *= 1 - 0.9 * dt
+        p.vx += Math.sin(p.age * 9 + p.phase) * 60 * dt
+        p.x += p.vx * dt
+        p.y += p.vy * dt
+        p.rot += p.vr * dt
+        const a = 1 - Math.pow(p.age / p.life, 2)
+        ctx.globalAlpha = a
+        ctx.fillStyle = p.color
+        if (p.ribbon) {
+          // curly ribbon: short trail of positions drawn as a tapering strip
+          p.trail.push({ x: p.x, y: p.y })
+          if (p.trail.length > 8) p.trail.shift()
+          ctx.beginPath()
+          ctx.lineWidth = p.w
+          ctx.lineCap = 'round'
+          ctx.strokeStyle = p.color
+          for (let k = 0; k < p.trail.length; k++) {
+            const q = p.trail[k]
+            const wob = Math.sin(p.age * 14 + k * 0.9 + p.phase) * 4
+            if (k === 0) ctx.moveTo(q.x + wob, q.y)
+            else ctx.lineTo(q.x + wob, q.y)
+          }
+          ctx.stroke()
+        } else {
+          ctx.save()
+          ctx.translate(p.x, p.y)
+          ctx.rotate(p.rot)
+          // flake tumbles: scale x by cos to fake 3D flip
+          ctx.scale(Math.cos(p.age * 10 + p.phase), 1)
+          ctx.fillRect(-p.w / 2, -p.len / 2, p.w, p.len)
+          ctx.restore()
+        }
+      }
+      ctx.globalAlpha = 1
+      if (alive) raf = requestAnimationFrame(step)
+      else {
+        running = false
+        ctx.clearRect(0, 0, innerWidth, innerHeight)
+      }
+    }
+
+    const fire = () => {
+      spawn()
+      running = true
+      t0 = performance.now()
+      raf = requestAnimationFrame(step)
+      // stroke turns mint as the burst leaves it
+      gsap.to(vLeftRef.current, { attr: { fill: MINT }, duration: 0.55, ease: 'power2.inOut', delay: 0.05 })
+      gsap.fromTo('.pl-vignette', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.9, ease: 'sine.out' })
+    }
+    const timer = setTimeout(fire, 450)
+
+    return () => {
+      clearTimeout(timer)
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', resize)
+    }
+  }, [])
+
   // intro choreography
   useGSAP(
     () => {
-      if (reducedMotion()) {
-        gsap.set('.pl-ribbon', { attr: { y: 5.9, height: 25.4 } })
-        gsap.set('.pl-vleft-clip', { attr: { y: 5.9, height: 25.4 } })
-        return
-      }
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      // 1. letters rise (no blur — quieter)
-      tl.from('.pl-letter', { y: 10, opacity: 0, stagger: 0.06, duration: 0.5 })
-        // vignette breathes once behind the mark while the pour happens
-        .fromTo('.pl-vignette', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 1.1, ease: 'sine.out' }, 0.2)
-        // 2. ribbons pour up: each strand rises from below the baseline, overshoots, settles
-        .fromTo(
-          '.pl-ribbon',
-          { attr: { y: 33, height: 0 } },
-          {
-            attr: { y: 5.9, height: 25.4 },
-            duration: 0.85,
-            ease: 'back.out(1.35)',
-            stagger: (i) => RIBBONS[i].delay,
-          },
-          0.3,
-        )
-        // strand tips glow slightly brighter as they rise
-        .fromTo('.pl-ribbon-tip', { attr: { y: 33 } }, { attr: { y: 5.9 }, duration: 0.85, ease: 'back.out(1.35)', stagger: (i) => RIBBONS[i].delay }, 0.3)
-        // 3. when full: specular flash runs the stroke's edge, then flat mint takes over
-        .fromTo('.pl-spec', { attr: { y1: 33, y2: 33 }, opacity: 0 }, { attr: { y1: 5.9, y2: 5.9 }, opacity: 1, duration: 0.45, ease: 'power2.in' }, 1.15)
-        .to('.pl-spec', { opacity: 0, duration: 0.3 }, 1.6)
-        // solid stroke fades in over the strands, then strands drop — never dimmer than the logo
-        .fromTo('.pl-vleft-solid', { attr: { opacity: 0 } }, { attr: { opacity: 1 }, duration: 0.45 }, 1.4)
-        .to('.pl-ribbons', { opacity: 0, duration: 0.3 }, 1.85)
+      if (reducedMotion()) return
+      gsap.from('.pl-letter', { y: 10, opacity: 0, stagger: 0.06, duration: 0.5, ease: 'power3.out' })
     },
     { scope: root },
   )
@@ -155,22 +244,9 @@ export default function PyvotLoader({ onDone }) {
       role="status"
     >
       <div className="pl-vignette pointer-events-none absolute inset-0 opacity-0 [background:radial-gradient(ellipse_40%_35%_at_50%_50%,rgba(51,190,134,0.14),transparent_70%)]" />
+      <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden />
       <div className="pl-mark relative w-[min(58vw,320px)]">
         <svg viewBox={VIEWBOX} className="relative w-full overflow-visible" fill="none">
-          <defs>
-            {/* everything mint lives inside the V's left-stroke silhouette */}
-            <clipPath id="pl-vshape">
-              <path d={PATHS.vLeft} />
-            </clipPath>
-            {/* the drain-out clip on exit */}
-            <clipPath id="pl-vleft-clip">
-              <rect className="pl-vleft-clip" x="56" y="5.9" width="16" height="25.4" />
-            </clipPath>
-            <filter id="pl-tip" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="0.6" />
-            </filter>
-          </defs>
-
           {/* letters */}
           <path className="pl-letter" d={PATHS.p} fill="#fff" />
           <path className="pl-letter" d={PATHS.y} fill="#fff" />
@@ -178,26 +254,8 @@ export default function PyvotLoader({ onDone }) {
           <path className="pl-letter" d={PATHS.o} fill="#fff" />
           <path className="pl-letter" d={PATHS.t} fill="#fff" />
 
-          {/* V left stroke: faint track so the pour has a vessel */}
-          <path d={PATHS.vLeft} fill={MINT} opacity="0.12" />
-
-          {/* ribbons — clipped to the stroke, then to the drain rect */}
-          <g clipPath="url(#pl-vleft-clip)">
-            <g clipPath="url(#pl-vshape)">
-              <g className="pl-ribbons">
-                {RIBBONS.map((r, i) => (
-                  <g key={i}>
-                    <rect className="pl-ribbon" x={r.x} y="33" width={r.w} height="0" fill={r.tint} />
-                    <rect className="pl-ribbon-tip" x={r.x - 0.3} y="33" width={r.w + 0.6} height="1.6" fill="#DFFBEE" filter="url(#pl-tip)" opacity="0.9" />
-                  </g>
-                ))}
-              </g>
-              {/* solid mint stroke takes over once full */}
-              <path className="pl-vleft-solid" d={PATHS.vLeft} fill={MINT} opacity="0" />
-              {/* specular flash along the left edge */}
-              <line className="pl-spec" x1="58" y1="33" x2="60.5" y2="33" stroke="#F2FFF8" strokeWidth="1.2" strokeLinecap="round" opacity="0" />
-            </g>
-          </g>
+          {/* V left stroke: starts white, turns mint as the burst leaves it */}
+          <path ref={vLeftRef} className="pl-letter" d={PATHS.vLeft} fill="#fff" />
 
           {/* underline: faint track + progress dashes */}
           <line x1={UNDERLINE_X1} y1="42.75" x2={UNDERLINE_X2} y2="42.75" stroke={MINT} strokeOpacity="0.16" strokeWidth="4.5" strokeLinecap="round" />
