@@ -1,7 +1,10 @@
+import { useRef } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 import CtaPair from '@/components/CtaPair'
-import { PyvotLogo } from '@/components/Brand'
-import { Button, Card, Eyebrow, PageHero, Reveal, Section, SectionHead, Stat } from '@/components/ui'
-import { cn } from '@/lib/utils'
+import { HeroMosaic, TeamGrid } from '@/components/TeamCards'
+import { Button, Card, Eyebrow, Reveal, Section, SectionHead, SmartLink } from '@/components/ui'
+import { GROUPS, LEADERSHIP, TEAM } from '@/data/team'
 
 const EVOLUTION = [
   ['Inside the industry', '20+ years of cumulative experience across dining and delivery — including years building and operating inside platforms like Zomato, watching how restaurants grow and where growth breaks.'],
@@ -19,32 +22,11 @@ const PRINCIPLES = [
   ['Craft matters', 'From a menu description to a dashboard tile, the details are the product.'],
 ]
 
-const LEADERSHIP = [
-  ['Bhaskar Halder', 'Co-Founder'],
-  ['Sanchit Surana', 'Co-Founder'],
-  ['Rohit Jain', 'Chief Strategy Officer'],
-  ['Abhishek Unni', 'Associate Director'],
-  ['Anirudh Saraf', 'Associate Director'],
-  ['Madhav Poddar', 'Associate Director'],
-]
-
-const TEAM = [
-  ['Ishprit Singh Batra', 'Senior Consultant'],
-  ['Pratik Jaiswal', 'Senior Consultant'],
-  ['Yatharth Srivastava', 'Senior Consultant'],
-  ['Heena Khubani', 'Consultant'],
-  ['Divya Dave', 'Consultant'],
-  ['Devika Khaitan', 'Consultant'],
-  ['Kshitij Murarka', 'Consultant'],
-  ['Sayantan Deb', 'Consultant'],
-  ['Tapash Paul', 'Consultant'],
-  ['Anish Roy', 'Creative Lead'],
-  ['Keshav Saraf', 'Analyst'],
-  ['Namrata Pareek', 'Analyst'],
-  ['Anagh Kumar Pasari', 'Operations Associate'],
-  ['Shreyansh Bardia', 'Operations Associate'],
-  ['Dibya Sarkar', 'Finance Associate'],
-  ['Nikita Thakkar', 'Chief of Staff'],
+const STATS = [
+  { value: 250, suffix: '+', label: 'restaurant brands' },
+  { value: 35, suffix: ' Cr+', label: 'monthly revenue managed' },
+  { value: 7, suffix: ' L+', label: 'monthly orders' },
+  { value: 10, suffix: 'K+', label: 'monthly dining transactions' },
 ]
 
 const WHY = [
@@ -54,37 +36,78 @@ const WHY = [
   ['Ownership-driven execution', 'Named owners, weekly rhythm, monthly review. Strategy that ships.'],
 ]
 
-const initials = (n) => n.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('')
+// faces in the hero: leaders + a few of the team who have photos
+const MOSAIC = [
+  LEADERSHIP[0], TEAM.find((p) => p.slug === 'heena-khubani'), LEADERSHIP[4],
+  LEADERSHIP[1], LEADERSHIP[2], TEAM.find((p) => p.slug === 'kshitij-murarka'),
+  TEAM.find((p) => p.slug === 'namrata-pareek'), LEADERSHIP[5], TEAM.find((p) => p.slug === 'keshav-saraf'),
+].filter(Boolean)
 
-function Person({ name, role, big = false }) {
+function CountStats() {
+  const root = useRef(null)
+  useGSAP(
+    () => {
+      gsap.utils.toArray('.about-stat').forEach((el, i) => {
+        const s = STATS[i]
+        const o = { v: 0 }
+        gsap.to(o, {
+          v: s.value,
+          duration: 1.5,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: root.current, start: 'top 80%', once: true },
+          onUpdate: () => (el.textContent = `${Math.round(o.v)}${s.suffix}`),
+        })
+      })
+    },
+    { scope: root },
+  )
   return (
-    <div className={cn('flex items-center gap-4', big && 'flex-col items-start gap-5')}>
-      <div
-        className={cn(
-          'grid shrink-0 place-items-center rounded-2xl border border-line/70 bg-gradient-to-br from-card to-surface font-semibold tracking-wide text-mint',
-          big ? 'h-24 w-24 text-2xl' : 'h-11 w-11 text-xs',
-        )}
-        aria-hidden
-      >
-        {initials(name)}
+    <section ref={root} className="border-y border-line/60 bg-surface/50 py-14">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 md:grid-cols-4">
+        {STATS.map((s) => (
+          <div key={s.label}>
+            <div className="about-stat text-4xl font-bold tracking-tight md:text-5xl">0{s.suffix}</div>
+            <div className="mt-2 text-xs uppercase tracking-[0.18em] text-mute">{s.label}</div>
+          </div>
+        ))}
       </div>
-      <div>
-        <div className={cn('font-semibold', big ? 'text-lg' : 'text-sm')}>{name}</div>
-        <div className={cn('text-mute', big ? 'text-sm' : 'text-xs')}>{role}</div>
-      </div>
-    </div>
+    </section>
   )
 }
 
 export default function About() {
   return (
     <>
-      <PageHero eyebrow="About Pyvot" title={<>We spent years inside the restaurant industry. <span className="text-gradient">Then we built what was missing.</span></>} lede="Pyvot helps restaurants scale faster online with data-driven strategy and marketplace expertise — and builds Mynt, the intelligence layer that makes it repeatable.">
-        <div className="flex flex-wrap items-center gap-6">
-          <Button to="#story" variant="ghost">Read our story</Button>
-          <PyvotLogo className="h-6 opacity-70" />
+      {/* hero: thesis + the people */}
+      <section className="relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24">
+        <div className="dot-field pointer-events-none absolute inset-0 [mask-image:radial-gradient(60%_60%_at_50%_0%,#000,transparent)]" />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1.05fr_1fr]">
+          <div>
+            <Reveal>
+              <Eyebrow>About Pyvot</Eyebrow>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h1 className="mt-5 text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl">
+                We spent years inside the restaurant industry. <span className="text-gradient">Then we built what was missing.</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-mute">
+                Pyvot helps restaurants scale faster online with data-driven strategy and marketplace expertise — and builds Mynt, the intelligence layer that makes it repeatable. Ex-Zomato operators, consultants, analysts, creators and engineers, working from Kolkata with brands across India.
+              </p>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <div className="mt-9 flex flex-wrap gap-3">
+                <Button to="#team">Meet the team</Button>
+                <Button to="#story" variant="ghost">Read our story</Button>
+              </div>
+            </Reveal>
+          </div>
+          <div className="mx-auto w-full max-w-md lg:max-w-[460px] lg:justify-self-end">
+            <HeroMosaic people={MOSAIC} />
+          </div>
         </div>
-      </PageHero>
+      </section>
 
       {/* story */}
       <Section id="story" tight>
@@ -116,15 +139,7 @@ export default function About() {
         </ol>
       </Section>
 
-      {/* proof */}
-      <section className="border-y border-line/60 bg-surface/50 py-14">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 md:grid-cols-4">
-          <Stat value="250+" label="restaurant brands" />
-          <Stat value="35 Cr+" label="monthly revenue managed" />
-          <Stat value="7 L+" label="monthly orders" />
-          <Stat value="10K+" label="monthly dining transactions" />
-        </div>
-      </section>
+      <CountStats />
 
       {/* philosophy */}
       <Section id="philosophy">
@@ -152,26 +167,13 @@ export default function About() {
       </Section>
 
       {/* team */}
-      <Section id="team" tight>
-        <SectionHead eyebrow="Our team" title="Operators, analysts, strategists — people who have sat on both sides of the pass." />
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {LEADERSHIP.map(([n, r], i) => (
-            <Reveal key={n} delay={(i % 3) * 0.05}>
-              <Card className="h-full">
-                <Person name={n} role={r} big />
-              </Card>
-            </Reveal>
-          ))}
-        </div>
-        <div className="mt-10 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
-          {TEAM.map(([n, r]) => (
-            <Person key={n} name={n} role={r} />
-          ))}
-        </div>
+      <Section id="team">
+        <SectionHead eyebrow="Our team" title="Operators, analysts, strategists, creators, engineers — people who have sat on both sides of the pass." lede="Hover a card for what they believe. Leaders open to a full bio." />
+        <TeamGrid groups={GROUPS} />
       </Section>
 
       {/* why us */}
-      <Section id="why-us">
+      <Section id="why-us" tight>
         <SectionHead eyebrow="Why choose us" title="Four reasons operators stay." />
         <div className="grid gap-4 md:grid-cols-2">
           {WHY.map(([t, d], i) => (
@@ -190,6 +192,9 @@ export default function About() {
         <div className="relative mx-auto max-w-2xl px-6">
           <h2 className="text-3xl font-bold tracking-tight md:text-5xl">Work with the team. Or with the software. Or both.</h2>
           <CtaPair size="lg" className="mt-10 justify-center" />
+          <p className="mt-6 text-sm text-mute">
+            Want to be on this page? <SmartLink to="/join" className="text-mint hover:underline">See open roles</SmartLink>
+          </p>
         </div>
       </section>
     </>

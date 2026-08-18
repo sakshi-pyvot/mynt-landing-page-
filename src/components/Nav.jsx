@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { useGSAP } from '@gsap/react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import CtaPair from './CtaPair'
 import { Lockup } from './Brand'
 import { SmartLink } from './ui'
@@ -32,8 +30,22 @@ export default function Nav() {
   const closeTimer = useRef(0)
   const location = useLocation()
 
-  useGSAP(() => {
-    ScrollTrigger.create({ start: 50, end: 'max', onToggle: (self) => setScrolled(self.isActive) })
+  // glass once scrolled (plain listener: page height changes per route, so no ScrollTrigger 'max')
+  useEffect(() => {
+    let last = false
+    const onScroll = () => {
+      const now = window.scrollY > 50
+      if (now !== last) {
+        last = now
+        setScrolled(now)
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    const t = setTimeout(onScroll, 0) // initial state (deep links land mid-page)
+    return () => {
+      clearTimeout(t)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   // any link click inside a panel/sheet closes it
