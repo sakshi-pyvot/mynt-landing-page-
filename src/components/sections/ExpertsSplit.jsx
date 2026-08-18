@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
@@ -29,13 +30,12 @@ function CinematicPanel() {
           Strategy, marketplace growth, profitability and governance — executed by the
           team that has run it inside 250+ restaurants.
         </p>
-        <a
-          href="/about"
-          title="About Pyvot — coming soon"
+        <Link
+          to="/about#team"
           className="mt-5 inline-flex h-11 items-center rounded-full border border-amber/50 px-6 text-sm font-medium text-amber transition-colors hover:bg-amber/10"
         >
           Meet Pyvot Experts
-        </a>
+        </Link>
       </div>
     </div>
   )
@@ -79,12 +79,12 @@ export default function ExpertsSplit() {
               Revenue, payouts, ads, discounts, refunds and alerts — every outlet,
               every platform, one intelligence layer.
             </p>
-            <a
-              href="#product"
+            <Link
+              to="/mynt"
               className="mt-5 inline-flex h-11 items-center rounded-full border border-mint/50 px-6 text-sm font-medium text-mint transition-colors hover:bg-mint/10"
             >
               Explore Mynt
-            </a>
+            </Link>
           </div>
           <img
             src="/shots/outlets.jpg"

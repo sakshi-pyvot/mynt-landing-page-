@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import CtaPair from '@/components/CtaPair'
+import { Lockup } from '@/components/Brand'
 import NetworkCanvas from './NetworkCanvas'
 
 function PulseRings() {
@@ -27,9 +28,7 @@ export default function FinalCTA() {
       <PulseRings />
 
       <div className="pointer-events-none relative mx-auto max-w-3xl px-6 text-center">
-        <div className="text-3xl font-bold">
-          mynt<span className="text-mint">.</span>
-        </div>
+        <Lockup className="justify-center" />
         <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight md:text-6xl">
           Your restaurant already has the answers.
           <span className="text-gradient block">Mynt helps you see them.</span>

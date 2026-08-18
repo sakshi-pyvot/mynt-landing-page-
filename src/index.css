@@ -18,6 +18,7 @@
 
 html {
   scroll-behavior: initial; /* lenis owns scrolling */
+  overflow-x: clip; /* pinned/3D stages bleed past the viewport on small screens */
 }
 
 html.lenis,

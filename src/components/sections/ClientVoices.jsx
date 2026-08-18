@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { AnimatePresence, motion } from 'motion/react'
@@ -276,9 +277,8 @@ export default function ClientVoices() {
               <VoiceCard key={v.slug} v={v} onOpen={() => setOpenIdx(i)} />
             ))}
             {/* end card */}
-            <a
-              href="/case-studies"
-              title="Case studies — coming soon"
+            <Link
+              to="/case-studies"
               className="flex aspect-[9/16] shrink-0 snap-center flex-col items-center justify-center rounded-[28px] border border-dashed border-mint/40 text-center transition-colors hover:bg-mint/5"
               style={{ width: 'clamp(200px, 19vw, 260px)' }}
             >
@@ -287,7 +287,7 @@ export default function ClientVoices() {
               <span className="mt-6 rounded-full border border-mint/50 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-mint">
                 All case studies
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
