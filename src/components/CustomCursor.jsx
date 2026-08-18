@@ -7,8 +7,8 @@ import { reducedMotion } from '@/lib/utils'
 // elsewhere), stretches with speed and grows over links. A 4px mint dot keeps precision.
 
 const HOVER_SELECTOR = 'a, button, [data-magnetic], input, select, textarea, [role=button]'
-const SIZE = 56
-const HOVER_SCALE = 1.35
+const SIZE = 36
+const HOVER_SCALE = 1.5
 
 export default function CustomCursor() {
   const lensRef = useRef(null)
@@ -110,7 +110,7 @@ export default function CustomCursor() {
         <filter id="cursor-lens" x="-25%" y="-25%" width="150%" height="150%" colorInterpolationFilters="sRGB">
           <feTurbulence ref={turbRef} type="fractalNoise" baseFrequency="0.012 0.016" numOctaves="2" seed="7" result="noise" />
           <feGaussianBlur in="noise" stdDeviation="1.2" result="soft" />
-          <feDisplacementMap in="SourceGraphic" in2="soft" scale="26" xChannelSelector="R" yChannelSelector="G" />
+          <feDisplacementMap in="SourceGraphic" in2="soft" scale="18" xChannelSelector="R" yChannelSelector="G" />
         </filter>
       </svg>
       <div
