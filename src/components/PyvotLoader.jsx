@@ -6,8 +6,9 @@ import { reducedMotion } from '@/lib/utils'
 
 // Pyvot wordmark loader — the V's mint stroke is the event.
 //  1. letters rise in; V's white right stroke with them
-//  2. one green ribbon sweeps across the screen and pours into the V's left
-//     stroke, which fills bottom → top from white to mint as the ribbon drains
+//  2. one silky ribbon (a twisting gradient band with a glass sheen) glides in
+//     from the left on a gentle arc and pours into the V's left stroke, which
+//     fills bottom → top from white to mint as the ribbon drains
 //  3. the "vot" underline is a dashed progress bar bound to real load signals;
 //     over the last 10% the dashes merge into the solid bar
 //  4. exit: the mint stroke drains down into the bar, then the curtain lifts
@@ -109,38 +110,62 @@ export default function PyvotLoader({ onDone }) {
         gsap.set('.pl-ribbon', { opacity: 0 })
         return
       }
-      // ribbon overlay works in pixel space so dash lengths are exact
+      // ribbon geometry in pixel space: a gentle arc from the left edge into
+      // the V. Width along the arc is modulated (narrow → wide → narrow) so the
+      // band reads as twisting; two offset outlines are joined into one shape.
       const W = innerWidth
       const H = innerHeight
-      ribbonSvgRef.current.setAttribute('viewBox', `0 0 ${W} ${H}`)
+      const svg = ribbonSvgRef.current
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`)
       const r = vLeftRef.current.getBoundingClientRect()
-      const ex = r.left + r.width * 0.55
-      const ey = r.top + r.height * 0.9
-      // bottom-left → S sweep across → curl above-right of the mark → dive into the V
-      const d = `M ${-0.06 * W} ${0.96 * H} C ${0.18 * W} ${0.92 * H}, ${0.22 * W} ${0.66 * H}, ${0.34 * W} ${0.6 * H} C ${0.46 * W} ${0.54 * H}, ${ex + 0.16 * W} ${ey + 0.22 * H}, ${ex + 0.21 * W} ${ey + 0.04 * H} C ${ex + 0.26 * W} ${ey - 0.1 * H}, ${ex + 0.13 * W} ${ey - 0.18 * H}, ${ex + 0.05 * W} ${ey - 0.1 * H} C ${ex + 0.005 * W} ${ey - 0.05 * H}, ${ex} ${ey - 0.02 * H}, ${ex} ${ey}`
-      gsap.set('.pl-ribbon-band', { attr: { d, 'stroke-width': Math.max(10, Math.min(22, W * 0.014)) } })
-      const band = root.current.querySelector('.pl-ribbon-band')
-      const L = band.getTotalLength()
+      const ex = r.left + r.width * 0.5
+      const ey = r.top + r.height * 0.85
+      const P0 = { x: -0.08 * W, y: 0.78 * H }
+      const P1 = { x: 0.22 * W, y: 0.36 * H }
+      const P2 = { x: ex - 0.14 * W, y: ey - 0.03 * H }
+      const P3 = { x: ex, y: ey }
+      const bez = (t) => {
+        const u = 1 - t
+        return {
+          x: u * u * u * P0.x + 3 * u * u * t * P1.x + 3 * u * t * t * P2.x + t * t * t * P3.x,
+          y: u * u * u * P0.y + 3 * u * u * t * P1.y + 3 * u * t * t * P2.y + t * t * t * P3.y,
+        }
+      }
+      const N = 60
+      const base = Math.max(14, Math.min(34, W * 0.022))
+      const top = []
+      const bot = []
+      for (let i = 0; i <= N; i++) {
+        const t = i / N
+        const p = bez(t)
+        const q = bez(Math.min(1, t + 0.01))
+        const dx = q.x - p.x
+        const dy = q.y - p.y
+        const len = Math.hypot(dx, dy) || 1
+        const nx = -dy / len
+        const ny = dx / len
+        // twist: width breathes twice along the arc, and tapers to a point at the V
+        const twist = 0.55 + 0.45 * Math.abs(Math.cos(t * Math.PI * 2 + 0.6))
+        const taper = 1 - Math.pow(t, 3)
+        const w = base * twist * taper + 1
+        top.push(`${(p.x + nx * w).toFixed(1)} ${(p.y + ny * w).toFixed(1)}`)
+        bot.push(`${(p.x - nx * w).toFixed(1)} ${(p.y - ny * w).toFixed(1)}`)
+      }
+      const shape = `M ${top.join(' L ')} L ${bot.reverse().join(' L ')} Z`
+      svg.querySelectorAll('.pl-ribbon-body, .pl-ribbon-shadow, .pl-ribbon-shape').forEach((el) => el.setAttribute('d', shape))
 
       const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } })
       tl.from('.pl-letter', { y: 10, opacity: 0, stagger: 0.06, duration: 0.5, ease: 'power3.out' })
-        // ribbon: enters bottom-left, sweeps in an S across the screen toward the V,
-        // narrows as it arrives (motion path on a full-screen SVG overlay)
-        .fromTo('.pl-ribbon', { opacity: 0 }, { opacity: 1, duration: 0.25 }, 0.35)
-        .fromTo(
-          band,
-          { attr: { 'stroke-dasharray': `${L} ${L}`, 'stroke-dashoffset': L } },
-          { attr: { 'stroke-dashoffset': 0 }, duration: 1.05, ease: 'power2.inOut' },
-          0.35,
-        )
-        // once the head reaches the V the tail follows: the visible segment shrinks
-        // toward the V (draining) while the stroke fills bottom → top
-        // drain: with dasharray "1 1" the visible unit slides along the path and off
-        // its end into the V as the offset runs 0 → -1
-        .to(band, { attr: { 'stroke-dashoffset': -L }, duration: 0.7, ease: 'power2.in' }, 1.15)
-        .fromTo('.pl-fill-clip', { attr: { y: 31.2, height: 0 } }, { attr: { y: 5.9, height: 25.4 }, duration: 0.7, ease: 'power2.in' }, 1.15)
-        .fromTo('.pl-vignette', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.9, ease: 'sine.out' }, 1.2)
-        .to('.pl-ribbon', { opacity: 0, duration: 0.2 }, 1.85)
+        // ribbon glides in: reveal sweeps left → right along the arc
+        .set('.pl-ribbon', { opacity: 1 }, 0.3)
+        .fromTo('.pl-ribbon-reveal', { attr: { x: 0, width: 0 } }, { attr: { width: ex + 40 }, duration: 1.1, ease: 'power2.inOut' }, 0.3)
+        // sheen travels the band while it moves
+        .fromTo('.pl-ribbon-sheen', { attr: { x: -0.3 * W } }, { attr: { x: ex }, duration: 1.4, ease: 'power1.inOut' }, 0.35)
+        // pour: the reveal window slides right (tail follows head into the V) while the stroke fills
+        .to('.pl-ribbon-reveal', { attr: { x: ex + 40, width: 0 }, duration: 0.75, ease: 'power2.in' }, 1.35)
+        .fromTo('.pl-fill-clip', { attr: { y: 31.2, height: 0 } }, { attr: { y: 5.9, height: 25.4 }, duration: 0.75, ease: 'power2.in' }, 1.35)
+        .fromTo('.pl-vignette', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.9, ease: 'sine.out' }, 1.4)
+        .to('.pl-ribbon', { opacity: 0, duration: 0.15 }, 2.1)
     },
     { scope: root },
   )
@@ -154,24 +179,37 @@ export default function PyvotLoader({ onDone }) {
       role="status"
     >
       <div className="pl-vignette pointer-events-none absolute inset-0 opacity-0 [background:radial-gradient(ellipse_40%_35%_at_50%_50%,rgba(51,190,134,0.14),transparent_70%)]" />
-      {/* full-screen ribbon overlay: one silky band on a bezier that ends at the V */}
+      {/* full-screen ribbon overlay: a filled band (not a stroke) so it can twist,
+          with a moving glass highlight; geometry is generated at runtime */}
       <svg ref={ribbonSvgRef} className="pl-ribbon pointer-events-none absolute inset-0 h-full w-full opacity-0" aria-hidden>
         <defs>
-          <linearGradient id="pl-ribbon-grad" x1="0" x2="1" y1="0" y2="0">
+          <linearGradient id="pl-silk" x1="0" x2="1" y1="0" y2="0">
             <stop offset="0" stopColor="#1F9D6D" />
-            <stop offset="0.5" stopColor="#33BE86" />
-            <stop offset="1" stopColor="#8FE3C0" />
+            <stop offset="0.45" stopColor="#33BE86" />
+            <stop offset="1" stopColor="#7FE0B8" />
           </linearGradient>
+          <linearGradient id="pl-sheen" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.5" stopColor="#fff" stopOpacity="0.55" />
+            <stop offset="1" stopColor="#fff" stopOpacity="0" />
+          </linearGradient>
+          <clipPath id="pl-ribbon-reveal">
+            <rect className="pl-ribbon-reveal" x="0" y="0" width="0" height="100%" />
+          </clipPath>
+          <clipPath id="pl-ribbon-band-clip">
+            <path className="pl-ribbon-shape" d="" />
+          </clipPath>
         </defs>
-        {/* path: bottom-left → mid sweep → top curl → lands on the V (≈ 46.5%, 47.5% of viewport) */}
-        <path
-          className="pl-ribbon-band"
-          d="M -6 96 C 18 92, 22 66, 34 60 C 46 54, 62 70, 68 52 C 73 38, 60 30, 52 38 C 47 43, 46.5 45.5, 46.6 47.4"
-          fill="none"
-          stroke="url(#pl-ribbon-grad)"
-          strokeWidth="16"
-          strokeLinecap="round"
-        />
+        <g clipPath="url(#pl-ribbon-reveal)">
+          {/* underside shadow band, slightly offset for depth */}
+          <path className="pl-ribbon-shadow" d="" fill="#0B4A33" opacity="0.55" transform="translate(0,6)" />
+          {/* body */}
+          <path className="pl-ribbon-body" d="" fill="url(#pl-silk)" />
+          {/* glass sheen: a soft diagonal highlight that travels along the band */}
+          <g clipPath="url(#pl-ribbon-band-clip)">
+            <rect className="pl-ribbon-sheen" x="-30%" y="0" width="22%" height="100%" fill="url(#pl-sheen)" style={{ mixBlendMode: 'screen' }} />
+          </g>
+        </g>
       </svg>
       <div className="pl-mark relative w-[min(58vw,320px)]">
         <svg viewBox={VIEWBOX} className="relative w-full overflow-visible" fill="none">
