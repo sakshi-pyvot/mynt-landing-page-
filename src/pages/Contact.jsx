@@ -93,7 +93,7 @@ export default function Contact() {
 
   return (
     <>
-      <PageHero eyebrow="Contact" title="What can we help you with?" lede="Pick a door. Each one goes to the right person, with the right first questions — no generic enquiry form." />
+      <PageHero logo={false} eyebrow="Contact" title="What can we help you with?" lede="Pick a door. Each one goes to the right person, with the right first questions — no generic enquiry form." />
 
       <Section tight className="pt-0">
         <div className="grid gap-3 md:grid-cols-4" role="tablist" aria-label="Intent">

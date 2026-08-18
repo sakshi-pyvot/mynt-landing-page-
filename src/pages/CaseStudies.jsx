@@ -96,7 +96,7 @@ export default function CaseStudies() {
 
   return (
     <>
-      <PageHero eyebrow="Case studies" title="Built on outcomes, not presentations." lede="Quantified results from restaurant brands Pyvot has worked with — revenue, profitability, ads, discounts, dining and menu. Every metric here was validated with the client.">
+      <PageHero logo={false} eyebrow="Case studies" title="Built on outcomes, not presentations." lede="Quantified results from restaurant brands Pyvot has worked with — revenue, profitability, ads, discounts, dining and menu. Every metric here was validated with the client.">
         <div className="flex flex-wrap gap-2">
           {TAGS.map((t) => (
             <button

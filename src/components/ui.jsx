@@ -49,15 +49,17 @@ export function Eyebrow({ children, className }) {
   )
 }
 
-export function PageHero({ eyebrow, title, lede, children, className, align = 'left' }) {
+export function PageHero({ eyebrow, title, lede, children, className, align = 'left', logo = true }) {
   return (
     <section className={cn('relative overflow-hidden pt-36 pb-16 md:pt-44 md:pb-24', className)}>
       <div className="dot-field pointer-events-none absolute inset-0 [mask-image:radial-gradient(60%_60%_at_50%_0%,#000,transparent)]" />
       <div className="mint-glow pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2" />
       <div className={cn('relative mx-auto max-w-7xl px-6', align === 'center' && 'text-center')}>
-        <Reveal>
-          <PyvotLogo className={cn('mb-6 h-6', align === 'center' && 'mx-auto')} />
-        </Reveal>
+        {logo && (
+          <Reveal>
+            <PyvotLogo className={cn('mb-6 h-6', align === 'center' && 'mx-auto')} />
+          </Reveal>
+        )}
         {eyebrow && (
           <Reveal>
             <Eyebrow>{eyebrow}</Eyebrow>
