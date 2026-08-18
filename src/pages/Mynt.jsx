@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import CtaPair from '@/components/CtaPair'
 import HeroDashboard from '@/components/sections/HeroDashboard'
-import { MyntMark } from '@/components/Brand'
+import { MyntMark, PyvotLogo } from '@/components/Brand'
 import { Button, Card, Eyebrow, Reveal, Section, SectionHead, SmartLink } from '@/components/ui'
 import { CONTACT, CTA } from '@/lib/site'
 import { cn } from '@/lib/utils'
@@ -71,6 +71,7 @@ export default function Mynt() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1.05fr_1fr]">
           <div>
             <Reveal>
+              <PyvotLogo className="mb-6 h-6" />
               <Eyebrow>Mynt · product overview</Eyebrow>
             </Reveal>
             <Reveal delay={0.05}>

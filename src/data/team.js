@@ -34,13 +34,22 @@ export const TEAM = [
 ]
 
 export const TECH = [
-  { name: "Deep Chakraborty", role: "Tech Lead", slug: "deep-chakraborty", linkedin: '', quote: '' },
-  { name: "Sakshi Kumari", role: "Software Developer 2", slug: "sakshi-kumari", linkedin: '', quote: '' },
-  { name: "Abhishek Kumar", role: "Software Developer 2", slug: "abhishek-kumar", linkedin: '', quote: '' },
+  { name: "Deep Chakraborty", role: "Tech Lead", slug: "deep-chakraborty", linkedin: "https://www.linkedin.com/in/xelcior/", quote: "Ten-plus years of shipping taught me one thing: the best architecture is the one nobody has to think about at 2 a.m." },
+  { name: "Sakshi Kumari", role: "Software Developer 2", slug: "sakshi-kumari", linkedin: "https://www.linkedin.com/in/sakshi-kumari-dev/", quote: "I turn payout PDFs into pixels that make sense. I have read more Zomato statements than most restaurant owners." },
+  { name: "Abhishek Kumar", role: "Software Developer 2", slug: "abhishek-kumar", linkedin: "https://www.linkedin.com/in/allworkdone/", quote: "MERN by day, edge cases by night. If it isn’t null-safe, it isn’t done." },
+]
+
+const by = (...slugs) => slugs.map((x) => TEAM.find((p) => p.slug === x)).filter(Boolean)
+
+// Our Team, grouped by the kind of work — leads first inside each group
+export const TEAM_SECTIONS = [
+  { title: 'Consulting', people: by('devang-ondhia', 'shadman-ali', 'varun-paul', 'heena-khubani', 'khushi-jaiswal', 'kshitij-murarka', 'sai-chakraborty', 'sayantan-deb', 'shivanshi-trivedi', 'tapas-paul') },
+  { title: 'Analytics', people: by('anagh-pasari', 'keshav-saraf', 'namrata-pareek', 'raahil-baid', 'shreyansh-bardia') },
+  { title: 'Creative & Content', people: by('anish-roy', 'soumyadip-soren', 'ripan-paul', 'abhishek-rana', 'sneha-jajodia') },
 ]
 
 export const GROUPS = [
   { key: 'leadership', label: 'Leadership', people: LEADERSHIP },
-  { key: 'team', label: 'Our Team', people: TEAM },
+  { key: 'team', label: 'Our Team', people: TEAM, sections: TEAM_SECTIONS },
   { key: 'tech', label: 'Tech Team', people: TECH },
 ]

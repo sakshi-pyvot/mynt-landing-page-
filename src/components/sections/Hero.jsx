@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { motion } from 'motion/react'
 import CtaPair from '@/components/CtaPair'
+import { PyvotLogo } from '@/components/Brand'
 import HeroDashboard from './HeroDashboard'
 import { reducedMotion } from '@/lib/utils'
 import { onLoaded } from '@/lib/loaded'
@@ -153,6 +154,7 @@ export default function Hero() {
       <div className="relative mx-auto grid min-h-[calc(100vh-72px)] max-w-7xl items-center gap-10 px-6 py-12 md:grid-cols-[minmax(0,42%)_1fr] md:py-0">
         {/* copy: left, asymmetric */}
         <div className="hero-copy relative z-10">
+          <PyvotLogo className="hero-eyebrow mb-5 h-6" />
           <p className="hero-eyebrow text-xs font-semibold uppercase tracking-[0.3em] text-mint">
             Your restaurant has the data
           </p>

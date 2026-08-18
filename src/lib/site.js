@@ -6,8 +6,8 @@ export const CONTACT = {
   phones: ['+91 98366 66745', '+91 82407 91854'],
   phoneHrefs: ['tel:+919836666745', 'tel:+918240791854'],
   whatsapp: 'https://wa.me/919836666745',
-  address: ['Arch Square X2, 3rd Floor', 'EP-Y1, Sector V, Bidhannagar', 'Kolkata, West Bengal 700091'],
-  maps: 'https://www.google.com/maps/search/?api=1&query=Arch+Square+X2+EP-Y1+Sector+V+Bidhannagar+Kolkata+700091',
+  address: ['5th Floor, Ergo Tower', 'Plot No. A1-4, Block EP & GP', 'Street Number 23, GP Block, Sector V', 'Bidhannagar, Salt Lake City, Kolkata', 'West Bengal 700091, India'],
+  maps: 'https://www.google.com/maps/search/?api=1&query=Ergo+Tower+Plot+A1-4+Block+EP+GP+Street+23+Sector+V+Salt+Lake+Kolkata+700091',
 }
 
 export const SOCIALS = [

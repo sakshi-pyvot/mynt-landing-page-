@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { cn } from '@/lib/utils'
+import { PyvotLogo } from './Brand'
 
 // Small shared primitives for inner pages. Kept deliberately thin — the landing
 // sections own their own visuals; these only give the inner pages one voice.
@@ -54,6 +55,9 @@ export function PageHero({ eyebrow, title, lede, children, className, align = 'l
       <div className="dot-field pointer-events-none absolute inset-0 [mask-image:radial-gradient(60%_60%_at_50%_0%,#000,transparent)]" />
       <div className="mint-glow pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2" />
       <div className={cn('relative mx-auto max-w-7xl px-6', align === 'center' && 'text-center')}>
+        <Reveal>
+          <PyvotLogo className={cn('mb-6 h-6', align === 'center' && 'mx-auto')} />
+        </Reveal>
         {eyebrow && (
           <Reveal>
             <Eyebrow>{eyebrow}</Eyebrow>

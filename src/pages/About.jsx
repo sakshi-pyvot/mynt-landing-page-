@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import CtaPair from '@/components/CtaPair'
 import { HeroMosaic, TeamGrid } from '@/components/TeamCards'
+import { PyvotLogo } from '@/components/Brand'
 import { Button, Card, Eyebrow, Reveal, Section, SectionHead, SmartLink } from '@/components/ui'
 import { GROUPS, LEADERSHIP, TEAM } from '@/data/team'
 
@@ -84,6 +85,7 @@ export default function About() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1.05fr_1fr]">
           <div>
             <Reveal>
+              <PyvotLogo className="mb-6 h-6" />
               <Eyebrow>About Pyvot</Eyebrow>
             </Reveal>
             <Reveal delay={0.05}>
@@ -170,6 +172,15 @@ export default function About() {
       <Section id="team">
         <SectionHead eyebrow="Our team" title="Operators, analysts, strategists, creators, engineers — people who have sat on both sides of the pass." lede="Hover a card for what they believe. Leaders open to a full bio." />
         <TeamGrid groups={GROUPS} />
+        <Reveal className="mt-16">
+          <figure className="relative overflow-hidden rounded-3xl border border-line/70">
+            <img src="/team/pyvot-team.jpg" alt="The Pyvot team at the Kolkata office" loading="lazy" className="block aspect-[3/2] w-full object-cover md:aspect-[21/9]" />
+            <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-bg via-bg/60 to-transparent p-6 pt-20 text-sm">
+              <span className="font-medium text-ink">The whole team, Kolkata office.</span>
+              <span className="text-mute">Sector V · Salt Lake</span>
+            </figcaption>
+          </figure>
+        </Reveal>
       </Section>
 
       {/* why us */}

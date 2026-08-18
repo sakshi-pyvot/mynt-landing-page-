@@ -107,15 +107,13 @@ export function HeroMosaic({ people }) {
   )
 }
 
-function PersonCard({ p, open = false, onOpen }) {
+function PersonCard({ p, index = 0, open = false, onOpen }) {
   const clickable = !!p.bio
   return (
     <motion.div
-      layout
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: Math.min(index, 11) * 0.04 }}
       className={cn('group relative', clickable && 'cursor-pointer')}
       onClick={clickable ? onOpen : undefined}
       role={clickable ? 'button' : undefined}
@@ -173,13 +171,34 @@ export function TeamGrid({ groups }) {
         ))}
       </div>
 
-      <motion.div layout className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" role="tabpanel">
-        <AnimatePresence mode="popLayout">
-          {g.people.map((p) => (
-            <PersonCard key={`${g.key}-${p.slug}`} p={p} open={openSlug === p.slug} onOpen={() => setOpenSlug(openSlug === p.slug ? null : p.slug)} />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={g.key}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.3 }}
+          role="tabpanel"
+          className="mt-8 space-y-12"
+        >
+          {(g.sections || [{ title: null, people: g.people }]).map((sec) => (
+            <div key={sec.title || g.key}>
+              {sec.title && (
+                <div className="mb-5 flex items-center gap-4">
+                  <h3 className="text-[11px] font-semibold uppercase tracking-[0.24em] text-mint">{sec.title}</h3>
+                  <span className="h-px flex-1 bg-line/60" aria-hidden />
+                  <span className="font-mono text-[10px] text-mute">{sec.people.length}</span>
+                </div>
+              )}
+              <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+                {sec.people.map((p, i) => (
+                  <PersonCard key={p.slug} p={p} index={i} open={openSlug === p.slug} onOpen={() => setOpenSlug(openSlug === p.slug ? null : p.slug)} />
+                ))}
+              </div>
+            </div>
           ))}
-        </AnimatePresence>
-      </motion.div>
+        </motion.div>
+      </AnimatePresence>
 
       {/* bio drawer (leadership) */}
       <AnimatePresence>
