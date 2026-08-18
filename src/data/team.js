@@ -50,6 +50,6 @@ export const TEAM_SECTIONS = [
 
 export const GROUPS = [
   { key: 'leadership', label: 'Leadership', people: LEADERSHIP },
-  { key: 'team', label: 'Our Team', people: TEAM, sections: TEAM_SECTIONS },
+  ...TEAM_SECTIONS.map((s) => ({ key: s.title.toLowerCase().replace(/[^a-z]+/g, '-'), label: s.title, people: s.people })),
   { key: 'tech', label: 'Tech Team', people: TECH },
 ]
