@@ -121,6 +121,14 @@ export default function Contact() {
   const intent = INTENTS.some((i) => i.key === q) ? q : 'mynt'
   const active = INTENTS.find((i) => i.key === intent)
 
+  // deep links like /contact?intent=mynt land on the form, not the page top
+  useEffect(() => {
+    if (!q) return
+    const t = setTimeout(() => document.getElementById('contact-tracks')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 350)
+    return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   useEffect(() => {
     const updateTime = () => {
       const now = new Date()
