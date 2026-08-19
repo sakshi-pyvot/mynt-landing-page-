@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'motion/react'
-import { Button, GlowCard, PageHero, Section } from '@/components/ui'
+import { Button, Eyebrow, GlowCard, Reveal, Section } from '@/components/ui'
+import ContactHeroVideo from '@/components/sections/ContactHeroVideo'
 import { CONTACT, SOCIALS } from '@/lib/site'
 import { submitForm, STATUS_TEXT } from '@/lib/forms'
 import { cn } from '@/lib/utils'
@@ -102,6 +103,12 @@ const INTENTS = [
   },
 ]
 
+const PROOF = [
+  { value: '< 2hr', label: 'Weekday reply' },
+  { value: '100+', label: 'Restaurant brands' },
+  { value: 'Direct', label: 'No ticket queue' },
+]
+
 export default function Contact() {
   const [params, setParams] = useSearchParams()
   const [status, setStatus] = useState('idle')
@@ -134,6 +141,7 @@ export default function Contact() {
     setStatus('idle')
     setFormValues({})
     setParams({ intent: k }, { replace: true })
+    document.getElementById('contact-tracks')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   const handleFieldChange = (name, val) => {
@@ -165,25 +173,54 @@ export default function Contact() {
 
   return (
     <>
-      <PageHero
-        logo={false}
-        eyebrow="Contact & Demo Desk"
-        title={
-          <>
-            Direct access to our <span className="text-gradient">restaurant team.</span>
-          </>
-        }
-        lede="No generic ticket queues. Select the exact track you need, and your message is routed immediately to the lead operator or engineer."
-      >
-        <div className="inline-flex items-center gap-3 rounded-full border border-mint/30 bg-mint/5 px-4 py-2 text-xs font-mono text-mint backdrop-blur-sm">
-          <span className="h-2 w-2 rounded-full bg-mint animate-pulse" />
-          <span>Priority Dispatch · Average Response Time: &lt; 2 Hours (Weekdays)</span>
+      <section className="relative overflow-hidden pt-36 pb-16 md:pt-44 md:pb-20">
+        <div className="dot-field pointer-events-none absolute inset-0 [mask-image:radial-gradient(60%_60%_at_50%_0%,#000,transparent)]" />
+        <div className="mint-glow pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2" />
+        <div className="pointer-events-none absolute -left-32 top-1/3 h-[400px] w-[400px] rounded-full bg-mint/[0.06] blur-[100px]" aria-hidden />
+
+        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:gap-20">
+          <Reveal className="order-2 lg:order-1">
+            <ContactHeroVideo />
+          </Reveal>
+
+          <div className="order-1 lg:order-2">
+            <Reveal>
+              <Eyebrow>Contact & Demo Desk</Eyebrow>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h1 className="mt-5 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
+                Direct access to our <span className="text-gradient">restaurant team.</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-6 max-w-lg text-lg leading-relaxed text-mute">
+                No generic ticket queues. Select the exact track you need, and your message is routed immediately to the lead operator or engineer.
+              </p>
+            </Reveal>
+            <Reveal delay={0.15} className="mt-8 flex flex-wrap gap-3">
+              {PROOF.map((p) => (
+                <div key={p.label} className="rounded-2xl border border-line/60 bg-card/40 px-4 py-3 backdrop-blur-sm">
+                  <div className="font-mono text-lg font-bold text-mint">{p.value}</div>
+                  <div className="mt-0.5 text-[11px] uppercase tracking-wider text-mute">{p.label}</div>
+                </div>
+              ))}
+            </Reveal>
+            <Reveal delay={0.2} className="mt-6">
+              <div className="inline-flex items-center gap-3 rounded-full border border-mint/30 bg-mint/5 px-4 py-2 font-mono text-xs text-mint backdrop-blur-sm">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-mint" />
+                </span>
+                <span>Priority dispatch · &lt; 2 hour reply on weekdays</span>
+              </div>
+            </Reveal>
+          </div>
         </div>
-      </PageHero>
+      </section>
 
       <Section tight className="pt-0">
         {/* Intent Tabs Grid */}
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4" role="tablist" aria-label="Intent Track Selector">
+        <div id="contact-tracks" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 scroll-mt-28" role="tablist" aria-label="Intent Track Selector">
           {INTENTS.map((i) => {
             const isSelected = intent === i.key
             return (
