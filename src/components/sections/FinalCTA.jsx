@@ -1,6 +1,7 @@
 import { motion } from 'motion/react'
 import CtaPair from '@/components/CtaPair'
 import { PyvotLogo } from '@/components/Brand'
+import SocialLinks from '@/components/SocialLinks'
 import NetworkCanvas from './NetworkCanvas'
 
 function PulseRings() {
@@ -34,6 +35,7 @@ export default function FinalCTA() {
           <span className="text-gradient block">Mynt helps you see them.</span>
         </h2>
         <CtaPair size="lg" className="pointer-events-auto mt-10 justify-center" />
+        <SocialLinks size="sm" className="pointer-events-auto mt-8 justify-center" />
         <p className="mt-6 text-xs uppercase tracking-[0.25em] text-mute">
           Built from real restaurant operations<span className="hidden md:inline"> · move your cursor</span>
         </p>

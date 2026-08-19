@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Button, GlowCard, PageHero, Reveal, Section, SectionHead } from '@/components/ui'
 import { submitForm, STATUS_TEXT } from '@/lib/forms'
+import SocialLinks from '@/components/SocialLinks'
 import { cn } from '@/lib/utils'
 
 const BUILDING = [

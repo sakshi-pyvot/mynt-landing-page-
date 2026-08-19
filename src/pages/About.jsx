@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import SocialLinks from '@/components/SocialLinks'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import CtaPair from '@/components/CtaPair'
@@ -172,6 +173,7 @@ export default function About() {
       <Section id="team">
         <SectionHead eyebrow="Our team" title="Operators, analysts, strategists, creators, engineers — people who have sat on both sides of the pass." lede="Hover or tap a card for what they believe. Leaders open to a full bio." />
         <TeamGrid groups={GROUPS} />
+        <SocialLinks size="sm" className="mt-10" />
         <Reveal className="mt-16">
           <figure className="relative overflow-hidden rounded-3xl border border-line/70">
             <img src="/team/pyvot-team.jpg" alt="The Pyvot team at the Kolkata office" loading="lazy" className="block aspect-[3/2] w-full object-cover md:aspect-[21/9]" />

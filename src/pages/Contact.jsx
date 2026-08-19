@@ -3,7 +3,8 @@ import { useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { Button, Eyebrow, GlowCard, Reveal, Section } from '@/components/ui'
 import ContactHeroVideo from '@/components/sections/ContactHeroVideo'
-import { CONTACT, SOCIALS } from '@/lib/site'
+import { CONTACT } from '@/lib/site'
+import SocialLinks from '@/components/SocialLinks'
 import { submitForm, STATUS_TEXT } from '@/lib/forms'
 import { cn } from '@/lib/utils'
 
@@ -477,19 +478,7 @@ export default function Contact() {
             {/* Social Network Hub */}
             <GlowCard className="p-6">
               <div className="font-mono text-[10px] uppercase tracking-widest text-mint">Follow Pyvot</div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {SOCIALS.filter((s) => s.key === 'instagram' || s.key === 'linkedin').map((s) => (
-                  <a
-                    key={s.key}
-                    href={s.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full border border-line bg-card/80 px-3.5 py-1.5 font-mono text-xs text-mute hover:border-mint/60 hover:text-mint transition-all"
-                  >
-                    {s.label} ↗
-                  </a>
-                ))}
-              </div>
+              <SocialLinks variant="pills" className="mt-3" />
             </GlowCard>
           </div>
         </div>
