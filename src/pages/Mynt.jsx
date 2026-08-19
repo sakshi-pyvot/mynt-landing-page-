@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import CtaPair from '@/components/CtaPair'
 import HeroDashboard from '@/components/sections/HeroDashboard'
+import TrustSecuritySection from '@/components/sections/TrustSecuritySection'
 import { MyntMark, PyvotLogo } from '@/components/Brand'
 import { Button, Card, Eyebrow, Reveal, Section, SectionHead, SmartLink } from '@/components/ui'
-import { CONTACT, CTA } from '@/lib/site'
+import { CTA } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
 const SOURCES = [
@@ -36,14 +37,7 @@ const ROLES = [
   { key: 'Restaurant manager', headline: 'Your outlet, one screen.', body: 'What sold, what refunded, what discount is eating margin — for your outlet only, no noise from the rest.', points: ['Outlet-scoped view', 'Daily digest', 'Ask Mynt in plain language'], shot: 'overview' },
 ]
 
-const TRUST = [
-  { t: 'Data access', d: 'Mynt reads platform reports, payout statements and the data you connect. Where a source supports read-only access, that is what we ask for — never more scope than the feature needs.' },
-  { t: 'Authentication', d: 'Email + OTP sign-in, per-user accounts and session controls. Access can be revoked by your workspace admin at any time.' },
-  { t: 'Encryption & infrastructure', d: 'Data is encrypted in transit (TLS) and at rest on managed cloud infrastructure. Environments are separated; production access is restricted to named engineers.' },
-  { t: 'Access controls', d: 'Workspace, brand and outlet-level roles. A restaurant manager sees their outlet; finance sees payouts; owners see everything.' },
-  { t: 'Retention & deletion', d: 'Your data stays yours. Disconnect a source and ingestion stops immediately; request export or deletion and we complete it and confirm in writing.' },
-  { t: 'AI data handling', d: 'Mynt AI answers from your workspace data only. Your data is not used to train shared models and is never shown to another customer.' },
-]
+
 
 const PROOF = [
   { brand: 'Koshe Kosha', metric: '+7 pp', label: 'net margin', body: 'Smart discounts and ROI-first ads reclaimed profitability.', slug: 'koshe-kosha' },
@@ -233,31 +227,7 @@ export default function Mynt() {
       </Section>
 
       {/* trust & security */}
-      <Section id="trust">
-        <div className="rounded-3xl border border-line/70 bg-surface/60 p-6 md:p-12">
-          <SectionHead eyebrow="Trust & Security" title="Restaurant data deserves enterprise-grade care." lede="Least privilege, secure access, clear controls. Here is how Mynt handles the financial, email and operational data you connect — stated plainly, with nothing implied that isn't in place." />
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {TRUST.map((t, i) => (
-              <Reveal key={t.t} delay={(i % 3) * 0.05}>
-                <Card className="h-full bg-card/40">
-                  <h3 className="font-semibold">{t.t}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-mute">{t.d}</p>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-          <div className="mt-8 flex flex-col gap-4 rounded-2xl border border-line/60 bg-bg/40 p-6 md:flex-row md:items-center md:justify-between">
-            <div>
-              <div className="font-semibold">Compliance roadmap</div>
-              <p className="mt-1 text-sm text-mute">Formal certifications are listed here only once achieved. For a security questionnaire, a data-processing note or a deletion request, write to us.</p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <Button to={`mailto:${CONTACT.email}?subject=Mynt%20security`} variant="ghost" size="sm">Contact security</Button>
-              <Button to={`mailto:${CONTACT.email}?subject=Mynt%20data%20deletion%20request`} variant="ghost" size="sm">Request deletion</Button>
-            </div>
-          </div>
-        </div>
-      </Section>
+      <TrustSecuritySection />
 
       {/* pricing teaser */}
       <Section id="pricing" tight>

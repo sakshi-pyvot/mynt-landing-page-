@@ -1,155 +1,454 @@
 import { useState } from 'react'
-import { Button, Card, Field, PageHero, Reveal, Section, SectionHead } from '@/components/ui'
-import { CONTACT } from '@/lib/site'
+import { Button, GlowCard, PageHero, Reveal, Section, SectionHead } from '@/components/ui'
 import { submitForm, STATUS_TEXT } from '@/lib/forms'
 import { cn } from '@/lib/utils'
 
 const BUILDING = [
-  ['Mynt', 'A SaaS platform at the intersection of fintech, data intelligence and food-tech: payout parsing, reconciliation, anomaly detection, LLM summaries, recommendations.'],
-  ['Growth infrastructure', 'Benchmarks, playbooks and operating rhythms that turn one brand’s win into a repeatable system for hundreds.'],
-  ['Expert services', 'Marketplace, dining and social programmes run hands-on with restaurant operators across India.'],
+  {
+    title: 'Mynt — The Restaurant Intelligence Layer',
+    badge: 'SAAS PRODUCT',
+    d: 'A unified financial and intelligence platform: automated statement ingestion, P&L reconciliation, deduction waterfalls, anomaly detection, and LLM-driven driver analysis.',
+    tags: ['React 19', 'Vite', 'FastAPI', 'PostgreSQL', 'LLM Agentic RAG'],
+  },
+  {
+    title: 'Growth & Margin Operating System',
+    badge: 'SCALE INFRASTRUCTURE',
+    d: 'Data benchmarks, bid algorithms, and weekly operating rhythms that turn one outlet’s profitability breakthrough into a repeatable blueprint for 250+ brands.',
+    tags: ['ROAS Algorithms', 'Discount Optimization', 'Benchmark Ledgers'],
+  },
+  {
+    title: 'Hands-On Operator Advisory',
+    badge: 'MARKETPLACE EXPERTS',
+    d: 'Direct execution on Zomato, Swiggy, and dining channels. We visit kitchen floors, analyze delivery radiuses, and run menu experiments directly with founders.',
+    tags: ['Aggregator Growth', 'Dining Experience', 'Unit Economics'],
+  },
 ]
 
-const HOW = [
-  ['Own the outcome', 'You take a number, not a task. If the number doesn’t move, the task didn’t matter.'],
-  ['Stay close to the restaurant', 'Consultants visit kitchens. Engineers read payout statements. Everyone knows what a Friday dinner rush costs.'],
-  ['Data beats opinion', 'Bring the chart. Loud is not the same as right.'],
-  ['Move with urgency', 'Weekly cadence, small bets, ship and learn.'],
-  ['Craft matters', 'The menu description, the SQL, the slide — done properly or not at all.'],
+const PRINCIPLES = [
+  {
+    title: 'Own the Outcome, Not the Ticket',
+    desc: 'You take a business metric (net margin, ingestion accuracy, ROAS), not a generic task. If the number doesn’t move, the code or slide didn’t matter.',
+    quote: '“Measure on rupees moved, not tickets closed.”',
+  },
+  {
+    title: 'Stay Close to the Kitchen Pass',
+    desc: 'Consultants visit kitchens; engineers inspect real aggregator PDF statements. Everyone on the team knows what a Friday dinner rush and a 20% platform deduction feels like.',
+    quote: '“Software built for operators by people who know service hours.”',
+  },
+  {
+    title: 'Data & Charts Beat Opinion',
+    desc: 'Bring the structured query and the distribution chart. Loudness is never a substitute for empirical evidence.',
+    quote: '“If we have data, let’s look at data. If all we have are opinions, let’s go with data.”',
+  },
+  {
+    title: 'High-Velocity Cadence',
+    desc: 'Weekly ship cycles, short feedback loops, rapid prototype validation. A week lost in food-tech is a week you never get back.',
+    quote: '“Ship, test with 5 brands on Monday, deploy to 250 by Friday.”',
+  },
+  {
+    title: 'Obsessive Craft in the Details',
+    desc: 'From a micro-interaction on a dashboard tile to SQL indexing and copy nuance — either done properly or not at all.',
+    quote: '“The details are not the details. They make the product.”',
+  },
 ]
 
 const ROLES = [
   {
-    title: 'Head of Engineering',
+    id: 'senior-full-stack',
+    title: 'Senior Full Stack Software Developer',
     fn: 'Engineering',
-    loc: 'Kolkata · Work from office',
-    type: 'Full-time · 5+ yrs',
-    summary: 'A hands-on, product-first engineering leader to own Mynt’s architecture and take the platform from 0→1 with the founders. Full-stack + leadership; ESOPs included.',
-    bullets: ['Own end-to-end architecture: backend, APIs, data, dashboards', 'Secure pipelines that fetch, parse and reconcile Zomato/Swiggy payout statements', 'AI layer: anomaly detection, discrepancy identification, LLM summarisation', 'Hire, mentor and run a growing engineering + data team'],
+    loc: 'Kolkata (Work from Office)',
+    type: 'Full-time',
+    equity: 'CTC: ₹18–30 LPA · ESOPs Included',
+    summary: 'We’re looking for a top-tier Senior Full Stack Software Developer to take complete ownership of the product — from creating the user interface to managing the complex data running behind the scenes. You’ll be the trusted technical owner of our software, making key design decisions and building features from start to finish.',
+    aiFirst: 'AI-First Engineering Team: We actively use Cursor, Claude, and Gemini to code smarter, boosting team efficiency by 3–5x!',
+    tech: ['Node.js', 'React', 'PostgreSQL', 'AWS', 'Cursor / Claude / Gemini'],
+    bullets: [
+      'Take complete technical ownership of the product from UI to complex data running behind the scenes',
+      'Make key architecture and system design decisions, building features from start to finish',
+      'Work in an AI-first engineering environment (Cursor, Claude, Gemini) to ship 3–5x faster',
+      'Build scalable backend services in Node.js, design PostgreSQL schemas, and deploy on AWS cloud',
+    ],
   },
 ]
 
-const PROCESS = ['Application', 'Conversation', 'Assessment (role-dependent)', 'Team / founder round', 'Decision']
+const PROCESS_STEPS = [
+  {
+    step: '01',
+    title: 'Application & Profile Review',
+    duration: '24–48 Hours',
+    desc: 'We review what you’ve built and shipped. A live GitHub, portfolio, or code walkthrough matters far more than a corporate resume.',
+  },
+  {
+    step: '02',
+    title: 'First Alignment Conversation',
+    duration: '30 Minutes · In-Person/Video',
+    desc: 'An informal discussion with the founders to understand your technical philosophy, problem-solving approach, and ambition.',
+  },
+  {
+    step: '03',
+    title: 'Practical Technical Assessment',
+    duration: 'Hands-on / Take-Home',
+    desc: 'A real-world engineering challenge you’d solve at Pyvot — architecting an end-to-end full-stack feature using modern tools.',
+  },
+  {
+    step: '04',
+    title: 'Team & In-Office Deep Dive',
+    duration: '60 Minutes · Kolkata Office',
+    desc: 'Meet the engineering team at our Sector V office, discuss system trade-offs, review architecture, and experience our work culture.',
+  },
+  {
+    step: '05',
+    title: 'Formal Offer & Roadmap',
+    duration: 'Within 48 Hours',
+    desc: 'Competitive compensation (₹18–30 LPA), ESOPs allocation, top-spec hardware setup, and your immediate milestone roadmap.',
+  },
+]
 
 export default function Join() {
+  const [selectedRole, setSelectedRole] = useState(ROLES[0].title)
   const [status, setStatus] = useState('idle')
+
+  const handleApplyClick = (roleTitle) => {
+    setSelectedRole(roleTitle)
+    const formEl = document.getElementById('apply')
+    if (formEl) {
+      formEl.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault()
     const form = e.currentTarget
-    const role = new FormData(form).get('role') || 'General'
+    const role = new FormData(form).get('role') || 'General Application'
     setStatus('sending')
-    setStatus(await submitForm(form, `Application — ${role}`))
-    if (form.isConnected) form.reset()
+    const res = await submitForm(form, `Application — ${role}`)
+    setStatus(res)
+    if (res === 'sent' && form.isConnected) {
+      form.reset()
+      setSelectedRole('')
+    }
   }
 
   return (
     <>
-      <PageHero eyebrow="Join Us" title={<>Build the intelligence layer <span className="text-gradient">for restaurants.</span></>} lede="Small team, real problems, visible results. We work from Kolkata with restaurant brands across India — and we are building the software category we wished existed.">
-        <div className="flex flex-wrap gap-3">
-          <Button to="#open-positions">View open roles</Button>
-          <Button to="#why-join" variant="ghost">Why join us</Button>
+      {/* Animated Careers Hero */}
+      <PageHero
+        eyebrow="Join the Pyvot Team"
+        title={
+          <>
+            Build the intelligence layer for <span className="text-gradient">250+ restaurant brands.</span>
+          </>
+        }
+        lede="We are operators, engineers, and growth strategists solving one of the largest unorganized data problems in food-tech. Based in Sector V, Kolkata — working with top culinary brands across India."
+      >
+        <div className="flex flex-wrap items-center gap-3">
+          <Button to="#open-positions" size="lg">
+            View Open Positions ({ROLES.length})
+          </Button>
+          <Button to="#why-join" variant="ghost" size="lg">
+            Why Join Pyvot ↓
+          </Button>
         </div>
       </PageHero>
 
-      <Section id="why-join" tight>
-        <SectionHead eyebrow="Why join us" title="What we’re building, and how we work." />
-        <div className="grid gap-4 md:grid-cols-3">
-          {BUILDING.map(([t, d], i) => (
-            <Reveal key={t} delay={i * 0.05}>
-              <Card className="h-full">
-                <h3 className="text-lg font-semibold">{t}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-mute">{d}</p>
-              </Card>
+      {/* What We're Building (Bento Grid) */}
+      <Section id="why-join" tight className="pt-0">
+        <SectionHead
+          eyebrow="Our Mission & Focus"
+          title="What we are building every day."
+          lede="Three interconnected pillars powering restaurant growth from the ground up."
+        />
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {BUILDING.map((b, i) => (
+            <Reveal key={b.title} delay={i * 0.08}>
+              <GlowCard className="h-full p-7 flex flex-col justify-between">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-mint border border-mint/30 bg-mint/5 px-2.5 py-0.5 rounded">
+                    {b.badge}
+                  </span>
+                  <h3 className="mt-4 text-xl font-bold text-ink">{b.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-mute">{b.d}</p>
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-1.5 pt-4 border-t border-line/60">
+                  {b.tags.map((tag) => (
+                    <span key={tag} className="rounded-md bg-bg/80 border border-line/80 px-2 py-0.5 font-mono text-[11px] text-mute">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </GlowCard>
             </Reveal>
           ))}
         </div>
-        <ul className="mt-12 divide-y divide-line/60 border-y border-line/60" role="list">
-          {HOW.map(([t, d], i) => (
-            <Reveal key={t} as="li" delay={i * 0.04} className="grid gap-2 py-5 sm:grid-cols-[260px_1fr]">
-              <span className="font-semibold">{t}</span>
-              <span className="text-sm text-mute">{d}</span>
+      </Section>
+
+      {/* Operating Principles / How We Work */}
+      <Section tight>
+        <SectionHead
+          eyebrow="Culture & Philosophy"
+          title="How we work: the five operating tenets."
+          lede="We keep teams lean, high-autonomy, and obsessed with practical impact."
+        />
+
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {PRINCIPLES.map((p, i) => (
+            <Reveal key={p.title} delay={i * 0.05}>
+              <GlowCard className="h-full p-6 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-bold text-mint">0{i + 1}</span>
+                    <span className="h-2 w-2 rounded-full bg-mint" />
+                  </div>
+                  <h3 className="mt-3 text-base font-bold text-ink">{p.title}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-mute">{p.desc}</p>
+                </div>
+
+                <blockquote className="mt-4 rounded-xl border border-line/60 bg-bg/50 p-3 font-mono text-[11px] text-mint italic">
+                  {p.quote}
+                </blockquote>
+              </GlowCard>
             </Reveal>
           ))}
-        </ul>
+        </div>
+
+        {/* Perks & Life at Pyvot */}
         <div className="mt-12 grid gap-4 sm:grid-cols-3">
           {[
-            ['Life at Pyvot', 'Client workshops, restaurant visits, shoot days, product reviews. Fewer meetings than you fear, more field time than you expect.'],
-            ['Compensation', 'Competitive, with ESOPs for early roles. We hire for ownership and pay like it.'],
-            ['Where', 'Sector V, Kolkata. Work from office — restaurants are not remote, and neither are we.'],
-          ].map(([t, d]) => (
-            <div key={t} className="rounded-2xl border border-line/60 p-6">
-              <div className="font-semibold">{t}</div>
-              <p className="mt-2 text-sm text-mute">{d}</p>
+            {
+              t: 'Real Industry Exposure',
+              d: 'Client food tastings, restaurant visits, kitchen walkthroughs, and executive reviews. You learn how F&B businesses really make money.',
+            },
+            {
+              t: 'Ownership & ESOPs',
+              d: 'We believe early team members should share directly in the enterprise value we create. Competitive cash + equity pools for key contributors.',
+            },
+            {
+              t: 'Kolkata HQ (Sector V)',
+              d: 'Fast-paced, in-person collaboration. Restaurants operate on real-world energy, and we thrive being in the same room together.',
+            },
+          ].map((item) => (
+            <div key={item.t} className="rounded-2xl border border-line/70 bg-card/50 p-6">
+              <div className="font-bold text-sm text-ink">{item.t}</div>
+              <p className="mt-2 text-xs leading-relaxed text-mute">{item.d}</p>
             </div>
           ))}
         </div>
       </Section>
 
+      {/* Interactive Vertical Hiring Process Timeline */}
+      <Section tight id="hiring-process">
+        <SectionHead
+          eyebrow="Hiring Process"
+          title="Transparent, fast & respectful of your time."
+          lede="Typically 2 weeks from first application to formal offer. You receive clear feedback at every step."
+        />
+
+        <div className="relative mx-auto max-w-3xl">
+          {/* Vertical progress line */}
+          <div className="absolute left-6 top-6 bottom-6 hidden w-0.5 bg-gradient-to-b from-mint via-mint/40 to-line md:block" />
+
+          <div className="space-y-6">
+            {PROCESS_STEPS.map((step, idx) => (
+              <Reveal key={step.step} delay={idx * 0.06}>
+                <div className="relative flex flex-col md:flex-row md:items-start gap-5 rounded-2xl border border-line/70 bg-card/60 p-6 md:pl-16 transition-all hover:border-mint/50">
+                  {/* Step bubble */}
+                  <div className="flex md:absolute md:left-2.5 md:top-6 h-7 w-7 shrink-0 items-center justify-center rounded-full border border-mint bg-bg font-mono text-xs font-bold text-mint shadow-[0_0_15px_rgba(47,211,154,0.3)]">
+                    {step.step}
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                      <h3 className="text-base font-bold text-ink">{step.title}</h3>
+                      <span className="font-mono text-xs text-mint bg-mint/10 border border-mint/20 px-2.5 py-0.5 rounded-full w-fit">
+                        {step.duration}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-xs leading-relaxed text-mute">{step.desc}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Open Positions */}
       <Section id="open-positions">
-        <SectionHead eyebrow="Open positions" title="Roles open right now." lede="Don’t see yours? Send a general application below — we hire strong people before we write the job description." />
-        <div className="space-y-4">
+        <SectionHead
+          eyebrow="Active Openings (1)"
+          title="Senior Full Stack Software Developer"
+          lede="We’re looking for a top-tier engineer to take complete ownership of the Mynt product from user interface to data infrastructure."
+        />
+
+        {/* Single Featured Role Card */}
+        <div className="space-y-6">
           {ROLES.map((r) => (
-            <Card key={r.title} className="p-8">
-              <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                <div className="max-w-2xl">
-                  <div className="flex flex-wrap gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-mute">
-                    <span className="text-mint">{r.fn}</span>
+            <GlowCard key={r.id} className="p-7 md:p-10 border-mint/40 bg-gradient-to-b from-card/90 to-surface/90">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+                <div className="max-w-3xl">
+                  <div className="flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-mute">
+                    <span className="text-mint font-bold bg-mint/10 border border-mint/30 px-2.5 py-0.5 rounded">{r.fn}</span>
                     <span>·</span>
                     <span>{r.loc}</span>
                     <span>·</span>
                     <span>{r.type}</span>
+                    <span>·</span>
+                    <span className="text-grape font-bold">{r.equity}</span>
                   </div>
-                  <h3 className="mt-2 text-2xl font-bold">{r.title}</h3>
-                  <p className="mt-2 text-mute">{r.summary}</p>
-                  <ul className="mt-4 space-y-1.5 text-sm text-ink/85" role="list">
-                    {r.bullets.map((b) => (
-                      <li key={b} className="flex gap-3">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-mint" aria-hidden />
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
+
+                  <h3 className="mt-3 text-2xl md:text-3xl font-bold text-ink">{r.title}</h3>
+                  <p className="mt-3 text-sm md:text-base leading-relaxed text-mute">{r.summary}</p>
+
+                  {/* AI First Banner */}
+                  <div className="mt-4 rounded-xl border border-mint/30 bg-mint/5 p-3.5 font-mono text-xs text-mint flex items-start gap-2.5">
+                    <span className="text-base">🤖</span>
+                    <div>
+                      <span className="font-bold text-ink block mb-0.5">AI-First Engineering Culture</span>
+                      <span>{r.aiFirst}</span>
+                    </div>
+                  </div>
+
+                  {/* Tech stack badges */}
+                  <div className="mt-5">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-mute block mb-2">Tech Stack:</span>
+                    <div className="flex flex-wrap gap-2">
+                      {r.tech.map((t) => (
+                        <span key={t} className="rounded-lg bg-bg/90 border border-line px-3 py-1 font-mono text-xs text-ink font-medium">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bullet points */}
+                  <div className="mt-6">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-mute block mb-2">Key Responsibilities & Ownership:</span>
+                    <ul className="space-y-2 text-xs md:text-sm text-ink/90" role="list">
+                      {r.bullets.map((b) => (
+                        <li key={b} className="flex items-start gap-2.5">
+                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-mint" />
+                          <span className="leading-relaxed">{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <Button to="#apply" className="shrink-0">Apply</Button>
+
+                <div className="flex flex-col items-start lg:items-end gap-3 shrink-0 lg:pt-2">
+                  <Button onClick={() => handleApplyClick(r.title)} size="lg" className="w-full sm:w-auto">
+                    Apply for this Role →
+                  </Button>
+                  <span className="font-mono text-[11px] text-mute">Immediate hire · Sector V Kolkata</span>
+                </div>
               </div>
-            </Card>
+            </GlowCard>
           ))}
         </div>
 
-        {/* process */}
-        <div className="mt-14">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-mute">Hiring process</div>
-          <ol className="mt-4 flex flex-wrap items-center gap-2 text-sm" role="list">
-            {PROCESS.map((p, i) => (
-              <li key={p} className="flex items-center gap-2">
-                <span className="rounded-full border border-line px-3 py-1.5">{p}</span>
-                {i < PROCESS.length - 1 && <span className="text-mint" aria-hidden>→</span>}
-              </li>
-            ))}
-          </ol>
-          <p className="mt-3 text-xs text-mute">Typically two to three weeks from application to decision. You will hear back at every step.</p>
-        </div>
-
-        {/* application */}
-        <div id="apply" className="mt-14 grid gap-10 lg:grid-cols-[1fr_1.4fr]">
+        {/* Application Form */}
+        <div id="apply" className="mt-16 grid gap-10 lg:grid-cols-[1fr_1.4fr]">
           <div>
-            <h3 className="text-2xl font-bold">Apply</h3>
-            <p className="mt-3 text-mute">Tell us what you have built or grown, and why restaurants. A LinkedIn or portfolio link does more than a long cover letter.</p>
-            <p className="mt-6 text-sm text-mute">Prefer email? <a href={`mailto:${CONTACT.email}?subject=Application`} className="text-mint">{CONTACT.email}</a></p>
+            <span className="font-mono text-xs uppercase tracking-widest text-mint">Direct Application</span>
+            <h3 className="mt-1 text-2xl font-bold text-ink">Apply for Senior Full Stack Developer</h3>
+            <p className="mt-3 text-sm leading-relaxed text-mute">
+              Tell us what you have built or shipped end-to-end. A live GitHub repo, portfolio, or code walkthrough link is best.
+            </p>
+            <div className="mt-6 rounded-2xl border border-line/70 bg-card/40 p-5 space-y-2">
+              <span className="font-mono text-xs font-semibold text-mint block">Direct hiring inbox:</span>
+              <div className="space-y-1 font-mono text-xs text-ink">
+                <div><a href="mailto:career@pyvot.in" className="hover:text-mint transition-colors">career@pyvot.in</a></div>
+                <div><a href="mailto:anirudh@pyvot.in" className="hover:text-mint transition-colors">anirudh@pyvot.in</a></div>
+              </div>
+            </div>
           </div>
-          <form onSubmit={onSubmit} className="grid gap-4 rounded-2xl border border-line/70 bg-card/50 p-6 sm:grid-cols-2">
-            <Field label="Full name" name="name" required placeholder="Your name" />
-            <Field label="Email" name="email" type="email" required placeholder="you@example.com" />
-            <Field label="Phone" name="phone" type="tel" placeholder="+91" />
-            <Field label="Role" name="role" as="select" required placeholder="Choose a role" options={[...ROLES.map((r) => r.title), 'General application']} />
-            <Field label="LinkedIn / portfolio" name="link" type="url" placeholder="https://" className="sm:col-span-2" />
-            <Field label="CV link (Drive, Dropbox…)" name="cv" type="url" placeholder="https://" className="sm:col-span-2" />
-            <Field label="Why Pyvot, and what have you built or grown?" name="message" as="textarea" required placeholder="A few honest lines." className="sm:col-span-2" />
-            <div className="flex flex-col items-start gap-3 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-              <Button type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : 'Send application'}</Button>
-              <span className={cn('text-xs', status === 'sent' ? 'text-mint' : 'text-mute')} role="status">
-                {STATUS_TEXT[status] || 'We reply to every application.'}
+
+          <form onSubmit={onSubmit} className="grid gap-4 rounded-3xl border border-line/80 bg-surface/70 p-6 md:p-8 backdrop-blur-xl shadow-2xl sm:grid-cols-2">
+            <label className="block text-xs font-medium uppercase tracking-[0.14em] text-mute">
+              Full name <span className="text-mint">*</span>
+              <input
+                name="name"
+                type="text"
+                required
+                placeholder="Your full name"
+                className="mt-1.5 w-full rounded-xl border border-line bg-card/70 px-4 py-3 text-sm text-ink placeholder:text-mute/50 outline-none focus:border-mint"
+              />
+            </label>
+
+            <label className="block text-xs font-medium uppercase tracking-[0.14em] text-mute">
+              Email address <span className="text-mint">*</span>
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="you@domain.com"
+                className="mt-1.5 w-full rounded-xl border border-line bg-card/70 px-4 py-3 text-sm text-ink placeholder:text-mute/50 outline-none focus:border-mint"
+              />
+            </label>
+
+            <label className="block text-xs font-medium uppercase tracking-[0.14em] text-mute">
+              Phone number <span className="text-mint">*</span>
+              <input
+                name="phone"
+                type="tel"
+                required
+                placeholder="+91 98765 43210"
+                className="mt-1.5 w-full rounded-xl border border-line bg-card/70 px-4 py-3 text-sm text-ink placeholder:text-mute/50 outline-none focus:border-mint"
+              />
+            </label>
+
+            <label className="block text-xs font-medium uppercase tracking-[0.14em] text-mute">
+              Target Role <span className="text-mint">*</span>
+              <input
+                name="role"
+                type="text"
+                readOnly
+                value={selectedRole}
+                className="mt-1.5 w-full rounded-xl border border-mint/40 bg-mint/5 px-4 py-3 text-sm font-semibold text-mint outline-none"
+              />
+            </label>
+
+            <label className="block text-xs font-medium uppercase tracking-[0.14em] text-mute sm:col-span-2">
+              LinkedIn / GitHub / Portfolio URL <span className="text-mint">*</span>
+              <input
+                name="link"
+                type="url"
+                required
+                placeholder="https://github.com/... or https://linkedin.com/in/..."
+                className="mt-1.5 w-full rounded-xl border border-line bg-card/70 px-4 py-3 text-sm text-ink placeholder:text-mute/50 outline-none focus:border-mint"
+              />
+            </label>
+
+            <label className="block text-xs font-medium uppercase tracking-[0.14em] text-mute sm:col-span-2">
+              CV / Resume Link (Google Drive, Dropbox, Notion) <span className="text-mint">*</span>
+              <input
+                name="cv"
+                type="url"
+                required
+                placeholder="https://drive.google.com/..."
+                className="mt-1.5 w-full rounded-xl border border-line bg-card/70 px-4 py-3 text-sm text-ink placeholder:text-mute/50 outline-none focus:border-mint"
+              />
+            </label>
+
+            <label className="block text-xs font-medium uppercase tracking-[0.14em] text-mute sm:col-span-2">
+              What have you built or scaled, and what interests you about Pyvot? <span className="text-mint">*</span>
+              <textarea
+                name="message"
+                rows={4}
+                required
+                placeholder="Tell us about a full-stack architecture, backend service, or AI-assisted project you took complete ownership of."
+                className="mt-1.5 w-full rounded-xl border border-line bg-card/70 px-4 py-3 text-sm text-ink placeholder:text-mute/50 outline-none focus:border-mint"
+              />
+            </label>
+
+            <div className="flex flex-col items-start gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between pt-2">
+              <Button type="submit" size="lg" disabled={status === 'sending'}>
+                {status === 'sending' ? 'Submitting Application...' : 'Submit Application →'}
+              </Button>
+              <span className={cn('font-mono text-xs', status === 'sent' ? 'text-mint' : 'text-mute')} role="status">
+                {STATUS_TEXT[status] || 'We review and reply to every application.'}
               </span>
             </div>
           </form>

@@ -191,8 +191,9 @@ export function Button({ to, children, variant = 'primary', size = 'md', classNa
   const cls = cn(
     'inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold transition-all',
     size === 'sm' ? 'h-10 px-4 text-sm' : size === 'lg' ? 'h-14 px-8 text-base' : 'h-12 px-6 text-[15px]',
-    variant === 'primary' && 'bg-mint text-[#06251a] hover:shadow-[0_0_32px_rgba(47,211,154,0.5)]',
-    variant === 'ghost' && 'border border-line font-medium text-ink hover:border-mint/60 hover:text-mint',
+    variant === 'primary' && 'bg-mint text-[#06251a] hover:shadow-[0_0_32px_rgba(47,211,154,0.5)] active:scale-[0.98]',
+    variant === 'ghost' && 'border border-line font-medium text-ink hover:border-mint/60 hover:text-mint hover:bg-mint/5 active:scale-[0.98]',
+    variant === 'danger' && 'border border-coral/40 text-coral hover:bg-coral/10 active:scale-[0.98]',
     className,
   )
   if (to) {
@@ -208,3 +209,84 @@ export function Button({ to, children, variant = 'primary', size = 'md', classNa
     </button>
   )
 }
+
+/**
+ * GlowCard adds a subtle mouse-following spotlight glow for high-end SaaS feel
+ */
+export function GlowCard({ children, className, glowColor = 'rgba(47, 211, 154, 0.15)', as: Tag = 'div', ...rest }) {
+  const [pos, setPos] = useState({ x: 0, y: 0, opacity: 0 })
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    setPos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      opacity: 1,
+    })
+  }
+
+  const handleMouseLeave = () => {
+    setPos((prev) => ({ ...prev, opacity: 0 }))
+  }
+
+  return (
+    <Tag
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={cn(
+        'group relative overflow-hidden rounded-2xl border border-line/70 bg-card/70 p-6 transition-all duration-300 hover:border-mint/50',
+        className,
+      )}
+      {...rest}
+    >
+      <div
+        className="pointer-events-none absolute -inset-px transition-opacity duration-300"
+        style={{
+          opacity: pos.opacity,
+          background: `radial-gradient(400px circle at ${pos.x}px ${pos.y}px, ${glowColor}, transparent 70%)`,
+        }}
+      />
+      <div className="relative z-10">{children}</div>
+    </Tag>
+  )
+}
+
+/**
+ * TiltCard adds subtle 3D perspective tilt following mouse cursor
+ */
+export function TiltCard({ children, className, maxTilt = 8, as: Tag = 'div', ...rest }) {
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0 })
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const px = (e.clientX - rect.left) / rect.width
+    const py = (e.clientY - rect.top) / rect.height
+    setTilt({
+      rx: (0.5 - py) * maxTilt,
+      ry: (px - 0.5) * maxTilt,
+    })
+  }
+
+  const handleMouseLeave = () => {
+    setTilt({ rx: 0, ry: 0 })
+  }
+
+  return (
+    <Tag
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `perspective(1000px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+        transition: 'transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1)',
+      }}
+      className={cn(
+        'relative rounded-2xl border border-line/70 bg-card/70 p-6 transition-colors hover:border-mint/50',
+        className,
+      )}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  )
+}
+

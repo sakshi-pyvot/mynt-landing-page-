@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react'
 import CtaPair from '@/components/CtaPair'
 import { HeroMosaic, TeamGrid } from '@/components/TeamCards'
 import { PyvotLogo } from '@/components/Brand'
-import { Button, Card, Eyebrow, Reveal, Section, SectionHead, SmartLink } from '@/components/ui'
+import { Button, Eyebrow, GlowCard, Reveal, Section, SectionHead, SmartLink } from '@/components/ui'
 import { GROUPS, LEADERSHIP, TEAM } from '@/data/team'
 
 const EVOLUTION = [
@@ -185,14 +185,26 @@ export default function About() {
 
       {/* why us */}
       <Section id="why-us" tight>
-        <SectionHead eyebrow="Why choose us" title="Four reasons operators stay." />
-        <div className="grid gap-4 md:grid-cols-2">
+        <SectionHead eyebrow="Why choose us" title="Four reasons 250+ restaurant brands choose Pyvot." lede="No generic agency slides. We operate at the intersection of fintech reconciliation, aggregator economics, and deep dining fundamentals." />
+        <div className="grid gap-5 md:grid-cols-2">
           {WHY.map(([t, d], i) => (
-            <Reveal key={t} delay={(i % 2) * 0.05}>
-              <Card className="h-full p-8">
-                <h3 className="text-xl font-semibold">{t}</h3>
-                <p className="mt-3 text-mute">{d}</p>
-              </Card>
+            <Reveal key={t} delay={(i % 2) * 0.06}>
+              <GlowCard className="h-full p-8 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-bold text-mint">0{i + 1}</span>
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-mint/80 border border-mint/20 bg-mint/5 px-2.5 py-0.5 rounded-full">
+                      PROVEN OPERATING SYSTEM
+                    </span>
+                  </div>
+                  <h3 className="mt-4 text-xl font-bold text-ink">{t}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-mute">{d}</p>
+                </div>
+                <div className="mt-6 flex items-center gap-2 text-xs text-mint">
+                  <span className="h-1.5 w-1.5 rounded-full bg-mint" />
+                  <span>Measured directly against contribution margin</span>
+                </div>
+              </GlowCard>
             </Reveal>
           ))}
         </div>
