@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { PyvotLogo, MyntMark } from '@/components/Brand'
+import { PyvotLogo } from '@/components/Brand'
 import { SmartLink } from '@/components/ui'
 import { FOOTER, CONTACT, CTA } from '@/lib/site'
 import SocialLinks from '@/components/SocialLinks'
@@ -11,10 +11,8 @@ export default function Footer() {
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)_1.2fr]">
           {/* brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link to="/" className="inline-flex items-center gap-3" aria-label="Mynt by Pyvot — home">
-              <MyntMark className="h-7" wordClass="text-xl" />
-              <span className="h-5 w-px bg-line" aria-hidden />
-              <PyvotLogo className="h-5" />
+            <Link to="/" className="inline-flex items-center" aria-label="Pyvot — home">
+              <PyvotLogo className="h-6" />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-mute">
               Mynt is restaurant intelligence by Pyvot — marketplace, payout, discount, ad and outlet data turned into decisions. Pyvot Experts make them happen.

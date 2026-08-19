@@ -207,15 +207,6 @@ export default function Hero() {
             style={desktop ? { transform: 'rotateX(8deg) rotateY(-12deg)' } : undefined}
           >
             <HeroDashboard boot />
-            {/* floating chips off the bezel, at different depths */}
-            <div className="glass absolute -left-14 top-[30%] hidden rounded-xl border border-line px-3 py-2 shadow-xl [transform:translateZ(90px)] md:block">
-              <div className="text-[9px] font-semibold uppercase tracking-[0.18em] text-mute">Net Margin</div>
-              <div className="text-sm font-bold text-ink">56.5% <span className="text-mint text-[10px] font-medium">↗ +1.0%</span></div>
-            </div>
-            <div className="glass absolute -bottom-9 left-[6%] hidden rounded-xl border border-line px-3 py-2 shadow-xl [transform:translateZ(70px)] md:block">
-              <div className="text-[9px] font-semibold uppercase tracking-[0.18em] text-mute">Outlets</div>
-              <div className="text-sm font-bold text-ink">40 <span className="text-[10px] font-medium text-mute">synced</span></div>
-            </div>
           </div>
         </div>
       </div>

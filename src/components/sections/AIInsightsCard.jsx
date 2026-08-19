@@ -18,7 +18,6 @@ const SEED = [
   { id: 2, tone: 'act', text: 'Net payout for Group is down 5.9% vs the previous period.' },
   { id: 3, tone: 'review', text: 'Discounts for Group are up 6.3% — contribution is slipping.' },
   { id: 4, tone: 'opp', text: 'Average order value for Group is up 6.3%, now at ₹530 per order.' },
-  { id: 5, tone: 'opp', text: 'Ad spend for Group is up 21.2% and sales lift is holding.' },
   { id: 6, tone: 'opp', text: 'Total platform charges for Group are down 3.9% vs the previous period.' },
 ]
 
