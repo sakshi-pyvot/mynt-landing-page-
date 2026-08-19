@@ -231,12 +231,21 @@ export default function Contact() {
                 aria-selected={isSelected}
                 onClick={() => pick(i.key)}
                 className={cn(
-                  'group relative overflow-hidden rounded-2xl border p-5 text-left transition-all duration-300',
+                  'group relative isolate overflow-hidden rounded-2xl border p-5 text-left transition-all duration-300',
                   isSelected
-                    ? 'border-mint bg-mint/10 shadow-[0_0_30px_rgba(47,211,154,0.15)] scale-[1.02]'
+                    ? 'border-mint/50 shadow-[0_0_30px_rgba(47,211,154,0.15)] scale-[1.02]'
                     : 'border-line/70 bg-card/60 hover:border-line hover:bg-card/90',
                 )}
               >
+                {isSelected && (
+                  <motion.span
+                    layoutId="contact-intent-glass"
+                    aria-hidden
+                    style={{ position: 'absolute', zIndex: -1 }}
+                    className="lq inset-0 rounded-2xl"
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  />
+                )}
                 <div className="flex items-center justify-between">
                   <div className={cn('rounded-xl border p-2 transition-colors', isSelected ? 'border-mint/40 bg-mint/20' : 'border-line bg-surface')}>
                     {i.icon}

@@ -123,7 +123,7 @@ function PersonCard({ p, index = 0, open = false, onOpen }) {
       aria-expanded={clickable ? open : undefined}
     >
       <div className="relative">
-        <Portrait person={p} className={cn('border border-white/5 transition-colors group-hover:border-mint/40', open && 'border-mint/60')} imgClass="group-hover:scale-[1.04]" />
+        <Portrait person={p} className={cn('lq-card border border-white/5 group-hover:border-mint/40', open && 'border-mint/60')} imgClass="group-hover:scale-[1.04]" />
         <LinkedIn href={p.linkedin} className="absolute right-3 top-3 opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100" />
         {/* quote slides up on hover */}
         {p.quote && (
@@ -167,12 +167,21 @@ export function TeamGrid({ groups }) {
               setOpenSlug(null)
             }}
             className={cn(
-              'inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-colors',
-              tab === i ? 'border-mint bg-mint/10 text-mint' : 'border-line text-mute hover:text-ink',
+              'relative inline-flex items-center gap-2 rounded-full border border-transparent px-4 py-2 text-sm transition-colors',
+              tab === i ? 'text-mint' : 'text-mute hover:text-ink',
             )}
           >
-            {x.label}
-            <span className={cn('rounded-full px-1.5 py-0.5 font-mono text-[10px]', tab === i ? 'bg-mint/15' : 'bg-card')}>{x.people.length}</span>
+            {tab === i && (
+              <motion.span
+                layoutId="team-tab-pill"
+                aria-hidden
+                style={{ position: 'absolute' }}
+                className="lq lq-pill inset-0 rounded-full"
+                transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+              />
+            )}
+            <span className="relative z-10">{x.label}</span>
+            <span className={cn('relative z-10 rounded-full px-1.5 py-0.5 font-mono text-[10px]', tab === i ? 'bg-mint/15' : 'bg-card')}>{x.people.length}</span>
           </button>
         ))}
       </div>

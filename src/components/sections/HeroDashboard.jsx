@@ -198,7 +198,7 @@ export default function HeroDashboard({ boot = true }) {
       {/* tiles: raised layer for parallax */}
       <div className="grid grid-cols-3 gap-2 [transform:translateZ(28px)]">
         {KPIS.map((k) => (
-          <div key={k.key} className="hd-tile rounded-xl border border-line bg-card/90 px-3 py-2.5">
+          <div key={k.key} className="hd-tile lq-card rounded-xl border border-line bg-card/90 px-3 py-2.5">
             <div className="text-[8px] font-semibold uppercase tracking-[0.14em] text-mute">{k.label}</div>
             <div className="hd-val mt-1 text-[15px] font-bold tabular-nums text-ink md:text-lg">{fmt(0, k)}</div>
             <div className={`text-[10px] font-medium ${TONE[k.tone].text}`}>

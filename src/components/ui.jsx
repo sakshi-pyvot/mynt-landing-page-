@@ -109,7 +109,7 @@ export function Card({ children, className, glow = false, as: Tag = 'div', ...re
   return (
     <Tag
       className={cn(
-        'relative rounded-2xl border border-line/70 bg-card/70 p-6 transition-colors hover:border-mint/40',
+        'lq-card relative rounded-2xl border border-line/70 bg-card/70 p-6 hover:border-mint/40',
         glow && 'shadow-[0_0_60px_-20px_rgba(47,211,154,0.35)]',
         className,
       )}
@@ -191,8 +191,8 @@ export function Button({ to, children, variant = 'primary', size = 'md', classNa
   const cls = cn(
     'inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold transition-all',
     size === 'sm' ? 'h-10 px-4 text-sm' : size === 'lg' ? 'h-14 px-8 text-base' : 'h-12 px-6 text-[15px]',
-    variant === 'primary' && 'bg-mint text-[#06251a] hover:shadow-[0_0_32px_rgba(47,211,154,0.5)] active:scale-[0.98]',
-    variant === 'ghost' && 'border border-line font-medium text-ink hover:border-mint/60 hover:text-mint hover:bg-mint/5 active:scale-[0.98]',
+    variant === 'primary' && 'lq-press bg-mint text-[#06251a] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_32px_rgba(47,211,154,0.5)]',
+    variant === 'ghost' && 'lq lq-press relative font-medium text-ink hover:text-mint',
     variant === 'danger' && 'border border-coral/40 text-coral hover:bg-coral/10 active:scale-[0.98]',
     className,
   )

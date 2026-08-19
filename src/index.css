@@ -146,9 +146,72 @@ body {
 
 /* glass surfaces */
 .glass {
-  background: rgba(16, 20, 28, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(16, 20, 28, 0.68);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  backdrop-filter: blur(16px) saturate(1.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* ---- Liquid Glass system (iOS-26 style) ----
+   .lq       static glass surface: blur + saturate + specular rim. Cheap, use freely.
+   .lq-pill  the moving lens capsule: adds real refraction via the #lq-lens SVG
+             displacement (Chromium; other engines keep the plain blur line). Only on
+             small gliding elements — displacement is expensive.
+   .lq-press capsule press squish. */
+.lq {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  -webkit-backdrop-filter: blur(16px) saturate(1.4) brightness(1.08);
+  backdrop-filter: blur(16px) saturate(1.4) brightness(1.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.lq::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04) 55%, rgba(255, 255, 255, 0.1));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.lq-pill {
+  -webkit-backdrop-filter: blur(3px) saturate(1.5) brightness(1.12);
+  backdrop-filter: blur(3px) saturate(1.5) brightness(1.12);
+  backdrop-filter: url(#lq-lens) blur(1px) saturate(1.5) brightness(1.12);
+}
+.lq-pill::after {
+  content: '';
+  position: absolute;
+  left: 14%;
+  top: 10%;
+  width: 42%;
+  height: 26%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+  filter: blur(2px);
+  pointer-events: none;
+}
+.lq-press {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.lq-press:active {
+  transform: scale(0.96);
+  transition-duration: 0.1s;
+}
+/* card rim-light hover: cheap, no backdrop work */
+.lq-card {
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.lq-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 12px 32px rgba(0, 0, 0, 0.3);
 }
 
 /* 3D and interaction utilities */

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'motion/react'
 import CtaPair from '@/components/CtaPair'
 import HeroDashboard from '@/components/sections/HeroDashboard'
 import TrustSecuritySection from '@/components/sections/TrustSecuritySection'
@@ -183,11 +184,20 @@ export default function Mynt() {
               aria-selected={role === i}
               onClick={() => setRole(i)}
               className={cn(
-                'rounded-full border px-4 py-2 text-sm transition-colors',
-                role === i ? 'border-mint bg-mint/10 text-mint' : 'border-line text-mute hover:text-ink',
+                'relative rounded-full border border-transparent px-4 py-2 text-sm transition-colors',
+                role === i ? 'text-mint' : 'text-mute hover:text-ink',
               )}
             >
-              {x.key}
+              {role === i && (
+                <motion.span
+                  layoutId="mynt-role-pill"
+                  aria-hidden
+                  style={{ position: 'absolute' }}
+                  className="lq lq-pill inset-0 rounded-full"
+                  transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10">{x.key}</span>
             </button>
           ))}
         </div>

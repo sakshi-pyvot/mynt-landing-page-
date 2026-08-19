@@ -192,7 +192,7 @@ export default function TrustSecuritySection() {
                   type="button"
                   onClick={() => setActivePipelineStep(idx)}
                   className={cn(
-                    'group relative rounded-xl border p-4 text-left transition-all duration-300',
+                    'lq-card group relative rounded-xl border p-4 text-left',
                     activePipelineStep === idx
                       ? 'border-mint bg-mint/10 shadow-[0_0_25px_rgba(47,211,154,0.15)]'
                       : 'border-line/70 bg-card/50 hover:border-line hover:bg-card/80',

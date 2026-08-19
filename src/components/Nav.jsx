@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import CtaPair from './CtaPair'
@@ -27,6 +28,7 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(-1) // desktop panel index
   const [sheet, setSheet] = useState(false) // mobile sheet
+  const [hover, setHover] = useState(-1) // desktop item under the glass capsule
   const closeTimer = useRef(0)
   const location = useLocation()
 
@@ -105,68 +107,83 @@ export default function Nav() {
           <Lockup size="sm" />
         </Link>
 
-        {/* desktop items */}
-        <ul className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-7" role="list">
-          {NAV.map((item, i) => {
-            const active = groupActive(item, location.pathname)
-            const lit = active || open === i
-            const cls = cn(
-              'group relative inline-flex h-10 items-center gap-1 px-1 text-[14px] transition-colors',
-              lit ? 'text-ink' : 'text-mute hover:text-ink',
-            )
-            const label = (
-              <span className="relative">
-                {item.label}
-                {/* hover underline grows from the left; active shows a mint dot */}
-                <span
-                  aria-hidden
-                  className={cn(
-                    'absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-ink/60 transition-transform duration-300 group-hover:scale-x-100',
-                    active && 'hidden',
+        {/* desktop items — frosted capsule rail; a liquid-glass lens glides under the
+            hovered/open item (framer layoutId handles the elastic width morph) */}
+        <div className="lq relative hidden rounded-full px-1.5 py-1.5 lg:block">
+          <ul className="flex items-center whitespace-nowrap" role="list" onMouseLeave={() => setHover(-1)}>
+            {NAV.map((item, i) => {
+              const active = groupActive(item, location.pathname)
+              const lit = active || open === i || hover === i
+              const pillHere = (hover >= 0 ? hover : open) === i
+              const cls = cn(
+                'group relative inline-flex h-9 items-center gap-1 rounded-full px-3.5 text-[14px] transition-colors',
+                lit ? 'text-ink' : 'text-mute',
+              )
+              const label = (
+                <>
+                  {pillHere && (
+                    <motion.span
+                      layoutId="nav-pill"
+                      aria-hidden
+                      className="lq lq-pill absolute inset-0 rounded-full"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
                   )}
-                />
-                {active && <span aria-hidden className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-mint" />}
-              </span>
-            )
-            return (
-              <li key={item.label} onMouseEnter={() => (item.items ? enter(i) : leave())}>
-                {item.items ? (
-                  <button
-                    type="button"
-                    className={cls}
-                    aria-expanded={open === i}
-                    aria-haspopup="true"
-                    onClick={() => setOpen(open === i ? -1 : i)}
-                  >
-                    {label}
-                    <Chevron className={cn('h-[11px] w-[11px] opacity-60 transition-transform', open === i && 'rotate-180 text-mint opacity-100')} />
-                  </button>
-                ) : (
-                  <SmartLink to={item.to} className={cls}>
-                    {label}
-                  </SmartLink>
-                )}
-              </li>
-            )
-          })}
-        </ul>
+                  <span className="relative z-10">
+                    {item.label}
+                    {active && <span aria-hidden className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-mint" />}
+                  </span>
+                </>
+              )
+              return (
+                <li key={item.label} onMouseEnter={() => { setHover(i); if (item.items) enter(i); else leave() }}>
+                  {item.items ? (
+                    <button
+                      type="button"
+                      className={cls}
+                      aria-expanded={open === i}
+                      aria-haspopup="true"
+                      onClick={() => setOpen(open === i ? -1 : i)}
+                    >
+                      {label}
+                      <Chevron className={cn('relative z-10 h-[11px] w-[11px] opacity-60 transition-transform', open === i && 'rotate-180 text-mint opacity-100')} />
+                    </button>
+                  ) : (
+                    <SmartLink to={item.to} className={cls}>
+                      {label}
+                    </SmartLink>
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
 
-        <div className="flex items-center gap-5" onMouseEnter={leave}>
-          <SmartLink to={CTA.expert} className="group hidden items-center gap-1.5 whitespace-nowrap text-sm text-ink/80 transition-colors hover:text-mint lg:inline-flex">
-            Talk to an expert
-            <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
-          </SmartLink>
+        <div className="flex items-center gap-3" onMouseEnter={leave}>
+          <div className="lq relative hidden items-center gap-4 rounded-full py-1.5 pl-5 pr-1.5 lg:flex">
+            <SmartLink to={CTA.expert} className="group inline-flex items-center gap-1.5 whitespace-nowrap text-sm text-ink/80 transition-colors hover:text-mint">
+              Talk to an expert
+              <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
+            </SmartLink>
+            <SmartLink
+              to={CTA.start}
+              target="_self"
+              className="lq-press inline-flex h-9 items-center whitespace-nowrap rounded-full bg-mint px-4 text-sm font-semibold text-[#06251a] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] transition-shadow hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_28px_rgba(47,211,154,0.45)]"
+            >
+              Get started with Mynt
+            </SmartLink>
+          </div>
           <SmartLink
             to={CTA.start}
             target="_self"
-            className="inline-flex h-10 items-center whitespace-nowrap rounded-full bg-mint px-5 text-sm font-semibold text-[#06251a] transition-shadow hover:shadow-[0_0_28px_rgba(47,211,154,0.45)]"
+            className="lq-press inline-flex h-10 items-center whitespace-nowrap rounded-full bg-mint px-4 text-sm font-semibold text-[#06251a] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] lg:hidden"
           >
             <span className="hidden sm:inline">Get started with Mynt</span>
             <span className="sm:hidden">Get started</span>
           </SmartLink>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink lg:hidden"
+            className="lq lq-press relative grid h-10 w-10 place-items-center rounded-full text-ink lg:hidden"
             aria-label={sheet ? 'Close menu' : 'Open menu'}
             aria-expanded={sheet}
             onClick={() => setSheet((s) => !s)}
@@ -191,7 +208,7 @@ export default function Nav() {
             transition={{ duration: 0.18, ease: 'easeOut' }}
             onMouseEnter={() => enter(open)}
             onClick={closeOnLink}
-            className="absolute inset-x-0 top-full hidden border-b border-line/60 bg-surface/95 backdrop-blur-xl lg:block"
+            className="glass absolute inset-x-0 top-full hidden border-b border-line/60 lg:block"
           >
             <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1.1fr)_minmax(0,2fr)] gap-10 px-6 py-8">
               <div>
@@ -225,21 +242,25 @@ export default function Nav() {
         )}
       </AnimatePresence>
 
-      {/* mobile sheet */}
-      <AnimatePresence>
-        {sheet && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={closeOnLink}
-            className="fixed inset-x-0 bottom-0 top-[68px] overflow-y-auto bg-bg/95 backdrop-blur-xl lg:hidden"
-          >
-            <MobileMenu />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* mobile sheet — portaled: the glass header's backdrop-filter makes it the
+          containing block for fixed children, which would collapse the sheet to 0 height */}
+      {createPortal(
+        <AnimatePresence>
+          {sheet && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={closeOnLink}
+              className="fixed inset-x-0 bottom-0 top-[68px] z-40 overflow-y-auto bg-bg/95 backdrop-blur-xl lg:hidden"
+            >
+              <MobileMenu />
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body,
+      )}
     </header>
   )
 }

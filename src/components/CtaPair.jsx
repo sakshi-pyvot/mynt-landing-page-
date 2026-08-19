@@ -18,7 +18,7 @@ export default function CtaPair({ size = 'md', className = '', magnetic = true }
       to={CTA.start}
       target="_self"
       className={cn(
-        'inline-flex items-center whitespace-nowrap rounded-full bg-mint font-semibold text-[#06251a] transition-shadow hover:shadow-[0_0_32px_rgba(47,211,154,0.5)]',
+        'lq-press inline-flex items-center whitespace-nowrap rounded-full bg-mint font-semibold text-[#06251a] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] transition-shadow hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_32px_rgba(47,211,154,0.5)]',
         s.btn,
       )}
     >
@@ -31,7 +31,7 @@ export default function CtaPair({ size = 'md', className = '', magnetic = true }
       <SmartLink
         to={CTA.expert}
         className={cn(
-          'inline-flex items-center whitespace-nowrap rounded-full border border-line font-medium text-ink transition-colors hover:border-mint/60 hover:text-mint',
+          'lq lq-press relative inline-flex items-center whitespace-nowrap rounded-full font-medium text-ink transition-colors hover:text-mint',
           s.btn,
         )}
       >

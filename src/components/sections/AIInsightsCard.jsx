@@ -38,7 +38,7 @@ function Row({ row, pulse }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -10, scale: 0.98, transition: { duration: 0.3 } }}
       transition={{ duration: 0.45, ease: 'easeOut' }}
-      className={`relative overflow-hidden rounded-xl border bg-card/80 py-3 pl-4 pr-9 ${t.ring}`}
+      className={`lq-card relative overflow-hidden rounded-xl border bg-card/80 py-3 pl-4 pr-9 ${t.ring}`}
       style={pulse ? { boxShadow: `0 0 0 1px ${t.glow}, 0 0 28px ${t.glow}` } : undefined}
     >
       {/* tone bar draws down */}

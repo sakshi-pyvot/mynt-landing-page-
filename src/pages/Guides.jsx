@@ -294,23 +294,23 @@ export default function Guides() {
                 aria-selected={isSelected}
                 onClick={() => setCat(c)}
                 className={cn(
-                  'relative rounded-full border px-4 py-2 font-medium text-xs transition-all duration-200',
-                  isSelected
-                    ? 'border-mint bg-mint/10 text-mint font-semibold shadow-sm'
-                    : 'border-line text-mute hover:border-line/90 hover:text-ink',
+                  'relative rounded-full border border-transparent px-4 py-2 font-medium text-xs transition-all duration-200',
+                  isSelected ? 'text-mint font-semibold' : 'text-mute hover:text-ink',
                 )}
               >
-                <span>{c}</span>
-                <span className="ml-2 rounded-full bg-bg/80 px-1.5 py-0.5 font-mono text-[10px] text-mute">
-                  {count}
-                </span>
                 {isSelected && (
-                  <motion.div
+                  <motion.span
                     layoutId="activeGuideCat"
-                    className="absolute -bottom-6 left-2 right-2 h-0.5 bg-mint"
-                    transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                    aria-hidden
+                    style={{ position: 'absolute' }}
+                    className="lq lq-pill inset-0 rounded-full"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
+                <span className="relative z-10">{c}</span>
+                <span className="relative z-10 ml-2 rounded-full bg-bg/80 px-1.5 py-0.5 font-mono text-[10px] text-mute">
+                  {count}
+                </span>
               </button>
             )
           })}
