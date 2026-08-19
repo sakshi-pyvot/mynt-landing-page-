@@ -83,11 +83,11 @@ export default function Nav() {
       <nav className="mx-auto flex h-[68px] max-w-7xl items-center justify-between gap-8 px-6" aria-label="Main">
         <Link
           to="/"
-          className="lq lq-press relative inline-flex h-10 shrink-0 items-center rounded-full px-4"
+          className="lq lq-press relative inline-flex h-11 shrink-0 items-center rounded-full px-5"
           aria-label="Pyvot — home"
           onMouseEnter={leave}
         >
-          <PyvotLogo className="h-4" />
+          <PyvotLogo className="h-6" />
         </Link>
 
         {/* desktop items — frosted capsule rail; a liquid-glass lens glides under the
