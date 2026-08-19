@@ -202,6 +202,7 @@ export default function ExcelToDashboard() {
             <div className="dash-chrome relative">
               <div className="mb-4 flex items-center justify-between">
                 <div className="flex items-center gap-2">
+                  <img src="/logos/mynt-mark.png" alt="Mynt" className="h-4 w-auto" />
                   <span className="text-sm font-bold">
                     mynt<span className="text-mint">.</span>
                   </span>

@@ -11,12 +11,12 @@ const SIZES = {
   lg: { btn: 'h-14 px-8 text-base', gap: 'gap-4' },
 }
 
-export default function CtaPair({ size = 'md', className = '', magnetic = true }) {
+export default function CtaPair({ size = 'md', className = '', magnetic = true, expertTo = CTA.expert }) {
   const s = SIZES[size]
   const primary = (
     <SmartLink
       to={CTA.start}
-      target="_self"
+      target="_blank"
       className={cn(
         'lq-press inline-flex items-center whitespace-nowrap rounded-full bg-mint font-semibold text-[#06251a] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] transition-shadow hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_32px_rgba(47,211,154,0.5)]',
         s.btn,
@@ -29,7 +29,7 @@ export default function CtaPair({ size = 'md', className = '', magnetic = true }
     <div className={cn('flex flex-wrap items-center', s.gap, className)}>
       {magnetic ? <Magnetic>{primary}</Magnetic> : primary}
       <SmartLink
-        to={CTA.expert}
+        to={expertTo}
         className={cn(
           'lq lq-press relative inline-flex items-center whitespace-nowrap rounded-full font-medium text-ink transition-colors hover:text-mint',
           s.btn,

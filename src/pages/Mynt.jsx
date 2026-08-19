@@ -80,7 +80,7 @@ export default function Mynt() {
               </p>
             </Reveal>
             <Reveal delay={0.15}>
-              <CtaPair className="mt-9" />
+              <CtaPair className="mt-9" expertTo="/contact?intent=mynt" />
             </Reveal>
           </div>
           <div className="relative flex justify-center [perspective:1400px] lg:justify-end">
@@ -257,7 +257,7 @@ export default function Mynt() {
         <div className="relative mx-auto max-w-3xl px-6">
           <MyntMark className="mx-auto h-10" withWord={false} />
           <h2 className="mt-6 text-3xl font-bold tracking-tight md:text-5xl">See your restaurant through Mynt.</h2>
-          <CtaPair size="lg" className="mt-10 justify-center" />
+          <CtaPair size="lg" className="mt-10 justify-center" expertTo="/contact?intent=mynt" />
         </div>
       </section>
     </>

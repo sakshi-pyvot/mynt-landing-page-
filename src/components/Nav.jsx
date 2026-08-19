@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import CtaPair from './CtaPair'
-import { Lockup } from './Brand'
+import { PyvotLogo } from './Brand'
 import { SmartLink } from './ui'
 import { NAV, CTA } from '@/lib/site'
 import { getLenis } from '@/lib/scroll'
@@ -25,30 +25,11 @@ const groupActive = (item, pathname) => {
 }
 
 export default function Nav() {
-  const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(-1) // desktop panel index
   const [sheet, setSheet] = useState(false) // mobile sheet
   const [hover, setHover] = useState(-1) // desktop item under the glass capsule
   const closeTimer = useRef(0)
   const location = useLocation()
-
-  // glass once scrolled (plain listener: page height changes per route, so no ScrollTrigger 'max')
-  useEffect(() => {
-    let last = false
-    const onScroll = () => {
-      const now = window.scrollY > 50
-      if (now !== last) {
-        last = now
-        setScrolled(now)
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    const t = setTimeout(onScroll, 0) // initial state (deep links land mid-page)
-    return () => {
-      clearTimeout(t)
-      window.removeEventListener('scroll', onScroll)
-    }
-  }, [])
 
   // any link click inside a panel/sheet closes it
   const closeOnLink = (e) => {
@@ -97,14 +78,16 @@ export default function Nav() {
   return (
     <header
       onMouseLeave={leave}
-      className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
-        scrolled || open >= 0 || sheet ? 'glass border-b border-line/60' : 'bg-transparent',
-      )}
+      className="fixed inset-x-0 top-0 z-50 bg-transparent"
     >
       <nav className="mx-auto flex h-[68px] max-w-7xl items-center justify-between gap-8 px-6" aria-label="Main">
-        <Link to="/" className="shrink-0" aria-label="Mynt by Pyvot — home" onMouseEnter={leave}>
-          <Lockup size="sm" />
+        <Link
+          to="/"
+          className="lq lq-press relative inline-flex h-10 shrink-0 items-center rounded-full px-4"
+          aria-label="Pyvot — home"
+          onMouseEnter={leave}
+        >
+          <PyvotLogo className="h-4" />
         </Link>
 
         {/* desktop items — frosted capsule rail; a liquid-glass lens glides under the
@@ -167,7 +150,7 @@ export default function Nav() {
             </SmartLink>
             <SmartLink
               to={CTA.start}
-              target="_self"
+              target="_blank"
               className="lq-press inline-flex h-9 items-center whitespace-nowrap rounded-full bg-mint px-4 text-sm font-semibold text-[#06251a] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] transition-shadow hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_28px_rgba(47,211,154,0.45)]"
             >
               Get started with Mynt
@@ -175,7 +158,7 @@ export default function Nav() {
           </div>
           <SmartLink
             to={CTA.start}
-            target="_self"
+            target="_blank"
             className="lq-press inline-flex h-10 items-center whitespace-nowrap rounded-full bg-mint px-4 text-sm font-semibold text-[#06251a] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] lg:hidden"
           >
             <span className="hidden sm:inline">Get started with Mynt</span>
@@ -208,16 +191,16 @@ export default function Nav() {
             transition={{ duration: 0.18, ease: 'easeOut' }}
             onMouseEnter={() => enter(open)}
             onClick={closeOnLink}
-            className="glass absolute inset-x-0 top-full hidden border-b border-line/60 lg:block"
+            className="absolute inset-x-0 top-full hidden justify-center px-6 pt-2 lg:flex"
           >
-            <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1.1fr)_minmax(0,2fr)] gap-10 px-6 py-8">
+            <div className="glass grid w-full max-w-4xl grid-cols-[minmax(0,1.1fr)_minmax(0,2fr)] gap-10 rounded-3xl border border-white/10 p-8 shadow-[0_24px_80px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)]">
               <div>
                 <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-mint">{panel.title || panel.label}</div>
                 <p className="mt-3 max-w-xs text-[15px] leading-relaxed text-ink/90">{panel.intro}</p>
                 {panel.cta && (
                   <SmartLink
                     to={panel.cta.to}
-                    target="_self"
+                    target="_blank"
                     className="mt-6 inline-flex h-10 items-center rounded-full bg-mint px-4 text-sm font-semibold text-[#06251a] hover:shadow-[0_0_28px_rgba(47,211,154,0.45)]"
                   >
                     {panel.cta.label}

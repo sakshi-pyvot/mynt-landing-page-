@@ -182,6 +182,7 @@ export default function HeroDashboard({ boot = true }) {
       {/* top bar */}
       <div className="hd-top flex items-center justify-between px-2 pb-2 pt-1">
         <div className="flex items-center gap-2">
+          <img src="/logos/mynt-mark.png" alt="Mynt" className="h-4 w-auto" />
           <span className="text-sm font-bold">
             mynt<span className="text-mint">.</span>
           </span>
