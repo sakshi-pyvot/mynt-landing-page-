@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { Button, Eyebrow, GlowCard, Reveal, Section } from '@/components/ui'
 import ContactHeroVideo from '@/components/sections/ContactHeroVideo'
@@ -121,13 +121,15 @@ export default function Contact() {
   const intent = INTENTS.some((i) => i.key === q) ? q : 'mynt'
   const active = INTENTS.find((i) => i.key === intent)
 
-  // deep links like /contact?intent=mynt land on the form, not the page top
+  // deep links like /contact?intent=mynt land on the form, not the page top.
+  // Keyed on location.key so re-clicking the CTA while already here re-scrolls too.
+  const { key: locationKey } = useLocation()
   useEffect(() => {
     if (!q) return
     const t = setTimeout(() => document.getElementById('contact-tracks')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 350)
     return () => clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [locationKey])
 
   useEffect(() => {
     const updateTime = () => {
