@@ -4,8 +4,9 @@ import { reducedMotion } from '@/lib/utils'
 
 const VIDEO_SRC = '/videos/3.mp4'
 
-// The contact hero video presented as an iPhone: titanium bezel, dynamic island,
-// side buttons, home indicator — floating over an animated mint/teal glow.
+// Contact hero video inside the real iPhone 17 Pro Max frame (public/iphone17-frame.png,
+// transparent screen + surround), floating over an animated mint/teal glow.
+// Screen cutout in the frame: 4.2% left/right, 1.72% top/bottom of the image.
 export default function ContactHeroVideo() {
   const videoRef = useRef(null)
   const [still] = useState(() => reducedMotion())
@@ -47,45 +48,42 @@ export default function ContactHeroVideo() {
         <motion.div
           animate={still ? undefined : { y: [0, -10, 0] }}
           transition={still ? undefined : { duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          className="relative"
+          className="relative aspect-[452/932] w-full drop-shadow-[0_40px_80px_rgba(0,0,0,0.55)]"
         >
-          {/* titanium bezel */}
-          <div className="relative rounded-[3.2rem] bg-gradient-to-b from-[#3a3d42] via-[#17191d] to-[#2c2f34] p-[3px] shadow-[0_40px_120px_rgba(0,0,0,0.6),0_0_60px_rgba(47,211,154,0.12)]">
-            {/* side buttons */}
-            <span aria-hidden className="absolute -left-[2px] top-[104px] h-7 w-[3px] rounded-l bg-[#3a3d42]" />
-            <span aria-hidden className="absolute -left-[2px] top-[148px] h-12 w-[3px] rounded-l bg-[#3a3d42]" />
-            <span aria-hidden className="absolute -left-[2px] top-[204px] h-12 w-[3px] rounded-l bg-[#3a3d42]" />
-            <span aria-hidden className="absolute -right-[2px] top-[160px] h-16 w-[3px] rounded-r bg-[#3a3d42]" />
-            <div className="rounded-[3rem] bg-black p-[8px]">
-              <div className="relative aspect-[9/19] w-full overflow-hidden rounded-[2.55rem]">
-                <video
-                  ref={videoRef}
-                  src={VIDEO_SRC}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  autoPlay={!still}
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  aria-label="Pyvot contact — restaurant team on call"
-                />
-                {/* dynamic island */}
-                <div aria-hidden className="absolute left-1/2 top-2.5 h-[26px] w-[96px] -translate-x-1/2 rounded-full bg-black shadow-[inset_0_0_2px_rgba(255,255,255,0.15)]">
-                  <span className="absolute right-3 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-[#101418] shadow-[inset_0_0_1.5px_rgba(90,120,150,0.8)]" />
-                </div>
-                {/* screen glass sheen */}
-                <div aria-hidden className="pointer-events-none absolute inset-0 rounded-[2.55rem] bg-[linear-gradient(115deg,rgba(255,255,255,0.10)_0%,transparent_28%)]" />
-                {/* home indicator */}
-                <div aria-hidden className="absolute bottom-2 left-1/2 h-1 w-28 -translate-x-1/2 rounded-full bg-white/70" />
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="pointer-events-none mx-auto mt-4 h-8 w-[70%] rounded-[100%] bg-[radial-gradient(ellipse_at_center,rgba(47,211,154,0.2),transparent_70%)] blur-md"
+          {/* video sits in the frame's screen cutout */}
+          <video
+            ref={videoRef}
+            src={VIDEO_SRC}
+            className="absolute object-cover"
+            style={{
+              left: '4.2%',
+              right: '4.2%',
+              top: '1.72%',
+              bottom: '1.72%',
+              width: '91.6%',
+              height: '96.56%',
+              borderRadius: '14% / 6.8%',
+            }}
+            autoPlay={!still}
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-label="Pyvot contact — restaurant team on call"
+          />
+          <img
+            src="/iphone17-frame.png"
+            alt=""
             aria-hidden
+            className="pointer-events-none absolute inset-0 z-10 h-full w-full select-none"
+            draggable={false}
           />
         </motion.div>
+
+        <div
+          className="pointer-events-none mx-auto mt-4 h-8 w-[70%] rounded-[100%] bg-[radial-gradient(ellipse_at_center,rgba(47,211,154,0.2),transparent_70%)] blur-md"
+          aria-hidden
+        />
       </motion.div>
     </div>
   )
