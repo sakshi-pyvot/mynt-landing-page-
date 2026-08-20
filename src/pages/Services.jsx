@@ -6,7 +6,19 @@ import VideoLoop from '@/components/VideoLoop'
 import { CTA } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
-const SOCIAL_POSTS = ['bento', 'ipl-chaos', 'that-convert', 'trusted-brands', 'post-christmas-dip', 'real-money', 'image-coverage', 'pyvot-stands-for'].map((n) => ({ src: `/social/${n}.jpg` }))
+// real @pyvot.in posts, each card links to its post
+const SOCIAL_POSTS = [
+  ['zomato-swiggy-stuck', 'p/Da47C_VGeMF'],
+  ['growth-files-haji-saheb', 'reel/DXesKldEVjg'],
+  ['menu-playbook', 'reel/DbiUtjiRrmq'],
+  ['five-metrics', 'p/DbA_BBgmcpb'],
+  ['growth-files-8th-day', 'reel/DWoVSoWCZxz'],
+  ['discount-mantra', 'reel/DaNahODRtnZ'],
+  ['dining-vs-delivery', 'p/DbLO7AhjCmG'],
+  ['growth-files-bhikharam', 'reel/DbOD20axwSK'],
+  ['traditional-day', 'reel/DcDhTbHRmEa'],
+  ['growth-files-pabrais', 'reel/DZ7iawbRwHg'],
+].map(([n, path]) => ({ src: `/social/${n}.jpg`, href: `https://www.instagram.com/pyvot.in/${path}/` }))
 
 const ROUTES = [
   { to: '/mynt', k: 'Mynt by Pyvot', d: 'The intelligence layer. Use it yourself; experts optional.', tag: 'Software' },
