@@ -42,10 +42,10 @@ export default function OrbitCarousel({
         // trade layers invisibly, and emerging cards read solid, not flickery.
         c.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${lean}deg) scale(${(0.55 + depth * 0.5) * k})`
         c.style.zIndex = String(Math.round(depth * 100))
-        const img = c.firstElementChild
-        if (img) {
-          img.style.filter = `brightness(${0.45 + depth * 0.55}) drop-shadow(0 ${8 + depth * 16}px ${14 + depth * 22}px rgba(0,0,0,${0.25 + depth * 0.3}))`
-        }
+        // depth dim via an overlay's opacity (compositor-only) — animating a
+        // brightness/drop-shadow filter re-rasterized every card every frame
+        const dim = c.lastElementChild
+        if (dim) dim.style.opacity = String(0.55 - depth * 0.55)
       }
     }
 
@@ -57,8 +57,24 @@ export default function OrbitCarousel({
     }
 
     layout()
-    if (!still) raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+    // only animate while the orbit is actually on screen
+    let running = false
+    const io = new IntersectionObserver(([e]) => {
+      if (still) return
+      if (e.isIntersecting && !running) {
+        running = true
+        last = performance.now()
+        raf = requestAnimationFrame(tick)
+      } else if (!e.isIntersecting && running) {
+        running = false
+        cancelAnimationFrame(raf)
+      }
+    })
+    io.observe(el)
+    return () => {
+      io.disconnect()
+      cancelAnimationFrame(raf)
+    }
   }, [radiusX, radiusY, cardWidth, speed])
 
   return (
@@ -80,7 +96,7 @@ export default function OrbitCarousel({
           href={img.href || 'https://www.instagram.com/pyvot.in/'}
           target="_blank"
           rel="noreferrer"
-          className="group absolute left-1/2 top-1/2 block overflow-hidden rounded-xl border border-white/10 transition-[border-color] hover:border-mint/50"
+          className="group absolute left-1/2 top-1/2 block overflow-hidden rounded-xl border border-white/10 shadow-[0_16px_30px_rgba(0,0,0,0.4)] transition-[border-color] hover:border-mint/50"
           style={{ width: cardWidth, willChange: 'transform' }}
         >
           <img
@@ -90,6 +106,8 @@ export default function OrbitCarousel({
             draggable={false}
             className="block aspect-[9/16] w-full select-none object-cover transition-transform duration-500 group-hover:scale-[1.06]"
           />
+          {/* depth dim layer — must stay lastElementChild, layout() drives its opacity */}
+          <div className="pointer-events-none absolute inset-0 bg-black" aria-hidden />
         </a>
       ))}
     </div>

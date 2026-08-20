@@ -109,7 +109,16 @@ export default function HeroDashboard({ boot = true }) {
     const vals = root.current.querySelectorAll('.hd-val')
     const timers = []
 
+    // everything below idles while the dashboard is off screen — the live loop
+    // used to keep painting (and heating laptops) from behind other sections
+    let vis = true
+    const io = new IntersectionObserver(([e]) => {
+      vis = e.isIntersecting
+    })
+    io.observe(root.current)
+
     const tick = setInterval(() => {
+      if (!vis) return
       // 1–2 random KPI nudges
       for (let n = 0; n < 2; n++) {
         const i = (Math.random() * KPIS.length) | 0
@@ -134,6 +143,7 @@ export default function HeroDashboard({ boot = true }) {
     let ai = 0
     let alertI = 0
     const cycleAlert = () => {
+      if (!vis) return
       const a = ALERTS[alertI++ % ALERTS.length]
       const el = alertRef.current
       el.innerHTML = `<span class="rounded-full border px-2 py-0.5 text-[9px] font-bold tracking-[0.18em] ${TONE[a.tone].ring} ${TONE[a.tone].text} ${TONE[a.tone].bg}">${a.tag}</span><span class="text-[11px] text-ink">${a.text}</span>`
@@ -141,6 +151,7 @@ export default function HeroDashboard({ boot = true }) {
       timers.push(setTimeout(() => gsap.to(el, { x: 12, opacity: 0, duration: 0.4 }), 4200))
     }
     const typeAI = () => {
+      if (!vis) return
       const q = AI_LINES[ai++ % AI_LINES.length]
       const el = aiRef.current
       let i = 0
@@ -153,7 +164,7 @@ export default function HeroDashboard({ boot = true }) {
     }
     // popout: card lifts toward the viewer, holds a beat, settles back in place
     const pop = (el) => {
-      if (!el) return
+      if (!el || !vis) return
       gsap
         .timeline()
         .to(el, {
@@ -193,6 +204,7 @@ export default function HeroDashboard({ boot = true }) {
 
     return () => {
       off()
+      io.disconnect()
       clearInterval(tick)
       timers.forEach((t) => {
         clearTimeout(t)

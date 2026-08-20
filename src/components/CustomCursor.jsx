@@ -13,7 +13,6 @@ const HOVER_SCALE = 1.5
 export default function CustomCursor() {
   const lensRef = useRef(null)
   const dotRef = useRef(null)
-  const turbRef = useRef(null)
 
   useEffect(() => {
     if (!window.matchMedia('(pointer: fine)').matches || reducedMotion()) return undefined
@@ -74,15 +73,6 @@ export default function CustomCursor() {
     const onDown = () => gsap.to(lens, { scale: 0.9, duration: 0.12 })
     const onUp = () => gsap.to(lens, { scale: hover ? HOVER_SCALE : 1, duration: 0.25, ease: 'back.out(2)' })
 
-    // slow shimmer: drift the displacement noise so the glass reads as liquid, not static
-    const turb = turbRef.current
-    let t = 0
-    const shimmer = () => {
-      t += 0.012
-      turb?.setAttribute('baseFrequency', `${(0.012 + Math.sin(t) * 0.003).toFixed(4)} ${(0.016 + Math.cos(t * 0.8) * 0.004).toFixed(4)}`)
-    }
-    const shimmerId = setInterval(shimmer, 60)
-
     window.addEventListener('mousemove', onMove, { passive: true })
     document.addEventListener('mouseover', onOver)
     document.addEventListener('mouseout', onOut)
@@ -92,7 +82,6 @@ export default function CustomCursor() {
 
     return () => {
       document.body.classList.remove('custom-cursor')
-      clearInterval(shimmerId)
       clearTimeout(relaxTimer)
       window.removeEventListener('mousemove', onMove)
       document.removeEventListener('mouseover', onOver)
@@ -105,14 +94,6 @@ export default function CustomCursor() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[100] hidden [@media(pointer:fine)]:block" aria-hidden>
-      {/* displacement map for the lens (Chromium honours url() in backdrop-filter) */}
-      <svg width="0" height="0" className="absolute">
-        <filter id="cursor-lens" x="-25%" y="-25%" width="150%" height="150%" colorInterpolationFilters="sRGB">
-          <feTurbulence ref={turbRef} type="fractalNoise" baseFrequency="0.012 0.016" numOctaves="2" seed="7" result="noise" />
-          <feGaussianBlur in="noise" stdDeviation="1.2" result="soft" />
-          <feDisplacementMap in="SourceGraphic" in2="soft" scale="18" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </svg>
       <div
         ref={lensRef}
         className="cursor-lens absolute -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0"

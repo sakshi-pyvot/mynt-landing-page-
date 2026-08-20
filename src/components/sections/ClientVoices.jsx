@@ -56,7 +56,9 @@ function VoiceCard({ v, onOpen }) {
           vid.pause()
         }
       },
-      { threshold: 0.2, rootMargin: '300px 600px' },
+      // tight margins: every extra margin-px is another video decoding in
+      // parallel — only cards genuinely on screen play
+      { threshold: 0.35 },
     )
     io.observe(vid)
     return () => io.disconnect()

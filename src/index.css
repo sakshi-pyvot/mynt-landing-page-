@@ -54,12 +54,12 @@ body {
   }
 }
 
-/* liquid-glass cursor lens: refracts the page under it (Chromium honours the SVG
-   displacement in backdrop-filter; other engines keep the plain glass blur) */
+/* liquid-glass cursor lens. Plain glass blur only — the SVG displacement
+   backdrop-filter forced a CPU re-rasterize of the region under the lens on
+   every pointer move and ran the laptop hot. */
 .cursor-lens {
   -webkit-backdrop-filter: blur(1.6px) saturate(1.25) brightness(1.06);
   backdrop-filter: blur(1.6px) saturate(1.25) brightness(1.06);
-  backdrop-filter: url(#cursor-lens) blur(0.35px) saturate(1.25) brightness(1.06);
   background: radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 45%, rgba(47, 211, 154, 0.07) 100%);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.28),
@@ -180,10 +180,11 @@ body {
   mask-composite: exclude;
   pointer-events: none;
 }
+/* Plain glass blur only — the SVG displacement variant re-rasterized the
+   backdrop through feTurbulence on every scrolled frame under the fixed nav. */
 .lq-pill {
   -webkit-backdrop-filter: blur(3px) saturate(1.5) brightness(1.12);
   backdrop-filter: blur(3px) saturate(1.5) brightness(1.12);
-  backdrop-filter: url(#lq-lens) blur(1px) saturate(1.5) brightness(1.12);
 }
 .lq-pill::after {
   content: '';

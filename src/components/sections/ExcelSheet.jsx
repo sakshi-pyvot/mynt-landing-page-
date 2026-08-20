@@ -35,7 +35,14 @@ export default function ExcelSheet({ highlight = [] }) {
     // only numeric body cells tick
     const numeric = Array.from(grid.querySelectorAll('[data-num="1"]'))
     const timers = new Set()
+    // idle while off screen — 10 cell writes per 140ms is real CPU
+    let vis = true
+    const io = new IntersectionObserver(([e]) => {
+      vis = e.isIntersecting
+    })
+    io.observe(grid)
     const id = setInterval(() => {
+      if (!vis) return
       for (let k = 0; k < 10; k++) {
         const el = numeric[(Math.random() * numeric.length) | 0]
         const cur = parseInt(el.textContent.replace(/[^\d]/g, ''), 10) || 1000
@@ -53,6 +60,7 @@ export default function ExcelSheet({ highlight = [] }) {
       }
     }, 140)
     return () => {
+      io.disconnect()
       clearInterval(id)
       timers.forEach(clearTimeout)
     }
