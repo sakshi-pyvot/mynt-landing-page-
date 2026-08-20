@@ -18,7 +18,9 @@ const Chevron = ({ className }) => (
   </svg>
 )
 
-// which top-level group "owns" a path, for the active underline
+// which top-level group "owns" a path, for the active dot. Dropdowns cross-link
+// other groups' pages (Services lists /mynt), so only the FIRST matching group
+// counts — owners precede cross-referencers in NAV order.
 const groupActive = (item, pathname) => {
   if (item.to) return item.to === pathname
   return item.items.some((l) => !l.to.startsWith('/#') && pathname.startsWith(l.to.split('#')[0]))
@@ -74,6 +76,7 @@ export default function Nav() {
   }
 
   const panel = open >= 0 ? NAV[open] : null
+  const activeIdx = NAV.findIndex((item) => groupActive(item, location.pathname))
 
   return (
     <header
@@ -95,7 +98,7 @@ export default function Nav() {
         <div className="lq relative hidden rounded-full px-1.5 py-1.5 lg:block">
           <ul className="flex items-center whitespace-nowrap" role="list" onMouseLeave={() => setHover(-1)}>
             {NAV.map((item, i) => {
-              const active = groupActive(item, location.pathname)
+              const active = activeIdx === i
               const lit = active || open === i || hover === i
               const pillHere = (hover >= 0 ? hover : open) === i
               const cls = cn(
