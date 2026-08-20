@@ -3,7 +3,7 @@ import CtaPair from '@/components/CtaPair'
 import VideoLoop from '@/components/VideoLoop'
 import { HeroMosaic, TeamGrid } from '@/components/TeamCards'
 import { MyntMark, PyvotLogo } from '@/components/Brand'
-import { Button, CountUp, Eyebrow, GlowCard, Reveal, Section, SectionHead, SmartLink } from '@/components/ui'
+import { Button, CountUp, Eyebrow, InteractiveCard, Reveal, Section, SectionHead, SmartLink } from '@/components/ui'
 import { GROUPS, LEADERSHIP, TEAM } from '@/data/team'
 
 // [title, description, tiles?] — tiles are era-appropriate [src, alt] pairs;
@@ -214,7 +214,7 @@ export default function About() {
         <div className="grid gap-5 md:grid-cols-2">
           {WHY.map(([t, d], i) => (
             <Reveal key={t} delay={(i % 2) * 0.06}>
-              <GlowCard className="h-full p-8 flex flex-col justify-between">
+              <InteractiveCard className="h-full p-8 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs font-bold text-mint">0{i + 1}</span>
@@ -229,7 +229,7 @@ export default function About() {
                   <span className="h-1.5 w-1.5 rounded-full bg-mint" />
                   <span>Measured directly against contribution margin</span>
                 </div>
-              </GlowCard>
+              </InteractiveCard>
             </Reveal>
           ))}
         </div>
