@@ -8,7 +8,7 @@ export default function OrbitCarousel({
   images,
   className,
   radiusX = 250,
-  radiusY = 70,
+  radiusY = 95,
   cardWidth = 150,
   speed = 0.05, // revolutions per second
 }) {
@@ -35,11 +35,17 @@ export default function OrbitCarousel({
         const y = Math.cos(a) * radiusY + Math.sin(sec * 1.3 + i * 1.7) * 5 // per-card bob
         const lean = Math.sin(a) * 5 // tilt into the direction of travel
         const c = cards[i]
-        c.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${lean}deg) scale(${(0.55 + depth * 0.5) * k})`
-        c.style.zIndex = String(Math.round(depth * 100))
-        c.style.opacity = String(0.4 + depth * 0.6)
-        // front cards brighter with a deeper drop shadow
-        c.style.filter = `brightness(${0.55 + depth * 0.45}) drop-shadow(0 ${8 + depth * 16}px ${14 + depth * 22}px rgba(0,0,0,${0.25 + depth * 0.3}))`
+        // real translateZ depth: the browser composites the parallel planes
+        // continuously, so passing cards glide over each other instead of the
+        // one-frame z-index pop. The card carries ONLY the transform — opacity
+        // or filter here would flatten it out of the parent's 3D space — so
+        // brightness/shadow/opacity live on the inner img.
+        c.style.transform = `translate(-50%, -50%) translate3d(${x}px, ${y}px, ${(Math.cos(a) * 260 - 40) * k}px) rotate(${lean}deg) scale(${k})`
+        const img = c.firstElementChild
+        if (img) {
+          img.style.opacity = String(0.4 + depth * 0.6)
+          img.style.filter = `brightness(${0.55 + depth * 0.45}) drop-shadow(0 ${8 + depth * 16}px ${14 + depth * 22}px rgba(0,0,0,${0.25 + depth * 0.3}))`
+        }
       }
     }
 
@@ -65,7 +71,7 @@ export default function OrbitCarousel({
         paused.current = false
       }}
       className={cn('relative', className)}
-      style={{ height: radiusY * 2 + cardWidth * (16 / 9) * 1.15 }}
+      style={{ height: radiusY * 2 + cardWidth * (16 / 9) * 1.15, perspective: '900px', transformStyle: 'preserve-3d' }}
       aria-label="Pyvot Instagram posts"
     >
       {images.map((img) => (
