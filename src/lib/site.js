@@ -55,7 +55,7 @@ export const NAV = [
     title: 'About Pyvot',
     intro: 'We spent years inside the restaurant industry. Then we built what was missing.',
     items: [
-      { label: 'Our Story', to: '/about#story', hint: '20+ years around restaurants' },
+      { label: 'Our Story', to: '/about', hint: '20+ years around restaurants' },
       { label: 'Our Philosophy', to: '/about#philosophy', hint: 'Growth is a system' },
       { label: 'Our Team', to: '/about#team', hint: 'Leadership, tech, consulting, creative' },
       { label: 'Why Choose Us', to: '/about#why-us', hint: 'Four reasons operators stay' },
