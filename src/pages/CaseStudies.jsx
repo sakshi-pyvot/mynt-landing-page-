@@ -118,7 +118,7 @@ export default function CaseStudies() {
       {/* PageHero has no background slot, so the hero is composed by hand: quiet kitchen
           loop behind the copy under a heavy scrim, text content unchanged. */}
       <section className="relative overflow-hidden pt-36 pb-16 md:pt-44 md:pb-24">
-        <VideoLoop src="/videos/dining-loop.mp4" poster="/videos/dining-poster.jpg" label="Evening service in an upscale dining room" className="absolute inset-0" />
+        <VideoLoop src="/videos/cases-india.mp4" poster="/videos/cases-india-poster.jpg" label="Evening service in an Indian dining room" className="absolute inset-0" />
         <div className="pointer-events-none absolute inset-0 bg-bg/75" aria-hidden />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg/60 via-bg/30 to-bg" aria-hidden />
         <div className="relative mx-auto max-w-7xl px-6">

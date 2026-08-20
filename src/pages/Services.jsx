@@ -146,7 +146,7 @@ export default function Services() {
           { brand: 'Koshe Kosha', metric: '+7 pp', label: 'net margin', slug: 'koshe-kosha' },
         ]}
       >
-        <VideoLoop src="/videos/rider-loop.mp4" poster="/videos/rider-poster.jpg" scrim label="Night-city delivery rider" className="aspect-[21/9] rounded-2xl border border-line/70" />
+        <VideoLoop src="/videos/rider-india.mp4" poster="/videos/rider-india-poster.jpg" scrim label="Night delivery rider through an Indian street" className="aspect-[21/9] rounded-2xl border border-line/70" />
         <Card className="bg-card/50">
           <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-mute">Disciplines inside</div>
           <ul className="mt-3 grid gap-2 text-sm sm:grid-cols-2" role="list">
@@ -171,7 +171,7 @@ export default function Services() {
         ]}
         flip
       >
-        <VideoLoop src="/videos/restaurant.mp4" poster="/videos/restaurant-poster.jpg" label="Flambé on the restaurant floor" className="aspect-video rounded-2xl border border-white/10" />
+        <VideoLoop src="/videos/dining-india.mp4" poster="/videos/dining-india-poster.jpg" label="Thali service at the table" className="aspect-video rounded-2xl border border-white/10" />
       </ServiceBlock>
 
       <ServiceBlock
