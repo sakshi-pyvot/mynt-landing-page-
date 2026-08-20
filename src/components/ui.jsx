@@ -247,6 +247,55 @@ export function Button({ to, children, variant = 'primary', size = 'md', classNa
 }
 
 /**
+ * InteractiveCard — tilt + cursor spotlight + specular sheen (light band sweeping
+ * with the pointer, like light over a matt-black card). Pointer-fine only;
+ * touch and reduced-motion get the plain card.
+ */
+export function InteractiveCard({ children, className, as: Tag = 'div', maxTilt = 6, ...rest }) {
+  const [fx, setFx] = useState({ rx: 0, ry: 0, mx: 50, my: 50, on: 0 })
+  const [fine] = useState(() => window.matchMedia('(pointer: fine)').matches && !reducedMotion())
+
+  const onMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    const px = (e.clientX - r.left) / r.width
+    const py = (e.clientY - r.top) / r.height
+    setFx({ rx: (0.5 - py) * maxTilt, ry: (px - 0.5) * maxTilt, mx: px * 100, my: py * 100, on: 1 })
+  }
+
+  return (
+    <Tag
+      onMouseMove={fine ? onMove : undefined}
+      onMouseLeave={fine ? () => setFx((f) => ({ ...f, rx: 0, ry: 0, on: 0 })) : undefined}
+      style={
+        fine
+          ? {
+              transform: `perspective(1000px) rotateX(${fx.rx}deg) rotateY(${fx.ry}deg)`,
+              transition: 'transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)',
+            }
+          : undefined
+      }
+      className={cn('lq-card group relative overflow-hidden rounded-2xl border border-line/70 bg-card/70 p-6 transition-colors hover:border-mint/40', className)}
+      {...rest}
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-px transition-opacity duration-300"
+        style={{ opacity: fx.on, background: `radial-gradient(340px circle at ${fx.mx}% ${fx.my}%, rgba(47,211,154,0.12), transparent 70%)` }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-px transition-opacity duration-300"
+        style={{
+          opacity: fx.on * 0.9,
+          background: `linear-gradient(${105 + (fx.mx - 50) * 0.3}deg, transparent ${Math.max(0, fx.mx - 22)}%, rgba(255,255,255,0.07) ${fx.mx}%, transparent ${Math.min(100, fx.mx + 22)}%)`,
+        }}
+      />
+      <div className="relative z-10">{children}</div>
+    </Tag>
+  )
+}
+
+/**
  * GlowCard adds a subtle mouse-following spotlight glow for high-end SaaS feel
  */
 export function GlowCard({ children, className, glowColor = 'rgba(47, 211, 154, 0.15)', as: Tag = 'div', ...rest }) {
