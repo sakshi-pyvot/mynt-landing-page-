@@ -9,10 +9,8 @@ import { cn } from '@/lib/utils'
 // real @pyvot.in content made for restaurant brands — each card links to its post
 const SOCIAL_POSTS = [
   ['growth-files-haji-saheb', 'DXesKldEVjg'],
-  ['menu-playbook', 'DbiUtjiRrmq'],
   ['growth-files-barbq', 'DUAUO20kkwk'],
   ['growth-files-8th-day', 'DWoVSoWCZxz'],
-  ['discount-mantra', 'DaNahODRtnZ'],
   ['growth-files-cocoa', 'Db3IWGpxPzG'],
   ['growth-files-bhikharam', 'DbOD20axwSK'],
   ['growth-files-lmb', 'DZe4q49Rezn'],
