@@ -1,8 +1,12 @@
 import CtaPair from '@/components/CtaPair'
+import OrbitCarousel from '@/components/OrbitCarousel'
 import ExpertsSplit from '@/components/sections/ExpertsSplit'
-import { Button, Card, Eyebrow, PageHero, Reveal, Section, SectionHead, SmartLink, Stat } from '@/components/ui'
+import { Button, Card, CountUp, Eyebrow, PageHero, Reveal, Section, SectionHead, SmartLink, Stat } from '@/components/ui'
+import VideoLoop from '@/components/VideoLoop'
 import { CTA } from '@/lib/site'
 import { cn } from '@/lib/utils'
+
+const SOCIAL_POSTS = ['bento', 'ipl-chaos', 'that-convert', 'trusted-brands', 'post-christmas-dip', 'real-money', 'image-coverage', 'pyvot-stands-for'].map((n) => ({ src: `/social/${n}.jpg` }))
 
 const ROUTES = [
   { to: '/mynt', k: 'Mynt by Pyvot', d: 'The intelligence layer. Use it yourself; experts optional.', tag: 'Software' },
@@ -130,6 +134,8 @@ export default function Services() {
           { brand: 'Koshe Kosha', metric: '+7 pp', label: 'net margin', slug: 'koshe-kosha' },
         ]}
       >
+        {/* TODO(asset): replace with delivery-rider night loop */}
+        <VideoLoop src="/videos/hero-ambient.mp4" poster="/videos/hero-ambient-poster.jpg" scrim label="Night-time restaurant ambience" className="aspect-[21/9] rounded-2xl border border-line/70" />
         <Card className="bg-card/50">
           <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-mute">Disciplines inside</div>
           <ul className="mt-3 grid gap-2 text-sm sm:grid-cols-2" role="list">
@@ -154,9 +160,7 @@ export default function Services() {
         ]}
         flip
       >
-        <div className="overflow-hidden rounded-2xl border border-white/10">
-          <video src="/videos/restaurant.mp4" muted loop playsInline autoPlay className="block aspect-video w-full object-cover" />
-        </div>
+        <VideoLoop src="/videos/restaurant.mp4" poster="/videos/restaurant-poster.jpg" label="Flambé on the restaurant floor" className="aspect-video rounded-2xl border border-white/10" />
       </ServiceBlock>
 
       <ServiceBlock
@@ -174,19 +178,12 @@ export default function Services() {
         cta="/contact?intent=social"
         ctaLabel="Get a social audit"
       >
-        <Card className="bg-card/50">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-mute">Platform strategy</div>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-xl border border-line/70 p-4">
-              <div className="font-semibold">Instagram</div>
-              <p className="mt-1 text-sm text-mute">Discovery and desire. Reels-first, food and people, saves and shares as the signal.</p>
-            </div>
-            <div className="rounded-xl border border-line/70 p-4">
-              <div className="font-semibold">Facebook</div>
-              <p className="mt-1 text-sm text-mute">Local audience and occasions. Events, offers, community replies, older demographics.</p>
-            </div>
-          </div>
-        </Card>
+        <div>
+          <OrbitCarousel images={SOCIAL_POSTS} radiusX={185} cardWidth={140} />
+          <a href="https://www.instagram.com/pyvot.in/" target="_blank" rel="noreferrer" className="mt-2 block text-center text-sm text-mint hover:underline">
+            @pyvot.in — see the work →
+          </a>
+        </div>
       </ServiceBlock>
 
       {/* how we work */}
@@ -212,7 +209,7 @@ export default function Services() {
           <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-6">
             {RESULTS.map(([v, l, b]) => (
               <div key={b}>
-                <Stat value={v} label={l} />
+                <Stat value={<CountUp value={v} />} label={l} />
                 <div className="mt-1 text-xs text-mute/70">{b}</div>
               </div>
             ))}
