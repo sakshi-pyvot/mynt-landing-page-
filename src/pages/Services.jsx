@@ -10,8 +10,10 @@ import { cn } from '@/lib/utils'
 const SOCIAL_POSTS = [
   ['growth-files-haji-saheb', 'DXesKldEVjg'],
   ['growth-files-barbq', 'DUAUO20kkwk'],
+  ['growth-files-hatari', 'DSNiNcmkeu7'],
   ['growth-files-8th-day', 'DWoVSoWCZxz'],
   ['growth-files-cocoa', 'Db3IWGpxPzG'],
+  ['growth-files-og', 'DTNbBmrERW6'],
   ['growth-files-bhikharam', 'DbOD20axwSK'],
   ['growth-files-lmb', 'DZe4q49Rezn'],
   ['growth-files-wah-foods', 'DbvXe1DR69L'],
@@ -144,8 +146,7 @@ export default function Services() {
           { brand: 'Koshe Kosha', metric: '+7 pp', label: 'net margin', slug: 'koshe-kosha' },
         ]}
       >
-        {/* TODO(asset): replace with delivery-rider night loop */}
-        <VideoLoop src="/videos/hero-ambient.mp4" poster="/videos/hero-ambient-poster.jpg" scrim label="Night-time restaurant ambience" className="aspect-[21/9] rounded-2xl border border-line/70" />
+        <VideoLoop src="/videos/rider-loop.mp4" poster="/videos/rider-poster.jpg" scrim label="Night-city delivery rider" className="aspect-[21/9] rounded-2xl border border-line/70" />
         <Card className="bg-card/50">
           <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-mute">Disciplines inside</div>
           <ul className="mt-3 grid gap-2 text-sm sm:grid-cols-2" role="list">

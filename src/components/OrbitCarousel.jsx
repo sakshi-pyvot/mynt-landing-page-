@@ -27,16 +27,19 @@ export default function OrbitCarousel({
       // scale the orbit down with the container so it survives mobile widths
       const k = Math.min(1, el.clientWidth / (radiusX * 2 + cardWidth))
       const cards = el.children
+      const sec = t / speed // wall-clock seconds, so bob speed is speed-independent
       for (let i = 0; i < cards.length; i += 1) {
         const a = t * Math.PI * 2 + (i / cards.length) * Math.PI * 2
         const depth = (Math.cos(a) + 1) / 2 // 0 = back, 1 = front
         const x = Math.sin(a) * radiusX * k
-        const y = Math.cos(a) * radiusY
+        const y = Math.cos(a) * radiusY + Math.sin(sec * 1.3 + i * 1.7) * 5 // per-card bob
+        const lean = Math.sin(a) * 5 // tilt into the direction of travel
         const c = cards[i]
-        c.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${(0.55 + depth * 0.5) * k})`
+        c.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${lean}deg) scale(${(0.55 + depth * 0.5) * k})`
         c.style.zIndex = String(Math.round(depth * 100))
         c.style.opacity = String(0.4 + depth * 0.6)
-        c.style.filter = `brightness(${0.55 + depth * 0.45})`
+        // front cards brighter with a deeper drop shadow
+        c.style.filter = `brightness(${0.55 + depth * 0.45}) drop-shadow(0 ${8 + depth * 16}px ${14 + depth * 22}px rgba(0,0,0,${0.25 + depth * 0.3}))`
       }
     }
 
@@ -62,7 +65,7 @@ export default function OrbitCarousel({
         paused.current = false
       }}
       className={cn('relative', className)}
-      style={{ height: radiusY * 2 + cardWidth * 2 }}
+      style={{ height: radiusY * 2 + cardWidth * (16 / 9) * 1.15 }}
       aria-label="Pyvot Instagram posts"
     >
       {images.map((img) => (
@@ -71,10 +74,16 @@ export default function OrbitCarousel({
           href={img.href || 'https://www.instagram.com/pyvot.in/'}
           target="_blank"
           rel="noreferrer"
-          className="absolute left-1/2 top-1/2 block overflow-hidden rounded-xl border border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.45)] transition-[border-color] hover:border-mint/50"
+          className="group absolute left-1/2 top-1/2 block overflow-hidden rounded-xl border border-white/10 transition-[border-color] hover:border-mint/50"
           style={{ width: cardWidth, willChange: 'transform' }}
         >
-          <img src={img.src} alt={img.alt || 'Pyvot Instagram post'} loading="lazy" draggable={false} className="block aspect-[4/5] w-full select-none object-cover" />
+          <img
+            src={img.src}
+            alt={img.alt || 'Pyvot Instagram post'}
+            loading="lazy"
+            draggable={false}
+            className="block aspect-[9/16] w-full select-none object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+          />
         </a>
       ))}
     </div>

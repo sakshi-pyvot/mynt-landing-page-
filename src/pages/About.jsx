@@ -159,7 +159,8 @@ export default function About() {
       {/* philosophy — the page's one cinematic break: full-bleed kitchen loop */}
       <section id="philosophy" className="relative overflow-hidden">
         <VideoLoop
-          src="/videos/restaurant.mp4"
+          src="/videos/kitchen-loop.mp4"
+          poster="/videos/kitchen-poster.jpg"
           label="Kitchen flames and service during a dinner rush"
           className="absolute inset-0"
         />
