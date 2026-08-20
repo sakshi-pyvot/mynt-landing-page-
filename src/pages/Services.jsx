@@ -6,19 +6,19 @@ import VideoLoop from '@/components/VideoLoop'
 import { CTA } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
-// real @pyvot.in posts, each card links to its post
+// real @pyvot.in content made for restaurant brands — each card links to its post
 const SOCIAL_POSTS = [
-  ['zomato-swiggy-stuck', 'p/Da47C_VGeMF'],
-  ['growth-files-haji-saheb', 'reel/DXesKldEVjg'],
-  ['menu-playbook', 'reel/DbiUtjiRrmq'],
-  ['five-metrics', 'p/DbA_BBgmcpb'],
-  ['growth-files-8th-day', 'reel/DWoVSoWCZxz'],
-  ['discount-mantra', 'reel/DaNahODRtnZ'],
-  ['dining-vs-delivery', 'p/DbLO7AhjCmG'],
-  ['growth-files-bhikharam', 'reel/DbOD20axwSK'],
-  ['traditional-day', 'reel/DcDhTbHRmEa'],
-  ['growth-files-pabrais', 'reel/DZ7iawbRwHg'],
-].map(([n, path]) => ({ src: `/social/${n}.jpg`, href: `https://www.instagram.com/pyvot.in/${path}/` }))
+  ['growth-files-haji-saheb', 'DXesKldEVjg'],
+  ['menu-playbook', 'DbiUtjiRrmq'],
+  ['growth-files-barbq', 'DUAUO20kkwk'],
+  ['growth-files-8th-day', 'DWoVSoWCZxz'],
+  ['discount-mantra', 'DaNahODRtnZ'],
+  ['growth-files-cocoa', 'Db3IWGpxPzG'],
+  ['growth-files-bhikharam', 'DbOD20axwSK'],
+  ['growth-files-lmb', 'DZe4q49Rezn'],
+  ['growth-files-wah-foods', 'DbvXe1DR69L'],
+  ['growth-files-pabrais', 'DZ7iawbRwHg'],
+].map(([n, id]) => ({ src: `/social/${n}.jpg`, href: `https://www.instagram.com/pyvot.in/reel/${id}/` }))
 
 const ROUTES = [
   { to: '/mynt', k: 'Mynt by Pyvot', d: 'The intelligence layer. Use it yourself; experts optional.', tag: 'Software' },

@@ -62,7 +62,7 @@ export default function OrbitCarousel({
         paused.current = false
       }}
       className={cn('relative', className)}
-      style={{ height: radiusY * 2 + cardWidth * 1.6 }}
+      style={{ height: radiusY * 2 + cardWidth * 2 }}
       aria-label="Pyvot Instagram posts"
     >
       {images.map((img) => (
@@ -74,7 +74,7 @@ export default function OrbitCarousel({
           className="absolute left-1/2 top-1/2 block overflow-hidden rounded-xl border border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.45)] transition-[border-color] hover:border-mint/50"
           style={{ width: cardWidth, willChange: 'transform' }}
         >
-          <img src={img.src} alt={img.alt || 'Pyvot Instagram post'} loading="lazy" draggable={false} className="block aspect-square w-full select-none object-cover" />
+          <img src={img.src} alt={img.alt || 'Pyvot Instagram post'} loading="lazy" draggable={false} className="block aspect-[4/5] w-full select-none object-cover" />
         </a>
       ))}
     </div>
