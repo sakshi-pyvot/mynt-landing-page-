@@ -1,7 +1,7 @@
 import CtaPair from '@/components/CtaPair'
 import OrbitCarousel from '@/components/OrbitCarousel'
 import ExpertsSplit from '@/components/sections/ExpertsSplit'
-import { Button, Card, CountUp, Eyebrow, PageHero, Reveal, Section, SectionHead, SmartLink, Stat } from '@/components/ui'
+import { Button, Card, CountUp, Eyebrow, InteractiveCard, PageHero, Reveal, Section, SectionHead, SmartLink, Stat } from '@/components/ui'
 import VideoLoop from '@/components/VideoLoop'
 import { CTA } from '@/lib/site'
 import { cn } from '@/lib/utils'
@@ -94,11 +94,11 @@ function ServiceBlock({ id, eyebrow, title, lede, monitor, playbook, get, proof,
             <div className="grid gap-4 sm:grid-cols-2">
               {proof.map((p) => (
                 <SmartLink key={p.brand} to={p.to || `/case-studies#${p.slug}`} className="block">
-                  <Card glow className="h-full">
+                  <InteractiveCard className="h-full">
                     <div className="text-xs uppercase tracking-[0.2em] text-mute">{p.brand}</div>
                     <div className="mt-2 text-3xl font-bold tracking-tight text-mint">{p.metric}</div>
                     <div className="text-xs uppercase tracking-[0.16em] text-mute">{p.label}</div>
-                  </Card>
+                  </InteractiveCard>
                 </SmartLink>
               ))}
             </div>
@@ -121,12 +121,12 @@ export default function Services() {
           {ROUTES.map((r, i) => (
             <Reveal key={r.k} delay={i * 0.05}>
               <SmartLink to={r.to} className="block h-full">
-                <Card className="h-full">
+                <InteractiveCard className="h-full">
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-mint">{r.tag}</span>
                   <h3 className="mt-2 font-semibold leading-snug">{r.k}</h3>
                   <p className="mt-2 text-sm text-mute">{r.d}</p>
                   <span className="mt-4 inline-block text-sm text-mint">Open →</span>
-                </Card>
+                </InteractiveCard>
               </SmartLink>
             </Reveal>
           ))}
