@@ -1,7 +1,8 @@
 import CtaPair from '@/components/CtaPair'
 import OrbitCarousel from '@/components/OrbitCarousel'
 import ExpertsSplit from '@/components/sections/ExpertsSplit'
-import { Button, Card, CountUp, Eyebrow, InteractiveCard, PageHero, Reveal, Section, SectionHead, SmartLink, Stat } from '@/components/ui'
+import { PyvotLogo } from '@/components/Brand'
+import { Button, Card, CountUp, Eyebrow, InteractiveCard, Reveal, Section, SectionHead, SmartLink, Stat } from '@/components/ui'
 import VideoLoop from '@/components/VideoLoop'
 import { CTA } from '@/lib/site'
 import { cn } from '@/lib/utils'
@@ -112,9 +113,32 @@ function ServiceBlock({ id, eyebrow, title, lede, monitor, playbook, get, proof,
 export default function Services() {
   return (
     <>
-      <PageHero eyebrow="Pyvot Experts · Services" title={<>Software finds the opportunity. <span className="text-gradient">People make it happen.</span></>} lede="Restaurant operators can use Mynt directly, or work with Pyvot's team to execute growth and profitability programmes — online ordering, dining, and social.">
-        <CtaPair />
-      </PageHero>
+      {/* PageHero has no background slot, so the hero is composed by hand: consulting-
+          session loop behind the copy under a heavy scrim, text content unchanged. */}
+      <section className="relative overflow-hidden pt-36 pb-16 md:pt-44 md:pb-24">
+        <VideoLoop src="/videos/experts-india.mp4" poster="/videos/experts-india-poster.jpg" label="Consultants and a restaurant owner reviewing dashboards" className="absolute inset-0" />
+        <div className="pointer-events-none absolute inset-0 bg-bg/75" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg/60 via-bg/30 to-bg" aria-hidden />
+        <div className="relative mx-auto max-w-7xl px-6">
+          <Reveal>
+            <PyvotLogo className="mb-6 h-6" />
+            <Eyebrow>Pyvot Experts · Services</Eyebrow>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h1 className="mt-5 max-w-4xl text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
+              Software finds the opportunity. <span className="text-gradient">People make it happen.</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mute md:text-xl">
+              Restaurant operators can use Mynt directly, or work with Pyvot's team to execute growth and profitability programmes — online ordering, dining, and social.
+            </p>
+          </Reveal>
+          <Reveal delay={0.15} className="mt-9">
+            <CtaPair />
+          </Reveal>
+        </div>
+      </section>
 
       <Section tight className="pt-0">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
