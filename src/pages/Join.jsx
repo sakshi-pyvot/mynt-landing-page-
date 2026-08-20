@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { Button, GlowCard, PageHero, Reveal, Section, SectionHead } from '@/components/ui'
+import { motion } from 'motion/react'
+import { Button, CountUp, Eyebrow, GlowCard, Reveal, Section, SectionHead } from '@/components/ui'
+import VideoLoop from '@/components/VideoLoop'
 import { submitForm, STATUS_TEXT } from '@/lib/forms'
-import SocialLinks from '@/components/SocialLinks'
-import { cn } from '@/lib/utils'
+import { cn, reducedMotion } from '@/lib/utils'
 
 const BUILDING = [
   {
@@ -106,6 +107,87 @@ const PROCESS_STEPS = [
   },
 ]
 
+const PERKS = [
+  {
+    t: 'Real Industry Exposure',
+    d: 'Client food tastings, restaurant visits, kitchen walkthroughs, and executive reviews. You learn how F&B businesses really make money.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-mint">
+        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+      </svg>
+    ),
+  },
+  {
+    t: 'Ownership & ESOPs',
+    d: 'We believe early team members should share directly in the enterprise value we create. Competitive cash + equity pools for key contributors.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-mint">
+        <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+        <path d="M22 12A10 10 0 0 0 12 2v10z" />
+      </svg>
+    ),
+  },
+  {
+    t: 'Kolkata HQ (Sector V)',
+    d: 'Fast-paced, in-person collaboration. Restaurants operate on real-world energy, and we thrive being in the same room together.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-mint">
+        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+        <circle cx="12" cy="10" r="3" />
+      </svg>
+    ),
+  },
+]
+
+// Floating square motion-graphic card ("SHARE YOUR WORK" Jitter loop). Pure black
+// video on the black page bg, so only the glow + rim separate it — same motion
+// language as ContactHeroVideo: spring entry, gentle infinite float, glow blobs.
+function HeroSceneCard() {
+  const [still] = useState(() => reducedMotion())
+
+  return (
+    <div className="relative mx-auto w-full max-w-[300px] sm:max-w-[340px] lg:max-w-[420px]">
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -inset-14 rounded-full bg-[radial-gradient(ellipse_at_35%_30%,rgba(47,211,154,0.25),transparent_60%)] blur-3xl"
+        animate={still ? undefined : { rotate: [0, 30, 0], scale: [1, 1.12, 1] }}
+        transition={still ? undefined : { duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -inset-14 rounded-full bg-[radial-gradient(ellipse_at_70%_70%,rgba(56,189,248,0.14),transparent_60%)] blur-3xl"
+        animate={still ? undefined : { rotate: [0, -25, 0], scale: [1.1, 1, 1.1] }}
+        transition={still ? undefined : { duration: 11, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
+      <motion.div
+        initial={{ opacity: 0, y: 40, scale: 0.94 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: '-10% 0px' }}
+        transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+        className="relative"
+      >
+        <motion.div
+          animate={still ? undefined : { y: [0, -10, 0] }}
+          transition={still ? undefined : { duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <VideoLoop
+            src="/videos/scene.mp4"
+            poster="/videos/scene-poster.jpg"
+            label="Share your work — Pyvot careers motion graphic"
+            className="aspect-square rounded-3xl border border-line/60 bg-bg shadow-[0_40px_80px_rgba(0,0,0,0.55)]"
+          />
+        </motion.div>
+
+        <div
+          className="pointer-events-none mx-auto mt-4 h-8 w-[70%] rounded-[100%] bg-[radial-gradient(ellipse_at_center,rgba(47,211,154,0.2),transparent_70%)] blur-md"
+          aria-hidden
+        />
+      </motion.div>
+    </div>
+  )
+}
+
 export default function Join() {
   const [selectedRole, setSelectedRole] = useState(ROLES[0].title)
   const [status, setStatus] = useState('idle')
@@ -133,25 +215,46 @@ export default function Join() {
 
   return (
     <>
-      {/* Animated Careers Hero */}
-      <PageHero
-        eyebrow="Join the Pyvot Team"
-        title={
-          <>
-            Build the intelligence layer for <span className="text-gradient">250+ restaurant brands.</span>
-          </>
-        }
-        lede="We are operators, engineers, and growth strategists solving one of the largest unorganized data problems in food-tech. Based in Sector V, Kolkata — working with top culinary brands across India."
-      >
-        <div className="flex flex-wrap items-center gap-3">
-          <Button to="#open-positions" size="lg">
-            View Open Positions ({ROLES.length})
-          </Button>
-          <Button to="#why-join" variant="ghost" size="lg">
-            Why Join Pyvot ↓
-          </Button>
+      {/* Animated Careers Hero — headline beside the "SHARE YOUR WORK" motion graphic */}
+      <section className="relative overflow-hidden pt-36 pb-16 md:pt-44 md:pb-20">
+        <div className="dot-field pointer-events-none absolute inset-0 [mask-image:radial-gradient(60%_60%_at_50%_0%,#000,transparent)]" />
+        <div className="mint-glow pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2" />
+
+        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1.15fr_1fr] lg:gap-20">
+          <div>
+            <Reveal>
+              <Eyebrow>Join the Pyvot Team</Eyebrow>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h1 className="mt-5 max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl">
+                Build the intelligence layer for{' '}
+                <span className="text-gradient">
+                  <CountUp value="250+" /> restaurant brands.
+                </span>
+              </h1>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mute md:text-xl">
+                We are operators, engineers, and growth strategists solving one of the largest unorganized data problems in food-tech. Based in Sector V, Kolkata — working with top culinary brands across India.
+              </p>
+            </Reveal>
+            <Reveal delay={0.15} className="mt-9">
+              <div className="flex flex-wrap items-center gap-3">
+                <Button to="#open-positions" size="lg">
+                  View Open Positions ({ROLES.length})
+                </Button>
+                <Button to="#why-join" variant="ghost" size="lg">
+                  Why Join Pyvot ↓
+                </Button>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.1}>
+            <HeroSceneCard />
+          </Reveal>
         </div>
-      </PageHero>
+      </section>
 
       {/* What We're Building (Bento Grid) */}
       <Section id="why-join" tight className="pt-0">
@@ -216,25 +319,17 @@ export default function Join() {
         </div>
 
         {/* Perks & Life at Pyvot */}
+        {/* TODO(asset): office/tasting candid photos */}
         <div className="mt-12 grid gap-4 sm:grid-cols-3">
-          {[
-            {
-              t: 'Real Industry Exposure',
-              d: 'Client food tastings, restaurant visits, kitchen walkthroughs, and executive reviews. You learn how F&B businesses really make money.',
-            },
-            {
-              t: 'Ownership & ESOPs',
-              d: 'We believe early team members should share directly in the enterprise value we create. Competitive cash + equity pools for key contributors.',
-            },
-            {
-              t: 'Kolkata HQ (Sector V)',
-              d: 'Fast-paced, in-person collaboration. Restaurants operate on real-world energy, and we thrive being in the same room together.',
-            },
-          ].map((item) => (
-            <div key={item.t} className="rounded-2xl border border-line/70 bg-card/50 p-6">
-              <div className="font-bold text-sm text-ink">{item.t}</div>
-              <p className="mt-2 text-xs leading-relaxed text-mute">{item.d}</p>
-            </div>
+          {PERKS.map((item, i) => (
+            <Reveal key={item.t} delay={i * 0.06}>
+              <div className="relative h-full overflow-hidden rounded-2xl border border-line/70 bg-card/50 p-6 transition-colors hover:border-mint/40">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-mint/[0.08] blur-2xl" aria-hidden />
+                <div className="grid h-10 w-10 place-items-center rounded-xl border border-mint/30 bg-mint/10">{item.icon}</div>
+                <div className="mt-4 font-bold text-sm text-ink">{item.t}</div>
+                <p className="mt-2 text-xs leading-relaxed text-mute">{item.d}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </Section>
@@ -248,15 +343,15 @@ export default function Join() {
         />
 
         <div className="relative mx-auto max-w-3xl">
-          {/* Vertical progress line */}
-          <div className="absolute left-6 top-6 bottom-6 hidden w-0.5 bg-gradient-to-b from-mint via-mint/40 to-line md:block" />
+          {/* Mint spine */}
+          <div className="absolute left-6 top-6 bottom-6 hidden w-0.5 bg-gradient-to-b from-mint via-mint/40 to-line shadow-[0_0_12px_rgba(47,211,154,0.4)] md:block" aria-hidden />
 
           <div className="space-y-6">
             {PROCESS_STEPS.map((step, idx) => (
               <Reveal key={step.step} delay={idx * 0.06}>
                 <div className="relative flex flex-col md:flex-row md:items-start gap-5 rounded-2xl border border-line/70 bg-card/60 p-6 md:pl-16 transition-all hover:border-mint/50">
-                  {/* Step bubble */}
-                  <div className="flex md:absolute md:left-2.5 md:top-6 h-7 w-7 shrink-0 items-center justify-center rounded-full border border-mint bg-bg font-mono text-xs font-bold text-mint shadow-[0_0_15px_rgba(47,211,154,0.3)]">
+                  {/* Numbered glass dot on the spine */}
+                  <div className="flex md:absolute md:left-1.5 md:top-6 h-9 w-9 shrink-0 items-center justify-center rounded-full border border-mint/70 bg-bg/60 backdrop-blur-md font-mono text-xs font-bold text-mint shadow-[0_0_18px_rgba(47,211,154,0.35),inset_0_1px_0_rgba(255,255,255,0.12)]">
                     {step.step}
                   </div>
 
@@ -275,6 +370,8 @@ export default function Join() {
           </div>
         </div>
       </Section>
+
+      {/* TODO(asset): Life at Pyvot reels wall (awaiting IG exports) */}
 
       {/* Open Positions */}
       <Section id="open-positions">
