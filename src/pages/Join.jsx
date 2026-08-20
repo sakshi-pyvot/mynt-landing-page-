@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'motion/react'
-import { Button, CountUp, Eyebrow, GlowCard, Reveal, Section, SectionHead } from '@/components/ui'
+import { Button, CountUp, Eyebrow, GlowCard, InteractiveCard, Reveal, Section, SectionHead } from '@/components/ui'
 import VideoLoop from '@/components/VideoLoop'
 import { submitForm, STATUS_TEXT } from '@/lib/forms'
 import { cn, reducedMotion } from '@/lib/utils'
@@ -267,7 +267,7 @@ export default function Join() {
         <div className="grid gap-6 md:grid-cols-3">
           {BUILDING.map((b, i) => (
             <Reveal key={b.title} delay={i * 0.08}>
-              <GlowCard className="h-full p-7 flex flex-col justify-between">
+              <InteractiveCard className="h-full p-7 flex flex-col justify-between">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-wider text-mint border border-mint/30 bg-mint/5 px-2.5 py-0.5 rounded">
                     {b.badge}
@@ -283,7 +283,7 @@ export default function Join() {
                     </span>
                   ))}
                 </div>
-              </GlowCard>
+              </InteractiveCard>
             </Reveal>
           ))}
         </div>
@@ -323,12 +323,12 @@ export default function Join() {
         <div className="mt-12 grid gap-4 sm:grid-cols-3">
           {PERKS.map((item, i) => (
             <Reveal key={item.t} delay={i * 0.06}>
-              <div className="relative h-full overflow-hidden rounded-2xl border border-line/70 bg-card/50 p-6 transition-colors hover:border-mint/40">
+              <InteractiveCard className="h-full bg-card/50">
                 <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-mint/[0.08] blur-2xl" aria-hidden />
                 <div className="grid h-10 w-10 place-items-center rounded-xl border border-mint/30 bg-mint/10">{item.icon}</div>
                 <div className="mt-4 font-bold text-sm text-ink">{item.t}</div>
                 <p className="mt-2 text-xs leading-relaxed text-mute">{item.d}</p>
-              </div>
+              </InteractiveCard>
             </Reveal>
           ))}
         </div>
@@ -384,7 +384,7 @@ export default function Join() {
         {/* Single Featured Role Card */}
         <div className="space-y-6">
           {ROLES.map((r) => (
-            <GlowCard key={r.id} className="p-7 md:p-10 border-mint/40 bg-gradient-to-b from-card/90 to-surface/90">
+            <InteractiveCard key={r.id} maxTilt={3} className="p-7 md:p-10 border-mint/40 bg-gradient-to-b from-card/90 to-surface/90">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
                 <div className="max-w-3xl">
                   <div className="flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-mute">
@@ -442,7 +442,7 @@ export default function Join() {
                   <span className="font-mono text-[11px] text-mute">Immediate hire · Sector V Kolkata</span>
                 </div>
               </div>
-            </GlowCard>
+            </InteractiveCard>
           ))}
         </div>
 
