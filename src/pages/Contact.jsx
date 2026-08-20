@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'motion/react'
-import { Button, Eyebrow, GlowCard, Reveal, Section } from '@/components/ui'
+import { Button, Eyebrow, InteractiveCard, Reveal, Section } from '@/components/ui'
 import ContactHeroVideo from '@/components/sections/ContactHeroVideo'
 import { CONTACT } from '@/lib/site'
 import SocialLinks from '@/components/SocialLinks'
@@ -423,7 +423,7 @@ export default function Contact() {
           {/* Living Contact Sidebar */}
           <div className="space-y-4">
             {/* Email Card with 1-Click Copy */}
-            <GlowCard className="p-6">
+            <InteractiveCard className="p-6">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] uppercase tracking-widest text-mint">Direct Dispatch</span>
                 <span className="font-mono text-[10px] text-mute">{copied ? 'COPIED!' : 'CLICK TO COPY'}</span>
@@ -441,10 +441,10 @@ export default function Contact() {
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                 </svg>
               </button>
-            </GlowCard>
+            </InteractiveCard>
 
             {/* Direct WhatsApp / Phone Desk */}
-            <GlowCard className="p-6">
+            <InteractiveCard className="p-6">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] uppercase tracking-widest text-mint">Phone & WhatsApp Desk</span>
                 <span className="h-2 w-2 rounded-full bg-mint animate-pulse" />
@@ -465,10 +465,10 @@ export default function Contact() {
                   Open WhatsApp Chat
                 </Button>
               </div>
-            </GlowCard>
+            </InteractiveCard>
 
             {/* Kolkata HQ Living Clock & Directions */}
-            <GlowCard className="p-6">
+            <InteractiveCard className="p-6">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] uppercase tracking-widest text-mint">Headquarters</span>
                 <span className="font-mono text-[11px] text-mint">{currentTime} IST</span>
@@ -506,13 +506,13 @@ export default function Contact() {
                   Get Google Maps Directions →
                 </Button>
               </div>
-            </GlowCard>
+            </InteractiveCard>
 
             {/* Social Network Hub */}
-            <GlowCard className="p-6">
+            <InteractiveCard className="p-6">
               <div className="font-mono text-[10px] uppercase tracking-widest text-mint">Follow Pyvot</div>
               <SocialLinks variant="pills" className="mt-3" />
-            </GlowCard>
+            </InteractiveCard>
           </div>
         </div>
       </Section>
