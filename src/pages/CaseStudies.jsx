@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import CtaPair from '@/components/CtaPair'
-import { Button, Card, CountUp, Eyebrow, Reveal, Section, SectionHead } from '@/components/ui'
+import { Button, CountUp, Eyebrow, InteractiveCard, Reveal, Section, SectionHead } from '@/components/ui'
 import VideoLoop from '@/components/VideoLoop'
 import { cn } from '@/lib/utils'
 
@@ -154,11 +154,12 @@ export default function CaseStudies() {
             const isOpen = open === c.slug
             return (
               <Reveal key={c.slug} delay={(i % 2) * 0.05} className={cn(isOpen && 'md:col-span-2')}>
-                <Card id={c.slug} className={cn('h-full', isOpen && 'border-mint/50')}>
+                <InteractiveCard id={c.slug} className={cn('h-full', isOpen && 'border-mint/50')}>
+                  {/* -inset-6 cancels the card's p-6 so the wash still covers the full card; the card's overflow-hidden clips it */}
                   {TINTS[c.slug] && (
                     <div
                       aria-hidden
-                      className="pointer-events-none absolute inset-0 rounded-2xl"
+                      className="pointer-events-none absolute -inset-6"
                       style={{ background: `radial-gradient(120% 90% at 100% 0%, ${TINTS[c.slug]}, transparent 55%)` }}
                     />
                   )}
@@ -216,7 +217,7 @@ export default function CaseStudies() {
                       </div>
                     </div>
                   </div>
-                </Card>
+                </InteractiveCard>
               </Reveal>
             )
           })}
