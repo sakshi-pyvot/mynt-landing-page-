@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Reveal, Eyebrow, GlowCard, Button } from '@/components/ui'
 import { CONTACT } from '@/lib/site'
-import { cn } from '@/lib/utils'
+import { cn, reducedMotion } from '@/lib/utils'
 
 const TRUST_PILLARS = [
   {
@@ -120,6 +120,17 @@ export default function TrustSecuritySection() {
   const [activePipelineStep, setActivePipelineStep] = useState(0)
   const role = ROLE_SIMULATION[activeRole]
 
+  // Shared scroll-in line-draw props; static when reduced motion
+  const rm = reducedMotion()
+  const draw = rm
+    ? { initial: { pathLength: 1 } }
+    : {
+        initial: { pathLength: 0 },
+        whileInView: { pathLength: 1 },
+        viewport: { once: false, margin: '-15% 0px' },
+        transition: { duration: 1.2, ease: 'easeInOut' },
+      }
+
   const PIPELINE_STEPS = [
     { title: '1. Ingestion', desc: 'Encrypted webhook or email parser receives raw statement', icon: '📥', status: 'TLS 1.3' },
     { title: '2. Normalization', desc: 'Line items mapped to standardized ledger schema', icon: '⚡', status: 'In-Memory VPC' },
@@ -160,8 +171,8 @@ export default function TrustSecuritySection() {
               <div className="absolute inset-2 rounded-full border border-mint/20 animate-radar" style={{ borderTopColor: '#2fd39a' }} />
               <div className="absolute inset-6 rounded-full bg-mint/5 border border-mint/40 flex items-center justify-center shadow-[0_0_30px_rgba(47,211,154,0.25)]">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-12 w-12 text-mint">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  <path d="M12 8v4" />
+                  <motion.path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" {...draw} />
+                  <motion.path d="M12 8v4" {...draw} transition={{ ...draw.transition, delay: 0.3 }} />
                   <circle cx="12" cy="16" r="1" fill="currentColor" />
                 </svg>
               </div>
@@ -185,6 +196,26 @@ export default function TrustSecuritySection() {
               <span className="font-mono text-[11px] text-mint">Interactive Pipeline</span>
             </div>
 
+            <div className="relative">
+              {/* connector draw + travelling pulse (lg row layout only) */}
+              <div className="pointer-events-none absolute inset-x-4 top-1/2 hidden lg:block">
+                <svg viewBox="0 0 100 2" preserveAspectRatio="none" className="h-0.5 w-full text-mint/25">
+                  <motion.path d="M0 1 H100" stroke="currentColor" strokeWidth="2" {...draw} />
+                </svg>
+                {!rm && (
+                  <motion.span
+                    className="absolute left-0 -top-[3px] -ml-1 h-2 w-2 rounded-full bg-mint shadow-[0_0_8px_rgba(47,211,154,0.8)]"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: false, margin: '-15% 0px' }}
+                    animate={{ left: ['0%', '100%'] }}
+                    transition={{
+                      left: { duration: 3, repeat: Infinity, ease: 'linear' },
+                      opacity: { duration: 0.6 },
+                    }}
+                  />
+                )}
+              </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {PIPELINE_STEPS.map((step, idx) => (
                 <button
@@ -210,6 +241,7 @@ export default function TrustSecuritySection() {
                   <p className="mt-1 text-[11px] leading-relaxed text-mute">{step.desc}</p>
                 </button>
               ))}
+            </div>
             </div>
           </div>
         </div>
