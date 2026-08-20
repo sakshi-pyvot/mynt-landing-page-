@@ -59,7 +59,7 @@ export const NAV = [
       { label: 'Our Philosophy', to: '/about#philosophy', hint: 'Growth is a system' },
       { label: 'Our Team', to: '/about#team', hint: 'Leadership, tech, consulting, creative' },
       { label: 'Why Choose Us', to: '/about#why-us', hint: 'Four reasons operators stay' },
-      { label: 'Why Join Us', to: '/join#why-join', hint: 'How we work, life at Pyvot' },
+      { label: 'Why Join Us', to: '/join', hint: 'How we work, life at Pyvot' },
       { label: 'Open Positions', to: '/join#open-positions', hint: 'Roles + application' },
     ],
     cta: { label: 'See open roles', to: '/join#open-positions' },
