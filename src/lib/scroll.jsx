@@ -85,13 +85,41 @@ export function RouteScroll() {
     prevPath.current = pathname
     const timers = []
     let off = () => {}
+    let stopGlue = () => {}
     if (hash) {
-      // cross-page: land on the target (or top) before paint; the delayed pass
-      // below only fine-corrects once pins/spacers have registered
+      // cross-page: GLUE the viewport to the target for the settling window.
+      // The target's position keeps moving after mount — lazy route chunks swap
+      // in, GSAP pins insert spacers, media resolves — so a one-shot jump shows
+      // whatever section drifts under the old offset. Re-snap every frame
+      // (immediate, no animation) until things settle or the user scrolls.
       if (!samePage) {
-        const el = document.getElementById(hash.slice(1))
-        if (el) scrollTo(el, { immediate: true })
-        else scrollTo(0, { immediate: true })
+        const id = hash.slice(1)
+        const t0 = performance.now()
+        let raf = 0
+        const stop = () => {
+          cancelAnimationFrame(raf)
+          window.removeEventListener('wheel', stop)
+          window.removeEventListener('touchstart', stop)
+          window.removeEventListener('keydown', stop)
+        }
+        window.addEventListener('wheel', stop, { passive: true })
+        window.addEventListener('touchstart', stop, { passive: true })
+        window.addEventListener('keydown', stop)
+        const glue = () => {
+          const el = document.getElementById(id)
+          if (el) {
+            const pinned = ScrollTrigger.getAll().find((t) => t.trigger === el && t.pin)
+            const target = pinned ? pinned.start : el.getBoundingClientRect().top + window.scrollY - NAV_H
+            if (Math.abs(window.scrollY - target) > 2) scrollTo(Math.max(0, target), { immediate: true })
+          } else if (window.scrollY > 0) {
+            scrollTo(0, { immediate: true }) // lazy chunk still loading — hold at top
+          }
+          if (performance.now() - t0 < 800) raf = requestAnimationFrame(glue)
+          else stop()
+        }
+        glue() // first tick pre-paint
+        stopGlue = stop
+        timers.push(setTimeout(stop, 900)) // hard stop even if rAF throttled
       }
       // new page: jump straight there once pins/spacers exist; same page: glide.
       // On a cold start the intro loader still covers the page — wait for it to lift.
@@ -115,6 +143,7 @@ export function RouteScroll() {
     }
     return () => {
       off()
+      stopGlue()
       timers.forEach(clearTimeout)
     }
   }, [pathname, hash])

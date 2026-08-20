@@ -51,7 +51,6 @@ function Layout({ loading, onLoaded }) {
         </filter>
       </svg>
       {loading && <PyvotLoader onDone={onLoaded} />}
-      <RouteScroll />
       <CustomCursor />
       <ProgressBar />
       <Nav />
@@ -70,6 +69,9 @@ function Layout({ loading, onLoaded }) {
           </Routes>
         </Suspense>
       </main>
+      {/* after <main> so its layout effect runs AFTER page pin effects —
+          the pre-paint hash snap then sees post-pin offsets */}
+      <RouteScroll />
       <Footer />
     </div>
   )
