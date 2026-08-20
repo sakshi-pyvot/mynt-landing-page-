@@ -267,6 +267,16 @@ body {
   mask-size: 200% 100%;
 }
 
+@keyframes formula-ticker {
+  to { transform: translateX(-50%); }
+}
+.animate-formula-ticker {
+  animation: formula-ticker 60s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-formula-ticker { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

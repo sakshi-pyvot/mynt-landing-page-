@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { motion } from 'motion/react'
-import { Accordion, Button, GlowCard, PageHero, Reveal, Section, SectionHead } from '@/components/ui'
+import { Accordion, Button, GlowCard, InteractiveCard, PageHero, Reveal, Section, SectionHead } from '@/components/ui'
 import { CTA } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
@@ -171,6 +171,14 @@ const GUIDES = [
 
 const QUICK_SEARCH_CHIPS = ['Payout Reconcile', 'Zomato API', 'Discount Burn', 'ROAS', 'Refunds', 'Mynt AI']
 
+const TICKER_FORMULAS = [
+  'Net Payout = Gross Orders − Aggregator Charges − Funded Discounts − Customer Refunds ± Adjustments',
+  'Net Margin % = Net Payout ÷ Gross Order Value',
+  'ROAS = attributed sales ÷ ad spend',
+  'Discount burn % = funded discounts ÷ gross sales',
+  'AOV = revenue ÷ orders',
+]
+
 const FAQ = [
   {
     q: 'Can Mynt modify menus, prices, or store status on Zomato or Swiggy?',
@@ -222,6 +230,15 @@ export default function Guides() {
   return (
     <>
       {/* Animated Help Centre Hero with Floating Ambient Elements */}
+      <div className="relative overflow-hidden">
+        {/* faint drifting formula ticker behind the hero */}
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-40 md:top-52">
+          <div className="animate-formula-ticker flex w-max whitespace-nowrap font-mono text-[11px] text-ink opacity-[0.055]">
+            {[0, 1].map((i) => (
+              <span key={i} className="pr-20">{TICKER_FORMULAS.join('      •      ')}</span>
+            ))}
+          </div>
+        </div>
       <PageHero
         eyebrow="Mynt Guides & Knowledge Base"
         title={
@@ -279,6 +296,7 @@ export default function Guides() {
           </div>
         </div>
       </PageHero>
+      </div>
 
       <Section tight className="pt-0">
         {/* Interactive Category Filter Bar */}
@@ -321,9 +339,8 @@ export default function Guides() {
           {list.map((g) => {
             const isOpen = openGuide === g.id
             return (
-              <GlowCard
+              <InteractiveCard
                 key={g.id}
-                as="div"
                 onClick={() => setOpenGuide(isOpen ? null : g.id)}
                 className={cn(
                   'cursor-pointer transition-all duration-300',
@@ -391,7 +408,7 @@ export default function Guides() {
                   <span>{isOpen ? 'Collapse checklist ↑' : 'Expand step-by-step checklist →'}</span>
                   <span className="text-mute group-hover:text-ink">{g.cat}</span>
                 </div>
-              </GlowCard>
+              </InteractiveCard>
             )
           })}
 
