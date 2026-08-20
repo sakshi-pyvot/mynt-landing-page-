@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -77,12 +77,22 @@ function settlePinned(el) {
 export function RouteScroll() {
   const { pathname, hash } = useLocation()
   const prevPath = useRef(null)
-  useEffect(() => {
+  // layout effect: correct the scroll before the new route's first paint —
+  // the browser keeps the old page's scrollY across SPA swaps, so an async
+  // effect would flash whatever section of the new page sits at that offset
+  useLayoutEffect(() => {
     const samePage = prevPath.current === pathname
     prevPath.current = pathname
     const timers = []
     let off = () => {}
     if (hash) {
+      // cross-page: land on the target (or top) before paint; the delayed pass
+      // below only fine-corrects once pins/spacers have registered
+      if (!samePage) {
+        const el = document.getElementById(hash.slice(1))
+        if (el) scrollTo(el, { immediate: true })
+        else scrollTo(0, { immediate: true })
+      }
       // new page: jump straight there once pins/spacers exist; same page: glide.
       // On a cold start the intro loader still covers the page — wait for it to lift.
       const go = (immediate) => {
