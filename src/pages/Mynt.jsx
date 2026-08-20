@@ -4,7 +4,7 @@ import CtaPair from '@/components/CtaPair'
 import HeroDashboard from '@/components/sections/HeroDashboard'
 import TrustSecuritySection from '@/components/sections/TrustSecuritySection'
 import { MyntMark, PyvotLogo } from '@/components/Brand'
-import { Button, Card, Eyebrow, Reveal, Section, SectionHead, SmartLink } from '@/components/ui'
+import { Button, Card, Eyebrow, InteractiveCard, Reveal, Section, SectionHead, SmartLink } from '@/components/ui'
 import { CTA } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
@@ -156,7 +156,7 @@ export default function Mynt() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f, i) => (
             <Reveal key={f.name} delay={(i % 3) * 0.05}>
-              <Card className={cn('h-full', f.shot && 'overflow-hidden pb-0')}>
+              <InteractiveCard className={cn('h-full', f.shot && 'pb-0')}>
                 <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-mint">{f.chip}</div>
                 <h3 className="mt-2 text-lg font-semibold">{f.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-mute">{f.body}</p>
@@ -167,7 +167,7 @@ export default function Mynt() {
                     </div>
                   </div>
                 )}
-              </Card>
+              </InteractiveCard>
             </Reveal>
           ))}
         </div>
@@ -224,13 +224,13 @@ export default function Mynt() {
         <div className="grid gap-4 md:grid-cols-3">
           {PROOF.map((p, i) => (
             <Reveal key={p.brand} delay={i * 0.06}>
-              <Card as={SmartLink} to={`/case-studies#${p.slug}`} className="block h-full">
+              <InteractiveCard as={SmartLink} to={`/case-studies#${p.slug}`} className="block h-full">
                 <div className="text-xs uppercase tracking-[0.2em] text-mute">{p.brand}</div>
                 <div className="mt-3 text-4xl font-bold tracking-tight text-mint">{p.metric}</div>
                 <div className="text-xs uppercase tracking-[0.18em] text-mute">{p.label}</div>
                 <p className="mt-4 text-sm text-ink/85">{p.body}</p>
                 <span className="mt-4 inline-block text-sm text-mint">Read the case study →</span>
-              </Card>
+              </InteractiveCard>
             </Reveal>
           ))}
         </div>
