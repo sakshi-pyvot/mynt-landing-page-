@@ -151,11 +151,37 @@ export default function HeroDashboard({ boot = true }) {
       }, 42)
       timers.push(t)
     }
+    // popout: card lifts toward the viewer, holds a beat, settles back in place
+    const pop = (el) => {
+      if (!el) return
+      gsap
+        .timeline()
+        .to(el, {
+          z: 70,
+          scale: 1.07,
+          zIndex: 5,
+          boxShadow: '0 24px 60px rgba(0,0,0,0.55), 0 0 40px rgba(47,211,154,0.25)',
+          borderColor: 'rgba(47,211,154,0.45)',
+          duration: 0.55,
+          ease: 'back.out(2)',
+        })
+        .to(el, {
+          z: 0,
+          scale: 1,
+          duration: 0.6,
+          ease: 'power3.inOut',
+          clearProps: 'zIndex,boxShadow,borderColor,transform',
+        }, '+=0.9')
+    }
     const startLive = () => {
       cycleAlert()
       typeAI()
       timers.push(setInterval(cycleAlert, 5200))
       timers.push(setInterval(typeAI, 6400))
+      const marginTile = root.current.querySelector('[data-pop]')
+      const aiBar = root.current.querySelector('.hd-ai')
+      timers.push(setInterval(() => pop(marginTile), 7000))
+      timers.push(setTimeout(() => timers.push(setInterval(() => pop(aiBar), 7000)), 3500))
     }
     const off = boot ? onLoaded(() => timers.push(setTimeout(startLive, 2400))) : (startLive(), () => {})
 
@@ -197,9 +223,9 @@ export default function HeroDashboard({ boot = true }) {
       </div>
 
       {/* tiles: raised layer for parallax */}
-      <div className="grid grid-cols-3 gap-2 [transform:translateZ(28px)]">
+      <div className="grid grid-cols-3 gap-2 [transform:translateZ(28px)] [transform-style:preserve-3d]">
         {KPIS.map((k) => (
-          <div key={k.key} className="hd-tile lq-card rounded-xl border border-line bg-card/90 px-3 py-2.5">
+          <div key={k.key} data-pop={k.key === 'margin' || undefined} className="hd-tile lq-card rounded-xl border border-line bg-card/90 px-3 py-2.5">
             <div className="text-[8px] font-semibold uppercase tracking-[0.14em] text-mute">{k.label}</div>
             <div className="hd-val mt-1 text-[15px] font-bold tabular-nums text-ink md:text-lg">{fmt(0, k)}</div>
             <div className={`text-[10px] font-medium ${TONE[k.tone].text}`}>
