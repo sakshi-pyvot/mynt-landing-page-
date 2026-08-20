@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
-import { cn } from '@/lib/utils'
+import gsap from 'gsap'
+import { cn, reducedMotion } from '@/lib/utils'
 import { PyvotLogo } from './Brand'
 
 // Small shared primitives for inner pages. Kept deliberately thin — the landing
@@ -117,6 +118,41 @@ export function Card({ children, className, glow = false, as: Tag = 'div', ...re
     >
       {children}
     </Tag>
+  )
+}
+
+// Counts the numeric part of a stat string ("50%", "35 Cr+", "+7 pp") up from 0
+// the first time it scrolls into view. Prefix/suffix stay verbatim.
+export function CountUp({ value, className, duration = 1.4 }) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const el = ref.current
+    const m = String(value).match(/-?\d+(\.\d+)?/)
+    if (!el || !m || reducedMotion()) return undefined
+    const target = parseFloat(m[0])
+    const decimals = m[1] ? m[1].length - 1 : 0
+    const obj = { n: 0 }
+    const render = () => {
+      el.textContent = String(value).replace(m[0], obj.n.toFixed(decimals))
+    }
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return
+        io.disconnect()
+        render()
+        gsap.to(obj, { n: target, duration, ease: 'power2.out', onUpdate: render })
+      },
+      { threshold: 0.4 },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [value, duration])
+
+  return (
+    <span ref={ref} className={className}>
+      {value}
+    </span>
   )
 }
 
