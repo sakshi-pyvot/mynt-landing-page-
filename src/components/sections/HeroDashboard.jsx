@@ -180,8 +180,14 @@ export default function HeroDashboard({ boot = true }) {
       timers.push(setInterval(typeAI, 6400))
       const marginTile = root.current.querySelector('[data-pop]')
       const aiBar = root.current.querySelector('.hd-ai')
+      pop(marginTile)
       timers.push(setInterval(() => pop(marginTile), 7000))
-      timers.push(setTimeout(() => timers.push(setInterval(() => pop(aiBar), 7000)), 3500))
+      timers.push(
+        setTimeout(() => {
+          pop(aiBar)
+          timers.push(setInterval(() => pop(aiBar), 7000))
+        }, 3500),
+      )
     }
     const off = boot ? onLoaded(() => timers.push(setTimeout(startLive, 2400))) : (startLive(), () => {})
 
