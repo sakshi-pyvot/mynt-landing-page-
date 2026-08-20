@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import CtaPair from '@/components/CtaPair'
-import { Button, Card, PageHero, Reveal, Section, SectionHead } from '@/components/ui'
+import { Button, Card, CountUp, Eyebrow, Reveal, Section, SectionHead } from '@/components/ui'
+import VideoLoop from '@/components/VideoLoop'
 import { cn } from '@/lib/utils'
 
 const TAGS = ['All', 'Revenue', 'Profitability', 'Ads', 'Discounts', 'Dining', 'Menu']
@@ -77,6 +78,24 @@ const CASES = [
 
 const LOGOS = { 'idly-go': '/brand/curated/idly-go.png', 'koshe-kosha': '/brand/curated/koshe-kosha.jpg', 'og-by-the-lake': '/brand/curated/og-by-the-lake.jpg' }
 
+// soft brand-coloured wash per card, kept faint so the cards stay quiet
+const TINTS = {
+  hatari: 'rgba(255,122,70,0.11)',
+  'biryani-house': 'rgba(255,182,64,0.10)',
+  'idly-go': 'rgba(120,220,140,0.10)',
+  'koshe-kosha': 'rgba(232,84,84,0.10)',
+  'land-of-cakes': 'rgba(255,128,176,0.10)',
+  'og-by-the-lake': 'rgba(84,186,224,0.10)',
+}
+
+// slugs match /public/testimonials/{full,poster}/<slug>.*
+const VOICES = [
+  { slug: 'og-by-the-lake', brand: 'OG by the Lake', hook: '136% revenue uplift' },
+  { slug: 'bhikharam-chandmal', brand: 'Bhikharam Chandmal', hook: 'Legacy brand, marketplace-first' },
+  { slug: 'nepal-sweets', brand: 'Nepal Sweets', hook: 'Discount burn under control' },
+  { slug: 'golbari', brand: 'Golbari', hook: 'Heritage kitchen, modern ops' },
+]
+
 export default function CaseStudies() {
   const { hash } = useLocation()
   const hashSlug = CASES.some((c) => c.slug === hash.slice(1)) ? hash.slice(1) : null
@@ -96,20 +115,38 @@ export default function CaseStudies() {
 
   return (
     <>
-      <PageHero logo={false} eyebrow="Case studies" title="Built on outcomes, not presentations." lede="Quantified results from restaurant brands Pyvot has worked with — revenue, profitability, ads, discounts, dining and menu. Every metric here was validated with the client.">
-        <div className="flex flex-wrap gap-2">
-          {TAGS.map((t) => (
-            <button
-              key={t}
-              type="button"
-              onClick={() => setTag(t)}
-              className={cn('rounded-full border px-4 py-2 text-sm transition-colors', tag === t ? 'border-mint bg-mint/10 text-mint' : 'border-line text-mute hover:text-ink')}
-            >
-              {t}
-            </button>
-          ))}
+      {/* PageHero has no background slot, so the hero is composed by hand: quiet kitchen
+          loop behind the copy under a heavy scrim, text content unchanged. */}
+      <section className="relative overflow-hidden pt-36 pb-16 md:pt-44 md:pb-24">
+        <VideoLoop src="/videos/restaurant.mp4" poster="/videos/restaurant-poster.jpg" label="Flambé on the restaurant floor" className="absolute inset-0" />
+        <div className="pointer-events-none absolute inset-0 bg-bg/75" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg/60 via-bg/30 to-bg" aria-hidden />
+        <div className="relative mx-auto max-w-7xl px-6">
+          <Reveal>
+            <Eyebrow>Case studies</Eyebrow>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h1 className="mt-5 max-w-4xl text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">Built on outcomes, not presentations.</h1>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mute md:text-xl">Quantified results from restaurant brands Pyvot has worked with — revenue, profitability, ads, discounts, dining and menu. Every metric here was validated with the client.</p>
+          </Reveal>
+          <Reveal delay={0.15} className="mt-9">
+            <div className="flex flex-wrap gap-2">
+              {TAGS.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setTag(t)}
+                  className={cn('rounded-full border px-4 py-2 text-sm transition-colors', tag === t ? 'border-mint bg-mint/10 text-mint' : 'border-line text-mute hover:text-ink')}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </Reveal>
         </div>
-      </PageHero>
+      </section>
 
       <Section tight className="pt-0">
         <div className="grid gap-4 md:grid-cols-2">
@@ -118,6 +155,14 @@ export default function CaseStudies() {
             return (
               <Reveal key={c.slug} delay={(i % 2) * 0.05} className={cn(isOpen && 'md:col-span-2')}>
                 <Card id={c.slug} className={cn('h-full', isOpen && 'border-mint/50')}>
+                  {TINTS[c.slug] && (
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 rounded-2xl"
+                      style={{ background: `radial-gradient(120% 90% at 100% 0%, ${TINTS[c.slug]}, transparent 55%)` }}
+                    />
+                  )}
+                  {/* TODO(asset): food photography backgrounds per brand */}
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-3">
                       {LOGOS[c.slug] ? (
@@ -149,7 +194,7 @@ export default function CaseStudies() {
                   <div className="mt-5 grid grid-cols-3 gap-3">
                     {c.metrics.map(([v, l]) => (
                       <div key={l} className="rounded-xl border border-line/60 bg-bg/40 p-3">
-                        <div className="text-2xl font-bold tracking-tight text-mint">{v}</div>
+                        <div className="text-2xl font-bold tracking-tight text-mint"><CountUp value={v} /></div>
                         <div className="mt-1 text-[11px] leading-snug text-mute">{l}</div>
                       </div>
                     ))}
@@ -179,8 +224,32 @@ export default function CaseStudies() {
       </Section>
 
       <Section tight>
-        <SectionHead eyebrow="Client voices" title="Hear it from the operators." lede="Ten restaurant owners on what changed — on the home page, in their own words." className="mb-6" />
-        <Button to="/#voices" variant="ghost">Watch client voices</Button>
+        <SectionHead eyebrow="Client voices" title="Hear it from the operators." lede="Restaurant owners on what changed, filmed on their own floors. Watch all ten with sound on the home page." className="mb-8" />
+        {/* row scrolls sideways on mobile, sits 4-across on desktop */}
+        <div className="-mx-6 overflow-x-auto px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex snap-x gap-4 pb-2">
+            {VOICES.map((v, i) => (
+              <Reveal key={v.slug} delay={i * 0.05} className="w-[220px] shrink-0 snap-center md:w-auto md:flex-1">
+                <div className="lq-card relative overflow-hidden rounded-2xl border border-line/70 hover:border-mint/40">
+                  <VideoLoop
+                    src={`/testimonials/preview/${v.slug}.mp4`}
+                    poster={`/testimonials/poster/${v.slug}.jpg`}
+                    label={`${v.brand} testimonial`}
+                    scrim
+                    className="aspect-[9/16]"
+                  />
+                  <div className="absolute inset-x-4 bottom-4">
+                    <div className="text-sm font-semibold text-ink">{v.brand}</div>
+                    <div className="mt-0.5 text-xs text-mute">{v.hook}</div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+        <Reveal className="mt-6">
+          <Button to="/#voices" variant="ghost">Watch client voices</Button>
+        </Reveal>
       </Section>
 
       <section className="relative overflow-hidden py-24 text-center md:py-32">
