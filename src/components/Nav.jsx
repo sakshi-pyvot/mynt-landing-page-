@@ -123,7 +123,13 @@ export default function Nav() {
               )
               return (
                 <li key={item.label} onMouseEnter={() => { setHover(i); if (item.items) enter(i); else leave() }}>
-                  {item.items ? (
+                  {item.items && item.to ? (
+                    // hover opens the panel; clicking the label goes to the group's page
+                    <SmartLink to={item.to} className={cls} aria-haspopup="true" onClick={() => setOpen(-1)}>
+                      {label}
+                      <Chevron className={cn('relative z-10 h-[11px] w-[11px] opacity-60 transition-transform', open === i && 'rotate-180 text-mint opacity-100')} />
+                    </SmartLink>
+                  ) : item.items ? (
                     <button
                       type="button"
                       className={cls}

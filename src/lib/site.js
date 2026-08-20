@@ -41,6 +41,7 @@ export const NAV = [
   },
   {
     label: 'Services',
+    to: '/services', // clicking the label itself opens the Services page
     intro: 'Software finds the opportunity. People make it happen.',
     items: [
       { label: 'Mynt by Pyvot', to: '/mynt', hint: 'The intelligence layer' },

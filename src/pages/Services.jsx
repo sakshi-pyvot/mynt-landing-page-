@@ -1,7 +1,6 @@
 import CtaPair from '@/components/CtaPair'
 import OrbitCarousel from '@/components/OrbitCarousel'
 import ExpertsSplit from '@/components/sections/ExpertsSplit'
-import { PyvotLogo } from '@/components/Brand'
 import { Button, Card, CountUp, Eyebrow, InteractiveCard, Reveal, Section, SectionHead, SmartLink, Stat } from '@/components/ui'
 import VideoLoop from '@/components/VideoLoop'
 import { CTA } from '@/lib/site'
@@ -121,7 +120,6 @@ export default function Services() {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg/60 via-bg/30 to-bg" aria-hidden />
         <div className="relative mx-auto max-w-7xl px-6">
           <Reveal>
-            <PyvotLogo className="mb-6 h-6" />
             <Eyebrow>Pyvot Experts · Services</Eyebrow>
           </Reveal>
           <Reveal delay={0.05}>
