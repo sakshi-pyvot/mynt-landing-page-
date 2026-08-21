@@ -171,12 +171,31 @@ function HeroSceneCard() {
           animate={still ? undefined : { y: [0, -10, 0] }}
           transition={still ? undefined : { duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <VideoLoop
-            src="/videos/scene.mp4"
-            poster="/videos/scene-poster.jpg"
-            label="Share your work — Pyvot careers motion graphic"
-            className="aspect-square rounded-3xl border border-line/60 bg-bg shadow-[0_40px_80px_rgba(0,0,0,0.55)]"
-          />
+          {/* glass shell: gradient ring + specular over the footage, copy as crisp HTML
+              (the old clip baked the typography and stock photos into the video) */}
+          <div className="lq relative aspect-square overflow-hidden rounded-3xl border border-white/15 shadow-[0_40px_80px_rgba(0,0,0,0.55)]">
+            <VideoLoop
+              src="/videos/scene.mp4"
+              poster="/videos/scene-poster.jpg"
+              label="Portfolio of aggregator, dining, social and tech work spread on a desk"
+              className="absolute inset-0"
+            />
+            <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/85 via-bg/25 to-bg/30" />
+            <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/12 via-transparent to-transparent" />
+            <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-between px-8 py-9 text-center">
+              <span aria-hidden />
+              <span className="text-[44px] font-black uppercase leading-[0.92] tracking-tight text-white drop-shadow-[0_6px_20px_rgba(0,0,0,0.7)] md:text-5xl">
+                Share
+                <br />
+                your
+                <br />
+                work
+              </span>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/90">
+                Pyvot · contact@pyvot.in
+              </span>
+            </div>
+          </div>
         </motion.div>
 
         <div
