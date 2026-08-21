@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { reducedMotion } from '@/lib/utils'
 
 const VIDEO_SRC = '/videos/3.mp4'
+
+// notifications typed over the footage (crisp HTML, not baked into the video);
+// each arrival buzzes the whole device
+const MESSAGES = [
+  { from: 'general managers:', text: 'how to get my menu fixed.' },
+  { from: 'finance head:', text: 'Hey team — our payouts don’t add up' },
+  { from: 'restaurant owner:', text: 'We want to grow on food delivery platforms.' },
+]
 
 // Contact hero video inside the real iPhone 17 Pro Max frame (public/iphone17-frame.png,
 // transparent screen + surround), floating over an animated mint/teal glow.
@@ -14,6 +22,39 @@ export default function ContactHeroVideo() {
   const [still] = useState(() => reducedMotion())
   const [fine] = useState(() => window.matchMedia('(pointer: fine)').matches)
   const [tilt, setTilt] = useState({ rx: 0, ry: 0, on: 0 })
+  // reduced motion: all three visible, no loop, no buzz
+  const [msgN, setMsgN] = useState(() => (reducedMotion() ? MESSAGES.length : 0))
+  const [shakeN, setShakeN] = useState(0) // increments per arrival → one buzz each
+
+  // notification loop: three arrivals ~2.2s apart, hold, clear, repeat
+  useEffect(() => {
+    if (still) return undefined
+    let alive = true
+    const timers = []
+    const arm = () => {
+      MESSAGES.forEach((_, i) =>
+        timers.push(
+          setTimeout(() => {
+            if (!alive) return
+            setMsgN(i + 1)
+            setShakeN((n) => n + 1)
+          }, 1400 + i * 2200),
+        ),
+      )
+      timers.push(
+        setTimeout(() => {
+          if (!alive) return
+          setMsgN(0)
+          arm()
+        }, 9800),
+      )
+    }
+    arm()
+    return () => {
+      alive = false
+      timers.forEach(clearTimeout)
+    }
+  }, [still])
 
   useEffect(() => {
     const video = videoRef.current
@@ -76,6 +117,20 @@ export default function ContactHeroVideo() {
           transition={{ type: 'spring', stiffness: 140, damping: 16 }}
           className="[transform-style:preserve-3d]"
         >
+        {/* buzz: one quick rattle per notification arrival (keyframes re-run as
+            shakeN flips the array identity) */}
+        <motion.div
+          animate={
+            shakeN
+              ? {
+                  x: shakeN % 2 ? [0, -3, 3, -2, 2, 0] : [0, 3, -3, 2, -2, 0],
+                  rotate: shakeN % 2 ? [0, -0.5, 0.5, -0.3, 0] : [0, 0.5, -0.5, 0.3, 0],
+                }
+              : undefined
+          }
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          className="[transform-style:preserve-3d]"
+        >
           {/* idle sway: only turns the phone while the cursor is away */}
           <motion.div
             animate={
@@ -122,6 +177,31 @@ export default function ContactHeroVideo() {
               />
               {/* screen-edge vignette so the panel sinks into the bezel */}
               <div aria-hidden className="pointer-events-none absolute inset-0" style={{ boxShadow: 'inset 0 0 30px rgba(0,0,0,0.5)' }} />
+              {/* incoming notifications — crisp HTML, springs in, buzzes the phone */}
+              <div className="pointer-events-none absolute inset-x-[6%] top-[22%] space-y-2.5">
+                <AnimatePresence>
+                  {MESSAGES.slice(0, msgN).map((m) => (
+                    <motion.div
+                      key={m.from}
+                      initial={{ opacity: 0, y: -18, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, transition: { duration: 0.25 } }}
+                      transition={{ type: 'spring', stiffness: 420, damping: 26 }}
+                      className="flex items-start gap-2.5 rounded-2xl bg-[#f6f3ee]/95 px-3 py-2.5 shadow-[0_10px_24px_rgba(0,0,0,0.35)]"
+                    >
+                      <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-[9px] bg-gradient-to-b from-[#67e26f] to-[#2fbf49]">
+                        <svg viewBox="0 0 24 24" className="h-4.5 w-4.5 h-[18px] w-[18px]" fill="#fff" aria-hidden>
+                          <path d="M12 4C7 4 3 7.3 3 11.4c0 2.3 1.3 4.4 3.4 5.7-.1.9-.5 2-1.3 2.9 1.6-.2 2.9-.8 3.8-1.4.98.25 2 .4 3.1.4 5 0 9-3.3 9-7.6S17 4 12 4z" />
+                        </svg>
+                      </span>
+                      <span className="min-w-0 text-left leading-snug">
+                        <span className="block text-[11px] font-bold text-[#3b3b3b]">{m.from}</span>
+                        <span className="block text-[11px] text-[#4a4a4a]">{m.text}</span>
+                      </span>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
             </div>
             <img
               src="/iphone17-frame.png"
@@ -131,6 +211,7 @@ export default function ContactHeroVideo() {
               draggable={false}
             />
           </motion.div>
+        </motion.div>
         </motion.div>
         </motion.div>
 
