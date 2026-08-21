@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import CtaPair from '@/components/CtaPair'
 import HeroDashboard from '@/components/sections/HeroDashboard'
@@ -339,6 +340,17 @@ function DashboardShowcase() {
     rail.scrollTo({ left: el.offsetLeft - rail.clientWidth / 2 + el.clientWidth / 2, behavior: 'smooth' })
   }, [active])
 
+  // shots finishing after ScrollTrigger measured leaves the pin range stale —
+  // the frame then lingers over later sections. Re-measure once they decode.
+  useEffect(() => {
+    let on = true
+    const imgs = [...(root.current?.querySelectorAll('.dsh-shot') || [])]
+    Promise.allSettled(imgs.map((im) => im.decode())).then(() => {
+      if (on) ScrollTrigger.refresh()
+    })
+    return () => { on = false }
+  }, [])
+
   const pick = (i) => {
     const st = stRef.current
     if (st) {
@@ -404,7 +416,6 @@ function DashboardShowcase() {
                 key={x.key}
                 src={`/shots/${x.shot}.jpg?v=3`}
                 alt={`${x.label} dashboard`}
-                loading={i === 0 ? 'eager' : 'lazy'}
                 className="dsh-shot absolute inset-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] rounded-xl object-contain"
                 style={i > 0 ? { clipPath: 'inset(100% 0 0 0)' } : undefined}
               />
