@@ -2,10 +2,58 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    // Precache the app shell (JS/CSS/fonts) and cache media on first use, so
+    // repeat visits skip the network for ~everything.
+    VitePWA({
+      registerType: 'autoUpdate',
+      manifest: false,
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,woff2,svg,ico}', 'favicon*.png', 'apple-touch-icon.png', 'logos/*.png'],
+        navigateFallback: '/index.html',
+        runtimeCaching: [
+          {
+            // videos stream via range requests — cache-first once fetched
+            urlPattern: /\/videos\/.*\.mp4$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'videos',
+              rangeRequests: true,
+              expiration: { maxEntries: 30, maxAgeSeconds: 30 * 24 * 60 * 60 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            // page media: posters, shots, team, brand, social, testimonials
+            urlPattern: /\/(videos|shots|social|team|testimonials|brand)\/.*\.(jpg|jpeg|png|webp)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'media',
+              expiration: { maxEntries: 300, maxAgeSeconds: 30 * 24 * 60 * 60 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            // testimonial preview clips
+            urlPattern: /\/testimonials\/.*\.mp4$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'testimonial-videos',
+              rangeRequests: true,
+              expiration: { maxEntries: 40, maxAgeSeconds: 30 * 24 * 60 * 60 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+        ],
+      },
+    }),
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
