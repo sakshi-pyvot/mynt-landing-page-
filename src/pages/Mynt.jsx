@@ -298,7 +298,7 @@ function DashboardShowcase() {
 
   useGSAP(
     () => {
-      gsap.matchMedia().add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+      gsap.matchMedia().add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
         const shots = gsap.utils.toArray('.dsh-shot', root.current)
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -361,9 +361,11 @@ function DashboardShowcase() {
     }
   }
 
-  const capsules = (
+  // rendered twice (pin + non-pin variants) — layoutId must differ per copy or
+  // framer animates the indicator between the visible rail and its hidden twin
+  const capsules = (id, withRef) => (
     <div
-      ref={pillsRef}
+      ref={withRef ? pillsRef : undefined}
       className="scrollbar-none flex gap-2 overflow-x-auto pb-1"
       role="tablist"
       aria-label="Dashboards"
@@ -381,7 +383,7 @@ function DashboardShowcase() {
         >
           {active === i && (
             <motion.span
-              layoutId="mynt-dash-pill"
+              layoutId={`mynt-dash-pill-${id}`}
               aria-hidden
               style={{ position: 'absolute' }}
               className="lq lq-pill inset-0 rounded-full"
@@ -429,8 +431,8 @@ function DashboardShowcase() {
   return (
     <div ref={root}>
       {/* desktop: pinned scrub story */}
-      <div className="dsh-pin hidden min-h-[640px] flex-col justify-center md:flex md:h-screen">
-        {capsules}
+      <div className="dsh-pin hidden min-h-[640px] flex-col justify-center lg:flex lg:h-screen">
+        {capsules('pin', true)}
         <div className="mt-8 grid items-center gap-10 lg:grid-cols-[minmax(0,340px)_1fr]">
           <div>
             <div className="font-mono text-xs text-mint">
@@ -463,9 +465,9 @@ function DashboardShowcase() {
         </div>
       </div>
 
-      {/* mobile: capsule taps swap the shot, no pinning */}
-      <div className="md:hidden">
-        {capsules}
+      {/* below lg: capsule taps swap the shot, no pinning */}
+      <div className="lg:hidden">
+        {capsules('flat', false)}
         <div className="mt-6">
           <AnimatePresence mode="wait">
             <motion.div
