@@ -39,16 +39,20 @@ export default function ContactHeroVideo() {
 
   return (
     <div className="relative mx-auto w-full max-w-[360px] [perspective:1200px]" onMouseMove={onMove} onMouseLeave={onLeave}>
-      {/* animated glow: two blurred blobs drifting behind the phone */}
+      {/* glow: bright mint halo hugging the phone + two drifting blobs behind it */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-8 rounded-[40%] bg-[radial-gradient(ellipse_at_50%_45%,rgba(47,211,154,0.35),transparent_70%)] blur-2xl"
+      />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute -inset-16 rounded-full bg-[radial-gradient(ellipse_at_35%_30%,rgba(47,211,154,0.28),transparent_60%)] blur-3xl"
+        className="pointer-events-none absolute -inset-16 rounded-full bg-[radial-gradient(ellipse_at_35%_30%,rgba(47,211,154,0.4),transparent_60%)] blur-3xl"
         animate={still ? undefined : { rotate: [0, 30, 0], scale: [1, 1.12, 1] }}
         transition={still ? undefined : { duration: 9, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute -inset-16 rounded-full bg-[radial-gradient(ellipse_at_70%_70%,rgba(56,189,248,0.16),transparent_60%)] blur-3xl"
+        className="pointer-events-none absolute -inset-16 rounded-full bg-[radial-gradient(ellipse_at_70%_70%,rgba(56,189,248,0.25),transparent_60%)] blur-3xl"
         animate={still ? undefined : { rotate: [0, -25, 0], scale: [1.1, 1, 1.1] }}
         transition={still ? undefined : { duration: 11, repeat: Infinity, ease: 'easeInOut' }}
       />
@@ -60,18 +64,24 @@ export default function ContactHeroVideo() {
         transition={{ type: 'spring', stiffness: 120, damping: 18 }}
         className="relative"
       >
+        {/* float: always-on bob, keeps running even while the cursor tilts the phone */}
+        <motion.div
+          animate={still ? undefined : { y: [0, -12, 0] }}
+          transition={still ? undefined : { duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          className="[transform-style:preserve-3d]"
+        >
         {/* cursor tilt layer: springs toward the pointer, releases to the sway below */}
         <motion.div
           animate={{ rotateX: tilt.rx, rotateY: tilt.ry }}
           transition={{ type: 'spring', stiffness: 140, damping: 16 }}
           className="[transform-style:preserve-3d]"
         >
-          {/* idle sway: only carries the phone while the cursor is away */}
+          {/* idle sway: only turns the phone while the cursor is away */}
           <motion.div
             animate={
               still || tilt.on
-                ? { y: 0, rotate: 0, rotateY: 0 }
-                : { y: [0, -10, 0], rotate: [-0.6, 0.6, -0.6], rotateY: [-4, 4, -4] }
+                ? { rotate: 0, rotateY: 0 }
+                : { rotate: [-0.6, 0.6, -0.6], rotateY: [-4, 4, -4] }
             }
             transition={still || tilt.on ? { duration: 0.5 } : { duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             className="relative aspect-[452/932] w-full [transform-style:preserve-3d]"
@@ -121,6 +131,7 @@ export default function ContactHeroVideo() {
               draggable={false}
             />
           </motion.div>
+        </motion.div>
         </motion.div>
 
         <div
