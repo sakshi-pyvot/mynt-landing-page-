@@ -323,7 +323,7 @@ function DashboardTabs() {
               {DASHBOARDS.map((x, i) => (
                 <img
                   key={x.key}
-                  src={`/shots/${x.shot}.jpg`}
+                  src={`/shots/${x.shot}.jpg?v=2`}
                   alt={`${x.label} dashboard`}
                   loading={i === 0 ? 'eager' : 'lazy'}
                   className={cn('absolute inset-0 h-full w-full object-cover transition-opacity duration-500', tab === i ? 'opacity-100' : 'opacity-0')}

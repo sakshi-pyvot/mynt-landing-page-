@@ -30,9 +30,10 @@ export default defineConfig({
             },
           },
           {
-            // page media: posters, shots, team, brand, social, testimonials
-            urlPattern: /\/(videos|shots|social|team|testimonials|brand)\/.*\.(jpg|jpeg|png|webp)$/,
-            handler: 'CacheFirst',
+            // page media: posters, shots, team, brand, social, testimonials.
+            // SWR (not CacheFirst) so replaced images refresh on revisit.
+            urlPattern: /\/(videos|shots|social|team|testimonials|brand)\/.*\.(jpg|jpeg|png|webp)(\?.*)?$/,
+            handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'media',
               expiration: { maxEntries: 300, maxAgeSeconds: 30 * 24 * 60 * 60 },
