@@ -146,61 +146,84 @@ const PRICING_POINTS = [
 
 const inView = { once: false, margin: '-10% 0px' }
 
-function useDraw() {
-  const rm = reducedMotion()
-  return rm
-    ? { initial: { pathLength: 1 } }
-    : { initial: { pathLength: 0 }, whileInView: { pathLength: 1 }, viewport: inView, transition: { duration: 1.1, ease: 'easeInOut' } }
-}
-
 /* ------------------------------------------------- section 2: flow visual -- */
 
-const flowY = { src: [20, 90, 160, 230, 300], out: [20, 113, 206, 300] }
-const inPath = (y) => `M 0 ${y} C 130 ${y}, 140 160, 200 160`
-const outPath = (y) => `M 200 160 C 260 160, 270 ${y}, 400 ${y}`
+// Zomato/Swiggy/Statements/Reports/Outlet Data → MYNT → Dashboards/Compare/AI/Reports
+// One tight braid: every path shares the same curvature family, merges into a
+// single spine through the MYNT core, then fans out. Dashes march while in view.
+const SRC_Y = [48, 104, 160, 216, 272]
+const OUT_Y = [64, 128, 192, 256]
+const flowIn = (y) => `M 0 ${y} C 72 ${y}, 84 160, 150 160`
+const flowOut = (y) => `M 250 160 C 316 160, 328 ${y}, 400 ${y}`
+const FLOW_PATHS = [...SRC_Y.map(flowIn), 'M 150 160 H 250', ...OUT_Y.map(flowOut)]
 
 function FlowDiagram() {
-  const draw = useDraw()
   const rm = reducedMotion()
-  const pill = 'flex h-10 items-center justify-center rounded-full border border-line/70 bg-card/70 px-4 text-xs font-medium text-ink'
+  const box = useRef(null)
+  const [live, setLive] = useState(false)
+
+  useEffect(() => {
+    if (rm) return undefined
+    const io = new IntersectionObserver(([e]) => setLive(e.isIntersecting))
+    io.observe(box.current)
+    return () => io.disconnect()
+  }, [rm])
+
+  const pill = (side) =>
+    cn(
+      'absolute flex h-10 w-full items-center rounded-xl border border-line/70 bg-card/80 px-4 text-xs font-medium text-ink',
+      side === 'l' ? 'justify-end border-r-2 border-r-mint/40 text-right' : 'justify-start border-l-2 border-l-mint/40',
+    )
+
   return (
-    <>
-      {/* desktop: sources converge into the MYNT core, fan out to what it powers */}
-      <div className="hidden items-center gap-4 lg:grid lg:grid-cols-[170px_1fr_170px]">
-        <div className="flex h-80 flex-col justify-between">
-          {FLOW_SOURCES.map((s) => (
-            <span key={s} className={pill}>{s}</span>
+    <div ref={box}>
+      {/* desktop */}
+      <div className="mx-auto hidden max-w-5xl items-center gap-3 lg:grid lg:grid-cols-[11rem_1fr_11rem]">
+        <div className="relative h-[320px]">
+          {FLOW_SOURCES.map((s, i) => (
+            <span key={s} className={pill('l')} style={{ top: SRC_Y[i] - 20 }}>{s}</span>
           ))}
         </div>
-        <div className="relative h-80">
+        <div className="relative h-[320px]">
           <svg viewBox="0 0 400 320" preserveAspectRatio="none" className="h-full w-full" aria-hidden>
-            {flowY.src.map((y) => (
-              <motion.path key={`i${y}`} d={inPath(y)} fill="none" stroke="rgba(47,211,154,0.3)" strokeWidth="1.5" {...draw} />
+            {FLOW_PATHS.map((d) => (
+              <path key={d} d={d} fill="none" stroke="rgba(47,211,154,0.16)" strokeWidth="1.5" />
             ))}
-            {flowY.out.map((y) => (
-              <motion.path key={`o${y}`} d={outPath(y)} fill="none" stroke="rgba(47,211,154,0.3)" strokeWidth="1.5" {...draw} />
-            ))}
-            {!rm && (
-              <>
-                <circle r="3" fill="#2fd39a">
-                  <animateMotion dur="2.8s" repeatCount="indefinite" path={inPath(90)} />
-                </circle>
-                <circle r="3" fill="#2fd39a">
-                  <animateMotion dur="2.8s" begin="1.4s" repeatCount="indefinite" path={inPath(230)} />
-                </circle>
-                <circle r="3" fill="#2fd39a">
-                  <animateMotion dur="2.4s" begin="0.7s" repeatCount="indefinite" path={outPath(113)} />
-                </circle>
-              </>
-            )}
+            {live &&
+              FLOW_PATHS.map((d, i) => (
+                <motion.path
+                  key={`m${d}`}
+                  d={d}
+                  fill="none"
+                  stroke="rgba(47,211,154,0.65)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeDasharray="3 13"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1, strokeDashoffset: [0, -32] }}
+                  transition={{
+                    opacity: { duration: 0.6, delay: i * 0.05 },
+                    strokeDashoffset: { duration: 1.1, repeat: Infinity, ease: 'linear' },
+                  }}
+                />
+              ))}
           </svg>
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-mint/40 bg-bg px-5 py-3 shadow-[0_0_50px_rgba(47,211,154,0.25)]">
-            <MyntMark className="h-6" wordClass="text-lg" />
+          {/* MYNT core with breathing glow */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <motion.div
+              aria-hidden
+              className="absolute -inset-4 rounded-3xl bg-mint/20 blur-2xl"
+              animate={live ? { opacity: [0.4, 0.9, 0.4], scale: [0.95, 1.06, 0.95] } : { opacity: 0.5 }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <div className="relative rounded-2xl border border-mint/40 bg-bg px-5 py-3 shadow-[0_0_40px_rgba(47,211,154,0.3)]">
+              <MyntMark className="h-6" wordClass="text-lg" />
+            </div>
           </div>
         </div>
-        <div className="flex h-80 flex-col justify-between py-6">
-          {FLOW_OUTPUTS.map((s) => (
-            <span key={s} className={pill}>{s}</span>
+        <div className="relative h-[320px]">
+          {FLOW_OUTPUTS.map((s, i) => (
+            <span key={s} className={pill('r')} style={{ top: OUT_Y[i] - 20 }}>{s}</span>
           ))}
         </div>
       </div>
@@ -217,7 +240,7 @@ function FlowDiagram() {
           <span key={s} className="rounded-full border border-line/70 bg-card/70 px-3 py-1.5 text-[11px] text-mute">{s}</span>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 
@@ -293,17 +316,9 @@ function DashboardTabs() {
           </AnimatePresence>
         </div>
 
-        {/* glass browser bezel around the live product shot */}
+        {/* glassy interactive frame around the live product shot */}
         <Reveal>
-          <div className="glass overflow-hidden rounded-2xl border border-white/10 shadow-[0_40px_120px_rgba(0,0,0,0.6)]">
-            <div className="flex items-center gap-2 border-b border-white/10 px-4 py-2.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-coral/70" />
-              <span className="h-2.5 w-2.5 rounded-full bg-amber/70" />
-              <span className="h-2.5 w-2.5 rounded-full bg-mint/70" />
-              <span className="mx-auto rounded-full border border-line/60 bg-bg/60 px-4 py-0.5 font-mono text-[10px] text-mute">
-                app.pyvotmynt.in/{d.key}
-              </span>
-            </div>
+          <InteractiveCard maxTilt={4} className="glass rounded-2xl border-white/10 p-0 shadow-[0_40px_120px_rgba(0,0,0,0.6)]">
             <div className="relative aspect-[1280/1000] bg-[#0d1119]">
               {DASHBOARDS.map((x, i) => (
                 <img
@@ -324,7 +339,7 @@ function DashboardTabs() {
                 className="h-0.5 origin-left bg-mint/60"
               />
             )}
-          </div>
+          </InteractiveCard>
         </Reveal>
       </div>
     </div>
@@ -615,38 +630,83 @@ function ReportPreview() {
 
 /* ------------------------------------------ section 7: trust pipeline -- */
 
+// Vertical verification flow: data drips down the spine, each checkpoint
+// seals with a tick as the pulse passes, the Mynt node glows at the end.
 function TrustPipeline() {
-  const draw = useDraw()
   const rm = reducedMotion()
+  const box = useRef(null)
+  const [live, setLive] = useState(false)
+
+  useEffect(() => {
+    if (rm) return undefined
+    const io = new IntersectionObserver(([e]) => setLive(e.isIntersecting))
+    io.observe(box.current)
+    return () => io.disconnect()
+  }, [rm])
+
+  const draw = rm
+    ? { initial: { pathLength: 1 } }
+    : { initial: { pathLength: 0 }, whileInView: { pathLength: 1 }, viewport: inView, transition: { duration: 0.5, ease: 'easeOut' } }
+
   return (
-    <div className="relative">
-      <div className="pointer-events-none absolute inset-x-10 top-[22px] hidden lg:block">
-        <svg viewBox="0 0 100 2" preserveAspectRatio="none" className="h-0.5 w-full text-mint/25">
-          <motion.path d="M0 1 H100" stroke="currentColor" strokeWidth="2" {...draw} />
-        </svg>
-        {!rm && (
-          <motion.span
-            className="absolute left-0 -top-[3px] -ml-1 h-2 w-2 rounded-full bg-mint shadow-[0_0_8px_rgba(47,211,154,0.8)]"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={inView}
-            animate={{ left: ['0%', '100%'] }}
-            transition={{ left: { duration: 3.2, repeat: Infinity, ease: 'linear' }, opacity: { duration: 0.6 } }}
-          />
-        )}
+    <div ref={box} className="glass relative overflow-hidden rounded-3xl border border-white/10 p-6 shadow-[0_40px_120px_rgba(0,0,0,0.5)] md:p-8">
+      <div className="mb-5 flex items-center justify-between">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-mute">Verification flow</span>
+        <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest text-mint">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-mint" /> Live
+        </span>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:gap-3">
-        {TRUST_FLOW.map((f, i) => (
-          <div key={f.name} className="relative flex flex-col items-center rounded-xl border border-line/70 bg-card/60 p-4 text-center lg:bg-transparent lg:border-transparent">
-            <span className={cn('grid h-11 w-11 place-items-center rounded-full border bg-bg', i === TRUST_FLOW.length - 1 ? 'border-mint shadow-[0_0_24px_rgba(47,211,154,0.35)]' : 'border-mint/40')}>
-              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-mint" aria-hidden>
-                <motion.path d="M4 10.5l4 4 8-9" {...draw} transition={{ ...draw.transition, delay: 0.2 + i * 0.22 }} />
-              </svg>
-            </span>
-            <div className="mt-3 text-sm font-semibold text-ink">{f.name}</div>
-            <div className="mt-1 text-[11px] leading-snug text-mute">{f.sub}</div>
-          </div>
-        ))}
+
+      <div className="relative">
+        {/* spine + travelling drops */}
+        <div className="absolute bottom-5 left-[21px] top-5 w-px bg-gradient-to-b from-mint/10 via-mint/35 to-mint/60" aria-hidden />
+        {live &&
+          [0, 1.6].map((delay) => (
+            <motion.span
+              key={delay}
+              aria-hidden
+              className="absolute left-[18px] h-[7px] w-[7px] rounded-full bg-mint shadow-[0_0_10px_rgba(47,211,154,0.9)]"
+              initial={{ top: '0%', opacity: 0 }}
+              animate={{ top: ['2%', '96%'], opacity: [0, 1, 1, 0] }}
+              transition={{ duration: 3.2, delay, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          ))}
+
+        <div className="space-y-5">
+          {TRUST_FLOW.map((f, i) => {
+            const last = i === TRUST_FLOW.length - 1
+            return (
+              <div key={f.name} className="relative flex items-center gap-4">
+                <motion.span
+                  className={cn(
+                    'relative z-10 grid h-[42px] w-[42px] shrink-0 place-items-center rounded-full border bg-bg',
+                    last ? 'border-mint shadow-[0_0_28px_rgba(47,211,154,0.45)]' : 'border-mint/40',
+                  )}
+                  initial={false}
+                  animate={live && !rm ? { boxShadow: ['0 0 0px rgba(47,211,154,0)', '0 0 18px rgba(47,211,154,0.55)', '0 0 0px rgba(47,211,154,0)'] } : {}}
+                  transition={{ duration: 3.2, delay: 0.3 + i * 0.62, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  {last ? (
+                    <MyntMark className="h-4" withWord={false} />
+                  ) : (
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-mint" aria-hidden>
+                      <motion.path d="M4 10.5l4 4 8-9" {...draw} transition={{ ...draw.transition, delay: 0.15 + i * 0.18 }} />
+                    </svg>
+                  )}
+                </motion.span>
+                <div className="min-w-0">
+                  <div className={cn('text-sm font-semibold', last ? 'text-mint' : 'text-ink')}>{f.name}</div>
+                  <div className="text-[11px] leading-snug text-mute">{f.sub}</div>
+                </div>
+                {!last && (
+                  <span className="ml-auto hidden font-mono text-[9px] uppercase tracking-[0.16em] text-mint/70 sm:block" aria-hidden>
+                    Verified ✓
+                  </span>
+                )}
+              </div>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
@@ -725,12 +785,7 @@ export default function Mynt() {
         <SectionHead
           eyebrow="Dashboards"
           title="A dashboard for every question that matters."
-          lede={
-            <>
-              Instead of putting everything into one overloaded screen, Mynt separates the business into focused dashboards.
-              <span className="mt-3 block">Start with the complete picture. Then go deeper into the number that needs attention.</span>
-            </>
-          }
+          lede="Instead of putting everything into one overloaded screen, Mynt separates the business into focused dashboards."
         />
         <DashboardTabs />
 
@@ -741,10 +796,10 @@ export default function Mynt() {
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {TEAMS.map((t, i) => (
               <Reveal key={t.t} delay={i * 0.05}>
-                <div className="h-full rounded-2xl border border-line/70 bg-card/50 p-5">
+                <InteractiveCard className="lq h-full rounded-2xl border-white/10 bg-card/40 p-5">
                   <div className="text-sm font-semibold text-mint">{t.t}</div>
                   <p className="mt-2 text-sm leading-relaxed text-mute">{t.d}</p>
-                </div>
+                </InteractiveCard>
               </Reveal>
             ))}
           </div>
@@ -866,22 +921,25 @@ export default function Mynt() {
 
       {/* 7 · data trust */}
       <Section id="data-trust">
-        <SectionHead
-          eyebrow="Data trust"
-          title="Every number is verified. Every metric is consistent. Every time."
-          lede={
-            <>
-              Mynt is built on a simple principle: if a number is shown, it is already correct.
-              <span className="mt-3 block">Every revenue, payout, cost, discount, charge and margin metric is fully reconciled across all underlying sources before it appears in any dashboard, report or AI response.</span>
-            </>
-          }
-        />
-        <Reveal>
-          <TrustPipeline />
-        </Reveal>
+        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
+          <SectionHead
+            className="mb-0"
+            eyebrow="Data trust"
+            title="Every number is verified. Every metric is consistent. Every time."
+            lede={
+              <>
+                Mynt is built on a simple principle: if a number is shown, it is already correct.
+                <span className="mt-3 block">Every revenue, payout, cost, discount, charge and margin metric is fully reconciled across all underlying sources before it appears in any dashboard, report or AI response.</span>
+              </>
+            }
+          />
+          <Reveal>
+            <TrustPipeline />
+          </Reveal>
+        </div>
 
         {/* live status strip */}
-        <Reveal className="mt-10">
+        <Reveal className="mt-12">
           <div className="grid gap-px overflow-hidden rounded-2xl border border-line/70 bg-line/40 sm:grid-cols-2 lg:grid-cols-4">
             {TRUST_STATUS.map((s) => (
               <div key={s.l} className="flex items-center gap-3 bg-bg/90 px-5 py-4">
@@ -934,27 +992,64 @@ export default function Mynt() {
           }
           align="center"
         />
-        <Card glow className="mx-auto max-w-4xl p-8 md:p-10">
-          <div className="grid gap-6 sm:grid-cols-2">
-            {PRICING_POINTS.map((p) => (
-              <div key={p.t} className="flex items-start gap-3">
-                <svg viewBox="0 0 16 16" fill="currentColor" className="mt-1 h-4 w-4 shrink-0 text-mint" aria-hidden>
-                  <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z" />
-                </svg>
-                <div>
-                  <div className="text-base font-semibold">{p.t}</div>
-                  <p className="mt-1 text-sm leading-relaxed text-mute">{p.d}</p>
-                </div>
+        {/* one clean pricing model — deliberately a single licence plate, no fake tiers */}
+        <Card glow className="mx-auto max-w-5xl overflow-hidden p-0">
+          <div className="grid lg:grid-cols-[1.15fr_1fr]">
+            <div className="p-8 md:p-10">
+              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-mint">Mynt · Annual Licence</div>
+              <div className="mt-3 flex flex-wrap items-baseline gap-3">
+                <span className="text-4xl font-bold tracking-tight md:text-5xl">One licence.</span>
+                <span className="text-lg text-mute">Every module included.</span>
               </div>
-            ))}
+              <div className="mt-8 space-y-5">
+                {PRICING_POINTS.map((p) => (
+                  <div key={p.t} className="flex items-start gap-3">
+                    <svg viewBox="0 0 16 16" fill="currentColor" className="mt-1 h-4 w-4 shrink-0 text-mint" aria-hidden>
+                      <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z" />
+                    </svg>
+                    <div>
+                      <div className="text-base font-semibold">{p.t}</div>
+                      <p className="mt-1 text-sm leading-relaxed text-mute">{p.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* outlet-based scaling visual */}
+            <div className="flex flex-col justify-center border-t border-line/60 bg-bg/40 p-8 md:p-10 lg:border-l lg:border-t-0">
+              <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-mute">Priced by outlets</div>
+              <div className="mt-4 grid grid-cols-2 gap-2.5">
+                {['Park Street', 'Salt Lake', 'Esplanade'].map((o, i) => (
+                  <Reveal key={o} delay={i * 0.07}>
+                    <span className="flex items-center gap-2 rounded-xl border border-mint/30 bg-mint/[0.06] px-3.5 py-2.5 text-xs font-medium text-ink">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5 shrink-0 text-mint" aria-hidden>
+                        <path d="M3 9l1-5h16l1 5" />
+                        <path d="M4 9v11h16V9" />
+                        <path d="M9 20v-6h6v6" />
+                      </svg>
+                      {o}
+                    </span>
+                  </Reveal>
+                ))}
+                <Reveal delay={0.24}>
+                  <span className="flex items-center justify-center gap-2 rounded-xl border border-dashed border-line px-3.5 py-2.5 text-xs text-mute">
+                    <span className="text-mint">+</span> Add outlet
+                  </span>
+                </Reveal>
+              </div>
+              <p className="mt-5 text-sm leading-relaxed text-mute">
+                One licence covers the workspace. The price scales only with the outlets you connect — never with seats.
+              </p>
+              <div className="mt-7 flex flex-col gap-3">
+                <Button to={CTA.start} target="_self" className="w-full">Get pricing for your brand</Button>
+                <Button to={CTA.expert} variant="ghost" className="w-full">Talk to an expert</Button>
+              </div>
+            </div>
           </div>
-          <p className="mt-8 border-t border-line/60 pt-6 text-center text-xs text-mute">
+          <p className="border-t border-line/60 px-8 py-4 text-center text-xs text-mute">
             Any usage-based services or optional additions, where applicable, are shown separately and transparently.
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Button to={CTA.start} target="_self">Get pricing for your brand</Button>
-            <Button to={CTA.expert} variant="ghost">Talk to an expert</Button>
-          </div>
         </Card>
       </Section>
 
