@@ -416,7 +416,7 @@ function DashboardShowcase() {
             {DASHBOARDS.map((x, i) => (
               <img
                 key={x.key}
-                src={`/shots/${x.shot}.jpg?v=3`}
+                src={`/shots/${x.shot}.jpg?v=4`}
                 alt={`${x.label} dashboard`}
                 className="dsh-shot absolute inset-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] rounded-xl object-contain"
                 style={i > 0 ? { clipPath: 'inset(100% 0 0 0)' } : undefined}
@@ -478,7 +478,7 @@ function DashboardShowcase() {
               transition={{ duration: 0.25 }}
             >
               <img
-                src={`/shots/${d.shot}.jpg?v=3`}
+                src={`/shots/${d.shot}.jpg?v=4`}
                 alt={`${d.label} dashboard`}
                 className="rounded-xl border border-line"
               />
