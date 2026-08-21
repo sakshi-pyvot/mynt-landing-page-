@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 import CtaPair from '@/components/CtaPair'
 import HeroDashboard from '@/components/sections/HeroDashboard'
 import TrustSecuritySection from '@/components/sections/TrustSecuritySection'
@@ -246,101 +248,232 @@ function FlowDiagram() {
 
 /* --------------------------------------------- section 3: dashboard tabs -- */
 
-function DashboardTabs() {
-  const [tab, setTab] = useState(0)
-  const [auto, setAuto] = useState(() => !reducedMotion())
-  const hover = useRef(false)
-  const vis = useRef(false)
-  const box = useRef(null)
-  const d = DASHBOARDS[tab]
+// Pinned scroll showcase (same mechanics as the landing ProductCanvas): scrolling
+// steps through the seven dashboards, wiping each screenshot into a glass slab.
+// The capsule rail doubles as navigation — it scrolls with the active step and
+// clicking a capsule jumps the page to that step inside the pinned range.
+function DashboardShowcase() {
+  const root = useRef(null)
+  const frameRef = useRef(null)
+  const pillsRef = useRef(null)
+  const stepRef = useRef(0)
+  const stRef = useRef(null)
+  const [active, setActive] = useState(0)
+  const N = DASHBOARDS.length
+  const d = DASHBOARDS[active]
 
+  // cursor tilt on the glass slab (quickTo springs, ProductCanvas pattern)
+  const tilt = useRef(null)
+  const getTilt = () => {
+    if (!tilt.current && frameRef.current) {
+      const el = frameRef.current
+      const o = { duration: 0.6, ease: 'power3.out' }
+      tilt.current = {
+        rx: gsap.quickTo(el, 'rotationX', o),
+        ry: gsap.quickTo(el, 'rotationY', o),
+        x: gsap.quickTo(el, 'x', o),
+        y: gsap.quickTo(el, 'y', o),
+      }
+    }
+    return tilt.current
+  }
+  const onFrameMove = (e) => {
+    if (reducedMotion() || !window.matchMedia('(pointer: fine)').matches) return
+    const t = getTilt()
+    if (!t) return
+    const r = frameRef.current.getBoundingClientRect()
+    const nx = ((e.clientX - r.left) / r.width - 0.5) * 2
+    const ny = ((e.clientY - r.top) / r.height - 0.5) * 2
+    t.rx(-ny * 5)
+    t.ry(nx * 5)
+    t.x(nx * 8)
+    t.y(ny * 8)
+  }
+  const onFrameLeave = () => {
+    const t = getTilt()
+    if (!t) return
+    t.rx(0); t.ry(0); t.x(0); t.y(0)
+  }
+
+  useGSAP(
+    () => {
+      gsap.matchMedia().add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+        const shots = gsap.utils.toArray('.dsh-shot', root.current)
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: root.current.querySelector('.dsh-pin'),
+            start: 'top top',
+            end: `+=${N * 460}`,
+            pin: true,
+            scrub: 0.5,
+            onUpdate: (self) => {
+              const idx = Math.min(N - 1, Math.floor(self.progress * N))
+              if (idx === stepRef.current) return
+              stepRef.current = idx
+              setActive(idx)
+            },
+          },
+        })
+        stRef.current = tl.scrollTrigger
+        shots.forEach((shot, i) => {
+          if (i === 0) return
+          tl.fromTo(
+            shot,
+            { clipPath: 'inset(100% 0 0 0)', yPercent: 6 },
+            { clipPath: 'inset(0% 0 0 0)', yPercent: 0, duration: 0.6, ease: 'power2.inOut' },
+            i,
+          ).to(shots[i - 1], { opacity: 0, duration: 0.6 }, i)
+        })
+        tl.to({}, { duration: 1 }, N - 1)
+        return () => { stRef.current = null }
+      })
+    },
+    { scope: root, dependencies: [N] },
+  )
+
+  // keep the active capsule centred in its rail (rail scrolls, page stays put)
   useEffect(() => {
-    if (!auto) return undefined
-    const io = new IntersectionObserver(([e]) => { vis.current = e.isIntersecting })
-    io.observe(box.current)
-    const t = setInterval(() => {
-      if (!vis.current || hover.current) return
-      setTab((v) => (v + 1) % DASHBOARDS.length)
-    }, 4500)
-    return () => { io.disconnect(); clearInterval(t) }
-  }, [auto])
+    const rail = pillsRef.current
+    const el = rail?.children[active]
+    if (!rail || !el) return
+    rail.scrollTo({ left: el.offsetLeft - rail.clientWidth / 2 + el.clientWidth / 2, behavior: 'smooth' })
+  }, [active])
 
-  const pick = (i) => { setAuto(false); setTab(i) }
+  const pick = (i) => {
+    const st = stRef.current
+    if (st) {
+      // jump into the pinned range at this step's slice
+      window.scrollTo(0, st.start + ((i + 0.5) / N) * (st.end - st.start))
+    } else {
+      setActive(i)
+    }
+  }
+
+  const capsules = (
+    <div
+      ref={pillsRef}
+      className="scrollbar-none flex gap-2 overflow-x-auto pb-1"
+      role="tablist"
+      aria-label="Dashboards"
+    >
+      {DASHBOARDS.map((x, i) => (
+        <button
+          key={x.key}
+          role="tab"
+          aria-selected={active === i}
+          onClick={() => pick(i)}
+          className={cn(
+            'relative shrink-0 rounded-full border border-transparent px-4 py-2 text-sm transition-colors',
+            active === i ? 'text-mint' : 'text-mute hover:text-ink',
+          )}
+        >
+          {active === i && (
+            <motion.span
+              layoutId="mynt-dash-pill"
+              aria-hidden
+              style={{ position: 'absolute' }}
+              className="lq lq-pill inset-0 rounded-full"
+              transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+            />
+          )}
+          <span className="relative z-10">{x.label}</span>
+        </button>
+      ))}
+    </div>
+  )
+
+  const frame = (
+    <div className="relative">
+      {/* breathing halo behind the slab */}
+      <motion.div
+        className="pointer-events-none absolute -inset-[10%] rounded-[48px] bg-[radial-gradient(ellipse_at_center,rgba(47,211,154,0.32),rgba(47,211,154,0.1)_45%,transparent_70%)] blur-3xl"
+        animate={{ scale: [1, 1.07, 1], opacity: [0.5, 0.85, 0.5] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <div className="[perspective:1400px]">
+        <div
+          ref={frameRef}
+          onMouseMove={onFrameMove}
+          onMouseLeave={onFrameLeave}
+          className="glass relative overflow-hidden rounded-3xl border border-mint/20 p-4 shadow-[0_0_120px_rgba(47,211,154,0.18),0_30px_90px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)] [transform-style:preserve-3d] md:p-5"
+        >
+          <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+          <div className="relative aspect-[1280/1000] overflow-hidden rounded-2xl bg-bg p-2 [transform:translateZ(24px)]">
+            {DASHBOARDS.map((x, i) => (
+              <img
+                key={x.key}
+                src={`/shots/${x.shot}.jpg?v=2`}
+                alt={`${x.label} dashboard`}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                className="dsh-shot absolute inset-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] rounded-xl object-contain"
+                style={i > 0 ? { clipPath: 'inset(100% 0 0 0)' } : undefined}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 
   return (
-    <div ref={box}>
-      <div className="flex flex-wrap gap-2" role="tablist" aria-label="Dashboards">
-        {DASHBOARDS.map((x, i) => (
-          <button
-            key={x.key}
-            role="tab"
-            aria-selected={tab === i}
-            onClick={() => pick(i)}
-            className={cn(
-              'relative rounded-full border border-transparent px-4 py-2 text-sm transition-colors',
-              tab === i ? 'text-mint' : 'text-mute hover:text-ink',
-            )}
-          >
-            {tab === i && (
-              <motion.span
-                layoutId="mynt-dash-pill"
-                aria-hidden
-                style={{ position: 'absolute' }}
-                className="lq lq-pill inset-0 rounded-full"
-                transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-              />
-            )}
-            <span className="relative z-10">{x.label}</span>
-          </button>
-        ))}
-      </div>
-
-      <div
-        className="mt-8 grid items-center gap-8 lg:grid-cols-[1fr_1.7fr]"
-        role="tabpanel"
-        onMouseEnter={() => { hover.current = true }}
-        onMouseLeave={() => { hover.current = false }}
-      >
-        <div className="min-h-[132px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={d.key}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.3 }}
-            >
-              <h3 className="text-2xl font-bold md:text-3xl">{d.title}</h3>
-              <p className="mt-3 text-mute">{d.body}</p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* glassy interactive frame around the live product shot */}
-        <Reveal>
-          <InteractiveCard maxTilt={4} className="glass rounded-2xl border-white/10 p-0 shadow-[0_40px_120px_rgba(0,0,0,0.6)]">
-            <div className="relative aspect-[1280/1000] bg-[#0d1119]">
+    <div ref={root}>
+      {/* desktop: pinned scrub story */}
+      <div className="dsh-pin hidden min-h-[640px] flex-col justify-center md:flex md:h-screen">
+        {capsules}
+        <div className="mt-8 grid items-center gap-10 lg:grid-cols-[minmax(0,340px)_1fr]">
+          <div>
+            <div className="font-mono text-xs text-mint">
+              {String(active + 1).padStart(2, '0')} / {String(N).padStart(2, '0')}
+            </div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={d.key}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3 }}
+                className="mt-3"
+              >
+                <h3 className="text-2xl font-bold md:text-3xl">{d.title}</h3>
+                <p className="mt-3 text-mute">{d.body}</p>
+              </motion.div>
+            </AnimatePresence>
+            <div className="mt-8 flex gap-2">
               {DASHBOARDS.map((x, i) => (
-                <img
+                <span
                   key={x.key}
-                  src={`/shots/${x.shot}.jpg?v=2`}
-                  alt={`${x.label} dashboard`}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  className={cn('absolute inset-0 h-full w-full object-cover transition-opacity duration-500', tab === i ? 'opacity-100' : 'opacity-0')}
+                  className={cn('h-1 rounded-full transition-all duration-300', active === i ? 'w-8 bg-mint' : 'w-3 bg-line')}
                 />
               ))}
             </div>
-            {auto && (
-              <motion.div
-                key={tab}
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 4.5, ease: 'linear' }}
-                className="h-0.5 origin-left bg-mint/60"
+            <div className="mt-6 text-xs text-mute">Scroll to move through the dashboards.</div>
+          </div>
+          {frame}
+        </div>
+      </div>
+
+      {/* mobile: capsule taps swap the shot, no pinning */}
+      <div className="md:hidden">
+        {capsules}
+        <div className="mt-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={d.key}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <img
+                src={`/shots/${d.shot}.jpg?v=2`}
+                alt={`${d.label} dashboard`}
+                className="rounded-xl border border-line"
               />
-            )}
-          </InteractiveCard>
-        </Reveal>
+              <h3 className="mt-4 text-xl font-bold">{d.title}</h3>
+              <p className="mt-2 text-sm text-mute">{d.body}</p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   )
@@ -787,7 +920,7 @@ export default function Mynt() {
           title="A dashboard for every question that matters."
           lede="Instead of putting everything into one overloaded screen, Mynt separates the business into focused dashboards."
         />
-        <DashboardTabs />
+        <DashboardShowcase />
 
         <div className="mt-16">
           <Reveal>

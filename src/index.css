@@ -286,6 +286,14 @@ body {
   .animate-formula-ticker { display: none; }
 }
 
+/* horizontal rails that scroll without showing a scrollbar */
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
