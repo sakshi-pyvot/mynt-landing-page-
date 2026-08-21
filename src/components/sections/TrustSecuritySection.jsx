@@ -6,46 +6,33 @@ import { cn, reducedMotion } from '@/lib/utils'
 
 const TRUST_PILLARS = [
   {
-    id: 'access',
+    id: 'assessed',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6 text-mint">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
         <path d="M9 12l2 2 4-4" />
       </svg>
     ),
-    title: 'Least-Privilege Read Access',
-    tag: 'READ-ONLY SCOPE',
-    body: 'Mynt reads platform reports, payout statements, and connected feeds. Where aggregators support read-only tokens, that is all we request — never permissions to modify listings or prices.',
-    highlight: 'Zero write permissions on aggregator accounts',
+    title: 'Independently assessed',
+    tag: 'CASA',
+    body: 'Mynt undergoes recognised security assessments, including CASA, to validate the security of our application, infrastructure and data-handling practices.',
+    highlight: 'Industry-standard, independent validation',
   },
   {
-    id: 'auth',
+    id: 'encryption',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6 text-mint">
         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
       </svg>
     ),
-    title: 'Authentication & Session Shield',
-    tag: 'OTP + RBAC',
-    body: 'Email with hardware/time-based OTP sign-in, per-user scoped accounts, and instantaneous session termination. Revoke any team member or device with a single click.',
-    highlight: 'Instant device & credential revocation',
+    title: 'Encrypted end-to-end',
+    tag: 'IN TRANSIT & AT REST',
+    body: 'Sensitive data is protected with strong encryption in transit and at rest throughout its lifecycle.',
+    highlight: 'Strong encryption across the full data lifecycle',
   },
   {
-    id: 'encryption',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6 text-mint">
-        <polyline points="16 18 22 12 16 6" />
-        <polyline points="8 6 2 12 8 18" />
-      </svg>
-    ),
-    title: 'Encryption in Flight & at Rest',
-    tag: 'TLS 1.3 + AES-256',
-    body: 'All incoming streams and API calls are encrypted using TLS 1.3 in transit and stored in hardened, VPC-isolated cloud databases with AES-256 encryption at rest.',
-    highlight: 'Dedicated VPC isolation & restricted engineer access',
-  },
-  {
-    id: 'roles',
+    id: 'access',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6 text-mint">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -54,39 +41,27 @@ const TRUST_PILLARS = [
         <path d="M16 3.13a4 4 0 0 1 0 7.75" />
       </svg>
     ),
-    title: 'Granular Role-Based Access Control',
-    tag: 'OUTLET SCOPED',
-    body: 'Hierarchical role boundaries. Outlet managers only inspect their specific branch; finance reconciles payouts; owners access whole-brand analytics.',
-    highlight: 'Zero cross-outlet data leakage across seats',
+    title: 'Strict access controls',
+    tag: 'LEAST PRIVILEGE',
+    body: 'Role-based permissions, least-privilege access and isolated customer environments ensure data is accessible only to authorised users and systems.',
+    highlight: 'Role-based, isolated customer environments',
   },
   {
-    id: 'retention',
+    id: 'protected',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6 text-mint">
-        <polyline points="3 6 5 6 21 6" />
-        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-        <line x1="10" y1="11" x2="10" y2="17" />
-        <line x1="14" y1="11" x2="14" y2="17" />
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 6v6l4 2" />
       </svg>
     ),
-    title: 'Absolute Ownership & Immediate Deletion',
-    tag: 'ZERO VENDOR LOCK-IN',
-    body: 'Your restaurant data is strictly yours. Disconnect any source and data collection halts immediately. Request a purge, and all logs are deleted with written verification.',
-    highlight: 'Data wipe with written audit certificate',
-  },
-  {
-    id: 'ai',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6 text-mint">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-      </svg>
-    ),
-    title: 'AI Isolation & Zero Model Training',
-    tag: 'PRIVATE CONTEXT ONLY',
-    body: 'Mynt AI runs on isolated, retrieval-augmented prompts bound strictly to your active workspace. Your proprietary sales and margin numbers are never used to train shared foundation models.',
-    highlight: 'No customer data leaks into general LLM weights',
+    title: 'Continuously protected',
+    tag: '24×7 MONITORING',
+    body: 'Security controls, monitoring, logging and vulnerability testing help protect Mynt against evolving threats.',
+    highlight: 'Monitoring, logging & vulnerability testing',
   },
 ]
+
+const TRUST_BADGES = ['CASA Assessed', 'Encrypted in Transit & at Rest', 'Role-Based Access', 'Continuous Security Monitoring']
 
 const ROLE_SIMULATION = [
   {
@@ -146,16 +121,16 @@ export default function TrustSecuritySection() {
       {/* Main Section Header */}
       <div className="relative z-10 mx-auto max-w-3xl text-center">
         <Reveal>
-          <Eyebrow className="justify-center">Enterprise-Grade Security Architecture</Eyebrow>
+          <Eyebrow className="justify-center">Enterprise-Grade Security</Eyebrow>
         </Reveal>
         <Reveal delay={0.05}>
           <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-            Your restaurant data is confidential. <span className="text-gradient">We protect it like banking infrastructure.</span>
+            Sensitive financial data <span className="text-gradient">deserves serious security.</span>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-4 text-base leading-relaxed text-mute md:text-lg">
-            Zero write access on aggregators, role-isolated tenant vaults, and strict AI data boundaries. Here is exactly how Mynt safeguards every rupee and line item.
+            Mynt handles some of the most sensitive data in your restaurant — revenue, payouts, costs, margins and operational performance. That is why security is built to enterprise standards, with rigorous controls and independent industry-standard security assessments.
           </p>
         </Reveal>
       </div>
@@ -342,10 +317,10 @@ export default function TrustSecuritySection() {
         </AnimatePresence>
       </div>
 
-      {/* 6 High-Engagement Trust Pillars (Glow Cards) */}
-      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {/* Security pillars (Glow Cards) */}
+      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         {TRUST_PILLARS.map((pillar, i) => (
-          <Reveal key={pillar.id} delay={(i % 3) * 0.06}>
+          <Reveal key={pillar.id} delay={(i % 4) * 0.06}>
             <GlowCard className="h-full flex flex-col justify-between p-6">
               <div>
                 <div className="flex items-center justify-between">
@@ -370,6 +345,20 @@ export default function TrustSecuritySection() {
           </Reveal>
         ))}
       </div>
+
+      {/* Trust strip / badges */}
+      <Reveal delay={0.05}>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
+          {TRUST_BADGES.map((b) => (
+            <span key={b} className="flex items-center gap-2 rounded-full border border-mint/30 bg-mint/5 px-4 py-2 text-xs font-medium text-ink">
+              <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-mint" aria-hidden>
+                <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z" />
+              </svg>
+              {b}
+            </span>
+          ))}
+        </div>
+      </Reveal>
 
       {/* Compliance Roadmap & Quick Contact Actions */}
       <Reveal delay={0.1}>
