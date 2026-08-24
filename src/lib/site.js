@@ -20,7 +20,7 @@ export const SOCIALS = [
 // CTA targets used by CtaPair everywhere. "Get started" goes straight to Mynt signup (same tab).
 export const CTA = {
   start: 'https://pyvotmynt.in/signup',
-  expert: '/contact?intent=mynt',
+  expert: '/contact?intent=expert',
 }
 
 // Top navigation. `items` → dropdown panel; plain `to` → direct link.
@@ -105,7 +105,7 @@ export const FOOTER = [
       { label: 'Success Stories', to: '/#voices' },
       { label: 'Case Studies', to: '/case-studies' },
       { label: 'Join Us', to: '/join', cta: true },
-      { label: 'Contact Us', to: '/contact#contact-tracks', cta: true },
+      { label: 'Contact Us', to: '/contact?intent=other', cta: true },
     ],
   },
 ]
