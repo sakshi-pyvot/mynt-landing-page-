@@ -32,7 +32,7 @@ export function Reveal({ children, className, delay = 0, as = 'div' }) {
       variants={rise}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: false, margin: '-10% 0px' }}
+      viewport={{ once: false, margin: '9999px 0px -10% 0px' }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay }}
       className={className}
     >

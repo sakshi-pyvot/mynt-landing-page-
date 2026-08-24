@@ -116,7 +116,7 @@ function ShieldVisual() {
     : {
         initial: { pathLength: 0 },
         whileInView: { pathLength: 1 },
-        viewport: { once: false, margin: '-15% 0px' },
+        viewport: { once: false, margin: '9999px 0px -15% 0px' },
         transition: { duration: 1.4, ease: 'easeInOut' },
       }
 

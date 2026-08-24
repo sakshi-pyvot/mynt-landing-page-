@@ -147,7 +147,7 @@ const PRICING_POINTS = [
 
 /* --------------------------------------------------- shared motion props -- */
 
-const inView = { once: false, margin: '-10% 0px' }
+const inView = { once: false, margin: '9999px 0px -10% 0px' }
 
 /* ------------------------------------------------- section 2: flow visual -- */
 
