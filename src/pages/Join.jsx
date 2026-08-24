@@ -342,20 +342,6 @@ export default function Join() {
           ))}
         </div>
 
-        {/* Perks & Life at Pyvot */}
-        {/* TODO(asset): office/tasting candid photos */}
-        <div className="mt-12 grid gap-4 sm:grid-cols-3">
-          {PERKS.map((item, i) => (
-            <Reveal key={item.t} delay={i * 0.06}>
-              <InteractiveCard className="h-full bg-card/50">
-                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-mint/[0.08] blur-2xl" aria-hidden />
-                <div className="grid h-10 w-10 place-items-center rounded-xl border border-mint/30 bg-mint/10">{item.icon}</div>
-                <div className="mt-4 font-bold text-sm text-ink">{item.t}</div>
-                <p className="mt-2 text-xs leading-relaxed text-mute">{item.d}</p>
-              </InteractiveCard>
-            </Reveal>
-          ))}
-        </div>
       </Section>
 
       {/* Interactive Vertical Hiring Process Timeline */}
@@ -392,6 +378,21 @@ export default function Join() {
               </Reveal>
             ))}
           </div>
+        </div>
+
+        {/* Perks & Life at Pyvot */}
+        {/* TODO(asset): office/tasting candid photos */}
+        <div className="mt-12 grid gap-4 sm:grid-cols-3">
+          {PERKS.map((item, i) => (
+            <Reveal key={item.t} delay={i * 0.06}>
+              <InteractiveCard className="h-full bg-card/50">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-mint/[0.08] blur-2xl" aria-hidden />
+                <div className="grid h-10 w-10 place-items-center rounded-xl border border-mint/30 bg-mint/10">{item.icon}</div>
+                <div className="mt-4 font-bold text-sm text-ink">{item.t}</div>
+                <p className="mt-2 text-xs leading-relaxed text-mute">{item.d}</p>
+              </InteractiveCard>
+            </Reveal>
+          ))}
         </div>
       </Section>
 
