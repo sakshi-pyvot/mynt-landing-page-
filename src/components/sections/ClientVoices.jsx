@@ -8,17 +8,48 @@ import { getLenis } from '@/lib/scroll'
 import { cn } from '@/lib/utils'
 
 // slugs match /public/testimonials/{full,preview,poster}/<slug>.*
+// `about` copy comes from the Brand Testimonial doc — keep it verbatim.
 const VOICES = [
-  { slug: 'og-by-the-lake', brand: 'OG by the Lake', logo: 'og-by-the-lake.jpg', hook: '136% revenue uplift', tag: 'Growth' },
-  { slug: 'bhikharam-chandmal', brand: 'Bhikharam Chandmal', logo: 'bhikharam-chandmal.jpg', hook: 'Legacy brand, marketplace-first', tag: 'Marketplace' },
-  { slug: 'nepal-sweets', brand: 'Nepal Sweets', logo: 'nepal-sweets.jpg', hook: 'Discount burn under control', tag: 'Profitability' },
-  { slug: 'bunaphile', brand: 'Bunaphile', logo: 'bunaphile.png', hook: 'Café growth on Zomato & Swiggy', tag: 'Growth' },
-  { slug: 'golbari', brand: 'Golbari', logo: 'golbari.jpg', hook: 'Heritage kitchen, modern ops', tag: 'Operations' },
-  { slug: 'pabrai', brand: "Pabrai's", logo: 'pabrais.jpg', hook: 'Multi-outlet visibility', tag: 'Multi-outlet' },
-  { slug: 'kaligodam', brand: 'Kaligodam', logo: 'kaligodam.jpg', hook: 'From data to decisions', tag: 'Intelligence' },
-  { slug: 'haji', brand: 'Haji Saheb', logo: 'haji-saheb.jpg', hook: 'Payout clarity every week', tag: 'Payouts' },
-  { slug: 'biryani-babu', brand: 'Biryani Babu', logo: null, hook: 'Ads that actually return', tag: 'Ads' },
-  { slug: 'balaram-mullick', brand: 'Balaram Mullick', logo: null, hook: 'Sweets, scaled with data', tag: 'Growth' },
+  {
+    slug: 'og-by-the-lake', brand: 'OG by the Lake', logo: 'og-by-the-lake.jpg', hook: '136% revenue uplift', tag: 'Growth',
+    about: 'Founded by Kamran Ahmed Khan and curated by Sneha Singhi Upadhaya (BBC Pastry Chef of the Year - 2018), OG by the Lake emerged as a contemporary destination restaurant in Kolkata. Famous primarily for its scenic lakeside dining experience, rather than for one specific cuisine or dish. Its large waterfront setting, outdoor decks, greenery and broad multi-cuisine menu make ambience central to the brand experience.',
+  },
+  {
+    slug: 'bhikharam-chandmal', brand: 'Bhikharam Chandmal', logo: 'bhikharam-chandmal.jpg', hook: 'Legacy brand, marketplace-first', tag: 'Marketplace',
+    about: 'The brand traces its heritage to Bikaner in 1923, later establishing a long-standing presence in Kolkata. Famous for traditional Rajasthani namkeen, sweets and vegetarian snacks rooted in Bikaneri food culture. It combines packaged savouries and mithai with street food and vegetarian meals, extending its traditional snacking identity. Bikaneri Bhujia is the product most closely associated with the brand’s origins and identity.',
+  },
+  {
+    slug: 'nepal-sweets', brand: 'Nepal Sweets', logo: 'nepal-sweets.jpg', hook: 'Discount burn under control', tag: 'Profitability',
+    about: 'Nepal Sweets was established in 1891. A sweet brand with strong recognition across generations, famous especially for its wide variety of Bengali sandesh and traditional mithai. Its differentiation comes from experimenting with sandesh through nolen gur, rose, caramel, chocolate and seasonal flavours. Gulab Patti Sandesh is one of the brand’s most distinctive and recognisable products.',
+  },
+  {
+    slug: 'bunaphile', brand: 'Bunaphile', logo: 'bunaphile.png', hook: 'Café growth on Zomato & Swiggy', tag: 'Growth',
+    about: 'Founded by Sonika Dey in 2021, Bunaphile began inside Bhalo-Basha, the former home of noted Bengali writer Nabaneeta Dev Sen. Famous as a modern Kolkata café centred around coffee, bakery offerings and all-day café dining. Its strongest differentiation is the use of heritage spaces and Bengali design cues, creating a café identity rooted specifically in Kolkata.',
+  },
+  {
+    slug: 'golbari', brand: 'Golbari', logo: 'golbari.jpg', hook: 'Heritage kitchen, modern ops', tag: 'Operations',
+    about: 'Established in the early 1920s in Shyambazar, Golbari has become one of Kolkata’s most enduring old-school food institutions for more than 100 years. Famous almost entirely for its intensely flavoured, dark and slow-cooked mutton kosha. Its distinctive preparation-rich spices, long cooking and traditionally paired paratha or roti has made “Golbari mangsho” a recognisable Kolkata reference. Kosha Mangsho is unquestionably the product that defines the brand.',
+  },
+  {
+    slug: 'pabrai', brand: "Pabrai's", logo: 'pabrais.jpg', hook: 'Multi-outlet visibility', tag: 'Multi-outlet',
+    about: 'Pabrai’s was started with Mr. Anuvrat Pabrai the founder of Tulika’s Ice Cream Pvt. Ltd. in 1985, known for premium artisanal ice creams built around distinctive Indian, regional and seasonal flavours. Differentiates itself through flavours such as paan, filter coffee and ingredient-led Indian creations rather than a conventional flavour portfolio. Nolen Gur Ice Cream is the brand’s strongest signature and most recognisable bestseller.',
+  },
+  {
+    slug: 'kaligodam', brand: 'Kaligodam', logo: 'kaligodam.jpg', hook: 'From data to decisions', tag: 'Intelligence',
+    about: 'Kaligodam is a Kolkata heritage sweets-and-snacks brand now carried forward by the fourth generation. Famous for traditional mithai alongside freshly prepared hot snacks and savouries. Its identity combines sweets with favourites such as jalebi, bhujia and kachori, giving it a strong everyday-snacking association. Boondia-Bhujia is the signature product most strongly associated with Kaligodam.',
+  },
+  {
+    slug: 'haji', brand: 'Haji Saheb', logo: 'haji-saheb.jpg', hook: 'Payout clarity every week', tag: 'Payouts',
+    about: 'Haji Saheb grew from its established Behala presence into a recognised Kolkata name for traditional Mughlai food. Famous for biryani, chaap, kebabs and rich Mughlai curries served in an accessible family-dining format. The brand is particularly associated with generous portions, familiar Mughlai flavours and a broad traditional menu. Mutton Biryani is its strongest signature, with Chicken Chaap another highly associated favourite.',
+  },
+  {
+    slug: 'biryani-babu', brand: 'Biryani Babu', logo: null, hook: 'Ads that actually return', tag: 'Ads',
+    about: 'Founded in 2024, Biryani Babu is a young Kolkata brand built as a modern, technology- and SOP-driven biryani QSR. Famous for bold Barrackpore-style biryani, distinguished from the lighter traditional Kolkata-style preparation. Its positioning centres on consistent preparation, generous meat portions and strong value across a scalable QSR format. Barrackpore Chicken Biryani and Mutton Biryani are the products that most strongly define the brand.',
+  },
+  {
+    slug: 'balaram-mullick', brand: 'Balaram Mullick', logo: null, hook: 'Sweets, scaled with data', tag: 'Growth',
+    about: 'Founded in 1885, the brand has remained part of Kolkata’s Bengali mishti culture for more than a century and is now run by the fourth generation. Famous for combining traditional Bengali sweets with continuous experimentation and contemporary formats. The brand has built a distinctive identity through baked, flavoured and innovative versions of classic mishti while retaining traditional foundations. Baked Rosogolla is one of its most recognisable innovations and signature products from the house of Balaram Mullick & Radharaman Mullick.',
+  },
 ]
 
 const initials = (s) => s.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase()
@@ -206,10 +237,7 @@ function Lightbox({ v, onClose, onPrev, onNext }) {
             </div>
           </div>
           <p className="mt-5 text-2xl font-semibold leading-tight text-ink">{v.hook}</p>
-          <p className="mt-3 text-sm text-mute">
-            Client story filmed inside the restaurant. Real operators on what changed
-            after working with Pyvot and Mynt.
-          </p>
+          <p className="mt-3 max-h-[32vh] overflow-y-auto text-sm leading-relaxed text-mute">{v.about}</p>
         </div>
       </motion.div>
     </motion.div>
