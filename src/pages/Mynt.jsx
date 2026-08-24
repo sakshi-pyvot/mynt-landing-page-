@@ -422,9 +422,9 @@ function DashboardShowcase() {
                 style={i > 0 ? { clipPath: 'inset(100% 0 0 0)' } : undefined}
               >
                 <img
-                  src={`/shots/${x.shot}.jpg?v=4`}
+                  src={`/shots/${x.shot}.jpg?v=5`}
                   alt={`${x.label} dashboard`}
-                  className="h-full w-full scale-[1.025] object-contain"
+                  className="h-full w-full object-contain"
                 />
               </div>
             ))}
@@ -483,13 +483,11 @@ function DashboardShowcase() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
             >
-              <div className="overflow-hidden rounded-xl border border-line">
-                <img
-                  src={`/shots/${d.shot}.jpg?v=4`}
-                  alt={`${d.label} dashboard`}
-                  className="scale-[1.025]"
-                />
-              </div>
+              <img
+                src={`/shots/${d.shot}.jpg?v=5`}
+                alt={`${d.label} dashboard`}
+                className="rounded-xl border border-line"
+              />
               <h3 className="mt-4 text-xl font-bold">{d.title}</h3>
               <p className="mt-2 text-sm text-mute">{d.body}</p>
             </motion.div>
