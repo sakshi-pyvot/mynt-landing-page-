@@ -344,7 +344,7 @@ function DashboardShowcase() {
   // the frame then lingers over later sections. Re-measure once they decode.
   useEffect(() => {
     let on = true
-    const imgs = [...(root.current?.querySelectorAll('.dsh-shot') || [])]
+    const imgs = [...(root.current?.querySelectorAll('.dsh-shot img') || [])]
     Promise.allSettled(imgs.map((im) => im.decode())).then(() => {
       if (on) ScrollTrigger.refresh()
     })
@@ -400,8 +400,8 @@ function DashboardShowcase() {
     <div className="relative">
       {/* breathing halo behind the slab */}
       <motion.div
-        className="pointer-events-none absolute -inset-[10%] rounded-[48px] bg-[radial-gradient(ellipse_at_center,rgba(47,211,154,0.32),rgba(47,211,154,0.1)_45%,transparent_70%)] blur-3xl"
-        animate={{ scale: [1, 1.07, 1], opacity: [0.5, 0.85, 0.5] }}
+        className="pointer-events-none absolute -inset-[16%] rounded-[64px] bg-[radial-gradient(ellipse_at_center,rgba(47,211,154,0.5),rgba(47,211,154,0.18)_45%,transparent_72%)] blur-3xl"
+        animate={{ scale: [1, 1.08, 1], opacity: [0.65, 1, 0.65] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
       />
       <div className="[perspective:1400px]">
@@ -414,13 +414,19 @@ function DashboardShowcase() {
           <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
           <div className="relative aspect-[1280/1000] overflow-hidden rounded-2xl bg-bg p-2 [transform:translateZ(24px)]">
             {DASHBOARDS.map((x, i) => (
-              <img
+              // wrapper carries the wipe (GSAP owns its transform); the inner img
+              // over-scales ~2% so ragged capture edges crop off all four sides
+              <div
                 key={x.key}
-                src={`/shots/${x.shot}.jpg?v=4`}
-                alt={`${x.label} dashboard`}
-                className="dsh-shot absolute inset-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] rounded-xl object-contain"
+                className="dsh-shot absolute inset-2 overflow-hidden rounded-xl"
                 style={i > 0 ? { clipPath: 'inset(100% 0 0 0)' } : undefined}
-              />
+              >
+                <img
+                  src={`/shots/${x.shot}.jpg?v=4`}
+                  alt={`${x.label} dashboard`}
+                  className="h-full w-full scale-[1.025] object-contain"
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -477,11 +483,13 @@ function DashboardShowcase() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
             >
-              <img
-                src={`/shots/${d.shot}.jpg?v=4`}
-                alt={`${d.label} dashboard`}
-                className="rounded-xl border border-line"
-              />
+              <div className="overflow-hidden rounded-xl border border-line">
+                <img
+                  src={`/shots/${d.shot}.jpg?v=4`}
+                  alt={`${d.label} dashboard`}
+                  className="scale-[1.025]"
+                />
+              </div>
               <h3 className="mt-4 text-xl font-bold">{d.title}</h3>
               <p className="mt-2 text-sm text-mute">{d.body}</p>
             </motion.div>
