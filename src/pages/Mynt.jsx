@@ -20,7 +20,7 @@ const HOW_STEPS = [
   { n: '04', t: 'Act', s: 'Know what deserves attention.', d: 'When something changes — margin, payouts, refunds, charges, ads or discounts — Mynt helps surface the issue instead of leaving you to find it manually.' },
 ]
 
-const FLOW_SOURCES = ['Zomato', 'Swiggy', 'Statements', 'Reports', 'Outlet Data']
+const FLOW_SOURCES = ['Statements', 'Reports', 'Outlet Data']
 const FLOW_OUTPUTS = ['Dashboards', 'Compare', 'AI', 'Reports']
 
 const DASHBOARDS = [
@@ -154,11 +154,11 @@ const inView = { once: false, margin: '9999px 0px -10% 0px' }
 // Zomato/Swiggy/Statements/Reports/Outlet Data → MYNT → Dashboards/Compare/AI/Reports
 // One tight braid: every path shares the same curvature family, merges into a
 // single spine through the MYNT core, then fans out. Dashes march while in view.
-const SRC_Y = [48, 104, 160, 216, 272]
-const OUT_Y = [64, 128, 192, 256]
-const flowIn = (y) => `M 0 ${y} C 72 ${y}, 84 160, 150 160`
-const flowOut = (y) => `M 250 160 C 316 160, 328 ${y}, 400 ${y}`
-const FLOW_PATHS = [...SRC_Y.map(flowIn), 'M 150 160 H 250', ...OUT_Y.map(flowOut)]
+const SRC_Y = [80, 136, 192]
+const OUT_Y = [40, 104, 168, 232]
+const flowIn = (y) => `M 0 ${y} C 72 ${y}, 84 136, 150 136`
+const flowOut = (y) => `M 250 136 C 316 136, 328 ${y}, 400 ${y}`
+const FLOW_PATHS = [...SRC_Y.map(flowIn), 'M 150 136 H 250', ...OUT_Y.map(flowOut)]
 
 function FlowDiagram() {
   const rm = reducedMotion()
@@ -182,13 +182,13 @@ function FlowDiagram() {
     <div ref={box}>
       {/* desktop */}
       <div className="mx-auto hidden max-w-5xl items-center gap-3 lg:grid lg:grid-cols-[11rem_1fr_11rem]">
-        <div className="relative h-[320px]">
+        <div className="relative h-[272px]">
           {FLOW_SOURCES.map((s, i) => (
             <span key={s} className={pill('l')} style={{ top: SRC_Y[i] - 20 }}>{s}</span>
           ))}
         </div>
-        <div className="relative h-[320px]">
-          <svg viewBox="0 0 400 320" preserveAspectRatio="none" className="h-full w-full" aria-hidden>
+        <div className="relative h-[272px]">
+          <svg viewBox="0 0 400 272" preserveAspectRatio="none" className="h-full w-full" aria-hidden>
             {FLOW_PATHS.map((d) => (
               <path key={d} d={d} fill="none" stroke="rgba(47,211,154,0.16)" strokeWidth="1.5" />
             ))}
@@ -224,7 +224,7 @@ function FlowDiagram() {
             </div>
           </div>
         </div>
-        <div className="relative h-[320px]">
+        <div className="relative h-[272px]">
           {FLOW_OUTPUTS.map((s, i) => (
             <span key={s} className={pill('r')} style={{ top: OUT_Y[i] - 20 }}>{s}</span>
           ))}
@@ -753,7 +753,7 @@ function ReportPreview() {
       <div aria-hidden className="absolute inset-0 translate-x-2 translate-y-2 rotate-[0.9deg] rounded-2xl border border-line/60 bg-card/50" />
       <Card glow className="relative p-6 md:p-8">
         <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-mint">Mynt · Monthly Report</div>
-        <h3 className="mt-2 text-xl font-bold md:text-2xl">Monthly Performance Report — Arsalan</h3>
+        <h3 className="mt-2 text-xl font-bold md:text-2xl">Monthly Performance Report</h3>
         <div className="mt-1 text-xs text-mute">June 2026 · All outlets · All platforms</div>
 
         <motion.ul variants={listV} initial="hidden" whileInView="show" viewport={inView} className="mt-6 space-y-2.5" role="list">
@@ -891,7 +891,7 @@ export default function Mynt() {
               </p>
             </Reveal>
             <Reveal delay={0.15}>
-              <CtaPair className="mt-9" />
+              <CtaPair className="mt-9" expertTo="/contact?intent=mynt" />
             </Reveal>
           </div>
           <div className="relative flex justify-center [perspective:1400px] lg:justify-end">
@@ -933,7 +933,7 @@ export default function Mynt() {
       </Section>
 
       {/* 3 · dashboards */}
-      <Section id="dashboards">
+      <Section id="dashboards" tight>
         <SectionHead
           eyebrow="Dashboards"
           title="A dashboard for every question that matters."
@@ -959,7 +959,7 @@ export default function Mynt() {
       </Section>
 
       {/* 4 · compare */}
-      <Section id="compare">
+      <Section id="compare" tight>
         <SectionHead
           eyebrow="Compare"
           title="Compare before you decide."
@@ -991,7 +991,7 @@ export default function Mynt() {
       </Section>
 
       {/* 5 · mynt ai */}
-      <Section id="ai-assistant">
+      <Section id="ai-assistant" tight>
         <SectionHead
           eyebrow="Mynt AI"
           title="Ask the business question. Get the answer from your own data."
@@ -1035,7 +1035,7 @@ export default function Mynt() {
       </Section>
 
       {/* 6 · reports */}
-      <Section id="reports">
+      <Section id="reports" tight>
         <SectionHead
           eyebrow="Reports"
           title="Turn your live data into a report in seconds."
@@ -1072,7 +1072,7 @@ export default function Mynt() {
       </Section>
 
       {/* 7 · data trust */}
-      <Section id="data-trust">
+      <Section id="data-trust" tight>
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
           <SectionHead
             className="mb-0"
@@ -1195,7 +1195,7 @@ export default function Mynt() {
               </p>
               <div className="mt-7 flex flex-col gap-3">
                 <Button to={CTA.start} target="_self" className="w-full">Get pricing for your brand</Button>
-                <Button to={CTA.expert} variant="ghost" className="w-full">Talk to an expert</Button>
+                <Button to="/contact?intent=mynt" variant="ghost" className="w-full">Talk to an expert</Button>
               </div>
             </div>
           </div>
@@ -1220,7 +1220,7 @@ export default function Mynt() {
               Bring your restaurant data together and turn it into numbers your team can understand, trust and act on.
             </p>
           </Reveal>
-          <CtaPair size="lg" className="mt-10 justify-center" />
+          <CtaPair size="lg" className="mt-10 justify-center" expertTo="/contact?intent=mynt" />
         </div>
       </section>
     </>

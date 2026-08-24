@@ -1,10 +1,11 @@
+import { motion } from 'motion/react'
 import CtaPair from '@/components/CtaPair'
 import OrbitCarousel from '@/components/OrbitCarousel'
 import ExpertsSplit from '@/components/sections/ExpertsSplit'
 import { Button, Card, CountUp, Eyebrow, InteractiveCard, Reveal, Section, SectionHead, SmartLink, Stat } from '@/components/ui'
 import VideoLoop from '@/components/VideoLoop'
 import { CTA } from '@/lib/site'
-import { cn } from '@/lib/utils'
+import { cn, reducedMotion } from '@/lib/utils'
 
 // real @pyvot.in content made for restaurant brands — each card links to its post
 const SOCIAL_POSTS = [
@@ -123,6 +124,30 @@ function ServiceBlock({ id, eyebrow, title, lede, monitor, playbook, get, proof,
   )
 }
 
+// ambient background for the How-we-work / Why-choose-us sections: soft mint
+// orbs drifting slowly behind the cards
+const ORBS = [
+  { pos: 'left-[6%] top-[10%] h-64 w-64', dur: 14, dx: 44, dy: 32 },
+  { pos: 'right-[4%] top-[36%] h-80 w-80', dur: 18, dx: -52, dy: 40 },
+  { pos: 'bottom-[2%] left-[36%] h-56 w-56', dur: 16, dx: 34, dy: -38 },
+]
+
+function GlowOrbs() {
+  if (reducedMotion()) return null
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+      {ORBS.map((o, i) => (
+        <motion.span
+          key={i}
+          className={cn('absolute rounded-full bg-[radial-gradient(circle,rgba(47,211,154,0.16),transparent_70%)] blur-2xl', o.pos)}
+          animate={{ x: [0, o.dx, 0], y: [0, o.dy, 0], opacity: [0.45, 0.9, 0.45] }}
+          transition={{ duration: o.dur, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      ))}
+    </div>
+  )
+}
+
 export default function Services() {
   return (
     <>
@@ -234,7 +259,8 @@ export default function Services() {
       </ServiceBlock>
 
       {/* how we work */}
-      <Section id="how-we-work" tight>
+      <Section id="how-we-work" tight className="relative">
+        <GlowOrbs />
         <SectionHead eyebrow="How we work" title="A repeatable operating rhythm — built to move numbers." lede="We diagnose first, measure what matters, prioritise the highest-impact actions, execute with your team, review the results, and keep improving." />
         <ol className="grid gap-4 md:grid-cols-3" role="list">
           {HOW.map(([t, s, d], i) => (
@@ -251,7 +277,8 @@ export default function Services() {
       </Section>
 
       {/* why choose us */}
-      <Section id="why-choose-us" tight>
+      <Section id="why-choose-us" tight className="relative">
+        <GlowOrbs />
         <SectionHead eyebrow="Why choose us" title="Built for restaurant growth. Proven across 250+ brands." lede="Pyvot combines restaurant operating experience, deep aggregator expertise, financial intelligence and hands-on execution — so recommendations do not stop at strategy." />
         <div className="grid gap-4 md:grid-cols-2">
           {WHY.map((w, i) => (
@@ -293,7 +320,9 @@ export default function Services() {
         <div className="relative mx-auto max-w-2xl px-6">
           <h2 className="text-3xl font-bold tracking-tight md:text-5xl">Tell us where growth is stuck.</h2>
           <p className="mt-4 text-mute">A 30-minute conversation with a Pyvot expert. Bring your numbers, or let Mynt bring them.</p>
-          <CtaPair size="lg" className="mt-10 justify-center" />
+          <div className="mt-10 flex justify-center">
+            <Button to={CTA.expert} size="lg">Talk to an expert</Button>
+          </div>
         </div>
       </section>
     </>

@@ -57,12 +57,12 @@ const PRINCIPLES = [
 const ROLES = [
   {
     id: 'senior-full-stack',
-    title: 'Senior Full Stack Software Developer',
+    title: 'Sr Full Stack Developer',
     fn: 'Engineering',
     loc: 'Kolkata (Work from Office)',
     type: 'Full-time',
     equity: 'CTC: ₹18–30 LPA · ESOPs Included',
-    summary: 'We’re looking for a top-tier Senior Full Stack Software Developer to take complete ownership of the product — from creating the user interface to managing the complex data running behind the scenes. You’ll be the trusted technical owner of our software, making key design decisions and building features from start to finish.',
+    summary: 'We’re looking for a top-tier Sr Full Stack Developer to take complete ownership of the product — from creating the user interface to managing the complex data running behind the scenes. You’ll be the trusted technical owner of our software, making key design decisions and building features from start to finish.',
     aiFirst: 'AI-First Engineering Team: We actively use Cursor, Claude, and Gemini to code smarter, boosting team efficiency by 3–5x!',
     tech: ['Node.js', 'React', 'PostgreSQL', 'AWS', 'Cursor / Claude / Gemini'],
     bullets: [
@@ -402,7 +402,7 @@ export default function Join() {
       <Section id="open-positions">
         <SectionHead
           eyebrow="Active Openings (1)"
-          title="Senior Full Stack Software Developer"
+          title="Sr Full Stack Developer"
           lede="We’re looking for a top-tier engineer to take complete ownership of the Mynt product from user interface to data infrastructure."
         />
 

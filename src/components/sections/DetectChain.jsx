@@ -1,6 +1,8 @@
-import { useRef } from 'react'
+import { Fragment, useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { motion } from 'motion/react'
+import { reducedMotion } from '@/lib/utils'
 
 const STAGES = [
   {
@@ -20,26 +22,37 @@ const STAGES = [
   },
 ]
 
+// the physical link between two stages: a drawn line with a pulse travelling
+// down the chain — vertical when stacked, horizontal on md+
+function ChainLink({ index }) {
+  const rm = reducedMotion()
+  return (
+    <div className="relative mx-auto h-10 w-px shrink-0 md:mx-0 md:h-px md:w-14 md:self-center" aria-hidden>
+      <span className="chain-line absolute inset-0 origin-top bg-gradient-to-b from-mint/70 via-mint/30 to-mint/70 md:origin-left md:bg-gradient-to-r" />
+      {!rm && (
+        <>
+          <motion.span
+            className="absolute left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-mint shadow-[0_0_10px_rgba(47,211,154,0.9)] md:hidden"
+            animate={{ top: ['0%', '100%'], opacity: [0, 1, 1, 0] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut', delay: index * 0.7, repeatDelay: 0.6 }}
+          />
+          <motion.span
+            className="absolute top-1/2 hidden h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-mint shadow-[0_0_10px_rgba(47,211,154,0.9)] md:block"
+            animate={{ left: ['0%', '100%'], opacity: [0, 1, 1, 0] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut', delay: index * 0.7, repeatDelay: 0.6 }}
+          />
+        </>
+      )}
+    </div>
+  )
+}
+
 export default function DetectChain() {
   const root = useRef(null)
 
   useGSAP(
     () => {
       gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.fromTo(
-          '.chain-path',
-          { strokeDashoffset: 1 },
-          {
-            strokeDashoffset: 0,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: root.current,
-              start: 'top 75%',
-              end: 'bottom 55%',
-              scrub: 0.5,
-            },
-          },
-        )
         gsap.from('.chain-card', {
           opacity: 0,
           y: 40,
@@ -47,6 +60,17 @@ export default function DetectChain() {
           scrollTrigger: {
             trigger: root.current,
             start: 'top 70%',
+            end: 'bottom 55%',
+            scrub: 0.5,
+          },
+        })
+        gsap.from('.chain-line', {
+          scaleX: 0,
+          scaleY: 0,
+          stagger: 0.3,
+          scrollTrigger: {
+            trigger: root.current,
+            start: 'top 65%',
             end: 'bottom 55%',
             scrub: 0.5,
           },
@@ -65,31 +89,24 @@ export default function DetectChain() {
         Mynt detects the anomaly, explains the drivers, and recommends the action.
       </p>
 
-      <div className="relative mt-16">
-        {/* connecting line behind cards */}
-        <svg
-          viewBox="0 0 1000 60"
-          preserveAspectRatio="none"
-          className="absolute left-0 top-1/2 hidden h-14 w-full -translate-y-1/2 md:block"
-        >
-          <path
-            className="chain-path"
-            d="M 20 30 C 180 -10, 320 70, 500 30 C 680 -10, 820 70, 980 30"
-            pathLength="1"
-            strokeDasharray="1"
-            fill="none"
-            stroke="#2fd39a"
-            strokeWidth="1.5"
-            opacity="0.6"
-          />
-        </svg>
-
-        <div className="relative grid gap-6 md:grid-cols-3">
-          {STAGES.map((s, i) => (
-            <div
-              key={s.tag}
-              className="chain-card rounded-2xl border border-line bg-card p-6"
-            >
+      <div className="mt-16 md:flex md:items-stretch">
+        {STAGES.map((s, i) => (
+          <Fragment key={s.tag}>
+            {i > 0 && <ChainLink index={i - 1} />}
+            <div className="chain-card relative rounded-2xl border border-line bg-card p-6 md:flex-1">
+              {/* connector ports on the card edges */}
+              {i > 0 && (
+                <span
+                  className="absolute left-0 top-1/2 hidden h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-mint/60 bg-bg md:block"
+                  aria-hidden
+                />
+              )}
+              {i < STAGES.length - 1 && (
+                <span
+                  className="absolute right-0 top-1/2 hidden h-2 w-2 -translate-y-1/2 translate-x-1/2 rounded-full border border-mint/60 bg-bg md:block"
+                  aria-hidden
+                />
+              )}
               <span
                 className={`inline-block rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] ${s.tone}`}
               >
@@ -97,8 +114,8 @@ export default function DetectChain() {
               </span>
               <p className="mt-4 text-sm leading-relaxed text-ink">{s.text}</p>
             </div>
-          ))}
-        </div>
+          </Fragment>
+        ))}
       </div>
     </section>
   )

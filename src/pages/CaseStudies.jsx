@@ -148,13 +148,46 @@ export default function CaseStudies() {
         </div>
       </section>
 
+      <Section id="client-voices" tight className="scroll-mt-28 pt-0">
+        <SectionHead eyebrow="Client voices" title="Hear it from the operators." lede="Restaurant owners on what changed, filmed on their own floors. Watch all ten with sound on the home page." className="mb-8" />
+        {/* row scrolls sideways on mobile, sits 4-across on desktop */}
+        <div className="-mx-6 overflow-x-auto px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex snap-x gap-4 pb-2">
+            {VOICES.map((v, i) => (
+              <Reveal key={v.slug} delay={i * 0.05} className="w-[220px] shrink-0 snap-center md:w-auto md:flex-1">
+                <div className="lq-card relative overflow-hidden rounded-2xl border border-line/70 hover:border-mint/40">
+                  <VideoLoop
+                    src={`/testimonials/preview/${v.slug}.mp4`}
+                    poster={`/testimonials/poster/${v.slug}.jpg`}
+                    label={`${v.brand} testimonial`}
+                    scrim
+                    className="aspect-[9/16]"
+                  />
+                  <div className="absolute inset-x-4 bottom-4">
+                    <div className="text-sm font-semibold text-ink">{v.brand}</div>
+                    <div className="mt-0.5 text-xs text-mute">{v.hook}</div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+        <Reveal className="mt-6">
+          <Button to="/#voices" variant="ghost">Watch client voices</Button>
+        </Reveal>
+      </Section>
+
       <Section tight className="pt-0">
         <div className="grid gap-4 md:grid-cols-2">
           {list.map((c, i) => {
             const isOpen = open === c.slug
             return (
               <Reveal key={c.slug} delay={(i % 2) * 0.05} className={cn(isOpen && 'md:col-span-2')}>
-                <InteractiveCard id={c.slug} className={cn('h-full', isOpen && 'border-mint/50')}>
+                <InteractiveCard
+                  id={c.slug}
+                  className={cn('h-full', isOpen ? 'border-mint/50' : 'cursor-pointer')}
+                  onClick={() => !isOpen && setOpen(c.slug)}
+                >
                   {/* -inset-6 cancels the card's p-6 so the wash still covers the full card; the card's overflow-hidden clips it */}
                   {TINTS[c.slug] && (
                     <div
@@ -184,7 +217,10 @@ export default function CaseStudies() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => setOpen(isOpen ? null : c.slug)}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setOpen(isOpen ? null : c.slug)
+                      }}
                       aria-expanded={isOpen}
                       className="shrink-0 rounded-full border border-line px-3 py-1.5 text-xs text-mute hover:border-mint/60 hover:text-mint"
                     >
@@ -223,35 +259,6 @@ export default function CaseStudies() {
             )
           })}
         </div>
-      </Section>
-
-      <Section tight>
-        <SectionHead eyebrow="Client voices" title="Hear it from the operators." lede="Restaurant owners on what changed, filmed on their own floors. Watch all ten with sound on the home page." className="mb-8" />
-        {/* row scrolls sideways on mobile, sits 4-across on desktop */}
-        <div className="-mx-6 overflow-x-auto px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex snap-x gap-4 pb-2">
-            {VOICES.map((v, i) => (
-              <Reveal key={v.slug} delay={i * 0.05} className="w-[220px] shrink-0 snap-center md:w-auto md:flex-1">
-                <div className="lq-card relative overflow-hidden rounded-2xl border border-line/70 hover:border-mint/40">
-                  <VideoLoop
-                    src={`/testimonials/preview/${v.slug}.mp4`}
-                    poster={`/testimonials/poster/${v.slug}.jpg`}
-                    label={`${v.brand} testimonial`}
-                    scrim
-                    className="aspect-[9/16]"
-                  />
-                  <div className="absolute inset-x-4 bottom-4">
-                    <div className="text-sm font-semibold text-ink">{v.brand}</div>
-                    <div className="mt-0.5 text-xs text-mute">{v.hook}</div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-        <Reveal className="mt-6">
-          <Button to="/#voices" variant="ghost">Watch client voices</Button>
-        </Reveal>
       </Section>
 
       <section className="relative overflow-hidden py-24 text-center md:py-32">

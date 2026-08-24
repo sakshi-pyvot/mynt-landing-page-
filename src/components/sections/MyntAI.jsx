@@ -16,7 +16,7 @@ const DRIVERS = [
 
 // human-paced typing: ~75ms/char with jitter, a small pause before the first
 // key and a slightly longer one after the space that starts the last word
-function useTypewriter(text, start, speed = 75) {
+function useTypewriter(text, start, speed = 32) {
   const [out, setOut] = useState('')
   useEffect(() => {
     if (!start) return undefined
@@ -34,7 +34,7 @@ function useTypewriter(text, start, speed = 75) {
       const pause = ch === ' ' ? speed * 1.6 : speed
       t = setTimeout(tick, pause + (Math.random() - 0.5) * speed * 0.6)
     }
-    t = setTimeout(tick, 500)
+    t = setTimeout(tick, 250)
     return () => clearTimeout(t)
   }, [text, start, speed])
   return out
@@ -73,7 +73,7 @@ export default function MyntAI() {
   // question done → brief "thinking" → answer
   useEffect(() => {
     if (!done) return undefined
-    const t = setTimeout(() => setAnswer(true), reducedMotion() ? 0 : 900)
+    const t = setTimeout(() => setAnswer(true), reducedMotion() ? 0 : 500)
     return () => clearTimeout(t)
   }, [done])
 

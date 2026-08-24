@@ -33,8 +33,8 @@ export const NAV = [
       { label: 'Data', to: '/#data', hint: 'From spreadsheets to one command centre' },
       { label: 'Product', to: '/#product', hint: 'Overview, ads, refunds, discounts' },
       { label: 'Mynt AI', to: '/#ai', hint: 'Ask why. Get the driver and the action.' },
-      { label: 'Product Overview', to: '/mynt', hint: 'What Mynt does, end to end' },
       { label: 'Trust & Security', to: '/mynt#trust', hint: 'How your data is handled' },
+      { label: 'Product Overview', to: '/mynt', hint: 'What Mynt does, end to end' },
       { label: 'Mynt Guides / Help Centre', to: '/mynt/guides', hint: 'Set-up, metrics, how-tos' },
     ],
     cta: { label: 'Get started with Mynt', to: CTA.start, cta: true },
@@ -69,7 +69,7 @@ export const NAV = [
     label: 'Customers',
     intro: 'Built on outcomes, not presentations.',
     items: [
-      { label: 'Success Stories', to: '/#voices', hint: 'Client voices — owners on film' },
+      { label: 'Success Stories', to: '/case-studies#client-voices', hint: 'Client voices — owners on film' },
       { label: 'Case Studies', to: '/case-studies', hint: 'Quantified results, brand by brand' },
     ],
     cta: { label: 'Talk to an expert', to: CTA.expert, cta: true },
@@ -102,7 +102,7 @@ export const FOOTER = [
     title: 'Company',
     links: [
       { label: 'About Us', to: '/about' },
-      { label: 'Success Stories', to: '/#voices' },
+      { label: 'Success Stories', to: '/case-studies#client-voices' },
       { label: 'Case Studies', to: '/case-studies' },
       { label: 'Join Us', to: '/join', cta: true },
       { label: 'Contact Us', to: '/contact?intent=other', cta: true },
