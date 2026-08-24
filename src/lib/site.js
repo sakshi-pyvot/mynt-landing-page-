@@ -105,7 +105,7 @@ export const FOOTER = [
       { label: 'Success Stories', to: '/#voices' },
       { label: 'Case Studies', to: '/case-studies' },
       { label: 'Join Us', to: '/join', cta: true },
-      { label: 'Contact Us', to: '/contact', cta: true },
+      { label: 'Contact Us', to: '/contact#contact-tracks', cta: true },
     ],
   },
 ]

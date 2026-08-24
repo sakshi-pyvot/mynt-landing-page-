@@ -38,12 +38,12 @@ const HOW = [
 
 // portfolio-level averages only — individual client results live on /case-studies
 const RESULTS = [
-  ['40% ↑', 'Average revenue growth', 'Online Ordering Aggregator Consulting'],
+  ['40%\u00A0↑', 'Average revenue growth', 'Online Ordering Aggregator Consulting'],
   ['+2 pp', 'Average profitability improvement', 'Online Ordering Aggregator Consulting'],
-  ['63% ↑', 'Average dining revenue growth', 'Dining Aggregator Consulting'],
-  ['120% ↑', 'Average new diner growth', 'Dining Aggregator Consulting'],
-  ['70% ↑', 'Average organic reach growth', 'Social Media Management'],
-  ['220% ↑', 'Average profile action growth', 'Social Media Management'],
+  ['63%\u00A0↑', 'Average dining revenue growth', 'Dining Aggregator Consulting'],
+  ['120%\u00A0↑', 'Average new diner growth', 'Dining Aggregator Consulting'],
+  ['70%\u00A0↑', 'Average organic reach growth', 'Social Media Management'],
+  ['220%\u00A0↑', 'Average profile action growth', 'Social Media Management'],
 ]
 
 const WHY = [

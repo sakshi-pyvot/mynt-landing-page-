@@ -316,9 +316,14 @@ export default function Join() {
           lede="We keep teams lean, high-autonomy, and obsessed with practical impact."
         />
 
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {/* 3 + 2 layout: no orphan slot — bottom pair widens to fill the row */}
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-6">
           {PRINCIPLES.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.05}>
+            <Reveal
+              key={p.title}
+              delay={i * 0.05}
+              className={cn(i < 3 ? 'lg:col-span-2' : 'lg:col-span-3', i === 4 && 'md:max-lg:col-span-2')}
+            >
               <GlowCard className="h-full p-6 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between">
@@ -469,9 +474,9 @@ export default function Join() {
         <div id="apply" className="mt-16 grid gap-10 lg:grid-cols-[1fr_1.4fr]">
           <div>
             <span className="font-mono text-xs uppercase tracking-widest text-mint">Direct Application</span>
-            <h3 className="mt-1 text-2xl font-bold text-ink">Apply — {selectedRole || 'General Application'}</h3>
+            <h3 className="mt-1 text-2xl font-bold text-ink">Apply to Pyvot</h3>
             <p className="mt-3 text-sm leading-relaxed text-mute">
-              Tell us what you have built or shipped end-to-end. A live GitHub repo, portfolio, or code walkthrough link is best.
+              Pick the role you are targeting and tell us what you have built, shipped or grown end-to-end. A portfolio, GitHub or work link helps.
             </p>
             <div className="mt-6 rounded-2xl border border-line/70 bg-card/40 p-5 space-y-2">
               <span className="font-mono text-xs font-semibold text-mint block">Direct hiring inbox:</span>
@@ -561,7 +566,7 @@ export default function Join() {
                 name="message"
                 rows={4}
                 required
-                placeholder="Tell us about a full-stack architecture, backend service, or AI-assisted project you took complete ownership of."
+                placeholder="Tell us about a project, product, campaign or system you took complete ownership of."
                 className="mt-1.5 w-full rounded-xl border border-line bg-card/70 px-4 py-3 text-sm text-ink placeholder:text-mute/50 outline-none focus:border-mint"
               />
             </label>

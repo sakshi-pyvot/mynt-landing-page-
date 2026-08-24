@@ -14,21 +14,9 @@ const EVOLUTION = [
     ['/team/sanchit-surana.png', 'Sanchit Surana'],
     ['/team/rohit-jain.png', 'Rohit Jain'],
   ]],
-  ['Consulting across brands', 'Pyvot started as hands-on growth and profitability work with restaurant operators: menus, pricing, ads, discounts, payouts, dining ops.', [
-    ['/brand/curated/koshe-kosha.jpg', 'Koshe Kosha'],
-    ['/brand/curated/chai-break.png', 'Chai Break'],
-    ['/brand/curated/oro-cafe.jpg', 'Oro Cafe'],
-  ]],
-  ['Patterns', 'The same problems repeated across brands: data in silos, no single owner, decisions made from GMV instead of margin.', [
-    ['/brand/curated/haji-saheb.jpg', 'Haji Saheb'],
-    ['/brand/curated/mio-amore.png', 'Mio Amore'],
-    ['/brand/curated/tao-bao.png', 'Tao Bao'],
-  ]],
-  ['Operating systems', 'We turned what worked into repeatable systems — weekly rhythms, benchmarks, governance — and ran them for clients.', [
-    ['/brand/curated/pa-pa-ya.jpg', 'Pa Pa Ya'],
-    ['/brand/curated/soda-bottle-opener-wala.jpg', 'Soda Bottle Opener Wala'],
-    ['/brand/curated/the-biryani-bari.jpg', 'The Biryani Bari'],
-  ]],
+  ['Consulting across brands', 'Pyvot started as hands-on growth and profitability work with restaurant operators: menus, pricing, ads, discounts, payouts, dining ops.'],
+  ['Patterns', 'The same problems repeated across brands: data in silos, no single owner, decisions made from GMV instead of margin.'],
+  ['Operating systems', 'We turned what worked into repeatable systems — weekly rhythms, benchmarks, governance — and ran them for clients.'],
   ['Mynt', 'Then we built the software the systems needed: one intelligence layer for marketplace, payout, discount, ad and outlet data. Experts stay optional.'],
 ]
 
@@ -48,10 +36,10 @@ const STATS = [
 ]
 
 const WHY = [
-  ['Online ordering optimisation', 'Marketplace growth with the economics intact — visibility, menu, ads and discounts read against contribution.'],
-  ['Dining & brand experience', 'Dine-in performance and a consistent brand across aggregators, reviews and the floor.'],
-  ['Data-led decision making', 'Mynt gives one version of the truth; every intervention is measured against it.'],
-  ['Ownership-driven execution', 'Named owners, weekly rhythm, monthly review. Strategy that ships.'],
+  { tag: 'Proven operating system', t: 'Online ordering growth', s: 'Grow orders without losing margin.', d: 'We optimise visibility, menus, ads, discounts and marketplace execution with profitability built into every decision.', m: 'Measured on revenue, contribution and ROI' },
+  { tag: 'Proven operating system', t: 'Dining growth', s: 'Turn dining platforms into a real growth channel.', d: 'We improve visibility, offers, campaigns, reviews and guest acquisition to drive more diners and stronger dining revenue.', m: 'Measured on dining revenue and new diner growth' },
+  { tag: 'Mynt powered', t: 'Data-backed decisions', s: 'One source of truth behind every action.', d: 'Mynt connects revenue, payouts, ads, discounts, charges and outlet performance so decisions are based on verified business data — not assumptions.', m: 'Measured before, during and after every intervention' },
+  { tag: 'Pyvot Experts', t: 'Execution with ownership', s: 'We do not just recommend. We make it happen.', d: 'Every priority has an owner, a timeline and a review rhythm — from identifying the opportunity to implementing the change and measuring the result.', m: 'Clear owners. Clear actions. Clear outcomes.' },
 ]
 
 // faces in the hero: leaders + a few of the team who have photos
@@ -134,11 +122,11 @@ export default function About() {
                     />
                   ))}
                 </div>
-              ) : (
+              ) : t === 'Mynt' ? (
                 <div className="mt-4 inline-flex h-11 items-center rounded-lg border border-mint/30 bg-mint/5 px-4">
                   <MyntMark className="h-5" wordClass="text-sm" />
                 </div>
-              )}
+              ) : null}
             </Reveal>
           ))}
         </ol>
@@ -211,25 +199,19 @@ export default function About() {
 
       {/* why us */}
       <Section id="why-us" tight>
-        <SectionHead eyebrow="Why choose us" title="Four reasons 250+ restaurant brands choose Pyvot." lede="No generic agency slides. We operate at the intersection of fintech reconciliation, aggregator economics, and deep dining fundamentals." />
-        <div className="grid gap-5 md:grid-cols-2">
-          {WHY.map(([t, d], i) => (
-            <Reveal key={t} delay={(i % 2) * 0.06}>
-              <InteractiveCard className="h-full p-8 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-bold text-mint">0{i + 1}</span>
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-mint/80 border border-mint/20 bg-mint/5 px-2.5 py-0.5 rounded-full">
-                      PROVEN OPERATING SYSTEM
-                    </span>
-                  </div>
-                  <h3 className="mt-4 text-xl font-bold text-ink">{t}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-mute">{d}</p>
+        <SectionHead eyebrow="Why choose us" title="Built for restaurant growth. Proven across 250+ brands." lede="Pyvot combines restaurant operating experience, deep aggregator expertise, financial intelligence and hands-on execution — so recommendations do not stop at strategy." />
+        <div className="grid gap-4 md:grid-cols-2">
+          {WHY.map((w, i) => (
+            <Reveal key={w.t} delay={(i % 2) * 0.05}>
+              <InteractiveCard className="h-full">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-mono text-xs text-mint">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="rounded-full border border-mint/30 bg-mint/5 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-mint">{w.tag}</span>
                 </div>
-                <div className="mt-6 flex items-center gap-2 text-xs text-mint">
-                  <span className="h-1.5 w-1.5 rounded-full bg-mint" />
-                  <span>Measured directly against contribution margin</span>
-                </div>
+                <h3 className="mt-3 text-lg font-semibold">{w.t}</h3>
+                <div className="mt-1 text-sm font-medium text-ink/85">{w.s}</div>
+                <p className="mt-2 text-sm leading-relaxed text-mute">{w.d}</p>
+                <div className="mt-4 border-t border-line/50 pt-3 text-xs text-mute">{w.m}</div>
               </InteractiveCard>
             </Reveal>
           ))}

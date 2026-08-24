@@ -105,7 +105,7 @@ const INTENTS = [
 
 const PROOF = [
   { value: '< 2hr', label: 'Weekday reply' },
-  { value: '100+', label: 'Restaurant brands' },
+  { value: '250+', label: 'Restaurant brands' },
   { value: 'Direct', label: 'No ticket queue' },
 ]
 
