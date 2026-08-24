@@ -110,7 +110,7 @@ const PROCESS_STEPS = [
 const PERKS = [
   {
     t: 'Real Industry Exposure',
-    d: 'Client food tastings, restaurant visits, kitchen walkthroughs, and executive reviews. You learn how F&B businesses really make money.',
+    d: 'Work close to the restaurant business — through client reviews, restaurant visits, menu and performance discussions, and real operating problems. You learn how F&B businesses actually grow, make money, and make decisions.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-mint">
         <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
@@ -118,8 +118,8 @@ const PERKS = [
     ),
   },
   {
-    t: 'Ownership & ESOPs',
-    d: 'We believe early team members should share directly in the enterprise value we create. Competitive cash + equity pools for key contributors.',
+    t: 'High-Ownership Roles',
+    d: 'Take meaningful responsibility early. You will work on real business problems, make decisions, execute ideas, and see the impact of your work directly on restaurant brands and internal products.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-mint">
         <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
@@ -128,8 +128,8 @@ const PERKS = [
     ),
   },
   {
-    t: 'Kolkata HQ (Sector V)',
-    d: 'Fast-paced, in-person collaboration. Restaurants operate on real-world energy, and we thrive being in the same room together.',
+    t: 'Kolkata HQ — Sector V',
+    d: 'We work closely, move fast, and solve problems together from our Kolkata office. Being in the same room helps us learn faster, collaborate better, and stay connected to the restaurants and teams we work with.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-mint">
         <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
@@ -469,7 +469,7 @@ export default function Join() {
         <div id="apply" className="mt-16 grid gap-10 lg:grid-cols-[1fr_1.4fr]">
           <div>
             <span className="font-mono text-xs uppercase tracking-widest text-mint">Direct Application</span>
-            <h3 className="mt-1 text-2xl font-bold text-ink">Apply for Senior Full Stack Developer</h3>
+            <h3 className="mt-1 text-2xl font-bold text-ink">Apply — {selectedRole || 'General Application'}</h3>
             <p className="mt-3 text-sm leading-relaxed text-mute">
               Tell us what you have built or shipped end-to-end. A live GitHub repo, portfolio, or code walkthrough link is best.
             </p>
@@ -518,13 +518,19 @@ export default function Join() {
 
             <label className="block text-xs font-medium uppercase tracking-[0.14em] text-mute">
               Target Role <span className="text-mint">*</span>
-              <input
+              <select
                 name="role"
-                type="text"
-                readOnly
+                required
                 value={selectedRole}
-                className="mt-1.5 w-full rounded-xl border border-mint/40 bg-mint/5 px-4 py-3 text-sm font-semibold text-mint outline-none"
-              />
+                onChange={(e) => setSelectedRole(e.target.value)}
+                className="mt-1.5 w-full rounded-xl border border-mint/40 bg-mint/5 px-4 py-3 text-sm font-semibold text-mint outline-none focus:border-mint"
+              >
+                <option value="" disabled>Select a role</option>
+                {ROLES.map((r) => (
+                  <option key={r.title} value={r.title}>{r.title}</option>
+                ))}
+                <option value="General Application">General Application</option>
+              </select>
             </label>
 
             <label className="block text-xs font-medium uppercase tracking-[0.14em] text-mute sm:col-span-2">

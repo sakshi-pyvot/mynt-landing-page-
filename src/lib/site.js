@@ -37,7 +37,7 @@ export const NAV = [
       { label: 'Trust & Security', to: '/mynt#trust', hint: 'How your data is handled' },
       { label: 'Mynt Guides / Help Centre', to: '/mynt/guides', hint: 'Set-up, metrics, how-tos' },
     ],
-    cta: { label: 'Get started with Mynt', to: CTA.start },
+    cta: { label: 'Get started with Mynt', to: CTA.start, cta: true },
   },
   {
     label: 'Services',
@@ -49,7 +49,7 @@ export const NAV = [
       { label: 'Dining Aggregator Consulting', to: '/services#dining', hint: 'Dine-in performance & brand experience' },
       { label: 'Social Media Management', to: '/services#social-media', hint: 'Strategy, shoots, reels, community' },
     ],
-    cta: { label: 'Talk to an expert', to: CTA.expert },
+    cta: { label: 'Talk to an expert', to: CTA.expert, cta: true },
   },
   {
     label: 'About',
@@ -72,7 +72,7 @@ export const NAV = [
       { label: 'Success Stories', to: '/#voices', hint: 'Client voices — owners on film' },
       { label: 'Case Studies', to: '/case-studies', hint: 'Quantified results, brand by brand' },
     ],
-    cta: { label: 'Talk to an expert', to: CTA.expert },
+    cta: { label: 'Talk to an expert', to: CTA.expert, cta: true },
   },
   { label: 'Contact', to: '/contact' },
 ]
@@ -85,7 +85,7 @@ export const FOOTER = [
       { label: 'Trust & Security', to: '/mynt#trust' },
       { label: 'Mynt Guides / Help Centre', to: '/mynt/guides' },
       { label: 'Mynt AI', to: '/#ai' },
-      { label: 'Get started with Mynt', to: CTA.start },
+      { label: 'Get started with Mynt', to: CTA.start, cta: true },
     ],
   },
   {
@@ -95,7 +95,7 @@ export const FOOTER = [
       { label: 'Online Ordering Aggregator Consulting', to: '/services#online-ordering' },
       { label: 'Dining Aggregator Consulting', to: '/services#dining' },
       { label: 'Social Media Management', to: '/services#social-media' },
-      { label: 'Talk to an expert', to: CTA.expert },
+      { label: 'Talk to an expert', to: CTA.expert, cta: true },
     ],
   },
   {
@@ -104,8 +104,8 @@ export const FOOTER = [
       { label: 'About Us', to: '/about' },
       { label: 'Success Stories', to: '/#voices' },
       { label: 'Case Studies', to: '/case-studies' },
-      { label: 'Join Us', to: '/join' },
-      { label: 'Contact Us', to: '/contact' },
+      { label: 'Join Us', to: '/join', cta: true },
+      { label: 'Contact Us', to: '/contact', cta: true },
     ],
   },
 ]

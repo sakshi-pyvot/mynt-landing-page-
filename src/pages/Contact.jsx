@@ -29,7 +29,6 @@ const INTENTS = [
       { label: 'Phone', name: 'phone', type: 'tel', required: true, placeholder: '+91 98765 43210' },
       { label: 'Restaurant / Brand', name: 'company', type: 'text', required: true, placeholder: 'e.g. Chaat & Co.' },
       { label: 'Number of active outlets', name: 'outlets', type: 'chips', required: true, options: ['1', '2–5', '6–20', '21–50', '50+'] },
-      { label: 'Platforms currently used', name: 'platforms', type: 'chips', required: true, options: ['Zomato', 'Swiggy', 'Both', 'Both + Dining'] },
     ],
   },
   {

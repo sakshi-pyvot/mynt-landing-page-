@@ -41,7 +41,7 @@ const PRINCIPLES = [
 ]
 
 const STATS = [
-  ['250+', 'restaurant brands'],
+  ['250+', 'brands'],
   ['35 Cr+', 'monthly revenue managed'],
   ['7 L+', 'monthly orders'],
   ['10K+', 'monthly dining transactions'],

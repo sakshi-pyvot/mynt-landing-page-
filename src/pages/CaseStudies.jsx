@@ -21,10 +21,10 @@ const CASES = [
   },
   {
     slug: 'biryani-house',
-    brand: 'Kolkata’s No.1 Biryani House',
+    brand: 'Dada Bodhi Biryani',
     title: 'Turning a biryani specialist into a full-menu powerhouse',
     tags: ['Revenue', 'Menu'],
-    metrics: [['40%', 'increase in combo-led orders'], ['5 min', 'faster average prep time'], ['↑', 'non-biryani revenue share']],
+    metrics: [['40%', 'increase in combo-led orders'], ['5 min', 'faster average prep time']],
     challenge: 'Revenue rode almost entirely on one category. Kitchen load peaked on it too, stretching prep times at rush hour.',
     data: 'Menu engineering and demand planning across millions of order lines showed where adjacent items were being searched but not converted.',
     intervention: 'Rebuilt the menu around combos, widened the revenue base with data-backed adjacent categories and streamlined kitchen operations.',
@@ -175,7 +175,7 @@ export default function CaseStudies() {
                       )}
                       <div>
                         <div className="text-xs uppercase tracking-[0.2em] text-mute">{c.brand}</div>
-                        <div className="mt-0.5 flex flex-wrap gap-1.5">
+                        <div className="mt-2 flex flex-wrap gap-1.5">
                           {c.tags.map((t) => (
                             <span key={t} className="rounded-full border border-line/70 px-2 py-0.5 text-[10px] text-mute">{t}</span>
                           ))}
@@ -191,8 +191,9 @@ export default function CaseStudies() {
                       {isOpen ? 'Close' : 'Read'}
                     </button>
                   </div>
-                  <h3 className="mt-5 text-xl font-semibold leading-snug">{c.title}</h3>
-                  <div className="mt-5 grid grid-cols-3 gap-3">
+                  <h3 className="mt-7 text-xl font-semibold leading-snug">{c.title}</h3>
+                  {/* two validated metrics split the row evenly; three keep the tighter grid */}
+                  <div className={cn('mt-6 grid gap-3', c.metrics.length === 2 ? 'grid-cols-2' : 'grid-cols-3')}>
                     {c.metrics.map(([v, l]) => (
                       <div key={l} className="rounded-xl border border-line/60 bg-bg/40 p-3">
                         <div className="text-2xl font-bold tracking-tight text-mint"><CountUp value={v} /></div>

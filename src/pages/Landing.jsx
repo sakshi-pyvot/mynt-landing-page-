@@ -1,5 +1,4 @@
 import Hero from '@/components/sections/Hero'
-import TrustMarquee from '@/components/sections/TrustMarquee'
 import ExcelToDashboard from '@/components/sections/ExcelToDashboard'
 import ProductCanvas from '@/components/sections/ProductCanvas'
 import MyntAI from '@/components/sections/MyntAI'
@@ -13,7 +12,6 @@ export default function Landing() {
   return (
     <>
       <Hero />
-      <TrustMarquee />
       <ExcelToDashboard />
       <ProductCanvas />
       <MyntAI />

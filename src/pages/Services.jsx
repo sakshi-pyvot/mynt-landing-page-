@@ -28,21 +28,29 @@ const ROUTES = [
 ]
 
 const HOW = [
-  ['Understand', 'Sit with the P&L, the platforms and the kitchen. Name the real constraint.'],
-  ['Measure', 'Connect Mynt. Get one version of orders, payouts, ads, discounts and refunds.'],
-  ['Prioritise', 'Rank interventions by rupee impact and effort. Pick three, not thirty.'],
-  ['Execute', 'Menus, offers, campaigns, listings, dining ops — done with your team, owned by ours.'],
-  ['Govern', 'Weekly rhythm, monthly review, clear owners. No slide decks that never ship.'],
-  ['Improve', 'What worked compounds. What didn’t is retired. Repeat.'],
+  ['Understand', 'Start with the business, not assumptions.', 'Align on goals, economics, platform performance and the real constraints holding growth back.'],
+  ['Measure', 'Create one version of the truth.', 'Bring revenue, payouts, ads, discounts, refunds and outlet performance together so every decision starts from the same numbers.'],
+  ['Prioritise', 'Focus on what will move the business most.', 'Rank opportunities by financial impact, urgency and effort — then concentrate the team on the highest-value actions.'],
+  ['Execute', 'Turn decisions into live changes.', 'Implement improvements across menus, offers, ads, listings, dining campaigns and operating processes, with clear ownership.'],
+  ['Govern', 'Keep execution accountable.', 'Run a disciplined weekly and monthly rhythm around owners, actions, deadlines, results and next steps.'],
+  ['Improve', 'Scale what works. Fix what doesn’t.', 'Measure the outcome, retain what creates value, remove what does not, and feed every learning into the next cycle.'],
 ]
 
+// portfolio-level averages only — individual client results live on /case-studies
 const RESULTS = [
-  ['50%', 'revenue growth', 'Hatari'],
-  ['5×', 'return on ad spend', 'Idly Go'],
-  ['+7 pp', 'net margin', 'Koshe Kosha'],
-  ['40%', 'more combo-led orders', 'Kolkata’s No.1 biryani house'],
-  ['100%', 'increase in new users', 'OG by the Lake'],
-  ['21%', 'controlled discount burn', 'Land of Cakes'],
+  ['40% ↑', 'Average revenue growth', 'Online Ordering Aggregator Consulting'],
+  ['+2 pp', 'Average profitability improvement', 'Online Ordering Aggregator Consulting'],
+  ['63% ↑', 'Average dining revenue growth', 'Dining Aggregator Consulting'],
+  ['120% ↑', 'Average new diner growth', 'Dining Aggregator Consulting'],
+  ['70% ↑', 'Average organic reach growth', 'Social Media Management'],
+  ['220% ↑', 'Average profile action growth', 'Social Media Management'],
+]
+
+const WHY = [
+  { tag: 'Proven operating system', t: 'Online ordering growth', s: 'Grow orders without losing margin.', d: 'We optimise visibility, menus, ads, discounts and marketplace execution with profitability built into every decision.', m: 'Measured on revenue, contribution and ROI' },
+  { tag: 'Proven operating system', t: 'Dining growth', s: 'Turn dining platforms into a real growth channel.', d: 'We improve visibility, offers, campaigns, reviews and guest acquisition to drive more diners and stronger dining revenue.', m: 'Measured on dining revenue and new diner growth' },
+  { tag: 'Mynt powered', t: 'Data-backed decisions', s: 'One source of truth behind every action.', d: 'Mynt connects revenue, payouts, ads, discounts, charges and outlet performance so decisions are based on verified business data — not assumptions.', m: 'Measured before, during and after every intervention' },
+  { tag: 'Pyvot Experts', t: 'Execution with ownership', s: 'We do not just recommend. We make it happen.', d: 'Every priority has an owner, a timeline and a review rhythm — from identifying the opportunity to implementing the change and measuring the result.', m: 'Clear owners. Clear actions. Clear outcomes.' },
 ]
 
 function ServiceBlock({ id, eyebrow, title, lede, monitor, playbook, get, proof, children, cta, ctaLabel = 'Talk to an expert', flip = false }) {
@@ -92,15 +100,21 @@ function ServiceBlock({ id, eyebrow, title, lede, monitor, playbook, get, proof,
               </ol>
             </Card>
             <div className="grid gap-4 sm:grid-cols-2">
-              {proof.map((p) => (
-                <SmartLink key={p.brand} to={p.to || `/case-studies#${p.slug}`} className="block">
+              {proof.map((p) => {
+                const card = (
                   <InteractiveCard className="h-full">
                     <div className="text-xs uppercase tracking-[0.2em] text-mute">{p.brand}</div>
                     <div className="mt-2 text-3xl font-bold tracking-tight text-mint">{p.metric}</div>
-                    <div className="text-xs uppercase tracking-[0.16em] text-mute">{p.label}</div>
+                    <div className="mt-1 text-xs text-mute">{p.label}</div>
                   </InteractiveCard>
-                </SmartLink>
-              ))}
+                )
+                const to = p.to || (p.slug && `/case-studies#${p.slug}`)
+                return to ? (
+                  <SmartLink key={p.brand} to={to} className="block">{card}</SmartLink>
+                ) : (
+                  <div key={p.brand}>{card}</div>
+                )
+              })}
             </div>
           </div>
         </div>
@@ -164,8 +178,8 @@ export default function Services() {
         get={['A named growth owner and weekly rhythm', 'Menu, offer and campaign changes shipped, not recommended', 'Payout, charge and burn reviewed monthly in Mynt', 'A profitability plan with rupee targets']}
         playbook={['Diagnose', 'Prioritise', 'Execute', 'Review', 'Improve']}
         proof={[
-          { brand: 'Idly Go', metric: '5×', label: 'ROAS', slug: 'idly-go' },
-          { brand: 'Koshe Kosha', metric: '+7 pp', label: 'net margin', slug: 'koshe-kosha' },
+          { brand: 'Average revenue growth', metric: '40% ↑', label: 'Across brands managed by Pyvot' },
+          { brand: 'Average profitability improvement', metric: '2% ↑', label: 'Across brands managed by Pyvot' },
         ]}
       >
         <VideoLoop src="/videos/rider-india.mp4" poster="/videos/rider-india-poster.jpg" scrim label="Night delivery rider through an Indian street" className="aspect-[21/9] rounded-2xl border border-line/70" />
@@ -188,8 +202,8 @@ export default function Services() {
         get={['Dining growth owner and monthly review', 'Offer and campaign calendar, executed', 'Review and rating playbook for the team', 'Lunch/dinner and weekday programmes with targets']}
         playbook={['Audit', 'Position', 'Activate', 'Measure', 'Refine']}
         proof={[
-          { brand: 'OG by the Lake', metric: '100%', label: 'more new users', slug: 'og-by-the-lake' },
-          { brand: 'Hatari', metric: '50%', label: 'revenue growth', slug: 'hatari' },
+          { brand: 'Average dining revenue growth', metric: '63% ↑', label: 'Across dining aggregator programmes managed by Pyvot' },
+          { brand: 'Average new diner growth', metric: '120% ↑', label: 'Across dining aggregator programmes managed by Pyvot' },
         ]}
         flip
       >
@@ -205,8 +219,8 @@ export default function Services() {
         get={['A content engine: plan → shoot → edit → approve → schedule → report', 'Instagram and Facebook treated as different channels, not repost feeds', 'Content pillars tuned to your brand: food, people, ambience, occasions, offers, culture', 'Reporting tied to business outcomes where measurable']}
         playbook={['Audit', 'Strategy', 'Calendar', 'Shoot', 'Publish', 'Review']}
         proof={[
-          { brand: 'Instagram', metric: '@pyvot.in', label: 'see the work', to: 'https://www.instagram.com/pyvot.in/' },
-          { brand: 'Restaurant brands', metric: '250+', label: 'partnered with Pyvot', to: '/case-studies' },
+          { brand: 'Average organic reach growth', metric: '70% ↑', label: 'Across restaurant social accounts managed by Pyvot' },
+          { brand: 'Average profile action growth', metric: '220% ↑', label: 'Across restaurant social accounts managed by Pyvot' },
         ]}
         cta="/contact?intent=social"
         ctaLabel="Get a social audit"
@@ -221,13 +235,14 @@ export default function Services() {
 
       {/* how we work */}
       <Section id="how-we-work" tight>
-        <SectionHead eyebrow="How we work" title="An operating rhythm, not a deck." lede="Six steps, in order — because the order is the point. Measurement before prioritisation; execution before governance." />
+        <SectionHead eyebrow="How we work" title="A repeatable operating rhythm — built to move numbers." lede="We diagnose first, measure what matters, prioritise the highest-impact actions, execute with your team, review the results, and keep improving." />
         <ol className="grid gap-4 md:grid-cols-3" role="list">
-          {HOW.map(([t, d], i) => (
+          {HOW.map(([t, s, d], i) => (
             <Reveal key={t} delay={(i % 3) * 0.05}>
               <li className="h-full rounded-2xl border border-line/70 bg-card/50 p-6">
                 <div className="font-mono text-xs text-mint">{String(i + 1).padStart(2, '0')}</div>
                 <h3 className="mt-2 text-lg font-semibold">{t}</h3>
+                <div className="mt-1 text-sm font-medium text-ink/85">{s}</div>
                 <p className="mt-2 text-sm text-mute">{d}</p>
               </li>
             </Reveal>
@@ -235,13 +250,34 @@ export default function Services() {
         </ol>
       </Section>
 
-      {/* results wall */}
+      {/* why choose us */}
+      <Section id="why-choose-us" tight>
+        <SectionHead eyebrow="Why choose us" title="Built for restaurant growth. Proven across 250+ brands." lede="Pyvot combines restaurant operating experience, deep aggregator expertise, financial intelligence and hands-on execution — so recommendations do not stop at strategy." />
+        <div className="grid gap-4 md:grid-cols-2">
+          {WHY.map((w, i) => (
+            <Reveal key={w.t} delay={(i % 2) * 0.05}>
+              <InteractiveCard className="h-full">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-mono text-xs text-mint">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="rounded-full border border-mint/30 bg-mint/5 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-mint">{w.tag}</span>
+                </div>
+                <h3 className="mt-3 text-lg font-semibold">{w.t}</h3>
+                <div className="mt-1 text-sm font-medium text-ink/85">{w.s}</div>
+                <p className="mt-2 text-sm leading-relaxed text-mute">{w.d}</p>
+                <div className="mt-4 border-t border-line/50 pt-3 text-xs text-mute">{w.m}</div>
+              </InteractiveCard>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* results wall — portfolio averages, no client names */}
       <section className="border-y border-line/60 bg-surface/50 py-16">
         <div className="mx-auto max-w-7xl px-6">
-          <Eyebrow>Results</Eyebrow>
+          <Eyebrow>Results across the Pyvot portfolio</Eyebrow>
           <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-6">
             {RESULTS.map(([v, l, b]) => (
-              <div key={b}>
+              <div key={l}>
                 <Stat value={<CountUp value={v} />} label={l} />
                 <div className="mt-1 text-xs text-mute/70">{b}</div>
               </div>
