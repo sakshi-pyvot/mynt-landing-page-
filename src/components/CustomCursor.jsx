@@ -1,6 +1,31 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { reducedMotion } from '@/lib/utils'
+
+// static radial lens map for the cursor's refraction: R/G encode an offset that
+// pulls samples toward the centre (magnify), zero at centre and rim so the
+// distortion blends out cleanly. Generated once, used as the filter's feImage.
+const makeLensMap = (n = 64) => {
+  const c = document.createElement('canvas')
+  c.width = c.height = n
+  const ctx = c.getContext('2d')
+  const img = ctx.createImageData(n, n)
+  for (let y = 0; y < n; y++) {
+    for (let x = 0; x < n; x++) {
+      const dx = (x + 0.5) / n - 0.5
+      const dy = (y + 0.5) / n - 0.5
+      const r = Math.hypot(dx, dy) * 2
+      const s = r < 1 ? Math.sin(r * Math.PI) : 0
+      const i = (y * n + x) * 4
+      img.data[i] = Math.round(-dx * s * 127 + 128)
+      img.data[i + 1] = Math.round(-dy * s * 127 + 128)
+      img.data[i + 2] = 0
+      img.data[i + 3] = 255
+    }
+  }
+  ctx.putImageData(img, 0, 0)
+  return c.toDataURL('image/png')
+}
 
 // Liquid-glass cursor: a small clear lens that follows the pointer and refracts the
 // page under it (backdrop-filter + SVG displacement in Chromium; soft glass blur
@@ -13,6 +38,7 @@ const HOVER_SCALE = 1.5
 export default function CustomCursor() {
   const lensRef = useRef(null)
   const dotRef = useRef(null)
+  const [lensMap] = useState(() => makeLensMap())
 
   useEffect(() => {
     if (!window.matchMedia('(pointer: fine)').matches || reducedMotion()) return undefined
@@ -94,6 +120,12 @@ export default function CustomCursor() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[100] hidden [@media(pointer:fine)]:block" aria-hidden>
+      <svg width="0" height="0" className="absolute">
+        <filter id="cursor-lens-warp" x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB">
+          <feImage href={lensMap} preserveAspectRatio="none" result="m" />
+          <feDisplacementMap in="SourceGraphic" in2="m" scale="14" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
       <div
         ref={lensRef}
         className="cursor-lens absolute -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0"

@@ -83,15 +83,15 @@ const DISPLAY = /* glsl */ `
     vec4 sc = texture2D(uScene, vUv + offs);
     float r = texture2D(uScene, vUv + offs * 1.3).r;
     float bch = texture2D(uScene, vUv + offs * 0.7).b;
-    vec3 refr = vec3(r, sc.g, bch) * 1.25;
+    vec3 refr = vec3(r, sc.g, bch) * 1.1;
 
     // thin iridescent skin: hue drifts with the flow direction
     float ang = atan(v.y, v.x + 1e-4);
     vec3 irid = 0.5 + 0.5 * cos(vec3(0.0, 2.1, 4.2) + ang + uTime * 0.6);
     vec3 col = refr * body
-             + mix(vec3(0.9, 1.0, 0.96), irid, 0.5) * (0.22 * fres * body)
-             + vec3(1.0) * (0.18 * spec * body);
-    float alpha = clamp(sc.a * body * 1.2 + 0.015 * body + 0.28 * fres * body + 0.18 * spec * body, 0.0, 1.0);
+             + mix(vec3(0.9, 1.0, 0.96), irid, 0.5) * (0.10 * fres * body)
+             + vec3(1.0) * (0.08 * spec * body);
+    float alpha = clamp(sc.a * body * 1.2 + 0.015 * body + 0.14 * fres * body + 0.08 * spec * body, 0.0, 1.0);
     gl_FragColor = vec4(col, alpha);
   }
 `
@@ -118,7 +118,7 @@ const MAP = /* glsl */ `
     gl_FragColor = vec4(disp.x * 0.5 + 0.5, -disp.y * 0.5 + 0.5, 0.0, 1.0);
   }
 `
-const MAP_RES = 128
+const MAP_RES = 256
 
 function makeTarget() {
   return new THREE.WebGLRenderTarget(SIM, SIM, {

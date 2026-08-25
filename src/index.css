@@ -58,9 +58,11 @@ body {
    backdrop-filter forced a CPU re-rasterize of the region under the lens on
    every pointer move and ran the laptop hot. */
 .cursor-lens {
-  -webkit-backdrop-filter: blur(1.6px) saturate(1.25) brightness(1.06);
-  backdrop-filter: blur(1.6px) saturate(1.25) brightness(1.06);
-  background: radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 45%, rgba(47, 211, 154, 0.07) 100%);
+  /* clear glass: no blur — the backdrop stays sharp; Chromium adds real
+     refraction through the static lens-displacement filter below */
+  -webkit-backdrop-filter: saturate(1.25) brightness(1.06);
+  backdrop-filter: saturate(1.25) brightness(1.06);
+  background: radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015) 45%, rgba(47, 211, 154, 0.05) 100%);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.28),
     inset 0 -10px 16px -8px rgba(255, 255, 255, 0.1),
@@ -68,6 +70,11 @@ body {
     0 8px 24px rgba(0, 0, 0, 0.28);
   transition: box-shadow 0.25s ease, background 0.25s ease;
   will-change: transform;
+}
+@supports (backdrop-filter: url('#f')) {
+  .cursor-lens {
+    backdrop-filter: url('#cursor-lens-warp') saturate(1.25) brightness(1.06);
+  }
 }
 .cursor-lens.is-hover {
   background: radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.12), rgba(47, 211, 154, 0.06) 45%, rgba(47, 211, 154, 0.14) 100%);
@@ -84,7 +91,7 @@ body {
   width: 36%;
   height: 22%;
   border-radius: 50%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0));
   filter: blur(1px);
   transform: rotate(-18deg);
 }
