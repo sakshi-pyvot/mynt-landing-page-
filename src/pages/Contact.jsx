@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { Button, Eyebrow, InteractiveCard, Reveal, Section } from '@/components/ui'
@@ -6,7 +6,10 @@ import ContactHeroVideo from '@/components/sections/ContactHeroVideo'
 import { CONTACT } from '@/lib/site'
 import SocialLinks from '@/components/SocialLinks'
 import { submitForm, STATUS_TEXT } from '@/lib/forms'
-import { cn, reducedMotion } from '@/lib/utils'
+import { cn } from '@/lib/utils'
+
+// maplibre is heavy — load the HQ map chunk only when Contact renders
+const HqMap = lazy(() => import('@/components/HqMap'))
 
 const INTENTS = [
   {
@@ -472,29 +475,15 @@ export default function Contact() {
                 <span className="font-mono text-[10px] uppercase tracking-widest text-mint">Headquarters</span>
                 <span className="font-mono text-[11px] text-mint">{currentTime} IST</span>
               </div>
-              {/* stylized map tile — pure CSS/SVG, opens the same maps link */}
-              <a
-                href={CONTACT.maps}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Open Pyvot HQ location in Google Maps"
-                className="dot-field group/map relative mt-3 block h-24 overflow-hidden rounded-2xl border border-line/70 bg-card/60 transition-colors hover:border-mint/40"
-              >
-                <svg viewBox="0 0 200 96" preserveAspectRatio="none" aria-hidden className="absolute inset-0 h-full w-full opacity-40">
-                  <path d="M0 64 H200" stroke="rgba(143,153,168,0.35)" strokeWidth="1" />
-                  <path d="M56 0 V96" stroke="rgba(143,153,168,0.35)" strokeWidth="1" />
-                  <path d="M0 26 C60 34 140 14 200 24" stroke="rgba(47,211,154,0.3)" strokeWidth="1.5" fill="none" />
-                </svg>
-                <span className="absolute left-1/2 top-1/2 flex h-3 w-3 -translate-x-1/2 -translate-y-1/2">
-                  {!reducedMotion() && (
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-50" />
-                  )}
-                  <span className="relative inline-flex h-3 w-3 rounded-full border-2 border-bg bg-mint shadow-[0_0_12px_rgba(47,211,154,0.6)]" />
-                </span>
-                <span className="absolute bottom-2 left-3 font-mono text-[9px] uppercase tracking-wider text-mute transition-colors group-hover/map:text-mint">
+              {/* live map — MapLibre dark basemap, pulsing marker on Ergo Tower */}
+              <div className="relative mt-3 h-44 overflow-hidden rounded-2xl border border-line/70 bg-card/60">
+                <Suspense fallback={<div className="dot-field h-full w-full" />}>
+                  <HqMap className="h-full w-full" />
+                </Suspense>
+                <span className="pointer-events-none absolute bottom-2 left-3 z-10 font-mono text-[9px] uppercase tracking-wider text-ink/80">
                   Sector V, Kolkata
                 </span>
-              </a>
+              </div>
               <address className="mt-3 not-italic font-sans text-xs leading-relaxed text-ink/80">
                 {CONTACT.address.map((l) => (
                   <span key={l} className="block">{l}</span>
