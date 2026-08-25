@@ -11,6 +11,12 @@ import { Button, Card, Eyebrow, InteractiveCard, Reveal, Section, SectionHead } 
 import { CTA } from '@/lib/site'
 import { cn, reducedMotion } from '@/lib/utils'
 
+// accent hex → rgba string (dashboard border/glow tints)
+const rgba = (hex, alpha) => {
+  const n = parseInt(hex.slice(1), 16)
+  return `rgba(${n >> 16}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`
+}
+
 /* ------------------------------------------------------------------ data -- */
 
 const HOW_STEPS = [
@@ -24,13 +30,13 @@ const FLOW_SOURCES = ['Statements', 'Reports', 'Outlet Data']
 const FLOW_OUTPUTS = ['Dashboards', 'Compare', 'AI', 'Reports']
 
 const DASHBOARDS = [
-  { key: 'overview', label: 'Overview', title: 'See the business in one screen.', body: 'Gross Order Value, orders, AOV, net payout, net margin, ads, discounts, charges, refunds and platform performance — together.', shot: 'overview' },
-  { key: 'revenue', label: 'Revenue', title: 'Understand where growth is coming from.', body: 'Track orders, Gross Order Value, AOV and revenue movement across brands, outlets, platforms and periods.', shot: 'revenue' },
-  { key: 'payouts', label: 'Payouts', title: 'Know what you earned and what you actually received.', body: 'Understand settlements, deductions, adjustments and payout differences without manually reconciling statements.', shot: 'payouts' },
-  { key: 'ads', label: 'Ads', title: 'See whether your advertising is creating worthwhile growth.', body: 'Track spend, ROAS and performance across platforms, campaigns and outlets.', shot: 'ads' },
-  { key: 'discounts', label: 'Discounts', title: 'Understand what every discount is costing you.', body: 'Track discount burn, coupon performance and contribution so growth is not bought at the expense of profitability.', shot: 'discounts' },
-  { key: 'charges', label: 'Charges', title: 'See exactly what platforms are deducting.', body: 'Break down platform charges and understand how each deduction affects the final payout.', shot: 'charges' },
-  { key: 'refunds', label: 'Refunds', title: 'Spot leakage before it becomes normal.', body: 'Track refund and cancellation rates, reasons, trends and their financial impact.', shot: 'refunds' },
+  { key: 'overview', label: 'Overview', title: 'See the business in one screen.', body: 'Gross Order Value, orders, AOV, net payout, net margin, ads, discounts, charges, refunds and platform performance — together.', shot: 'overview', accent: '#2fd39a' },
+  { key: 'revenue', label: 'Revenue', title: 'Understand where growth is coming from.', body: 'Track orders, Gross Order Value, AOV and revenue movement across brands, outlets, platforms and periods.', shot: 'revenue', accent: '#2fd39a' },
+  { key: 'payouts', label: 'Payouts', title: 'Know what you earned and what you actually received.', body: 'Understand settlements, deductions, adjustments and payout differences without manually reconciling statements.', shot: 'payouts', accent: '#2fd39a' },
+  { key: 'ads', label: 'Ads', title: 'See whether your advertising is creating worthwhile growth.', body: 'Track spend, ROAS and performance across platforms, campaigns and outlets.', shot: 'ads', accent: '#8b5cf6' },
+  { key: 'discounts', label: 'Discounts', title: 'Understand what every discount is costing you.', body: 'Track discount burn, coupon performance and contribution so growth is not bought at the expense of profitability.', shot: 'discounts', accent: '#2dd4bf' },
+  { key: 'charges', label: 'Charges', title: 'See exactly what platforms are deducting.', body: 'Break down platform charges and understand how each deduction affects the final payout.', shot: 'charges', accent: '#38bdf8' },
+  { key: 'refunds', label: 'Refunds', title: 'Spot leakage before it becomes normal.', body: 'Track refund and cancellation rates, reasons, trends and their financial impact.', shot: 'refunds', accent: '#f87171' },
 ]
 
 const TEAMS = [
@@ -396,11 +402,17 @@ function DashboardShowcase() {
     </div>
   )
 
+  // halo + frame border/glow take the active dashboard's graph colour
+  const a = d.accent
   const frame = (
     <div className="relative">
       {/* breathing halo behind the slab */}
       <motion.div
-        className="pointer-events-none absolute -inset-[16%] rounded-[64px] bg-[radial-gradient(ellipse_at_center,rgba(47,211,154,0.5),rgba(47,211,154,0.18)_45%,transparent_72%)] blur-3xl"
+        className="pointer-events-none absolute -inset-[16%] rounded-[64px] blur-3xl"
+        style={{
+          background: `radial-gradient(ellipse at center, ${rgba(a, 0.5)}, ${rgba(a, 0.18)} 45%, transparent 72%)`,
+          transition: 'background 0.8s ease',
+        }}
         animate={{ scale: [1, 1.08, 1], opacity: [0.65, 1, 0.65] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
       />
@@ -409,7 +421,12 @@ function DashboardShowcase() {
           ref={frameRef}
           onMouseMove={onFrameMove}
           onMouseLeave={onFrameLeave}
-          className="glass relative overflow-hidden rounded-3xl border border-mint/20 p-4 shadow-[0_0_120px_rgba(47,211,154,0.18),0_30px_90px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)] [transform-style:preserve-3d] md:p-5"
+          style={{
+            borderColor: rgba(a, 0.35),
+            boxShadow: `0 0 120px ${rgba(a, 0.22)}, 0 30px 90px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)`,
+            transition: 'border-color 0.8s ease, box-shadow 0.8s ease',
+          }}
+          className="glass relative overflow-hidden rounded-3xl border p-4 [transform-style:preserve-3d] md:p-5"
         >
           <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
           <div className="relative aspect-[1280/1000] overflow-hidden rounded-2xl bg-bg p-2 [transform:translateZ(24px)]">
@@ -461,7 +478,8 @@ function DashboardShowcase() {
               {DASHBOARDS.map((x, i) => (
                 <span
                   key={x.key}
-                  className={cn('h-1 rounded-full transition-all duration-300', active === i ? 'w-8 bg-mint' : 'w-3 bg-line')}
+                  className={cn('h-1 rounded-full transition-all duration-300', active === i ? 'w-8' : 'w-3 bg-line')}
+                  style={active === i ? { background: x.accent } : undefined}
                 />
               ))}
             </div>
@@ -486,7 +504,8 @@ function DashboardShowcase() {
               <img
                 src={`/shots/${d.shot}.jpg?v=7`}
                 alt={`${d.label} dashboard`}
-                className="rounded-xl border border-line"
+                className="rounded-xl border"
+                style={{ borderColor: rgba(d.accent, 0.45), boxShadow: `0 0 40px ${rgba(d.accent, 0.22)}` }}
               />
               <h3 className="mt-4 text-xl font-bold">{d.title}</h3>
               <p className="mt-2 text-sm text-mute">{d.body}</p>
