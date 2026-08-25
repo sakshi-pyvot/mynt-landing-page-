@@ -422,7 +422,7 @@ function DashboardShowcase() {
                 style={i > 0 ? { clipPath: 'inset(100% 0 0 0)' } : undefined}
               >
                 <img
-                  src={`/shots/${x.shot}.jpg?v=5`}
+                  src={`/shots/${x.shot}.jpg?v=6`}
                   alt={`${x.label} dashboard`}
                   className="h-full w-full object-contain"
                 />
@@ -484,7 +484,7 @@ function DashboardShowcase() {
               transition={{ duration: 0.25 }}
             >
               <img
-                src={`/shots/${d.shot}.jpg?v=5`}
+                src={`/shots/${d.shot}.jpg?v=6`}
                 alt={`${d.label} dashboard`}
                 className="rounded-xl border border-line"
               />
