@@ -148,6 +148,67 @@ function GlowOrbs() {
   )
 }
 
+// header-side visual for HOW WE WORK: the six steps as a slowly-orbited cycle —
+// the "repeatable rhythm" drawn literally
+function RhythmVisual() {
+  const rm = reducedMotion()
+  const R = 43.75 // node ring radius in % — matches the inset-4 border circle
+  return (
+    <div className="relative mx-auto hidden h-64 w-64 lg:block" aria-hidden>
+      <div className="absolute inset-4 rounded-full border border-mint/25" />
+      <div className="absolute inset-10 rounded-full border border-line/40" />
+      {['01', '02', '03', '04', '05', '06'].map((n, i) => {
+        const a = (i / 6) * 2 * Math.PI - Math.PI / 2
+        return (
+          <span
+            key={n}
+            className="absolute grid h-9 w-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-mint/40 bg-bg font-mono text-[10px] text-mint shadow-[0_0_14px_rgba(47,211,154,0.18)]"
+            style={{ left: `${50 + R * Math.cos(a)}%`, top: `${50 + R * Math.sin(a)}%` }}
+          >
+            {n}
+          </span>
+        )
+      })}
+      {!rm && (
+        <motion.div className="absolute inset-4" animate={{ rotate: 360 }} transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}>
+          <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-mint shadow-[0_0_14px_rgba(47,211,154,0.95)]" />
+        </motion.div>
+      )}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+        <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-mint/80">Operating</div>
+        <div className="mt-1 text-sm font-bold">Rhythm</div>
+      </div>
+    </div>
+  )
+}
+
+// header-side visual for WHY CHOOSE US: growth bars rising toward the 250+ mark
+const PROOF_BARS = [34, 48, 42, 60, 55, 74, 68, 88]
+
+function ProofVisual() {
+  const rm = reducedMotion()
+  return (
+    <div className="hidden w-72 flex-col justify-end lg:flex" aria-hidden>
+      <div className="flex h-40 items-end gap-2.5 border-b border-line/60">
+        {PROOF_BARS.map((h, i) => (
+          <motion.span
+            key={i}
+            className="flex-1 rounded-t bg-gradient-to-t from-mint/10 to-mint/70"
+            initial={rm ? false : { height: 0 }}
+            whileInView={{ height: `${h}%` }}
+            viewport={{ once: true, margin: '-10% 0px' }}
+            transition={{ duration: 0.7, delay: i * 0.08, ease: 'easeOut' }}
+          />
+        ))}
+      </div>
+      <div className="mt-3 flex items-baseline gap-2">
+        <span className="text-2xl font-bold text-mint">250+</span>
+        <span className="text-xs text-mute">brands measured on outcomes</span>
+      </div>
+    </div>
+  )
+}
+
 export default function Services() {
   return (
     <>
@@ -261,7 +322,12 @@ export default function Services() {
       {/* how we work */}
       <Section id="how-we-work" tight className="relative">
         <GlowOrbs />
-        <SectionHead eyebrow="How we work" title="A repeatable operating rhythm — built to move numbers." lede="We diagnose first, measure what matters, prioritise the highest-impact actions, execute with your team, review the results, and keep improving." />
+        <div className="lg:mb-12 lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center lg:gap-12">
+          <SectionHead className="lg:mb-0" eyebrow="How we work" title="A repeatable operating rhythm — built to move numbers." lede="We diagnose first, measure what matters, prioritise the highest-impact actions, execute with your team, review the results, and keep improving." />
+          <Reveal delay={0.1}>
+            <RhythmVisual />
+          </Reveal>
+        </div>
         <ol className="grid gap-4 md:grid-cols-3" role="list">
           {HOW.map(([t, s, d], i) => (
             <Reveal key={t} delay={(i % 3) * 0.05}>
@@ -279,7 +345,12 @@ export default function Services() {
       {/* why choose us */}
       <Section id="why-choose-us" tight className="relative">
         <GlowOrbs />
-        <SectionHead eyebrow="Why choose us" title="Built for restaurant growth. Proven across 250+ brands." lede="Pyvot combines restaurant operating experience, deep aggregator expertise, financial intelligence and hands-on execution — so recommendations do not stop at strategy." />
+        <div className="lg:mb-12 lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center lg:gap-12">
+          <SectionHead className="lg:mb-0" eyebrow="Why choose us" title="Built for restaurant growth. Proven across 250+ brands." lede="Pyvot combines restaurant operating experience, deep aggregator expertise, financial intelligence and hands-on execution — so recommendations do not stop at strategy." />
+          <Reveal delay={0.1}>
+            <ProofVisual />
+          </Reveal>
+        </div>
         <div className="grid gap-4 md:grid-cols-2">
           {WHY.map((w, i) => (
             <Reveal key={w.t} delay={(i % 2) * 0.05}>
