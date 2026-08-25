@@ -25,13 +25,13 @@ export default function Footer() {
               <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-mute">{col.title}</div>
               <ul className="mt-4 flex flex-col gap-2.5" role="list">
                 {col.links.map((l) => (
-                  <li key={l.label} className={l.cta ? 'pt-1' : undefined}>
+                  <li key={l.label}>
                     <SmartLink
                       to={l.to}
                       target={l.to === CTA.start ? '_self' : undefined}
                       className={
                         l.cta
-                          ? 'inline-flex items-center rounded-full border border-mint/40 bg-mint/5 px-4 py-1.5 text-sm font-medium text-mint transition-colors hover:bg-mint/15'
+                          ? 'text-sm font-medium text-mint transition-colors hover:text-mint/80'
                           : 'text-sm text-ink/80 transition-colors hover:text-mint'
                       }
                     >
