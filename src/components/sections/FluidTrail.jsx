@@ -118,7 +118,7 @@ const MAP = /* glsl */ `
     gl_FragColor = vec4(disp.x * 0.5 + 0.5, -disp.y * 0.5 + 0.5, 0.0, 1.0);
   }
 `
-const MAP_RES = 256
+const MAP_RES = 128
 
 function makeTarget() {
   return new THREE.WebGLRenderTarget(SIM, SIM, {
@@ -179,6 +179,8 @@ export default function FluidTrail({ velocityRef }) {
       mapImage: null, // ImageData, created lazily
       mapTick: 0,
       quiet: 0,
+      blobSeq: 0,
+      blobUrl: null,
     }
   }
   const makeDisplay = () =>
@@ -272,7 +274,16 @@ export default function FluidTrail({ velocityRef }) {
         if (!s.mapImage) s.mapImage = s.mapCtx.createImageData(MAP_RES, MAP_RES)
         s.mapImage.data.set(s.mapPixels)
         s.mapCtx.putImageData(s.mapImage, 0, 0)
-        feImage.setAttribute('href', s.mapCanvas.toDataURL('image/png'))
+        // toBlob encodes off the main thread (toDataURL was a per-frame stall);
+        // the sequence guard drops any encode that finishes out of order
+        const seq = ++s.blobSeq
+        s.mapCanvas.toBlob((blob) => {
+          if (!blob || seq !== s.blobSeq) return
+          const url = URL.createObjectURL(blob)
+          feImage.setAttribute('href', url)
+          if (s.blobUrl) URL.revokeObjectURL(s.blobUrl)
+          s.blobUrl = url
+        })
       }
     }
 

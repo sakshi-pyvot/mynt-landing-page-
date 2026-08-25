@@ -144,7 +144,7 @@ export default function Hero() {
           <svg width="0" height="0" className="absolute" aria-hidden>
             <filter id="hero-warp" x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB">
               <feImage id="hero-warp-image" preserveAspectRatio="none" result="map" />
-              <feGaussianBlur in="map" stdDeviation="1.5" result="smooth" />
+              <feGaussianBlur in="map" stdDeviation="2.5" result="smooth" />
               <feDisplacementMap in="SourceGraphic" in2="smooth" scale="24" xChannelSelector="R" yChannelSelector="G" />
             </filter>
           </svg>
