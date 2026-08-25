@@ -117,7 +117,36 @@ export default function CaseStudies() {
     <>
       {/* PageHero has no background slot, so the hero is composed by hand: quiet kitchen
           loop behind the copy under a heavy scrim, text content unchanged. */}
-      <section className="relative overflow-hidden pt-36 pb-16 md:pt-44 md:pb-24">
+      <Section id="client-voices" tight className="scroll-mt-28 pt-32 md:pt-40">
+        <SectionHead eyebrow="Client voices" title="Hear it from the operators." lede="Restaurant owners on what changed, filmed on their own floors. Watch all ten with sound on the home page." className="mb-8" />
+        {/* row scrolls sideways on mobile, sits 4-across on desktop */}
+        <div className="-mx-6 overflow-x-auto px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex snap-x gap-4 pb-2">
+            {VOICES.map((v, i) => (
+              <Reveal key={v.slug} delay={i * 0.05} className="w-[220px] shrink-0 snap-center md:w-auto md:flex-1">
+                <div className="lq-card relative overflow-hidden rounded-2xl border border-line/70 hover:border-mint/40">
+                  <VideoLoop
+                    src={`/testimonials/preview/${v.slug}.mp4`}
+                    poster={`/testimonials/poster/${v.slug}.jpg`}
+                    label={`${v.brand} testimonial`}
+                    scrim
+                    className="aspect-[9/16]"
+                  />
+                  <div className="absolute inset-x-4 bottom-4">
+                    <div className="text-sm font-semibold text-ink">{v.brand}</div>
+                    <div className="mt-0.5 text-xs text-mute">{v.hook}</div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+        <Reveal className="mt-6">
+          <Button to="/#voices" variant="ghost">Watch client voices</Button>
+        </Reveal>
+      </Section>
+
+      <section className="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
         <VideoLoop src="/videos/cases-india.mp4" poster="/videos/cases-india-poster.jpg" label="Evening service in an Indian dining room" className="absolute inset-0" />
         <div className="pointer-events-none absolute inset-0 bg-bg/75" aria-hidden />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg/60 via-bg/30 to-bg" aria-hidden />
@@ -147,35 +176,6 @@ export default function CaseStudies() {
           </Reveal>
         </div>
       </section>
-
-      <Section id="client-voices" tight className="scroll-mt-28 pt-0">
-        <SectionHead eyebrow="Client voices" title="Hear it from the operators." lede="Restaurant owners on what changed, filmed on their own floors. Watch all ten with sound on the home page." className="mb-8" />
-        {/* row scrolls sideways on mobile, sits 4-across on desktop */}
-        <div className="-mx-6 overflow-x-auto px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex snap-x gap-4 pb-2">
-            {VOICES.map((v, i) => (
-              <Reveal key={v.slug} delay={i * 0.05} className="w-[220px] shrink-0 snap-center md:w-auto md:flex-1">
-                <div className="lq-card relative overflow-hidden rounded-2xl border border-line/70 hover:border-mint/40">
-                  <VideoLoop
-                    src={`/testimonials/preview/${v.slug}.mp4`}
-                    poster={`/testimonials/poster/${v.slug}.jpg`}
-                    label={`${v.brand} testimonial`}
-                    scrim
-                    className="aspect-[9/16]"
-                  />
-                  <div className="absolute inset-x-4 bottom-4">
-                    <div className="text-sm font-semibold text-ink">{v.brand}</div>
-                    <div className="mt-0.5 text-xs text-mute">{v.hook}</div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-        <Reveal className="mt-6">
-          <Button to="/#voices" variant="ghost">Watch client voices</Button>
-        </Reveal>
-      </Section>
 
       <Section tight className="pt-0">
         <div className="grid gap-4 md:grid-cols-2">

@@ -31,10 +31,10 @@ export const NAV = [
     intro: 'Restaurant intelligence — every platform, payout and outlet in one place.',
     items: [
       { label: 'Data', to: '/#data', hint: 'From spreadsheets to one command centre' },
-      { label: 'Product', to: '/#product', hint: 'Overview, ads, refunds, discounts' },
+      { label: 'Product Overview', to: '/mynt', hint: 'What Mynt does, end to end' },
       { label: 'Mynt AI', to: '/#ai', hint: 'Ask why. Get the driver and the action.' },
       { label: 'Trust & Security', to: '/mynt#trust', hint: 'How your data is handled' },
-      { label: 'Product Overview', to: '/mynt', hint: 'What Mynt does, end to end' },
+      { label: 'Product', to: '/#product', hint: 'Overview, ads, refunds, discounts' },
       { label: 'Mynt Guides / Help Centre', to: '/mynt/guides', hint: 'Set-up, metrics, how-tos' },
     ],
     cta: { label: 'Get started with Mynt', to: CTA.start, cta: true },

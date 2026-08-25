@@ -127,9 +127,9 @@ function ServiceBlock({ id, eyebrow, title, lede, monitor, playbook, get, proof,
 // ambient background for the How-we-work / Why-choose-us sections: soft mint
 // orbs drifting slowly behind the cards
 const ORBS = [
-  { pos: 'left-[6%] top-[10%] h-64 w-64', dur: 14, dx: 44, dy: 32 },
-  { pos: 'right-[4%] top-[36%] h-80 w-80', dur: 18, dx: -52, dy: 40 },
-  { pos: 'bottom-[2%] left-[36%] h-56 w-56', dur: 16, dx: 34, dy: -38 },
+  { pos: 'left-[2%] top-[6%] h-[24rem] w-[24rem]', dur: 13, dx: 90, dy: 60 },
+  { pos: 'right-[0%] top-[30%] h-[30rem] w-[30rem]', dur: 17, dx: -110, dy: 80 },
+  { pos: 'bottom-[-6%] left-[32%] h-[22rem] w-[22rem]', dur: 15, dx: 70, dy: -70 },
 ]
 
 function GlowOrbs() {
@@ -139,8 +139,8 @@ function GlowOrbs() {
       {ORBS.map((o, i) => (
         <motion.span
           key={i}
-          className={cn('absolute rounded-full bg-[radial-gradient(circle,rgba(47,211,154,0.16),transparent_70%)] blur-2xl', o.pos)}
-          animate={{ x: [0, o.dx, 0], y: [0, o.dy, 0], opacity: [0.45, 0.9, 0.45] }}
+          className={cn('absolute rounded-full bg-[radial-gradient(circle,rgba(47,211,154,0.32),transparent_68%)] blur-3xl', o.pos)}
+          animate={{ x: [0, o.dx, 0], y: [0, o.dy, 0], opacity: [0.55, 1, 0.55] }}
           transition={{ duration: o.dur, repeat: Infinity, ease: 'easeInOut' }}
         />
       ))}
