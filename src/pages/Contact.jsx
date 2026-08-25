@@ -469,33 +469,6 @@ export default function Contact() {
               </div>
             </InteractiveCard>
 
-            {/* Kolkata HQ Living Clock & Directions */}
-            <InteractiveCard className="p-6">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[10px] uppercase tracking-widest text-mint">Headquarters</span>
-                <span className="font-mono text-[11px] text-mint">{currentTime} IST</span>
-              </div>
-              {/* live map — MapLibre dark basemap, pulsing marker on Ergo Tower */}
-              <div className="relative mt-3 h-44 overflow-hidden rounded-2xl border border-line/70 bg-card/60">
-                <Suspense fallback={<div className="dot-field h-full w-full" />}>
-                  <HqMap className="h-full w-full" />
-                </Suspense>
-                <span className="pointer-events-none absolute bottom-2 left-3 z-10 font-mono text-[9px] uppercase tracking-wider text-ink/80">
-                  Sector V, Kolkata
-                </span>
-              </div>
-              <address className="mt-3 not-italic font-sans text-xs leading-relaxed text-ink/80">
-                {CONTACT.address.map((l) => (
-                  <span key={l} className="block">{l}</span>
-                ))}
-              </address>
-              <div className="mt-4">
-                <Button to={CONTACT.maps} variant="ghost" size="sm" className="w-full">
-                  Get Google Maps Directions →
-                </Button>
-              </div>
-            </InteractiveCard>
-
             {/* Social Network Hub */}
             <InteractiveCard className="p-6">
               <div className="font-mono text-[10px] uppercase tracking-widest text-mint">Follow Pyvot</div>
@@ -503,6 +476,38 @@ export default function Contact() {
             </InteractiveCard>
           </div>
         </div>
+
+        {/* Kolkata HQ — full-width: large live map beside the address */}
+        <Reveal className="mt-10">
+          <div className="overflow-hidden rounded-3xl border border-line/80 bg-surface/70">
+            <div className="grid lg:grid-cols-[1.6fr_1fr]">
+              <div className="relative h-72 lg:h-[26rem]">
+                <Suspense fallback={<div className="dot-field h-full w-full" />}>
+                  <HqMap className="h-full w-full" />
+                </Suspense>
+                <span className="pointer-events-none absolute bottom-2 left-3 z-10 font-mono text-[9px] uppercase tracking-wider text-ink/80">
+                  Sector V, Kolkata
+                </span>
+              </div>
+              <div className="flex flex-col justify-center p-6 md:p-9">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-mint">Headquarters</span>
+                  <span className="font-mono text-[11px] text-mint">{currentTime} IST</span>
+                </div>
+                <address className="mt-5 not-italic font-sans text-sm leading-relaxed text-ink/85 md:text-base">
+                  {CONTACT.address.map((l) => (
+                    <span key={l} className="block">{l}</span>
+                  ))}
+                </address>
+                <div className="mt-7">
+                  <Button to={CONTACT.maps} variant="ghost" className="w-full">
+                    Get Google Maps Directions →
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Reveal>
       </Section>
     </>
   )
