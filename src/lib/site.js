@@ -70,7 +70,7 @@ export const NAV = [
     intro: 'Built on outcomes, not presentations.',
     items: [
       { label: 'Success Stories', to: '/case-studies#client-voices', hint: 'Client voices — owners on film' },
-      { label: 'Case Studies', to: '/case-studies', hint: 'Quantified results, brand by brand' },
+      { label: 'Case Studies', to: '/case-studies#cases', hint: 'Quantified results, brand by brand' },
     ],
     cta: { label: 'Talk to an expert', to: CTA.expert, cta: true },
   },
@@ -103,7 +103,7 @@ export const FOOTER = [
     links: [
       { label: 'About Us', to: '/about' },
       { label: 'Success Stories', to: '/case-studies#client-voices' },
-      { label: 'Case Studies', to: '/case-studies' },
+      { label: 'Case Studies', to: '/case-studies#cases' },
       { label: 'Join Us', to: '/join', cta: true },
       { label: 'Contact Us', to: '/contact?intent=other', cta: true },
     ],

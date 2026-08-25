@@ -146,7 +146,7 @@ export default function CaseStudies() {
         </Reveal>
       </Section>
 
-      <section className="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
+      <section id="cases" className="relative scroll-mt-20 overflow-hidden pt-12 pb-8 md:pt-16 md:pb-10">
         <VideoLoop src="/videos/cases-india.mp4" poster="/videos/cases-india-poster.jpg" label="Evening service in an Indian dining room" className="absolute inset-0" />
         <div className="pointer-events-none absolute inset-0 bg-bg/75" aria-hidden />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg/60 via-bg/30 to-bg" aria-hidden />
@@ -177,7 +177,7 @@ export default function CaseStudies() {
         </div>
       </section>
 
-      <Section tight className="pt-0">
+      <Section tight className="pt-0 md:pt-0">
         <div className="grid gap-4 md:grid-cols-2">
           {list.map((c, i) => {
             const isOpen = open === c.slug
