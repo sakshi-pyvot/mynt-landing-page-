@@ -434,16 +434,19 @@ export default function Guides() {
       {/* ----------------------------------------------------------- cta -- */}
       <Section tight className="pb-28">
         <Reveal>
-          <GlowCard className="flex flex-col items-start justify-between gap-8 border-mint/40 bg-gradient-to-r from-card/90 to-surface/90 p-7 md:flex-row md:items-center">
-            <div>
-              <h2 className="text-xl font-bold text-ink md:text-2xl">Still stuck? Talk to a human.</h2>
-              <p className="mt-2 text-sm text-mute">
-                <a href={`mailto:${CONTACT.email}`} className="text-mint hover:underline">{CONTACT.email}</a> · or raise a ticket from Help &amp; Support inside Mynt.
-              </p>
+          <GlowCard className="border-mint/40 bg-gradient-to-r from-card/90 to-surface/90 p-7">
+            {/* GlowCard wraps children in a plain div — layout lives on this row */}
+            <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+              <div>
+                <h2 className="text-xl font-bold text-ink md:text-2xl">Still stuck? Talk to a human.</h2>
+                <p className="mt-2 text-sm text-mute">
+                  <a href={`mailto:${CONTACT.email}`} className="text-mint hover:underline">{CONTACT.email}</a> · or raise a ticket from Help &amp; Support inside Mynt.
+                </p>
+              </div>
+              <Button to={CTA.expert} size="md" className="shrink-0">
+                Talk to an expert
+              </Button>
             </div>
-            <Button to={CTA.expert} size="md" className="shrink-0">
-              Talk to an expert
-            </Button>
           </GlowCard>
         </Reveal>
       </Section>
