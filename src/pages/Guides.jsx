@@ -441,7 +441,7 @@ export default function Guides() {
                 <a href={`mailto:${CONTACT.email}`} className="text-mint hover:underline">{CONTACT.email}</a> · or raise a ticket from Help &amp; Support inside Mynt.
               </p>
             </div>
-            <Button to={CTA.expert} size="lg" className="shrink-0">
+            <Button to={CTA.expert} size="md" className="shrink-0">
               Talk to an expert
             </Button>
           </GlowCard>
