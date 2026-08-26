@@ -109,7 +109,7 @@ export function CalendarScene({ rm }) {
             {pending ? (
               <motion.circle cx={x + 14} cy="76" r="3" fill={MUTE} animate={rm ? undefined : { opacity: [0.2, 1, 0.2] }} transition={loop(1.6, { delay: i * 0.4 })} />
             ) : (
-              <motion.path d={`M${x + 8} 77l4 4 8-8`} fill="none" stroke={MINT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" initial={{ pathLength: 1 }} animate={rm ? undefined : { pathLength: [0, 0, 1, 1] }} transition={loop(7, { times: [0, 0.1 + i * 0.1, 0.2 + i * 0.1, 1], ease: 'linear' })} />
+              <motion.path d={`M${x + 8} 77l4 4 8-8`} fill="none" stroke={MINT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" initial={{ pathLength: 1 }} animate={rm ? undefined : { pathLength: [0, 0, 1, 1], opacity: [0, 0, 1, 1] }} transition={loop(7, { times: [0, 0.1 + i * 0.1, 0.2 + i * 0.1, 1], ease: 'linear' })} />
             )}
           </g>
         )
