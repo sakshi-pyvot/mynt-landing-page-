@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { Button, Eyebrow, GlowCard, GlowOrbs, InteractiveCard, Reveal, Section, SectionHead } from '@/components/ui'
+import { Button, Eyebrow, GlowCard, GlowOrbs, Reveal, Section, SectionHead } from '@/components/ui'
 import { ARTICLES, CATEGORIES, getPopularArticles } from '@/help/catalog'
 import MEDIA from '@/help/media.json'
-import { getLenis } from '@/lib/scroll'
 import { CONTACT, CTA } from '@/lib/site'
 import { cn, reducedMotion } from '@/lib/utils'
 
@@ -15,8 +14,11 @@ const M = MEDIA.articles
 const CAT_COVER = MEDIA.categories
 const POPULAR = getPopularArticles()
 const VIDEOS = ARTICLES.filter((a) => M[a.id]?.video)
-const ALL = 'all'
-const TABS = [{ id: ALL, label: 'All guides', count: ARTICLES.length }, ...CATEGORIES]
+const MAX_RESULTS = 8
+
+// a topic opens on its first guide; the reader's rail lists the rest
+const firstOf = (catId) => ARTICLES.find((a) => a.category === catId)
+const guideTo = (a) => `/mynt/guides/${a.id}`
 
 // one glyph per help category — ids match catalog.ts CATEGORY_DEFS
 const ICONS = {
@@ -32,8 +34,6 @@ const ICONS = {
 }
 
 const fmt = (s) => (s ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}` : null)
-// full-app shots fill the frame; cropped strips/cards float on a dark stage
-const fit = (m) => (m.ratio >= 1.25 && m.ratio <= 2.2 && m.w >= 800 ? 'cover' : 'contain')
 
 function Icon({ id, className }) {
   return (
@@ -51,58 +51,51 @@ function Play({ className }) {
   )
 }
 
-// article cover: real screenshot from the article, 16:9 stage
-function Cover({ a, className }) {
-  const m = M[a.id]
+// live results under the search field
+function Results({ results, active, onHover, query }) {
   return (
-    <div className={cn('relative aspect-[16/9] overflow-hidden bg-bg', className)}>
-      <div className="dot-field absolute inset-0 opacity-50" aria-hidden />
-      {!m?.cover ? (
-        <div className="absolute inset-0 grid place-items-center text-mint/70">
-          <Icon id={a.category} className="h-12 w-12" />
+    <div className="lq absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-2xl border border-line/70 shadow-[0_30px_80px_rgba(0,0,0,0.6)]" role="listbox" aria-label="Matching guides">
+      {results.length === 0 ? (
+        <div className="p-5 text-sm text-mute">
+          No guides match “{query}”.{' '}
+          <Link to={CTA.expert} className="text-mint hover:underline">Talk to an expert →</Link>
         </div>
-      ) : fit(m) === 'cover' ? (
-        <img src={m.cover} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]" />
       ) : (
-        <div className="absolute inset-0 flex items-center justify-center p-5">
-          <img
-            src={m.cover}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            className="max-h-full max-w-full rounded-md border border-white/10 object-contain shadow-[0_14px_36px_rgba(0,0,0,0.55)] transition-transform duration-700 group-hover:scale-[1.04]"
-          />
-        </div>
+        <ul role="list">
+          {results.map((a, i) => {
+            const m = M[a.id]
+            const on = i === active
+            return (
+              <li key={a.id}>
+                <Link
+                  to={guideTo(a)}
+                  role="option"
+                  aria-selected={on}
+                  onMouseEnter={() => onHover(i)}
+                  className={cn('flex items-center gap-4 px-4 py-3 transition-colors', on ? 'bg-mint/10' : 'hover:bg-white/[0.03]')}
+                >
+                  <span className="grid h-10 w-[4.5rem] shrink-0 place-items-center overflow-hidden rounded-md border border-white/10 bg-bg">
+                    {m?.cover ? <img src={m.cover} alt="" className="h-full w-full object-cover object-top" /> : <Icon id={a.category} className="h-4 w-4 text-mint/70" />}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-mono text-[10px] uppercase tracking-widest text-mint">
+                      {CAT_BY_ID[a.category].label}
+                      {m?.mins && <span className="text-mute"> · {m.mins} min</span>}
+                    </span>
+                    <span className={cn('mt-0.5 block truncate text-sm font-semibold', on ? 'text-mint' : 'text-ink')}>{a.title}</span>
+                  </span>
+                  <span className={cn('hidden font-mono text-[10px] text-mute sm:block', on ? 'opacity-100' : 'opacity-0')}>↵</span>
+                </Link>
+              </li>
+            )
+          })}
+          <li className="flex items-center justify-between border-t border-line/60 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-mute">
+            <span>{results.length === MAX_RESULTS ? `Top ${MAX_RESULTS}` : results.length} of {ARTICLES.length}</span>
+            <span className="hidden sm:block">↑↓ move · ↵ open · esc clear</span>
+          </li>
+        </ul>
       )}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card/90 via-transparent to-transparent" aria-hidden />
     </div>
-  )
-}
-
-function Meta({ a, className }) {
-  const m = M[a.id]
-  return (
-    <div className={cn('flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-mute', className)}>
-      <span className="text-mint">{CAT_BY_ID[a.category].label}</span>
-      {m?.mins && <span>· {m.mins} min</span>}
-      {m?.video && (
-        <span className="inline-flex items-center gap-1 text-ink">
-          <Play className="h-3 w-3 text-mint" /> {fmt(m.secs) || 'video'}
-        </span>
-      )}
-    </div>
-  )
-}
-
-function ArticleCard({ a, className }) {
-  return (
-    <InteractiveCard as={Link} to={`/mynt/guides/${a.id}`} title={a.excerpt} className={cn('flex flex-col p-0', className)}>
-      <Cover a={a} />
-      <div className="flex flex-1 flex-col p-5">
-        <Meta a={a} />
-        <h3 className="mt-2 line-clamp-2 text-base font-bold leading-snug text-ink transition-colors group-hover:text-mint">{a.title}</h3>
-      </div>
-    </InteractiveCard>
   )
 }
 
@@ -126,7 +119,7 @@ function HoverVideo({ a }) {
   }
   return (
     <Link
-      to={`/mynt/guides/${a.id}`}
+      to={guideTo(a)}
       onMouseEnter={start}
       onMouseLeave={stop}
       onFocus={start}
@@ -169,7 +162,7 @@ function DemoFrame() {
   }, [i, rm])
 
   return (
-    <Link to={`/mynt/guides/${a.id}`} className="group relative block" aria-label={`Watch: ${a.title}`}>
+    <Link to={guideTo(a)} className="group relative block" aria-label={`Watch: ${a.title}`}>
       <motion.div
         className="pointer-events-none absolute -inset-[14%] rounded-[64px] blur-3xl"
         style={{ background: 'radial-gradient(ellipse at center, rgba(47,211,154,0.45), rgba(47,211,154,0.16) 45%, transparent 72%)' }}
@@ -220,11 +213,11 @@ function DemoFrame() {
 }
 
 // category tile: a real screen from that part of Mynt, label + count over it
-function TopicTile({ c, onClick, delay }) {
+function TopicTile({ c, delay }) {
   const cover = CAT_COVER[c.id]?.cover
   return (
     <Reveal delay={delay}>
-      <button type="button" onClick={onClick} className="lq-card group relative block aspect-[16/10] w-full overflow-hidden rounded-2xl border border-line/70 bg-card text-left transition-colors hover:border-mint/50">
+      <Link to={guideTo(firstOf(c.id))} className="lq-card group relative block aspect-[16/10] w-full overflow-hidden rounded-2xl border border-line/70 bg-card text-left transition-colors hover:border-mint/50">
         {cover ? (
           <img src={cover} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-top opacity-60 transition-all duration-700 group-hover:scale-105 group-hover:opacity-80" />
         ) : (
@@ -240,29 +233,26 @@ function TopicTile({ c, onClick, delay }) {
           </div>
           <span className="rounded-full border border-line bg-bg/80 px-2.5 py-1 font-mono text-[11px] text-ink/80">{c.count} guides</span>
         </div>
-      </button>
+      </Link>
     </Reveal>
   )
 }
 
 export default function Guides() {
-  const [cat, setCat] = useState(ALL)
+  const navigate = useNavigate()
   const [q, setQ] = useState('')
-  const listRef = useRef(null)
+  const [active, setActive] = useState(0)
+  const [open, setOpen] = useState(false)
   const searchRef = useRef(null)
+  const boxRef = useRef(null)
   const query = q.trim().toLowerCase()
 
-  const list = useMemo(
-    () =>
-      ARTICLES.filter((a) => {
-        if (cat !== ALL && a.category !== cat) return false
-        if (!query) return true
-        return `${a.title} ${a.excerpt} ${CAT_BY_ID[a.category].label}`.toLowerCase().includes(query)
-      }),
-    [cat, query],
-  )
+  const results = useMemo(() => {
+    if (!query) return []
+    return ARTICLES.filter((a) => `${a.title} ${a.excerpt} ${CAT_BY_ID[a.category].label}`.toLowerCase().includes(query)).slice(0, MAX_RESULTS)
+  }, [query])
 
-  // "/" or ⌘K from anywhere lands in the search box
+  // "/" or ⌘K from anywhere lands in the search box; clicks outside close the results
   useEffect(() => {
     const onKey = (e) => {
       const typing = /^(INPUT|TEXTAREA)$/.test(e.target.tagName)
@@ -272,33 +262,55 @@ export default function Guides() {
         searchRef.current?.select()
       }
     }
+    const onDown = (e) => {
+      if (!boxRef.current?.contains(e.target)) setOpen(false)
+    }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    document.addEventListener('mousedown', onDown)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.removeEventListener('mousedown', onDown)
+    }
   }, [])
 
-  const jump = (id) => {
-    setCat(id)
-    const el = listRef.current
-    const lenis = getLenis()
-    if (lenis) lenis.scrollTo(el, { offset: -96 })
-    else el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const onSearchKey = (e) => {
+    if (e.key === 'Escape') {
+      setQ('')
+      setOpen(false)
+      return
+    }
+    if (!results.length) return
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setActive((n) => (n + 1) % results.length)
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActive((n) => (n - 1 + results.length) % results.length)
+    } else if (e.key === 'Enter') {
+      e.preventDefault()
+      navigate(guideTo(results[active] || results[0]))
+    }
   }
+
+  const showResults = open && query.length > 0
 
   return (
     <>
       {/* ---------------------------------------------------------- hero -- */}
-      <section className="relative overflow-hidden pt-32 pb-12 md:pt-40 md:pb-16">
-        <div className="dot-field pointer-events-none absolute inset-0 [mask-image:radial-gradient(60%_60%_at_50%_0%,#000,transparent)]" />
-        <div className="mint-glow pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2" />
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-28 md:top-36">
-          <div className="animate-formula-ticker flex w-max whitespace-nowrap font-mono text-[11px] text-ink opacity-[0.05]">
-            {[0, 1].map((i) => (
-              <span key={i} className="pr-20">{POPULAR.map((a) => a.title).join('      •      ')}</span>
-            ))}
+      <section className="relative pt-32 pb-12 md:pt-40 md:pb-16">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+          <div className="dot-field absolute inset-0 [mask-image:radial-gradient(60%_60%_at_50%_0%,#000,transparent)]" />
+          <div className="mint-glow absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2" />
+          <div className="absolute inset-x-0 top-28 md:top-36">
+            <div className="animate-formula-ticker flex w-max whitespace-nowrap font-mono text-[11px] text-ink opacity-[0.05]">
+              {[0, 1].map((i) => (
+                <span key={i} className="pr-20">{POPULAR.map((a) => a.title).join('      •      ')}</span>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:gap-10 lg:gap-16">
+        <div className="relative z-20 mx-auto grid max-w-7xl items-center gap-12 px-6 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:gap-10 lg:gap-16">
           <div>
             <Reveal>
               <Eyebrow>Mynt Help Centre</Eyebrow>
@@ -313,56 +325,66 @@ export default function Guides() {
             </Reveal>
 
             <Reveal delay={0.15} className="mt-8">
-              <label
-                htmlFor="guide-search"
-                className="lq relative flex items-center rounded-2xl border border-mint/50 shadow-[0_0_44px_rgba(47,211,154,0.2)] transition-all duration-300 focus-within:border-mint focus-within:shadow-[0_0_64px_rgba(47,211,154,0.38)]"
-              >
-                <svg viewBox="0 0 24 24" className="pointer-events-none absolute left-5 h-5 w-5 text-mint" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
-                  <circle cx="11" cy="11" r="7" />
-                  <path d="M20 20l-3.5-3.5" strokeLinecap="round" />
-                </svg>
-                <input
-                  id="guide-search"
-                  ref={searchRef}
-                  type="search"
-                  value={q}
-                  onChange={(e) => setQ(e.target.value)}
-                  placeholder={`Search ${ARTICLES.length} guides…`}
-                  autoComplete="off"
-                  className="w-full bg-transparent py-5 pl-14 pr-24 text-base text-ink outline-none placeholder:text-mute/70"
-                />
-                <span className="absolute right-4 flex items-center gap-2">
-                  {q ? (
-                    <button type="button" onClick={() => setQ('')} className="font-mono text-xs text-mute hover:text-ink">
-                      CLEAR
-                    </button>
-                  ) : (
-                    <>
-                      <kbd className="hidden rounded-md border border-line bg-bg/70 px-2 py-1 font-mono text-[11px] text-mute sm:inline-block">/</kbd>
-                      <kbd className="hidden rounded-md border border-line bg-bg/70 px-2 py-1 font-mono text-[11px] text-mute sm:inline-block">⌘K</kbd>
-                    </>
-                  )}
-                </span>
-              </label>
-              {query && (
-                <p className="mt-3 font-mono text-[11px] uppercase tracking-wider text-mute" aria-live="polite">
-                  <span className="text-mint">{list.length}</span> {list.length === 1 ? 'guide matches' : 'guides match'}
-                </p>
-              )}
+              <div ref={boxRef} className="relative">
+                <label
+                  htmlFor="guide-search"
+                  className="lq relative flex items-center rounded-2xl border border-mint/50 shadow-[0_0_44px_rgba(47,211,154,0.2)] transition-all duration-300 focus-within:border-mint focus-within:shadow-[0_0_64px_rgba(47,211,154,0.38)]"
+                >
+                  <svg viewBox="0 0 24 24" className="pointer-events-none absolute left-5 h-5 w-5 text-mint" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="M20 20l-3.5-3.5" strokeLinecap="round" />
+                  </svg>
+                  <input
+                    id="guide-search"
+                    ref={searchRef}
+                    type="search"
+                    value={q}
+                    onChange={(e) => {
+                      setQ(e.target.value)
+                      setActive(0)
+                      setOpen(true)
+                    }}
+                    onFocus={() => setOpen(true)}
+                    onKeyDown={onSearchKey}
+                    placeholder={`Search ${ARTICLES.length} guides…`}
+                    autoComplete="off"
+                    role="combobox"
+                    aria-expanded={showResults}
+                    aria-controls="guide-results"
+                    className="w-full bg-transparent py-5 pl-14 pr-24 text-base text-ink outline-none placeholder:text-mute/70 [&::-webkit-search-cancel-button]:appearance-none"
+                  />
+                  <span className="absolute right-4 flex items-center gap-2">
+                    {q ? (
+                      <button type="button" onClick={() => setQ('')} className="font-mono text-xs text-mute hover:text-ink">
+                        CLEAR
+                      </button>
+                    ) : (
+                      <>
+                        <kbd className="hidden rounded-md border border-line bg-bg/70 px-2 py-1 font-mono text-[11px] text-mute sm:inline-block">/</kbd>
+                        <kbd className="hidden rounded-md border border-line bg-bg/70 px-2 py-1 font-mono text-[11px] text-mute sm:inline-block">⌘K</kbd>
+                      </>
+                    )}
+                  </span>
+                </label>
+                {showResults && (
+                  <div id="guide-results">
+                    <Results results={results} active={active} onHover={setActive} query={q.trim()} />
+                  </div>
+                )}
+              </div>
             </Reveal>
 
             <Reveal delay={0.2} className="mt-5">
               <div className="flex flex-wrap gap-2">
                 {CATEGORIES.map((c) => (
-                  <button
+                  <Link
                     key={c.id}
-                    type="button"
-                    onClick={() => jump(c.id)}
+                    to={guideTo(firstOf(c.id))}
                     className="lq lq-press inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-ink transition-colors hover:text-mint"
                   >
                     <Icon id={c.id} className="h-3.5 w-3.5 text-mint" />
                     {c.label}
-                  </button>
+                  </Link>
                 ))}
               </div>
             </Reveal>
@@ -375,94 +397,39 @@ export default function Guides() {
       </section>
 
       {/* -------------------------------------------------------- topics -- */}
-      {!query && (
-        <Section tight className="relative">
-          <GlowOrbs />
-          <div className="relative">
-            <SectionHead eyebrow="Browse by topic" title="Pick the part of Mynt you are in." />
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {CATEGORIES.map((c, i) => (
-                <TopicTile key={c.id} c={c} delay={i * 0.04} onClick={() => jump(c.id)} />
-              ))}
-            </div>
+      <Section tight className="relative">
+        <GlowOrbs />
+        <div className="relative">
+          <SectionHead eyebrow="Browse by topic" title="Pick the part of Mynt you are in." />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {CATEGORIES.map((c, i) => (
+              <TopicTile key={c.id} c={c} delay={i * 0.04} />
+            ))}
           </div>
-        </Section>
-      )}
+        </div>
+      </Section>
 
       {/* --------------------------------------------------------- watch -- */}
-      {!query && (
-        <Section tight className="pt-0 md:pt-0">
-          <SectionHead eyebrow="Watch & learn" title="See it done in under a minute." lede="Hover to play. Click for the full guide." />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {VIDEOS.map((a, i) => (
-              <Reveal key={a.id} delay={i * 0.04}>
-                <HoverVideo a={a} />
-              </Reveal>
+      <Section tight className="pt-0 md:pt-0">
+        <SectionHead eyebrow="Watch & learn" title="See it done in under a minute." lede="Hover to play. Click for the full guide." />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {VIDEOS.map((a, i) => (
+            <Reveal key={a.id} delay={i * 0.04}>
+              <HoverVideo a={a} />
+            </Reveal>
+          ))}
+        </div>
+        <Reveal className="mt-10">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="mr-2 font-mono text-[10px] uppercase tracking-widest text-mute">Most read</span>
+            {POPULAR.map((a) => (
+              <Link key={a.id} to={guideTo(a)} className="lq lq-press rounded-full px-3 py-1.5 text-xs text-ink transition-colors hover:text-mint">
+                {a.title}
+              </Link>
             ))}
           </div>
-          <Reveal className="mt-10">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="mr-2 font-mono text-[10px] uppercase tracking-widest text-mute">Most read</span>
-              {POPULAR.map((a) => (
-                <Link key={a.id} to={`/mynt/guides/${a.id}`} className="lq lq-press rounded-full px-3 py-1.5 text-xs text-ink transition-colors hover:text-mint">
-                  {a.title}
-                </Link>
-              ))}
-            </div>
-          </Reveal>
-        </Section>
-      )}
-
-      {/* ---------------------------------------------------- all guides -- */}
-      <div ref={listRef}>
-        <Section id="all-guides" tight className="pt-0 md:pt-0">
-          <div className="flex flex-wrap items-center gap-2 border-b border-line/60 pb-6" role="tablist" aria-label="Guide topics">
-            {TABS.map((t) => {
-              const isSelected = cat === t.id
-              return (
-                <button
-                  key={t.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isSelected}
-                  onClick={() => setCat(t.id)}
-                  className={cn(
-                    'relative rounded-full border border-transparent px-4 py-2 text-xs font-medium transition-all duration-200',
-                    isSelected ? 'font-semibold text-mint' : 'text-mute hover:text-ink',
-                  )}
-                >
-                  {isSelected && (
-                    <motion.span
-                      layoutId="activeGuideCat"
-                      aria-hidden
-                      style={{ position: 'absolute' }}
-                      className="lq lq-pill inset-0 rounded-full"
-                      transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                    />
-                  )}
-                  <span className="relative z-10">{t.label}</span>
-                  <span className="relative z-10 ml-2 rounded-full bg-bg/80 px-1.5 py-0.5 font-mono text-[10px] text-mute">{t.count}</span>
-                </button>
-              )
-            })}
-          </div>
-
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="guide-list">
-            {list.map((a) => (
-              <ArticleCard key={a.id} a={a} />
-            ))}
-            {list.length === 0 && (
-              <div className="rounded-3xl border border-dashed border-line/80 p-12 text-center text-sm text-mute sm:col-span-2 lg:col-span-3">
-                <p className="text-base font-semibold text-ink">No guides match “{q}”</p>
-                <p className="mt-2 text-xs">Try a shorter term — “tokens”, “Gmail”, “mapping”, “invoice”.</p>
-                <Button to={CTA.expert} variant="ghost" size="sm" className="mt-5">
-                  Ask an expert instead →
-                </Button>
-              </div>
-            )}
-          </div>
-        </Section>
-      </div>
+        </Reveal>
+      </Section>
 
       {/* ----------------------------------------------------------- cta -- */}
       <Section tight className="pb-28">
