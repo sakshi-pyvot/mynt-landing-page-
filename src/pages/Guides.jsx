@@ -1,15 +1,20 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'motion/react'
-import { Button, GlowCard, GlowOrbs, InteractiveCard, PageHero, Reveal, Section, SectionHead } from '@/components/ui'
+import { AnimatePresence, motion } from 'motion/react'
+import { Button, Eyebrow, GlowCard, GlowOrbs, InteractiveCard, Reveal, Section, SectionHead } from '@/components/ui'
 import { ARTICLES, CATEGORIES, getPopularArticles } from '@/help/catalog'
+import MEDIA from '@/help/media.json'
 import { getLenis } from '@/lib/scroll'
 import { CONTACT, CTA } from '@/lib/site'
-import { cn } from '@/lib/utils'
+import { cn, reducedMotion } from '@/lib/utils'
 
-// Content comes from src/help/catalog.ts, synced from the Mynt app (see src/help/README.md).
+// Content comes from src/help/catalog.ts; imagery from src/help/media.json —
+// both synced from the Mynt app (see src/help/README.md).
 const CAT_BY_ID = Object.fromEntries(CATEGORIES.map((c) => [c.id, c]))
+const M = MEDIA.articles
+const CAT_COVER = MEDIA.categories
 const POPULAR = getPopularArticles()
+const VIDEOS = ARTICLES.filter((a) => M[a.id]?.video)
 const ALL = 'all'
 const TABS = [{ id: ALL, label: 'All guides', count: ARTICLES.length }, ...CATEGORIES]
 
@@ -26,6 +31,10 @@ const ICONS = {
   security: 'M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6l8-3zM9 12l2 2 4-4',
 }
 
+const fmt = (s) => (s ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}` : null)
+// full-app shots fill the frame; cropped strips/cards float on a dark stage
+const fit = (m) => (m.ratio >= 1.25 && m.ratio <= 2.2 && m.w >= 800 ? 'cover' : 'contain')
+
 function Icon({ id, className }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -34,18 +43,205 @@ function Icon({ id, className }) {
   )
 }
 
-function ArticleCard({ a, className }) {
-  const c = CAT_BY_ID[a.category]
+function Play({ className }) {
   return (
-    <InteractiveCard as={Link} to={`/mynt/guides/${a.id}`} className={cn('flex flex-col', className)}>
-      <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
-        <span className="text-mint">{c.label}</span>
-        {a.popular && <span className="rounded-full border border-mint/30 bg-mint/10 px-2 py-0.5 text-mint">Popular</span>}
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M8 5.5v13l11-6.5z" />
+    </svg>
+  )
+}
+
+// article cover: real screenshot from the article, 16:9 stage
+function Cover({ a, className }) {
+  const m = M[a.id]
+  return (
+    <div className={cn('relative aspect-[16/9] overflow-hidden bg-bg', className)}>
+      <div className="dot-field absolute inset-0 opacity-50" aria-hidden />
+      {!m?.cover ? (
+        <div className="absolute inset-0 grid place-items-center text-mint/70">
+          <Icon id={a.category} className="h-12 w-12" />
+        </div>
+      ) : fit(m) === 'cover' ? (
+        <img src={m.cover} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]" />
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center p-5">
+          <img
+            src={m.cover}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="max-h-full max-w-full rounded-md border border-white/10 object-contain shadow-[0_14px_36px_rgba(0,0,0,0.55)] transition-transform duration-700 group-hover:scale-[1.04]"
+          />
+        </div>
+      )}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card/90 via-transparent to-transparent" aria-hidden />
+    </div>
+  )
+}
+
+function Meta({ a, className }) {
+  const m = M[a.id]
+  return (
+    <div className={cn('flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-mute', className)}>
+      <span className="text-mint">{CAT_BY_ID[a.category].label}</span>
+      {m?.mins && <span>· {m.mins} min</span>}
+      {m?.video && (
+        <span className="inline-flex items-center gap-1 text-ink">
+          <Play className="h-3 w-3 text-mint" /> {fmt(m.secs) || 'video'}
+        </span>
+      )}
+    </div>
+  )
+}
+
+function ArticleCard({ a, className }) {
+  return (
+    <InteractiveCard as={Link} to={`/mynt/guides/${a.id}`} title={a.excerpt} className={cn('flex flex-col p-0', className)}>
+      <Cover a={a} />
+      <div className="flex flex-1 flex-col p-5">
+        <Meta a={a} />
+        <h3 className="mt-2 line-clamp-2 text-base font-bold leading-snug text-ink transition-colors group-hover:text-mint">{a.title}</h3>
       </div>
-      <h3 className="mt-3 text-lg font-bold leading-snug text-ink transition-colors group-hover:text-mint">{a.title}</h3>
-      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-mute">{a.excerpt}</p>
-      <span className="mt-auto pt-5 text-xs font-semibold text-mint">Read guide →</span>
     </InteractiveCard>
+  )
+}
+
+// poster at rest, plays on hover/focus — a video preview that costs nothing until touched
+function HoverVideo({ a }) {
+  const m = M[a.id]
+  const ref = useRef(null)
+  const [on, setOn] = useState(false)
+  const rm = reducedMotion()
+  const start = () => {
+    if (rm) return
+    setOn(true)
+    ref.current?.play().catch(() => {})
+  }
+  const stop = () => {
+    setOn(false)
+    const v = ref.current
+    if (!v) return
+    v.pause()
+    v.currentTime = 0
+  }
+  return (
+    <Link
+      to={`/mynt/guides/${a.id}`}
+      onMouseEnter={start}
+      onMouseLeave={stop}
+      onFocus={start}
+      onBlur={stop}
+      className="lq-card group relative block overflow-hidden rounded-2xl border border-line/70 bg-card/70 transition-colors hover:border-mint/40"
+    >
+      <div className="relative aspect-[16/9] overflow-hidden bg-bg">
+        <video ref={ref} src={m.video} poster={m.poster} muted loop playsInline preload="none" className="h-full w-full object-cover" aria-label={a.title} />
+        <div className={cn('pointer-events-none absolute inset-0 grid place-items-center bg-bg/30 transition-opacity duration-300', on && 'opacity-0')} aria-hidden>
+          <span className="grid h-14 w-14 place-items-center rounded-full bg-mint text-[#06251a] shadow-[0_0_40px_rgba(47,211,154,0.55)] transition-transform group-hover:scale-110">
+            <Play className="ml-0.5 h-6 w-6" />
+          </span>
+        </div>
+        <span className="absolute bottom-3 right-3 rounded-md bg-bg/80 px-2 py-0.5 font-mono text-[10px] text-ink">{fmt(m.secs) || 'demo'}</span>
+      </div>
+      <div className="p-4">
+        <div className="font-mono text-[10px] uppercase tracking-widest text-mint">{CAT_BY_ID[a.category].label}</div>
+        <h3 className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-ink group-hover:text-mint">{a.title}</h3>
+      </div>
+    </Link>
+  )
+}
+
+// hero showcase: the 9 demo clips, one after another, in the product frame
+function DemoFrame() {
+  const [i, setI] = useState(0)
+  const ref = useRef(null)
+  const a = VIDEOS[i]
+  const m = M[a.id]
+  const rm = reducedMotion()
+  const next = () => setI((n) => (n + 1) % VIDEOS.length)
+
+  // only run while on screen
+  useEffect(() => {
+    const v = ref.current
+    if (!v || rm) return undefined
+    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? v.play().catch(() => {}) : v.pause()), { rootMargin: '80px' })
+    io.observe(v)
+    return () => io.disconnect()
+  }, [i, rm])
+
+  return (
+    <Link to={`/mynt/guides/${a.id}`} className="group relative block" aria-label={`Watch: ${a.title}`}>
+      <motion.div
+        className="pointer-events-none absolute -inset-[14%] rounded-[64px] blur-3xl"
+        style={{ background: 'radial-gradient(ellipse at center, rgba(47,211,154,0.45), rgba(47,211,154,0.16) 45%, transparent 72%)' }}
+        animate={rm ? undefined : { scale: [1, 1.08, 1], opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        aria-hidden
+      />
+      <div
+        className="glass relative overflow-hidden rounded-3xl border p-3 md:p-4"
+        style={{ borderColor: 'rgba(47,211,154,0.35)', boxShadow: '0 0 120px rgba(47,211,154,0.2), 0 30px 90px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)' }}
+      >
+        <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" aria-hidden />
+        <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-bg">
+          <AnimatePresence initial={false}>
+            <motion.video
+              key={a.id}
+              ref={ref}
+              src={m.video}
+              poster={m.poster}
+              muted
+              playsInline
+              autoPlay={!rm}
+              preload="auto"
+              onEnded={next}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6 }}
+              className="absolute inset-0 h-full w-full object-cover"
+              aria-label={a.title}
+            />
+          </AnimatePresence>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/95 via-bg/60 to-transparent p-4 pt-12" aria-hidden>
+            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-mint">
+              <Play className="h-3 w-3" /> Watch · {fmt(m.secs) || 'demo'}
+            </div>
+            <div className="mt-1 line-clamp-1 text-sm font-semibold text-ink">{a.title}</div>
+          </div>
+        </div>
+        <div className="mt-3 flex items-center justify-center gap-1.5" aria-hidden>
+          {VIDEOS.map((v, n) => (
+            <span key={v.id} className={cn('h-1 rounded-full transition-all duration-300', n === i ? 'w-6 bg-mint' : 'w-2 bg-line')} />
+          ))}
+        </div>
+      </div>
+    </Link>
+  )
+}
+
+// category tile: a real screen from that part of Mynt, label + count over it
+function TopicTile({ c, onClick, delay }) {
+  const cover = CAT_COVER[c.id]?.cover
+  return (
+    <Reveal delay={delay}>
+      <button type="button" onClick={onClick} className="lq-card group relative block aspect-[16/10] w-full overflow-hidden rounded-2xl border border-line/70 bg-card text-left transition-colors hover:border-mint/50">
+        {cover ? (
+          <img src={cover} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-top opacity-60 transition-all duration-700 group-hover:scale-105 group-hover:opacity-80" />
+        ) : (
+          <div className="dot-field absolute inset-0" aria-hidden />
+        )}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg via-bg/55 to-bg/5" aria-hidden />
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
+          <div className="flex items-center gap-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-mint/30 bg-bg/80 text-mint shadow-[0_0_24px_rgba(47,211,154,0.25)]">
+              <Icon id={c.id} className="h-5 w-5" />
+            </span>
+            <span className="text-lg font-bold text-ink transition-colors group-hover:text-mint">{c.label}</span>
+          </div>
+          <span className="rounded-full border border-line bg-bg/80 px-2.5 py-1 font-mono text-[11px] text-ink/80">{c.count} guides</span>
+        </div>
+      </button>
+    </Reveal>
   )
 }
 
@@ -53,6 +249,7 @@ export default function Guides() {
   const [cat, setCat] = useState(ALL)
   const [q, setQ] = useState('')
   const listRef = useRef(null)
+  const searchRef = useRef(null)
   const query = q.trim().toLowerCase()
 
   const list = useMemo(
@@ -65,6 +262,20 @@ export default function Guides() {
     [cat, query],
   )
 
+  // "/" or ⌘K from anywhere lands in the search box
+  useEffect(() => {
+    const onKey = (e) => {
+      const typing = /^(INPUT|TEXTAREA)$/.test(e.target.tagName)
+      if ((e.key === '/' && !typing) || (e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey))) {
+        e.preventDefault()
+        searchRef.current?.focus()
+        searchRef.current?.select()
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   const jump = (id) => {
     setCat(id)
     const el = listRef.current
@@ -75,108 +286,134 @@ export default function Guides() {
 
   return (
     <>
-      <div className="relative overflow-hidden">
-        {/* faint drifting ticker of guide titles behind the hero */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-40 md:top-52">
-          <div className="animate-formula-ticker flex w-max whitespace-nowrap font-mono text-[11px] text-ink opacity-[0.055]">
+      {/* ---------------------------------------------------------- hero -- */}
+      <section className="relative overflow-hidden pt-32 pb-12 md:pt-40 md:pb-16">
+        <div className="dot-field pointer-events-none absolute inset-0 [mask-image:radial-gradient(60%_60%_at_50%_0%,#000,transparent)]" />
+        <div className="mint-glow pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-28 md:top-36">
+          <div className="animate-formula-ticker flex w-max whitespace-nowrap font-mono text-[11px] text-ink opacity-[0.05]">
             {[0, 1].map((i) => (
               <span key={i} className="pr-20">{POPULAR.map((a) => a.title).join('      •      ')}</span>
             ))}
           </div>
         </div>
-        <PageHero
-          eyebrow="Mynt Guides & Help Centre"
-          title={
-            <>
-              Every screen in Mynt, <span className="text-gradient">explained.</span>
-            </>
-          }
-          lede="Set-up, Gmail connection, outlet mapping, every dashboard metric, reports, tokens and billing — the same guides that live inside the Mynt app."
-        >
-          <div className="relative mx-auto max-w-2xl">
-            <div className="relative flex items-center">
-              <input
-                type="search"
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="Search guides — e.g. token balance, Gmail permissions, outlet mapping…"
-                aria-label="Search guides"
-                className="w-full rounded-2xl border border-line bg-surface/90 px-5 py-4 pl-12 font-sans text-sm text-ink placeholder:text-mute/60 outline-none transition-all duration-300 focus:border-mint focus:shadow-[0_0_30px_rgba(47,211,154,0.2)]"
-              />
-              <svg viewBox="0 0 24 24" className="pointer-events-none absolute left-4 h-5 w-5 text-mute" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                <circle cx="11" cy="11" r="7" />
-                <path d="M20 20l-3.5-3.5" strokeLinecap="round" />
-              </svg>
-              {q && (
-                <button type="button" onClick={() => setQ('')} className="absolute right-4 font-mono text-xs text-mute hover:text-ink">
-                  CLEAR
-                </button>
-              )}
-            </div>
 
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-wider text-mute">
-              {query ? (
-                <span>
-                  <span className="text-mint">{list.length}</span> {list.length === 1 ? 'guide matches' : 'guides match'}
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:gap-10 lg:gap-16">
+          <div>
+            <Reveal>
+              <Eyebrow>Mynt Help Centre</Eyebrow>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h1 className="mt-5 text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
+                What do you need <span className="text-gradient">help with?</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-4 max-w-md text-base text-mute md:text-lg">Short guides with real Mynt screens — search, or pick a topic.</p>
+            </Reveal>
+
+            <Reveal delay={0.15} className="mt-8">
+              <label
+                htmlFor="guide-search"
+                className="lq relative flex items-center rounded-2xl border border-mint/50 shadow-[0_0_44px_rgba(47,211,154,0.2)] transition-all duration-300 focus-within:border-mint focus-within:shadow-[0_0_64px_rgba(47,211,154,0.38)]"
+              >
+                <svg viewBox="0 0 24 24" className="pointer-events-none absolute left-5 h-5 w-5 text-mint" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M20 20l-3.5-3.5" strokeLinecap="round" />
+                </svg>
+                <input
+                  id="guide-search"
+                  ref={searchRef}
+                  type="search"
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  placeholder={`Search ${ARTICLES.length} guides…`}
+                  autoComplete="off"
+                  className="w-full bg-transparent py-5 pl-14 pr-24 text-base text-ink outline-none placeholder:text-mute/70"
+                />
+                <span className="absolute right-4 flex items-center gap-2">
+                  {q ? (
+                    <button type="button" onClick={() => setQ('')} className="font-mono text-xs text-mute hover:text-ink">
+                      CLEAR
+                    </button>
+                  ) : (
+                    <>
+                      <kbd className="hidden rounded-md border border-line bg-bg/70 px-2 py-1 font-mono text-[11px] text-mute sm:inline-block">/</kbd>
+                      <kbd className="hidden rounded-md border border-line bg-bg/70 px-2 py-1 font-mono text-[11px] text-mute sm:inline-block">⌘K</kbd>
+                    </>
+                  )}
                 </span>
-              ) : (
-                <>
-                  <span><span className="text-mint">{ARTICLES.length}</span> guides</span>
-                  <span><span className="text-mint">{CATEGORIES.length}</span> topics</span>
-                  <span className="inline-flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint/60" />
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-mint" />
-                    </span>
-                    Synced from the Mynt app
-                  </span>
-                </>
+              </label>
+              {query && (
+                <p className="mt-3 font-mono text-[11px] uppercase tracking-wider text-mute" aria-live="polite">
+                  <span className="text-mint">{list.length}</span> {list.length === 1 ? 'guide matches' : 'guides match'}
+                </p>
               )}
-            </div>
-          </div>
-        </PageHero>
-      </div>
+            </Reveal>
 
+            <Reveal delay={0.2} className="mt-5">
+              <div className="flex flex-wrap gap-2">
+                {CATEGORIES.map((c) => (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => jump(c.id)}
+                    className="lq lq-press inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-ink transition-colors hover:text-mint"
+                  >
+                    <Icon id={c.id} className="h-3.5 w-3.5 text-mint" />
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.2} className="hidden md:block">
+            <DemoFrame />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* -------------------------------------------------------- topics -- */}
       {!query && (
-        <Section tight className="relative pt-0 md:pt-0">
+        <Section tight className="relative">
           <GlowOrbs />
           <div className="relative">
-            <SectionHead eyebrow="Browse by topic" title="Nine topics. Start where you are." lede="From a brand-new account to reading net margin — pick the part of Mynt you are working in." />
+            <SectionHead eyebrow="Browse by topic" title="Pick the part of Mynt you are in." />
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {CATEGORIES.map((c, i) => (
-                <Reveal key={c.id} delay={i * 0.04}>
-                  <InteractiveCard as="button" type="button" onClick={() => jump(c.id)} className="flex h-full w-full items-start gap-4 text-left">
-                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-mint/30 bg-mint/10 text-mint shadow-[0_0_24px_rgba(47,211,154,0.18)] transition-transform group-hover:scale-110">
-                      <Icon id={c.id} className="h-6 w-6" />
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="flex items-center justify-between gap-3">
-                        <span className="text-lg font-bold text-ink transition-colors group-hover:text-mint">{c.label}</span>
-                        <span className="rounded-full bg-bg/80 px-2 py-0.5 font-mono text-[10px] text-mute">{c.count} {c.count === 1 ? 'guide' : 'guides'}</span>
-                      </span>
-                      <span className="mt-1 block text-sm text-mute">{c.description}</span>
-                    </span>
-                  </InteractiveCard>
-                </Reveal>
+                <TopicTile key={c.id} c={c} delay={i * 0.04} onClick={() => jump(c.id)} />
               ))}
             </div>
           </div>
         </Section>
       )}
 
+      {/* --------------------------------------------------------- watch -- */}
       {!query && (
         <Section tight className="pt-0 md:pt-0">
-          <SectionHead eyebrow="Most read" title="Popular guides" lede="The questions operators ask first." />
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {POPULAR.map((a, i) => (
-              <Reveal key={a.id} delay={i * 0.04} className="h-full">
-                <ArticleCard a={a} className="h-full" />
+          <SectionHead eyebrow="Watch & learn" title="See it done in under a minute." lede="Hover to play. Click for the full guide." />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {VIDEOS.map((a, i) => (
+              <Reveal key={a.id} delay={i * 0.04}>
+                <HoverVideo a={a} />
               </Reveal>
             ))}
           </div>
+          <Reveal className="mt-10">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="mr-2 font-mono text-[10px] uppercase tracking-widest text-mute">Most read</span>
+              {POPULAR.map((a) => (
+                <Link key={a.id} to={`/mynt/guides/${a.id}`} className="lq lq-press rounded-full px-3 py-1.5 text-xs text-ink transition-colors hover:text-mint">
+                  {a.title}
+                </Link>
+              ))}
+            </div>
+          </Reveal>
         </Section>
       )}
 
+      {/* ---------------------------------------------------- all guides -- */}
       <div ref={listRef}>
         <Section id="all-guides" tight className="pt-0 md:pt-0">
           <div className="flex flex-wrap items-center gap-2 border-b border-line/60 pb-6" role="tablist" aria-label="Guide topics">
@@ -210,12 +447,12 @@ export default function Guides() {
             })}
           </div>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3" data-testid="guide-list">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="guide-list">
             {list.map((a) => (
               <ArticleCard key={a.id} a={a} />
             ))}
             {list.length === 0 && (
-              <div className="rounded-3xl border border-dashed border-line/80 p-12 text-center text-sm text-mute md:col-span-2 lg:col-span-3">
+              <div className="rounded-3xl border border-dashed border-line/80 p-12 text-center text-sm text-mute sm:col-span-2 lg:col-span-3">
                 <p className="text-base font-semibold text-ink">No guides match “{q}”</p>
                 <p className="mt-2 text-xs">Try a shorter term — “tokens”, “Gmail”, “mapping”, “invoice”.</p>
                 <Button to={CTA.expert} variant="ghost" size="sm" className="mt-5">
@@ -227,14 +464,14 @@ export default function Guides() {
         </Section>
       </div>
 
+      {/* ----------------------------------------------------------- cta -- */}
       <Section tight className="pb-28">
         <Reveal>
-          <GlowCard className="flex flex-col items-start justify-between gap-6 border-mint/40 bg-gradient-to-r from-card/90 to-surface/90 p-8 md:flex-row md:items-center">
+          <GlowCard className="flex flex-col items-start justify-between gap-5 border-mint/40 bg-gradient-to-r from-card/90 to-surface/90 p-7 md:flex-row md:items-center">
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-mint">Still stuck?</span>
-              <h2 className="mt-1 text-2xl font-bold text-ink">Talk to someone who has set up Mynt a hundred times.</h2>
-              <p className="mt-2 max-w-xl text-sm text-mute">
-                Write to <a href={`mailto:${CONTACT.email}`} className="text-mint hover:underline">{CONTACT.email}</a>, or raise a ticket from Help &amp; Support inside Mynt.
+              <h2 className="text-xl font-bold text-ink md:text-2xl">Still stuck? Talk to a human.</h2>
+              <p className="mt-1 text-sm text-mute">
+                <a href={`mailto:${CONTACT.email}`} className="text-mint hover:underline">{CONTACT.email}</a> · or raise a ticket from Help &amp; Support inside Mynt.
               </p>
             </div>
             <Button to={CTA.expert} size="lg" className="shrink-0">

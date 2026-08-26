@@ -23,7 +23,7 @@ export default defineConfig({
         navigateFallbackDenylist: [/^\/help-articles\//],
         runtimeCaching: [
           {
-            urlPattern: /\/help-articles\//,
+            urlPattern: /\/(help-articles|help-thumbs)\//,
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'help-articles',
