@@ -188,8 +188,13 @@ export function Stat({ value, label, className }) {
   )
 }
 
-export function Accordion({ items, className }) {
+export function Accordion({ items, className, onChange }) {
   const [open, setOpen] = useState(0)
+  const toggle = (i) => {
+    const next = open === i ? -1 : i
+    setOpen(next)
+    onChange?.(next)
+  }
   return (
     <div className={cn('divide-y divide-line/70 rounded-2xl border border-line/70 bg-card/50', className)}>
       {items.map((it, i) => {
@@ -199,7 +204,7 @@ export function Accordion({ items, className }) {
             <button
               type="button"
               aria-expanded={isOpen}
-              onClick={() => setOpen(isOpen ? -1 : i)}
+              onClick={() => toggle(i)}
               className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-[15px] font-medium text-ink hover:text-mint"
             >
               <span>{it.q}</span>

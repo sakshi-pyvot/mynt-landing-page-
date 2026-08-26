@@ -29,6 +29,7 @@ const FAQ_IDS = [
 const FAQ = FAQ_IDS.map((id) => ARTICLES.find((a) => a.id === id))
   .filter(Boolean)
   .map((a) => ({
+    article: a,
     q: a.title,
     a: (
       <>
@@ -56,6 +57,9 @@ const ICONS = {
   data: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 8v5M12 16h.01',
   security: 'M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6l8-3zM9 12l2 2 4-4',
 }
+
+// full-app shots fill the frame; cropped strips/cards float on a dark stage
+const fit = (m) => (m.ratio >= 1.25 && m.ratio <= 2.2 && m.w >= 800 ? 'cover' : 'contain')
 
 const fmt = (s) => (s ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}` : null)
 
@@ -262,11 +266,61 @@ function TopicTile({ c, delay }) {
   )
 }
 
+// FAQ companion: the open question's guide, shown as its real screen
+function FaqFrame({ a }) {
+  const m = M[a.id]
+  return (
+    <Link to={guideTo(a)} className="group relative block" aria-label={`Open guide: ${a.title}`}>
+      <div className="pointer-events-none absolute -inset-[12%] rounded-[64px] bg-[radial-gradient(ellipse_at_center,rgba(47,211,154,0.35),rgba(47,211,154,0.12)_45%,transparent_72%)] blur-3xl" aria-hidden />
+      <div
+        className="glass relative overflow-hidden rounded-3xl border p-3 md:p-4"
+        style={{ borderColor: 'rgba(47,211,154,0.3)', boxShadow: '0 0 100px rgba(47,211,154,0.16), 0 30px 90px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)' }}
+      >
+        <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" aria-hidden />
+        <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-bg">
+          <div className="dot-field absolute inset-0 opacity-50" aria-hidden />
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={a.id}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="absolute inset-0"
+            >
+              {!m?.full ? (
+                <div className="grid h-full w-full place-items-center text-mint/70">
+                  <Icon id={a.category} className="h-14 w-14" />
+                </div>
+              ) : fit(m) === 'cover' ? (
+                <img src={m.full} alt="" className="h-full w-full object-cover object-top" />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center p-8">
+                  <img src={m.full} alt="" className="max-h-full max-w-full rounded-lg border border-white/10 object-contain shadow-[0_18px_44px_rgba(0,0,0,0.55)]" />
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/95 via-bg/60 to-transparent p-4 pt-12" aria-hidden>
+            <div className="font-mono text-[10px] uppercase tracking-widest text-mint">
+              {CAT_BY_ID[a.category].label}
+              {m?.mins && <span className="text-mute"> · {m.mins} min</span>}
+            </div>
+            <div className="mt-1 line-clamp-1 text-sm font-semibold text-ink">{a.title}</div>
+          </div>
+        </div>
+        <div className="mt-3 text-center font-mono text-[10px] uppercase tracking-widest text-mute transition-colors group-hover:text-mint">Open the full guide →</div>
+      </div>
+    </Link>
+  )
+}
+
 export default function Guides() {
   const navigate = useNavigate()
   const [q, setQ] = useState('')
   const [active, setActive] = useState(0)
   const [open, setOpen] = useState(false)
+  const [faqShown, setFaqShown] = useState(0) // last opened FAQ item, drives the side frame
   const searchRef = useRef(null)
   const boxRef = useRef(null)
   const query = q.trim().toLowerCase()
@@ -458,9 +512,14 @@ export default function Guides() {
       {/* ----------------------------------------------------------- faq -- */}
       <Section id="faq" tight className="pt-0 md:pt-0">
         <SectionHead eyebrow="FAQ" title="Quick answers." lede="The short version — each one links to the full guide." />
-        <Reveal>
-          <Accordion items={FAQ} className="max-w-3xl" />
-        </Reveal>
+        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
+          <Reveal>
+            <Accordion items={FAQ} onChange={(i) => i >= 0 && setFaqShown(i)} />
+          </Reveal>
+          <Reveal delay={0.1} className="hidden lg:block lg:sticky lg:top-28">
+            {FAQ[faqShown] && <FaqFrame a={FAQ[faqShown].article} />}
+          </Reveal>
+        </div>
       </Section>
 
       {/* ----------------------------------------------------------- cta -- */}
