@@ -5,6 +5,7 @@ import { Accordion, Button, Eyebrow, GlowCard, GlowOrbs, Reveal, Section, Sectio
 import { ARTICLES, CATEGORIES, getPopularArticles } from '@/help/catalog'
 import MEDIA from '@/help/media.json'
 import { CONTACT, CTA } from '@/lib/site'
+import FaqScene from '@/components/FaqScenes'
 import { cn, reducedMotion } from '@/lib/utils'
 
 // Content comes from src/help/catalog.ts; imagery from src/help/media.json —
@@ -57,9 +58,6 @@ const ICONS = {
   data: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 8v5M12 16h.01',
   security: 'M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6l8-3zM9 12l2 2 4-4',
 }
-
-// full-app shots fill the frame; cropped strips/cards float on a dark stage
-const fit = (m) => (m.ratio >= 1.25 && m.ratio <= 2.2 && m.w >= 800 ? 'cover' : 'contain')
 
 const fmt = (s) => (s ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}` : null)
 
@@ -266,7 +264,7 @@ function TopicTile({ c, delay }) {
   )
 }
 
-// FAQ companion: the open question's guide, shown as its real screen
+// FAQ companion: an animated illustration of the open question's topic
 function FaqFrame({ a }) {
   const m = M[a.id]
   return (
@@ -282,23 +280,13 @@ function FaqFrame({ a }) {
           <AnimatePresence initial={false}>
             <motion.div
               key={a.id}
-              initial={{ opacity: 0, scale: 0.98 }}
+              initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
               className="absolute inset-0"
             >
-              {!m?.full ? (
-                <div className="grid h-full w-full place-items-center text-mint/70">
-                  <Icon id={a.category} className="h-14 w-14" />
-                </div>
-              ) : fit(m) === 'cover' ? (
-                <img src={m.full} alt="" className="h-full w-full object-cover object-top" />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center p-8">
-                  <img src={m.full} alt="" className="max-h-full max-w-full rounded-lg border border-white/10 object-contain shadow-[0_18px_44px_rgba(0,0,0,0.55)]" />
-                </div>
-              )}
+              <FaqScene id={a.id} />
             </motion.div>
           </AnimatePresence>
           <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/95 via-bg/60 to-transparent p-4 pt-12" aria-hidden>
