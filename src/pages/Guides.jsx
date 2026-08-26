@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { Button, Eyebrow, GlowCard, GlowOrbs, Reveal, Section, SectionHead } from '@/components/ui'
+import { Accordion, Button, Eyebrow, GlowCard, GlowOrbs, Reveal, Section, SectionHead } from '@/components/ui'
 import { ARTICLES, CATEGORIES, getPopularArticles } from '@/help/catalog'
 import MEDIA from '@/help/media.json'
 import { CONTACT, CTA } from '@/lib/site'
@@ -15,6 +15,30 @@ const CAT_COVER = MEDIA.categories
 const POPULAR = getPopularArticles()
 const VIDEOS = ARTICLES.filter((a) => M[a.id]?.video)
 const MAX_RESULTS = 8
+
+// FAQ = question-titled guides; answer is the catalog excerpt verbatim (no site-authored copy)
+const FAQ_IDS = [
+  '02-gmail-permissions',
+  '05-how-often-sync',
+  '01-why-todays-recent-data-not-showing',
+  '01-what-is-outlet-mapping-and-why-required',
+  '01-what-are-mynt-tokens',
+  '02-which-mynt-features-consume-tokens',
+  '01-understanding-mynt-pricing-annual-outlet-licences',
+]
+const FAQ = FAQ_IDS.map((id) => ARTICLES.find((a) => a.id === id))
+  .filter(Boolean)
+  .map((a) => ({
+    q: a.title,
+    a: (
+      <>
+        {a.excerpt}{' '}
+        <Link to={`/mynt/guides/${a.id}`} className="whitespace-nowrap font-medium text-mint hover:underline">
+          Read the full guide →
+        </Link>
+      </>
+    ),
+  }))
 
 // a topic opens on its first guide; the reader's rail lists the rest
 const firstOf = (catId) => ARTICLES.find((a) => a.category === catId)
@@ -428,6 +452,14 @@ export default function Guides() {
               </Link>
             ))}
           </div>
+        </Reveal>
+      </Section>
+
+      {/* ----------------------------------------------------------- faq -- */}
+      <Section id="faq" tight className="pt-0 md:pt-0">
+        <SectionHead eyebrow="FAQ" title="Quick answers." lede="The short version — each one links to the full guide." />
+        <Reveal>
+          <Accordion items={FAQ} className="max-w-3xl" />
         </Reveal>
       </Section>
 
