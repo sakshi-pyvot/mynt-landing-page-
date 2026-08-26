@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Map Zomato and Swiggy Outlets — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embed');
+    }
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>How to Map Zomato and Swiggy Outlets</h1>
+  <p class="meta">Outlet Mapping · Read time: 5 minutes · Includes a short video · Last updated 25 August 2026</p>
+
+  <div class="hello">Linking a Zomato or Swiggy restaurant ID to one of your outlets makes payouts for that ID count against the right shop.</div>
+
+  <h2>Watch this first</h2>
+  <div class="video-box">
+    <video controls playsinline preload="metadata" poster="assets/map-zomato-swiggy-platform-outlets/demo-poster.jpg">
+      <source src="assets/map-zomato-swiggy-platform-outlets/demo.mp4" type="video/mp4" />
+      <a href="assets/map-zomato-swiggy-platform-outlets/demo.mp4">Download the video</a>
+    </video>
+    <p class="video-caption">Linking a Zomato ID to an outlet in Platform Mapping</p>
+  </div>
+
+  <h2>Before you start</h2>
+  <ul>
+    <li>Your payout email should show <strong>Connected</strong> under <strong>Settings → Email Integration</strong>. Mynt reads restaurant IDs out of those emails, and the list you pick from is built from what it finds.</li>
+    <li>Have the outlet in mind. Each platform ID can belong to only one outlet in your account.</li>
+  </ul>
+
+  <h2>Step-by-step</h2>
+  <div class="step"><h3><span class="step-num">1</span> Open Outlet Mapping</h3><p>Left menu → <strong>Settings</strong> → <strong>Outlet Mapping</strong>.</p><figure><img src="assets/map-zomato-swiggy-platform-outlets/step-01-outlet-mapping-overview.png" alt="Outlet Mapping overview" /><figcaption>Step 1 — Outlet Mapping</figcaption></figure></div>
+  <div class="step"><h3><span class="step-num">2</span> Go to Platform Mapping</h3><p>Tap <strong>Platform Mapping</strong> in the row of buttons, or scroll down to the Platform Mapping card. Outlets with nothing linked show <strong>Not mapped</strong> in orange.</p><figure><img src="assets/map-zomato-swiggy-platform-outlets/step-02-platform-mapping-table.png" alt="Platform Mapping table" /><figcaption>Step 2 — Platform Mapping</figcaption></figure></div>
+  <div class="step"><h3><span class="step-num">3</span> Tap Edit on the outlet</h3><p>Find the outlet's row and tap <strong>Edit</strong>. The row highlights and its fields become editable, with <strong>Cancel</strong> and <strong>Save</strong> on the right.</p><figure><img src="assets/map-zomato-swiggy-platform-outlets/step-03-edit-row.png" alt="Outlet row in edit mode" /><figcaption>Step 3 — Edit the row</figcaption></figure></div>
+  <div class="step"><h3><span class="step-num">4</span> Add the platform</h3><p>Tap <strong>+ Zomato</strong> or <strong>+ Swiggy</strong> to add a platform link. Only platforms you have not already linked appear here.</p><figure><img src="assets/map-zomato-swiggy-platform-outlets/step-04-add-zomato.png" alt="Add a platform to the outlet" /><figcaption>Step 4 — Add the platform</figcaption></figure></div>
+  <div class="tip"><strong>Toing</strong> is shown too, but you cannot edit it. Toing uses the same ID as Swiggy, so it fills in by itself once Swiggy is linked.</div>
+  <div class="step"><h3><span class="step-num">5</span> Pick the restaurant ID</h3><p>Tap the dropdown next to the platform name and choose the right ID. Where Mynt found a restaurant name in your payout email, the option reads <strong>ID · restaurant name</strong> to help you tell them apart.</p><figure><img src="assets/map-zomato-swiggy-platform-outlets/step-05-select-id.png" alt="Choosing the restaurant ID from the dropdown" /><figcaption>Step 5 — Pick the ID</figcaption></figure></div>
+  <p>If the dropdown is empty, Mynt has not detected any unused IDs for that platform yet. Check that your payout email is connected and give it time to sync.</p>
+  <div class="step"><h3><span class="step-num">6</span> Save</h3><p>Tap <strong>Save</strong>. The link is stored and Mynt starts counting that platform's payouts against this outlet. Repeat for each outlet, and for each platform separately.</p><figure><img src="assets/map-zomato-swiggy-platform-outlets/step-06-save-mapping.png" alt="Saving the mapping" /><figcaption>Step 6 — Save</figcaption></figure></div>
+
+  <h2>How do I know it worked?</h2>
+  <ul>
+    <li>The row now shows a tag such as <strong>Zomato · 20942752</strong> instead of <strong>Not mapped</strong>.</li>
+    <li>The <strong>Mapped</strong> count at the top goes up and <strong>Unmapped</strong> goes down.</li>
+    <li>The dot beside the licence ID turns green once data starts arriving.</li>
+    <li>Dashboard numbers for that outlet update within a few minutes.</li>
+  </ul>
+
+  <h2>Common problems</h2>
+  <table class="glossary">
+    <tr><th>+ Zomato / + Swiggy missing</th><td>You have already linked that platform for this outlet, or Mynt has not detected any ID for it</td></tr>
+    <tr><th>Dropdown is empty</th><td>No unused IDs detected yet — check Email Integration shows Connected</td></tr>
+    <tr><th>"That platform ID is already registered"</th><td>The ID belongs to another outlet. See <a href="05-how-to-fix-incorrect-duplicate-unmapped-outlets.html" style="color:var(--mint)">Fixing incorrect, duplicate or unmapped outlets</a></td></tr>
+    <tr><th>Toing cannot be edited</th><td>Correct — it follows your Swiggy ID automatically</td></tr>
+  </table>
+
+  <h2>Related guides</h2>
+  <ul>
+    <li><a href="01-what-is-outlet-mapping-and-why-required.html" style="color:var(--mint)">What outlet mapping is</a></li>
+    <li><a href="03-how-to-edit-existing-outlet-mapping.html" style="color:var(--mint)">How to edit an existing outlet mapping</a></li>
+    <li><a href="05-how-to-fix-incorrect-duplicate-unmapped-outlets.html" style="color:var(--mint)">Fixing incorrect, duplicate or unmapped outlets</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>

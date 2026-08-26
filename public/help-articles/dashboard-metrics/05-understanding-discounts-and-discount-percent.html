@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Understanding Discounts and Discount Percent — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embed');
+    }
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>Understanding Discounts and Discount Percent</h1>
+  <p class="meta">Dashboard & Metrics · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+
+  <div class="hello">Discounts are the easiest cost to underestimate, because they never appear as a bill. Mynt reports them as a value and as a share of sales.</div>
+
+  <h2>The headline card</h2>
+
+  <figure><img src="assets/understanding-discounts-and-discount-percent/step-01-discounts-card.png" alt="The Discounts card on the dashboard" /><figcaption>The value of discounts and coupons applied in the period</figcaption></figure>
+
+  <h2>The Discounts dashboard</h2>
+
+  <p>Choose <strong>Discounts</strong> in the left menu for the full picture &mdash; coupon performance, burn analysis and the funding split.</p>
+
+  <figure><img src="assets/understanding-discounts-and-discount-percent/step-02-discounts-page.png" alt="The Discounts dashboard with gross order value, total discount burn and discount percent" /><figcaption>Discount burn against gross order value, and what that is as a percentage</figcaption></figure>
+
+  <table class="glossary">
+    <tr><th>Total Discount Burn</th><td>The rupee value of discounts applied.</td></tr>
+    <tr><th>Discount %</th><td>Discount burn as a share of gross order value &mdash; the number to watch.</td></tr>
+    <tr><th>Discount Sales Contribution</th><td>How much of your sales came from discounted orders.</td></tr>
+    <tr><th>Discounted Orders</th><td>How many orders carried a discount.</td></tr>
+    <tr><th>Avg Discount / Order</th><td>Average discount on the orders that had one.</td></tr>
+    <tr><th>Discount Trend</th><td>Burn over time, daily, weekly or monthly.</td></tr>
+  </table>
+
+  <h2>Why Discount % matters more than the rupee figure</h2>
+
+  <p>Discount value rises naturally as sales rise. The percentage tells you whether you are buying growth or simply growing. A rising Discount % with flat orders means you are paying more for the same volume.</p>
+
+  <div class="tip">Every percentage on the dashboard compares against the <strong>LAST PERIOD</strong> chip in the header &mdash; the period immediately before the one you are viewing. It is not a year-on-year comparison.</div>
+
+  <h2>Reading it against the other cards</h2>
+
+  <table class="glossary">
+    <tr><th>Discounts up, orders up, AOV down</th><td>The discount is working, at a cost. Compare against net margin.</td></tr>
+    <tr><th>Discounts up, orders flat</th><td>You are discounting without buying volume.</td></tr>
+    <tr><th>Discounts up, net margin down</th><td>The discount is coming straight out of profit.</td></tr>
+  </table>
+
+  <h2>Related guides</h2>
+
+  <ul>
+    <li><a href="04-understanding-orders-and-average-order-value.html" style="color:var(--mint)">Orders and average order value</a></li>
+    <li><a href="08-understanding-net-margin-and-profitability.html" style="color:var(--mint)">Net margin and profitability</a></li>
+    <li><a href="06-understanding-advertising-spend-and-ad-performance.html" style="color:var(--mint)">Advertising spend</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>

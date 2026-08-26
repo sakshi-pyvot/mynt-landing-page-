@@ -8,6 +8,29 @@ import { PyvotLogo } from './Brand'
 // Small shared primitives for inner pages. Kept deliberately thin — the landing
 // sections own their own visuals; these only give the inner pages one voice.
 
+// drifting mint glow orbs — ambient background for header/topic blocks
+const ORBS = [
+  { pos: 'left-[2%] top-[6%] h-[24rem] w-[24rem]', dur: 13, dx: 90, dy: 60 },
+  { pos: 'right-[0%] top-[30%] h-[30rem] w-[30rem]', dur: 17, dx: -110, dy: 80 },
+  { pos: 'bottom-[-6%] left-[32%] h-[22rem] w-[22rem]', dur: 15, dx: 70, dy: -70 },
+]
+
+export function GlowOrbs() {
+  if (reducedMotion()) return null
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+      {ORBS.map((o, i) => (
+        <motion.span
+          key={i}
+          className={cn('absolute rounded-full bg-[radial-gradient(circle,rgba(47,211,154,0.32),transparent_68%)] blur-3xl', o.pos)}
+          animate={{ x: [0, o.dx, 0], y: [0, o.dy, 0], opacity: [0.55, 1, 0.55] }}
+          transition={{ duration: o.dur, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      ))}
+    </div>
+  )
+}
+
 export function SmartLink({ to, children, className, ...rest }) {
   const external = /^(https?:|mailto:|tel:)/.test(to)
   if (external) {

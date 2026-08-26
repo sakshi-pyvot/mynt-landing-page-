@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What to Do When Data Is Missing for Certain Dates — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embed');
+    }
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>What to Do When Data Is Missing for Certain Dates</h1>
+  <p class="meta">Data Issues · Read time: 5 minutes · Article only · Last updated 25 August 2026</p>
+
+  <div class="hello">Most weeks look right, but one specific stretch is blank. Four things cause that, in the order worth checking them.</div>
+
+  <h2>Step 1 — Rule out the filters first</h2>
+
+  <p>A wrong filter looks exactly like missing data. Open the filter panel on the left and set <strong>DATE</strong> to a range that definitely covers the gap.</p>
+
+  <figure><img src="assets/missing-certain-dates/step-01-date-presets.png" alt="The DATE filter open, showing Latest Week, Latest Month, Previous Month and Custom Range" /><figcaption>Use Custom Range to target the exact dates you think are missing</figcaption></figure>
+
+  <table class="glossary">
+    <tr><th>Latest Week</th><td>The most recent full week Mynt holds.</td></tr>
+    <tr><th>Latest Month</th><td>The most recent full month.</td></tr>
+    <tr><th>Previous Month</th><td>The month before that.</td></tr>
+    <tr><th>Custom Range</th><td>Any two dates you choose &mdash; the one to use when chasing a specific gap.</td></tr>
+  </table>
+
+  <p>While you are there, set <strong>PLATFORM</strong> to <strong>All Platforms</strong> and <strong>SELECT OUTLET</strong> to <strong>Select all</strong>. Narrow filters are the single most common cause of a &ldquo;missing&rdquo; week.</p>
+
+  <h2>Step 2 — Check the payout email exists</h2>
+
+  <p>Mynt can only show what arrived by email. Open the mailbox connected in <strong>Settings &rarr; Email Integration</strong> and search for the Zomato or Swiggy settlement email covering those dates.</p>
+
+  <ul>
+    <li>If the email <strong>is not there</strong>, Mynt cannot show that period. Ask the platform to resend it, or check whether it went to a different mailbox.</li>
+    <li>If it went to a mailbox Mynt does not read, add that mailbox with <strong>Add SOA Email</strong>.</li>
+  </ul>
+
+  <div class="tip">Platforms usually send one settlement email per payout cycle. A single &ldquo;missing day&rdquo; inside a week is often just rolled into that week&rsquo;s total rather than genuinely absent.</div>
+
+  <h2>Step 3 — Check the outlet was mapped at the time</h2>
+
+  <p>If a restaurant ID was not mapped when Mynt processed that week&rsquo;s email, that outlet&rsquo;s numbers for that week are missing or under-reported. Go to <strong>Settings &rarr; Outlet Mapping</strong> and check the <strong>Platform Mapping</strong> table.</p>
+
+  <figure><img src="assets/missing-certain-dates/step-02-mapping-status.png" alt="The Platform Mapping table listing each outlet, its licence ID and its linked platform IDs" /><figcaption>Every outlet should show at least one platform ID. Orange <strong>Not mapped</strong> means it is being skipped.</figcaption></figure>
+
+  <h2>Step 4 — Check whether it is one platform or both</h2>
+
+  <p>Set <strong>PLATFORM</strong> to <strong>Zomato</strong> alone, then <strong>Swiggy</strong> alone. If only one is blank, the problem is that platform&rsquo;s ID or its emails, not Mynt as a whole. See <a href="04-why-zomato-swiggy-data-missing-incomplete.html">why one platform can be missing</a>.</p>
+
+  <h2>Step 5 — Raise a ticket with the right details</h2>
+
+  <p>If the emails exist, the mapping is right and the filters are wide, support needs these five things:</p>
+
+  <ol>
+    <li>The outlet name (or licence ID) affected.</li>
+    <li>The <strong>exact date range</strong> &mdash; for example 14 Jul &ndash; 20 Jul 2026.</li>
+    <li>Which platform: Zomato, Swiggy, or both.</li>
+    <li>Which mailbox the payout email arrived in.</li>
+    <li>Whether other outlets show data for the same period.</li>
+  </ol>
+
+  <p>See <a href="06-how-to-raise-data-issue-support-ticket.html">how to raise a data issue ticket</a>.</p>
+
+  <h2>Related guides</h2>
+
+  <ul>
+    <li><a href="01-why-todays-recent-data-not-showing.html" style="color:var(--mint)">Why recent data is not showing yet</a></li>
+    <li><a href="03-what-to-do-when-dashboard-numbers-incorrect.html" style="color:var(--mint)">When dashboard numbers look wrong</a></li>
+    <li><a href="04-why-zomato-swiggy-data-missing-incomplete.html" style="color:var(--mint)">Why one platform can be missing</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>

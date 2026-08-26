@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Payments, GST and Billing Details Work — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embed');
+    }
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>How Payments, GST and Billing Details Work</h1>
+  <p class="meta">Billing · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+
+  <div class="hello">What Mynt accepts, how GST is applied, and which details end up printed on your invoice.</div>
+
+  <h2>What you can pay with</h2>
+
+  <figure><img src="assets/payments-gst-billing-details-work/step-01-accepted-methods.png" alt="Accepted payment methods: UPI, credit card, net banking and auto debit" /><figcaption>Shown above the payment history, so you can check before starting a purchase</figcaption></figure>
+
+  <ul>
+    <li><strong>UPI</strong> &mdash; any UPI app.</li>
+    <li><strong>Credit card</strong>.</li>
+    <li><strong>Net banking</strong>.</li>
+    <li><strong>Auto debit</strong> &mdash; for recurring payments.</li>
+  </ul>
+
+  <h2>How GST is applied</h2>
+
+  <p>GST is added on top of the listed price and always itemised, never folded into a single figure. The token packs show this most clearly:</p>
+
+  <figure><img src="assets/payments-gst-billing-details-work/step-02-gst-breakdown.png" alt="Token packs showing base price, GST and the GST-inclusive total for each" /><figcaption>Each pack shows the base price, the GST added, and the effective per-token cost including GST</figcaption></figure>
+
+  <table class="glossary">
+    <tr><th>Listed price</th><td>The base amount, before tax.</td></tr>
+    <tr><th>GST</th><td>Added on top and shown as its own line.</td></tr>
+    <tr><th>Total</th><td>What is actually charged &mdash; the figure the pay button repeats.</td></tr>
+  </table>
+
+  <p>Licence purchases work the same way: the purchase card shows the pre-GST total, and GST is itemised at checkout.</p>
+
+  <h2>The details printed on your invoice</h2>
+
+  <p>Invoices are raised against what is stored in <strong>Settings &rarr; Account</strong>. Check these before your first purchase.</p>
+
+  <figure><img src="assets/payments-gst-billing-details-work/step-03-billing-details.png" alt="The account details form with company name, GST number, billing state and billing address" /><figcaption>GST number, billing state and billing address all appear on the invoice</figcaption></figure>
+
+  <table class="glossary">
+    <tr><th>GST Number</th><td>Enter it and press <strong>Verify</strong>. Your company name and billing state are then filled in from it automatically.</td></tr>
+    <tr><th>Company Name</th><td>Set from the verified GSTIN. To change it, change or clear the GST number.</td></tr>
+    <tr><th>Billing State</th><td>Also set from the GSTIN. It decides how GST is applied.</td></tr>
+    <tr><th>Billing Address</th><td>Printed on the invoice.</td></tr>
+    <tr><th>Account Owner Name / Phone</th><td>Contact details for the account.</td></tr>
+    <tr><th>Email ID</th><td>Your login address. Contact support to change it &mdash; it cannot be edited here.</td></tr>
+  </table>
+
+  <div class="tip">Fill in the GST number <em>before</em> you buy. An invoice already raised cannot have a GSTIN added to it afterwards &mdash; that needs support.</div>
+
+  <h2>Common questions</h2>
+
+  <div class="faq-item"><div class="faq-q">Why can I not edit my company name?</div><div class="faq-a">It is taken from your verified GSTIN so the invoice matches your GST registration. Change or clear the GST number to edit it.</div></div>
+  <div class="faq-item"><div class="faq-q">Can I change my login email here?</div><div class="faq-a">No. The Email ID field is read-only &mdash; contact support to change the address you sign in with.</div></div>
+  <div class="faq-item"><div class="faq-q">I paid without a GSTIN. Can it be added?</div><div class="faq-a">Not to an invoice already issued. Add the GSTIN now so future invoices carry it, and contact support about the earlier one.</div></div>
+
+  <h2>Related guides</h2>
+
+  <ul>
+    <li><a href="05-how-to-view-download-invoices.html" style="color:var(--mint)">Viewing and downloading invoices</a></li>
+    <li><a href="07-troubleshooting-failed-payments-renewals.html" style="color:var(--mint)">Failed payments and renewals</a></li>
+    <li><a href="../security/03-how-mynt-protects-business-data.html" style="color:var(--mint)">How Mynt protects your business data</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>

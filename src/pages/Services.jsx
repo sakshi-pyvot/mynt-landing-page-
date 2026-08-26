@@ -2,7 +2,7 @@ import { motion } from 'motion/react'
 import CtaPair from '@/components/CtaPair'
 import OrbitCarousel from '@/components/OrbitCarousel'
 import ExpertsSplit from '@/components/sections/ExpertsSplit'
-import { Button, Card, CountUp, Eyebrow, InteractiveCard, Reveal, Section, SectionHead, SmartLink, Stat } from '@/components/ui'
+import { Button, Card, CountUp, Eyebrow, GlowOrbs, InteractiveCard, Reveal, Section, SectionHead, SmartLink, Stat } from '@/components/ui'
 import VideoLoop from '@/components/VideoLoop'
 import { CTA } from '@/lib/site'
 import { cn, reducedMotion } from '@/lib/utils'
@@ -126,28 +126,6 @@ function ServiceBlock({ id, eyebrow, title, lede, monitor, playbook, get, proof,
 
 // ambient background for the How-we-work / Why-choose-us sections: soft mint
 // orbs drifting slowly behind the cards
-const ORBS = [
-  { pos: 'left-[2%] top-[6%] h-[24rem] w-[24rem]', dur: 13, dx: 90, dy: 60 },
-  { pos: 'right-[0%] top-[30%] h-[30rem] w-[30rem]', dur: 17, dx: -110, dy: 80 },
-  { pos: 'bottom-[-6%] left-[32%] h-[22rem] w-[22rem]', dur: 15, dx: 70, dy: -70 },
-]
-
-function GlowOrbs() {
-  if (reducedMotion()) return null
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      {ORBS.map((o, i) => (
-        <motion.span
-          key={i}
-          className={cn('absolute rounded-full bg-[radial-gradient(circle,rgba(47,211,154,0.32),transparent_68%)] blur-3xl', o.pos)}
-          animate={{ x: [0, o.dx, 0], y: [0, o.dy, 0], opacity: [0.55, 1, 0.55] }}
-          transition={{ duration: o.dur, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      ))}
-    </div>
-  )
-}
-
 // header-side visual for HOW WE WORK: the six steps as a slowly-orbited cycle —
 // the "repeatable rhythm" drawn literally
 function RhythmVisual() {

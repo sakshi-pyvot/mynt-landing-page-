@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Incorrect Outlet Mapping Affects Your Data — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embed');
+    }
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>How Incorrect Outlet Mapping Affects Your Data</h1>
+  <p class="meta">Data Issues · Read time: 5 minutes · Article only · Last updated 25 August 2026</p>
+
+  <div class="hello">Outlet mapping decides which orders belong to which shop. Get it wrong and the numbers are not slightly off &mdash; they are attributed to the wrong outlet, or dropped entirely.</div>
+
+  <h2>What mapping actually controls</h2>
+
+  <p>Zomato and Swiggy identify each shop by a <strong>restaurant ID</strong>. Mynt matches those IDs to your outlets. Every order in a payout email is filed under the outlet holding that ID &mdash; and an ID Mynt does not hold is skipped, not queued.</p>
+
+  <h2>Start with the counters</h2>
+
+  <p>The top of <strong>Settings &rarr; Outlet Mapping</strong> tells you the state of every outlet at a glance.</p>
+
+  <figure><img src="assets/incorrect-outlet-mapping/step-01-unmapped-stat.png" alt="Outlet mapping counters: outlets, mapped, unmapped, brands and groups" /><figcaption><strong>UNMAPPED</strong> above zero means orders are being dropped right now</figcaption></figure>
+
+  <h2>Symptom 1 — an outlet is unmapped</h2>
+
+  <p>An unmapped outlet shows <strong>Not mapped</strong> in orange and contributes nothing to any total.</p>
+
+  <figure><img src="assets/incorrect-outlet-mapping/step-02-not-mapped-row.png" alt="An outlet row reading Not mapped in orange" /><figcaption>This outlet contributes nothing to any dashboard figure</figcaption></figure>
+
+  <p>Press <strong>Edit</strong> on the row, add the platform, pick the restaurant ID and press <strong>Save</strong>.</p>
+
+  <figure><img src="assets/incorrect-outlet-mapping/step-03-fix-in-edit-mode.png" alt="The same row in edit mode with the Zomato ID picker open" /><figcaption>Mynt only offers IDs it has actually seen in your payout mail</figcaption></figure>
+
+  <h2>Symptom 2 — one outlet shows another shop&rsquo;s sales</h2>
+
+  <p>The ID is on the wrong outlet. A restaurant ID can belong to only one outlet in your account, so it has to be removed before it can be re-added:</p>
+
+  <ol>
+    <li>Open the outlet that <em>wrongly</em> holds the ID and press <strong>Edit</strong>.</li>
+    <li>Press <strong>&times;</strong> beside that platform to remove the ID, then <strong>Save</strong>.</li>
+    <li>Open the correct outlet, press <strong>Edit</strong>, add the platform, pick the ID and <strong>Save</strong>.</li>
+  </ol>
+
+  <p>Past periods stay attributed to the old outlet until support reprocesses them. Fixing the mapping corrects what comes next, not what is already filed.</p>
+
+  <h2>Symptom 3 — "Outlet platform res-id conflict"</h2>
+
+  <p>You press <strong>Save</strong> and this appears at the top of the screen:</p>
+
+  <figure><img src="assets/incorrect-outlet-mapping/step-04-duplicate-id-error.png" alt="The error shown when a restaurant ID already belongs to another account" /><figcaption>Mynt rejects the save and shows <strong>Outlet platform res-id conflict</strong></figcaption></figure>
+
+  <p>It means that restaurant ID is already registered to a <em>different Mynt account</em> &mdash; not just a different outlet of yours. It happens after an ownership change, or when the outlet was first set up under another login.</p>
+
+  <p>You cannot move it yourself. <a href="06-how-to-raise-data-issue-support-ticket.html">Raise a ticket</a> with the platform, the restaurant ID and which outlet it should belong to.</p>
+
+  <h2>Symptom 4 — totals lower than they should be</h2>
+
+  <ol>
+    <li>Is <strong>UNMAPPED</strong> above zero?</li>
+    <li>Does every outlet show an ID for <em>every</em> platform it trades on?</li>
+    <li>Is <strong>Settings &rarr; Email Integration</strong> showing <strong>Connected</strong>?</li>
+    <li>Is the dashboard date range one where those outlets actually traded?</li>
+  </ol>
+
+  <h2>Quick reference</h2>
+
+  <table class="glossary">
+    <tr><th>Orange <strong>Not mapped</strong></th><td>Edit the row, add the platform, pick the ID, Save.</td></tr>
+    <tr><th>Wrong outlet&rsquo;s sales showing</th><td>Remove the ID from the wrong outlet first, then add it to the right one.</td></tr>
+    <tr><th><strong>Outlet platform res-id conflict</strong></th><td>The ID belongs to another account &mdash; only support can move it.</td></tr>
+    <tr><th>ID missing from the dropdown</th><td>Mynt has not seen it in your mail yet. Check the mailbox, then Rescan mailboxes.</td></tr>
+    <tr><th>Past periods still wrong after a fix</th><td>Ask support to reprocess that date range.</td></tr>
+  </table>
+
+  <h2>Related guides</h2>
+
+  <ul>
+    <li><a href="04-why-zomato-swiggy-data-missing-incomplete.html" style="color:var(--mint)">Why one platform can be missing</a></li>
+    <li><a href="../outlet-mapping/05-how-to-fix-incorrect-duplicate-unmapped-outlets.html" style="color:var(--mint)">Fixing incorrect or duplicate outlets</a></li>
+    <li><a href="06-how-to-raise-data-issue-support-ticket.html" style="color:var(--mint)">Raise a data issue ticket</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>

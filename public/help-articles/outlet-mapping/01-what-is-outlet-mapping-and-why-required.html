@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What Is Outlet Mapping and Why Is It Required? — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embed');
+    }
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>What Is Outlet Mapping and Why Is It Required?</h1>
+  <p class="meta">Outlet Mapping · Read time: 3 minutes · Article only · Last updated 25 August 2026</p>
+
+  <div class="hello">Zomato and Swiggy each give your restaurant their own ID number. Outlet mapping tells Mynt which of those IDs belong to which of your outlets, so your payout emails land against the right shop.</div>
+
+  <h2>What is outlet mapping?</h2>
+  <p>Every platform knows your outlet by a number, not by its name. Zomato might call your Indiranagar shop <strong>20942752</strong>; Swiggy calls the same shop <strong>375320</strong>.</p>
+  <p>Outlet mapping is where you link those numbers to the outlet in Mynt. Once linked, every payout email for that number is counted against that outlet.</p>
+
+  <h2>Why is it required?</h2>
+  <table class="glossary">
+    <tr><th>Without mapping</th><td>Payout emails arrive but Mynt cannot tell which outlet they belong to; the dashboard shows blanks or lumps everything together; reports cannot be filtered by outlet, brand or group.</td></tr>
+    <tr><th>With mapping</th><td>Every payout lands against the right outlet, sales and charges split correctly per outlet, and filters work properly.</td></tr>
+  </table>
+
+  <h2>Where to find it</h2>
+  <p>Open <strong>Settings</strong> from the left menu, then tap <strong>Outlet Mapping</strong>.</p>
+  <figure><img src="assets/what-is-outlet-mapping-and-why-required/step-01-settings-sidebar.png" alt="Settings with Outlet Mapping open" /><figcaption>Settings → Outlet Mapping</figcaption></figure>
+
+  <h2>What you see on the page</h2>
+  <p>The top of the page summarises where you stand:</p>
+  <table class="glossary">
+    <tr><th>Outlets</th><td>Total active locations</td></tr>
+    <tr><th>Mapped</th><td>Outlets with at least one platform ID linked</td></tr>
+    <tr><th>Unmapped</th><td>Outlets still missing IDs — <strong>turns orange when above zero</strong></td></tr>
+    <tr><th>Brands</th><td>How many brands are in your list</td></tr>
+    <tr><th>Groups</th><td>How many groups you have created</td></tr>
+  </table>
+  <p>Below the cards, three buttons — <strong>Platform Mapping</strong>, <strong>Brand Mapping</strong>, <strong>Group Mapping</strong> — jump straight to each section.</p>
+  <figure><img src="assets/what-is-outlet-mapping-and-why-required/step-02-outlet-mapping-overview.png" alt="Outlet Mapping overview with summary cards" /><figcaption>Outlet Mapping overview with summary cards</figcaption></figure>
+
+  <h2>Platform Mapping in brief</h2>
+  <p>This is the section that actually matters for your data. Its table has four columns:</p>
+  <table class="glossary">
+    <tr><th>License ID</th><td>The licence covering that outlet, e.g. <strong>LIC-2026-001</strong></td></tr>
+    <tr><th>Outlet</th><td>The outlet name, with its brand underneath</td></tr>
+    <tr><th>Platform Mappings</th><td>One tag per linked platform, e.g. <strong>Zomato · 20942752</strong></td></tr>
+    <tr><th>Action</th><td>The <strong>Edit</strong> button for that row</td></tr>
+  </table>
+  <p>A <strong>green dot</strong> beside the licence ID means Mynt is collecting data for that outlet. A <strong>grey dot</strong> means it is not — usually because the outlet has no platform IDs linked yet. An outlet with nothing linked shows <strong>Not mapped</strong> in orange.</p>
+  <figure><img src="assets/what-is-outlet-mapping-and-why-required/step-03-platform-mapping-section.png" alt="Platform Mapping table" /><figcaption>Platform Mapping table — green dots for outlets that are collecting data</figcaption></figure>
+
+  <h2>When should you map?</h2>
+  <ul>
+    <li><strong>During onboarding</strong> — mapping is one of the setup steps.</li>
+    <li><strong>After connecting your payout email</strong> — Mynt detects IDs from your emails, so the list to choose from fills up once mail is flowing.</li>
+    <li><strong>Whenever you add an outlet</strong> — a new outlet starts unmapped.</li>
+  </ul>
+  <div class="tip">Brand and Group mapping are optional and do not affect whether data arrives. Only <strong>Platform Mapping</strong> does that.</div>
+
+  <h2>Common questions</h2>
+  <div class="faq-item"><div class="faq-q">Do I have to map every platform?</div><div class="faq-a">Only the ones you actually trade on. An outlet on Zomato but not Swiggy just gets the Zomato link.</div></div>
+  <div class="faq-item"><div class="faq-q">What if I map the wrong ID?</div><div class="faq-a">Open the row, change it, save. See <a href="03-how-to-edit-existing-outlet-mapping.html" style="color:var(--mint)">How to edit an existing outlet mapping</a>.</div></div>
+  <div class="faq-item"><div class="faq-q">Does mapping change past data?</div><div class="faq-a">Historic data stays where it is. New payouts follow the updated link.</div></div>
+
+  <h2>Related guides</h2>
+  <ul>
+    <li><a href="02-how-to-map-zomato-swiggy-platform-outlets.html" style="color:var(--mint)">How to map Zomato and Swiggy outlets</a></li>
+    <li><a href="03-how-to-edit-existing-outlet-mapping.html" style="color:var(--mint)">How to edit an existing outlet mapping</a></li>
+    <li><a href="04-how-outlet-mapping-works-multiple-outlets-chains-groups.html" style="color:var(--mint)">Brands, groups and multiple outlets</a></li>
+    <li><a href="05-how-to-fix-incorrect-duplicate-unmapped-outlets.html" style="color:var(--mint)">Fixing incorrect, duplicate or unmapped outlets</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>

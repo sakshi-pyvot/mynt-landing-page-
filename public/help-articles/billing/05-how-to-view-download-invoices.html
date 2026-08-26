@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to View and Download Invoices — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embed');
+    }
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>How to View and Download Invoices</h1>
+  <p class="meta">Billing · Read time: 3 minutes · Includes a short video · Last updated 25 August 2026</p>
+
+  <div class="hello">Every payment on your account has an invoice you can open on screen or download as a PDF for your accountant.</div>
+
+  <h2>Watch it done</h2>
+
+  <div class="video-box">
+    <video controls preload="metadata" poster="assets/view-download-invoices/demo-poster.jpg" style="width:100%;border-radius:8px">
+      <source src="assets/view-download-invoices/demo.mp4" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/view-download-invoices/demo.mp4">Download it instead</a>.
+    </video>
+    <p class="video-caption">Finding a payment in the history and downloading its invoice</p>
+  </div>
+
+  <h2>Where invoices live</h2>
+
+  <p>Open <strong>Billing</strong> and scroll to <strong>Invoices &amp; Payment History</strong>. Every licence purchase and token top-up is listed, newest first.</p>
+
+  <figure><img src="assets/view-download-invoices/step-01-invoices-table.png" alt="The Invoices and Payment History table listing licence and token purchases" /><figcaption>Licence purchases and token top-ups, newest first, each with its status and actions</figcaption></figure>
+
+  <table class="glossary">
+    <tr><th>Date</th><td>When the payment was made.</td></tr>
+    <tr><th>Description</th><td>What was bought &mdash; an annual licence, or a token pack.</td></tr>
+    <tr><th>Licenses</th><td>How many licences that payment covered.</td></tr>
+    <tr><th>Amount</th><td>What was charged, GST included.</td></tr>
+    <tr><th>Invoice</th><td>The invoice number, e.g. MYNT-2026/00020. Quote this to support or your accountant.</td></tr>
+    <tr><th>Status</th><td><strong>Paid</strong>, <strong>Pending</strong>, <strong>Failed</strong> or <strong>Cancelled</strong>.</td></tr>
+    <tr><th>Actions</th><td><strong>View</strong> opens the invoice; <strong>PDF</strong> downloads it.</td></tr>
+  </table>
+
+  <h2>Opening or downloading one</h2>
+
+  <figure><img src="assets/view-download-invoices/step-02-invoice-row.png" alt="A single invoice row showing its invoice number" /><figcaption>Every paid row carries an invoice number and both actions</figcaption></figure>
+
+  <ol>
+    <li>Find the payment by date or amount.</li>
+    <li>Press <strong>View</strong> to read it on screen.</li>
+    <li>Press <strong>PDF</strong> to download it &mdash; that is the copy to send to your accountant.</li>
+  </ol>
+
+  <div class="tip">The invoice PDF is generated by Mynt and carries the GST details from <strong>Settings &rarr; Account</strong>. Get those right <em>before</em> you pay &mdash; see <a href="06-how-payments-gst-billing-details-work.html">payments, GST and billing details</a>.</div>
+
+  <h2>Rows without an invoice</h2>
+
+  <p>A <strong>Cancelled</strong> row shows <strong>&mdash;</strong> instead of actions: no money changed hands, so there is nothing to invoice. A <strong>Pending</strong> row shows <strong>Retry</strong> instead &mdash; the payment has not completed yet. See <a href="07-troubleshooting-failed-payments-renewals.html">failed payments and renewals</a>.</p>
+
+  <h2>Related guides</h2>
+
+  <ul>
+    <li><a href="06-how-payments-gst-billing-details-work.html" style="color:var(--mint)">Payments, GST and billing details</a></li>
+    <li><a href="07-troubleshooting-failed-payments-renewals.html" style="color:var(--mint)">Failed payments and renewals</a></li>
+    <li><a href="02-how-to-purchase-mynt-licences.html" style="color:var(--mint)">How to purchase licences</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>

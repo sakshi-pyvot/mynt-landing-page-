@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Read Growth Trends, Comparisons and AI Insights — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embed');
+    }
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>How to Read Growth Trends, Comparisons and AI Insights</h1>
+  <p class="meta">Dashboard & Metrics · Read time: 5 minutes · Article only · Last updated 25 August 2026</p>
+
+  <div class="hello">Below the headline cards sit the three tools for working out <em>why</em> a number moved: the platform split, the trend line, and the insights panel.</div>
+
+  <h2>Platform Comparison</h2>
+
+  <figure><img src="assets/how-to-read-growth-trends-comparisons-ai-insights/step-01-platform-comparison.png" alt="Platform comparison showing Zomato, Swiggy and Toing side by side" /><figcaption>The same metrics per platform, with each platform&rsquo;s share of gross order value</figcaption></figure>
+
+  <p>Each platform card repeats the headline metrics &mdash; gross order value, orders, ads, charges, discounts, refunds, net payout and margin &mdash; so you can see which platform moved the group figure. A share bar at the top shows the split at a glance.</p>
+
+  <div class="tip">Margin often differs by several points between platforms on the same menu. If group margin fell, check whether the mix shifted rather than assuming rates changed.</div>
+
+  <h2>Trends</h2>
+
+  <figure><img src="assets/how-to-read-growth-trends-comparisons-ai-insights/step-02-trends.png" alt="The Trends chart plotting sales over the selected period" /><figcaption>Sales, payout or orders &mdash; daily, hourly, by mealtime or by day type</figcaption></figure>
+
+  <table class="glossary">
+    <tr><th>Sales / Payout / Orders</th><td>Which measure to plot.</td></tr>
+    <tr><th>Daily</th><td>Day by day across the period &mdash; best for spotting a single bad day.</td></tr>
+    <tr><th>Hourly</th><td>By hour of day &mdash; best for staffing and kitchen capacity.</td></tr>
+    <tr><th>Mealtime</th><td>Grouped into meal windows.</td></tr>
+    <tr><th>Day Type</th><td>Weekday against weekend.</td></tr>
+  </table>
+
+  <p>A card tells you <em>that</em> something moved; the trend tells you <em>when</em>. A week that is down because of one closed day reads very differently from one that is down every day.</p>
+
+  <h2>AI Insights</h2>
+
+  <figure><img src="assets/how-to-read-growth-trends-comparisons-ai-insights/step-03-ai-insights.png" alt="The AI Insights panel with prioritised observations" /><figcaption>Each insight is tagged by priority &mdash; act now, review, or opportunity</figcaption></figure>
+
+  <table class="glossary">
+    <tr><th>Act now</th><td>Something is costing money today.</td></tr>
+    <tr><th>Review</th><td>Worth a look, not urgent.</td></tr>
+    <tr><th>Opportunity</th><td>A positive movement worth building on.</td></tr>
+  </table>
+
+  <p>Insights are generated from the same filtered data as the cards, so changing the filters changes the insights. They point at where to look; the trend and comparison views tell you what actually happened.</p>
+
+  <h2>A workable order to read them in</h2>
+
+  <ol>
+    <li>Read the headline card that moved.</li>
+    <li>Check <strong>Platform Comparison</strong> &mdash; is it one platform or both?</li>
+    <li>Check <strong>Trends</strong> &mdash; is it one day or the whole period?</li>
+    <li>Read <strong>AI Insights</strong> for what the data itself flags.</li>
+    <li>Narrow with <strong>VIEW BY &rarr; Outlet</strong> to find the specific location.</li>
+  </ol>
+
+  <h2>Related guides</h2>
+
+  <ul>
+    <li><a href="01-understanding-the-mynt-dashboard.html" style="color:var(--mint)">Understanding the dashboard</a></li>
+    <li><a href="02-how-to-use-filters-date-platform-restaurant-chain-group.html" style="color:var(--mint)">Using the filters</a></li>
+    <li><a href="08-understanding-net-margin-and-profitability.html" style="color:var(--mint)">Net margin and profitability</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>

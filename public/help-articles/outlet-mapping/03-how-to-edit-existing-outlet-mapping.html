@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Edit an Existing Outlet Mapping — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embed');
+    }
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>How to Edit an Existing Outlet Mapping</h1>
+  <p class="meta">Outlet Mapping · Read time: 3 minutes · Includes a short video · Last updated 25 August 2026</p>
+
+  <div class="hello">Renamed a shop, or linked the wrong restaurant ID? Everything in Platform Mapping can be changed from the same Edit button.</div>
+
+  <h2>Watch this first</h2>
+  <div class="video-box">
+    <video controls playsinline preload="metadata" poster="assets/edit-existing-outlet-mapping/demo-poster.jpg">
+      <source src="assets/edit-existing-outlet-mapping/demo.mp4" type="video/mp4" />
+      <a href="assets/edit-existing-outlet-mapping/demo.mp4">Download the video</a>
+    </video>
+    <p class="video-caption">Renaming an outlet and removing a platform link</p>
+  </div>
+
+  <h2>Before you start</h2>
+  <p>Have the correct restaurant ID to hand — from your payout email, or from the list Mynt has already detected.</p>
+
+  <h2>Step-by-step</h2>
+  <div class="step"><h3><span class="step-num">1</span> Find the outlet</h3><p>Go to <strong>Settings → Outlet Mapping</strong> and scroll to <strong>Platform Mapping</strong>. Mapped outlets show a tag per platform, such as <strong>Zomato · 20942752</strong>. Unmapped ones show <strong>Not mapped</strong> in orange.</p><figure><img src="assets/edit-existing-outlet-mapping/step-01-existing-mappings.png" alt="Existing platform mappings" /><figcaption>Step 1 — Existing mappings</figcaption></figure></div>
+  <div class="step"><h3><span class="step-num">2</span> Tap Edit</h3><p>Tap <strong>Edit</strong> on that outlet's row. The row highlights and opens with <strong>Cancel</strong> and <strong>Save</strong> buttons.</p><figure><img src="assets/edit-existing-outlet-mapping/step-02-tap-edit.png" alt="Row opened for editing" /><figcaption>Step 2 — Tap Edit</figcaption></figure></div>
+  <div class="step"><h3><span class="step-num">3</span> Change what you need</h3><p>Tap the name box to rename the outlet, pick a different ID from a platform's dropdown, tap <strong>+ Zomato</strong> or <strong>+ Swiggy</strong> to add a platform, or <strong>×</strong> to remove one.</p><figure><img src="assets/edit-existing-outlet-mapping/step-03-edit-fields.png" alt="Editing the outlet fields" /><figcaption>Step 3 — Edit the fields</figcaption></figure></div>
+  <div class="tip"><strong>Toing</strong> cannot be edited here. It follows your Swiggy ID automatically.</div>
+  <div class="step"><h3><span class="step-num">4</span> Save</h3><p>Tap <strong>Save</strong> to apply, or <strong>Cancel</strong> to discard.</p><figure><img src="assets/edit-existing-outlet-mapping/step-04-tap-save.png" alt="Saving the changes" /><figcaption>Step 4 — Save</figcaption></figure></div>
+  <p>Changes apply immediately. Historic data stays with the outlet; new payouts follow the updated ID.</p>
+
+  <h2>What you change elsewhere</h2>
+  <table class="glossary">
+    <tr><th>Brand Mapping</th><td>Which brand an outlet belongs to</td></tr>
+    <tr><th>Group Mapping</th><td>Which group an outlet belongs to</td></tr>
+    <tr><th>Billing</th><td>Which licence covers which outlet</td></tr>
+  </table>
+  <p>See <a href="04-how-outlet-mapping-works-multiple-outlets-chains-groups.html" style="color:var(--mint)">Brands, groups and multiple outlets</a>.</p>
+
+  <h2>Common questions</h2>
+  <div class="faq-item"><div class="faq-q">Will editing break my past data?</div><div class="faq-a">No. Mynt keeps what it already collected and applies the new link going forward.</div></div>
+  <div class="faq-item"><div class="faq-q">Can I remove a platform link entirely?</div><div class="faq-a">Yes. Tap <strong>×</strong> next to it, then <strong>Save</strong>. That outlet stops counting payouts from that platform.</div></div>
+  <div class="faq-item"><div class="faq-q">How soon do dashboards update?</div><div class="faq-a">Usually within a few minutes.</div></div>
+  <div class="faq-item"><div class="faq-q">Why can't I edit Toing?</div><div class="faq-a">Toing shares Swiggy's ID, so Mynt fills it in for you.</div></div>
+
+  <h2>Related guides</h2>
+  <ul>
+    <li><a href="01-what-is-outlet-mapping-and-why-required.html" style="color:var(--mint)">What outlet mapping is</a></li>
+    <li><a href="02-how-to-map-zomato-swiggy-platform-outlets.html" style="color:var(--mint)">How to map Zomato and Swiggy outlets</a></li>
+    <li><a href="05-how-to-fix-incorrect-duplicate-unmapped-outlets.html" style="color:var(--mint)">Fixing incorrect, duplicate or unmapped outlets</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>

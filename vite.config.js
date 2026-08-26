@@ -16,8 +16,22 @@ export default defineConfig({
       manifest: false,
       workbox: {
         globPatterns: ['**/*.{js,css,html,woff2,svg,ico}', 'favicon*.png', 'apple-touch-icon.png', 'logos/*.png'],
+        // help articles (52 HTML + 12MB screenshots/videos) are synced from the
+        // Mynt app — runtime-cached on first open, never precached
+        globIgnores: ['**/help-articles/**'],
         navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/help-articles\//],
         runtimeCaching: [
+          {
+            urlPattern: /\/help-articles\//,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'help-articles',
+              rangeRequests: true,
+              expiration: { maxEntries: 400, maxAgeSeconds: 7 * 24 * 60 * 60 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
           {
             // videos stream via range requests — cache-first once fetched
             urlPattern: /\/videos\/.*\.mp4$/,

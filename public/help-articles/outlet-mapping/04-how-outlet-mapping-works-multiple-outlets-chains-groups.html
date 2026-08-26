@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Outlet Mapping Works for Multiple Outlets, Brands and Groups — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embed');
+    }
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>How Outlet Mapping Works for Multiple Outlets, Brands and Groups</h1>
+  <p class="meta">Outlet Mapping · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+
+  <div class="hello">Running more than one shop, or more than one brand out of them? Mynt organises outlets in three layers. Only the first affects your data; the other two make filtering easier.</div>
+
+  <h2>The three layers</h2>
+  <table class="glossary">
+    <tr><th>Platform Mapping</th><td>Links platform IDs to an outlet — <strong>required for data to appear</strong>. Example: Zomato <strong>20942752</strong> → Curry Story — Indiranagar</td></tr>
+    <tr><th>Brand Mapping</th><td>Says which brand an outlet trades as. Example: Curry Story — Indiranagar → <strong>Curry Story</strong></td></tr>
+    <tr><th>Group Mapping</th><td>Clusters outlets however you like. Example: Curry Story — Indiranagar → <strong>South Bengaluru</strong></td></tr>
+  </table>
+  <p>Platform Mapping is required for data. Brand and Group are optional, but they are what let you filter Reports and Dashboard views later.</p>
+
+  <h2>Summary cards at the top</h2>
+  <table class="glossary">
+    <tr><th>Outlets</th><td>Total active locations</td></tr>
+    <tr><th>Mapped</th><td>Outlets with at least one platform ID</td></tr>
+    <tr><th>Unmapped</th><td>Outlets still missing IDs — <strong>orange when above zero</strong></td></tr>
+    <tr><th>Brands</th><td>Brands in your list</td></tr>
+    <tr><th>Groups</th><td>Groups you have created</td></tr>
+  </table>
+  <figure><img src="assets/multiple-outlets-chains-groups/step-01-overview-stats.png" alt="Summary cards and quick-jump buttons" /><figcaption>Summary cards and quick-jump buttons</figcaption></figure>
+
+  <h2>Brand Mapping</h2>
+  <p>Brands are managed in two parts: build the list first, then assign outlets to it.</p>
+  <h3>1. The brand list</h3>
+  <p>Type a name into <strong>New brand name</strong> and tap <strong>+ Add brand</strong>. Each brand then appears as a chip showing how many outlets use it.</p>
+  <p>Hover a chip to <strong>Rename</strong> or <strong>Delete</strong> it. A brand can only be deleted once no outlets are assigned to it — otherwise Mynt tells you how many still need reassigning.</p>
+  <figure><img src="assets/multiple-outlets-chains-groups/step-02-brand-mapping.png" alt="Brand Mapping — the brand list and outlet buckets" /><figcaption>Brand list, with one bucket of outlets per brand</figcaption></figure>
+  <h3>2. Assign outlets to brands</h3>
+  <p>Below the list, outlets are grouped into a bucket per brand, plus an <strong>Unassigned</strong> bucket. To move one, tap <strong>Edit</strong> on its row, pick a brand from the <strong>Assigned Brand</strong> dropdown, and save.</p>
+  <figure><img src="assets/multiple-outlets-chains-groups/step-03-assign-brand.png" alt="Choosing a brand for an outlet" /><figcaption>Picking a brand from the Assigned Brand dropdown</figcaption></figure>
+  <p>One outlet belongs to exactly one brand — never two.</p>
+
+  <h2>Group Mapping</h2>
+  <p>Groups work the same way, for whatever grouping suits you — region, cluster, franchisee.</p>
+  <p>Add one with <strong>New group name</strong> → <strong>+ Add group</strong>. Outlets with no group sit under <strong>Ungrouped</strong>. To move an outlet, tap <strong>Edit</strong> on its row and pick a group.</p>
+  <figure><img src="assets/multiple-outlets-chains-groups/step-04-group-mapping.png" alt="Group Mapping — clustering outlets" /><figcaption>Group Mapping — cluster by region, franchise, or anything else</figcaption></figure>
+
+  <h2>Example: a six-outlet business</h2>
+  <table class="glossary">
+    <tr><th>Outlet</th><td>Platform IDs · Brand · Group</td></tr>
+    <tr><th>Indiranagar</th><td>Zomato + Swiggy · Curry Story · South Bengaluru</td></tr>
+    <tr><th>Koramangala</th><td>Zomato + Swiggy · Curry Story · South Bengaluru</td></tr>
+    <tr><th>Whitefield</th><td>Zomato · Curry Story · North Bengaluru</td></tr>
+    <tr><th>Jayanagar</th><td>Swiggy · Bake House · North Bengaluru</td></tr>
+    <tr><th>HSR Layout</th><td>Zomato + Swiggy · Bake House · South Bengaluru</td></tr>
+    <tr><th>Hebbal</th><td>Zomato · Bake House · North Bengaluru</td></tr>
+  </table>
+  <p>Reports can then be filtered to one brand ("Curry Story only") or one group ("North Bengaluru").</p>
+
+  <h2>Common questions</h2>
+  <div class="faq-item"><div class="faq-q">Does brand or group mapping affect my data?</div><div class="faq-a">No. Only Platform Mapping decides whether payouts are collected. Brands and groups only affect filtering.</div></div>
+  <div class="faq-item"><div class="faq-q">Can one outlet be in two brands?</div><div class="faq-a">No. One outlet, one brand.</div></div>
+  <div class="faq-item"><div class="faq-q">Can I rename a brand later?</div><div class="faq-a">Yes, hover its chip and tap Rename. Every outlet assigned to it follows automatically.</div></div>
+  <div class="faq-item"><div class="faq-q">What if I delete a group?</div><div class="faq-a">Mynt blocks it while outlets are still assigned, and tells you how many to reassign first.</div></div>
+
+  <h2>Related guides</h2>
+  <ul>
+    <li><a href="01-what-is-outlet-mapping-and-why-required.html" style="color:var(--mint)">What outlet mapping is</a></li>
+    <li><a href="02-how-to-map-zomato-swiggy-platform-outlets.html" style="color:var(--mint)">How to map Zomato and Swiggy outlets</a></li>
+    <li><a href="03-how-to-edit-existing-outlet-mapping.html" style="color:var(--mint)">How to edit an existing outlet mapping</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>

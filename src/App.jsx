@@ -11,6 +11,7 @@ import Landing from '@/pages/Landing'
 
 const Mynt = lazy(() => import('@/pages/Mynt'))
 const Guides = lazy(() => import('@/pages/Guides'))
+const Guide = lazy(() => import('@/pages/Guide'))
 const Services = lazy(() => import('@/pages/Services'))
 const About = lazy(() => import('@/pages/About'))
 const Join = lazy(() => import('@/pages/Join'))
@@ -37,7 +38,7 @@ function Layout({ loading, onLoaded }) {
   }, [loading])
 
   useEffect(() => {
-    document.title = TITLES[pathname] || 'Mynt by Pyvot'
+    document.title = TITLES[pathname] || (pathname.startsWith('/mynt/guides/') ? TITLES['/mynt/guides'] : 'Mynt by Pyvot')
   }, [pathname])
 
   return (
@@ -52,6 +53,7 @@ function Layout({ loading, onLoaded }) {
             <Route path="/" element={<Landing />} />
             <Route path="/mynt" element={<Mynt />} />
             <Route path="/mynt/guides" element={<Guides />} />
+            <Route path="/mynt/guides/:id" element={<Guide />} />
             <Route path="/services" element={<Services />} />
             <Route path="/about" element={<About />} />
             <Route path="/join" element={<Join />} />

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Sign-In and Account Access Work in Mynt — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embed');
+    }
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>How Sign-In and Account Access Work in Mynt</h1>
+  <p class="meta">Security · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+
+  <div class="hello">Mynt signs you in with an email and password, or with Google. Your session stays open on that browser until you sign out or it expires.</div>
+
+  <h2>How to sign in</h2>
+  <ol>
+    <li>Go to your Mynt login page.</li>
+    <li>Enter your <strong>Email</strong> and <strong>Password</strong>, then tap <strong>Sign in</strong>.</li>
+    <li>Mynt opens your dashboard.</li>
+  </ol>
+  <p>You can also tap <strong>Continue with Google</strong>. That works only if a Mynt account already exists for that Google address — it signs you in, it does not create an account.</p>
+  <figure><img src="assets/sign-in-account-access/step-01-login-page.png" alt="Mynt login page" /><figcaption>Mynt login — Continue with Google, or email and password</figcaption></figure>
+  <p>New user? See <a href="../getting-started/02-how-to-create-your-mynt-account-and-sign-in.html" style="color:var(--mint)">How to create your Mynt account and sign in</a>.</p>
+
+  <h2>What happens after sign-in</h2>
+  <table class="glossary">
+    <tr><th>Session</th><td>You stay signed in on that browser until you sign out or the session expires</td></tr>
+    <tr><th>Your business</th><td>The top of every page shows your business name, so you always know which account you are looking at</td></tr>
+    <tr><th>Dashboard access</th><td>Only people invited to your Mynt account can see your business data</td></tr>
+  </table>
+  <p>Mynt never asks for your Zomato or Swiggy passwords — only your Mynt login and, separately, permission to read your payout emails.</p>
+
+  <h2>Forgot your password?</h2>
+  <p>Tap <strong>Forgot?</strong> next to the Password box on the login screen. Mynt tells you to use the password that was emailed to you by your admin when your account was set up.</p>
+  <figure><img src="assets/sign-in-account-access/step-02-forgot-password.png" alt="Forgot password message on the Mynt login screen" /><figcaption>Tapping Forgot? points you to the password your admin emailed during onboarding</figcaption></figure>
+  <p>There is no self-service reset link today. If you cannot find that email, contact support and they will verify you own the account before helping.</p>
+  <p>Once you are signed in, you can change your password yourself at <strong>Settings → Security → Change Password</strong>. You need your current password to set a new one.</p>
+
+  <h2>Making your sign-in stronger</h2>
+  <p>Under <strong>Settings → Security → Authentication</strong> you can add a second step to your sign-in. All three are optional and you set them up yourself:</p>
+  <table class="glossary">
+    <tr><th>Authenticator app</th><td>Six-digit codes from an app like Google Authenticator</td></tr>
+    <tr><th>Passkey</th><td>Sign in with Face ID, Touch ID or a security key — no password at all</td></tr>
+    <tr><th>Recovery codes</th><td>One-time codes to use if you lose your phone or security key</td></tr>
+  </table>
+  <p>Adding or removing any of these asks you to confirm your password first. See <a href="03-how-mynt-protects-business-data.html" style="color:var(--mint)">How Mynt protects your business data</a>.</p>
+
+  <h2>Signing in on a new device</h2>
+  <ul>
+    <li>Use the same email and password (or the same Google account) as before.</li>
+    <li>If you have set up an authenticator app or passkey, you will be asked for it here.</li>
+    <li>On a shared computer, always <strong>sign out</strong> when you finish. See <a href="04-how-to-disconnect-sign-out-remove-access.html" style="color:var(--mint)">How to disconnect, sign out, and remove access</a>.</li>
+  </ul>
+
+  <h2>Common questions</h2>
+  <div class="faq-item"><div class="faq-q">Can my team share one login?</div><div class="faq-a">Each person should have their own account. Sharing one password means you cannot tell who changed what, and signing out one person signs out everybody.</div></div>
+  <div class="faq-item"><div class="faq-q">Google sign-in or email and password?</div><div class="faq-a">Both open the same Mynt account, as long as the Google address matches the email your account was created with.</div></div>
+  <div class="faq-item"><div class="faq-q">The business name at the top looks wrong</div><div class="faq-a">Contact support. A Mynt login opens one business account; there is no account switcher on the customer dashboard.</div></div>
+
+  <h2>Related guides</h2>
+  <ul>
+    <li><a href="../getting-started/02-how-to-create-your-mynt-account-and-sign-in.html" style="color:var(--mint)">Creating your account</a></li>
+    <li><a href="02-understanding-google-gmail-permissions.html" style="color:var(--mint)">Understanding Google and Gmail permissions</a></li>
+    <li><a href="03-how-mynt-protects-business-data.html" style="color:var(--mint)">How Mynt protects your business data</a></li>
+    <li><a href="04-how-to-disconnect-sign-out-remove-access.html" style="color:var(--mint)">Sign out and remove access</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>
