@@ -8,7 +8,7 @@ import SocialLinks from '@/components/SocialLinks'
 import { submitForm, STATUS_TEXT } from '@/lib/forms'
 import { cn } from '@/lib/utils'
 
-// maplibre is heavy — load the HQ map chunk only when Contact renders
+// the HQ map (Google embed) loads only when Contact renders
 const HqMap = lazy(() => import('@/components/HqMap'))
 
 const INTENTS = [
@@ -485,9 +485,6 @@ export default function Contact() {
                 <Suspense fallback={<div className="dot-field h-full w-full" />}>
                   <HqMap className="h-full w-full" />
                 </Suspense>
-                <span className="pointer-events-none absolute bottom-2 left-3 z-10 font-mono text-[9px] uppercase tracking-wider text-ink/80">
-                  Sector V, Kolkata
-                </span>
               </div>
               <div className="flex flex-col justify-center p-6 md:p-9">
                 <div className="flex items-center justify-between">
