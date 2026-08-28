@@ -8,7 +8,7 @@ export default function HqMap({ className }) {
   return (
     <div className={className}>
       <iframe
-        src={`https://maps.google.com/maps?q=${HQ}&z=16&output=embed`}
+        src={`https://maps.google.com/maps?q=${HQ}&z=14&output=embed`}
         title="Pyvot HQ — Ergo Tower, Sector V, Kolkata"
         loading="lazy"
         allowFullScreen
