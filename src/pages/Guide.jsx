@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Button, Eyebrow, Reveal } from '@/components/ui'
 import { ARTICLES, CATEGORIES } from '@/help/catalog'
 import { CTA } from '@/lib/site'
-import { cn } from '@/lib/utils'
+import { HOVER_SELECTOR, cn } from '@/lib/utils'
 import NotFound from './NotFound'
 
 // Reader for one help article. The body is the article's own HTML from
@@ -33,6 +33,25 @@ export default function Guide() {
     }
     fit()
     new ResizeObserver(fit).observe(doc.body)
+    // custom-cursor bridge: the iframe is its own document, so the site's
+    // `cursor: none` and the lens's window mousemove tracking stop at its edge.
+    // Hide the native cursor inside and forward pointer events out, translated
+    // into parent coordinates, so the lens glides across the article.
+    if (document.body.classList.contains('custom-cursor')) {
+      doc.head.appendChild(Object.assign(doc.createElement('style'), { textContent: '* { cursor: none !important }' }))
+      doc.addEventListener(
+        'mousemove',
+        (ev) => {
+          const r = el.getBoundingClientRect()
+          window.dispatchEvent(new MouseEvent('mousemove', { clientX: ev.clientX + r.left, clientY: ev.clientY + r.top }))
+        },
+        { passive: true },
+      )
+      doc.addEventListener('mousedown', () => document.dispatchEvent(new MouseEvent('mousedown')))
+      doc.addEventListener('mouseup', () => document.dispatchEvent(new MouseEvent('mouseup')))
+      doc.addEventListener('mouseover', (ev) => ev.target.closest?.(HOVER_SELECTOR) && window.dispatchEvent(new CustomEvent('cursor:hover', { detail: true })))
+      doc.addEventListener('mouseout', (ev) => ev.target.closest?.(HOVER_SELECTOR) && window.dispatchEvent(new CustomEvent('cursor:hover', { detail: false })))
+    }
     doc.addEventListener('click', (ev) => {
       const a = ev.target.closest?.('a[href]')
       if (!a) return

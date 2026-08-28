@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { reducedMotion } from '@/lib/utils'
+import { HOVER_SELECTOR, reducedMotion } from '@/lib/utils'
 
 // static radial lens map for the cursor's refraction: R/G encode an offset that
 // pulls samples toward the centre (magnify), zero at centre and rim so the
@@ -31,7 +31,6 @@ const makeLensMap = (n = 64) => {
 // page under it (backdrop-filter + SVG displacement in Chromium; soft glass blur
 // elsewhere), stretches with speed and grows over links. A 4px mint dot keeps precision.
 
-const HOVER_SELECTOR = 'a, button, [data-magnetic], input, select, textarea, [role=button]'
 const SIZE = 36
 const HOVER_SCALE = 1.5
 
@@ -93,6 +92,8 @@ export default function CustomCursor() {
       sy(on ? HOVER_SCALE : 1)
       gsap.to(dot, { scale: on ? 0 : 1, duration: 0.2 })
     }
+    // the Guide reader forwards hover state from inside its article iframe
+    const onHoverEvt = (e) => setHover(!!e.detail)
     const onOver = (e) => e.target.closest(HOVER_SELECTOR) && setHover(true)
     const onOut = (e) => e.target.closest(HOVER_SELECTOR) && setHover(false)
     const onLeave = () => gsap.to([lens, dot], { opacity: 0, duration: 0.2 })
@@ -100,6 +101,7 @@ export default function CustomCursor() {
     const onUp = () => gsap.to(lens, { scale: hover ? HOVER_SCALE : 1, duration: 0.25, ease: 'back.out(2)' })
 
     window.addEventListener('mousemove', onMove, { passive: true })
+    window.addEventListener('cursor:hover', onHoverEvt)
     document.addEventListener('mouseover', onOver)
     document.addEventListener('mouseout', onOut)
     document.addEventListener('mousedown', onDown)
@@ -110,6 +112,7 @@ export default function CustomCursor() {
       document.body.classList.remove('custom-cursor')
       clearTimeout(relaxTimer)
       window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('cursor:hover', onHoverEvt)
       document.removeEventListener('mouseover', onOver)
       document.removeEventListener('mouseout', onOut)
       document.removeEventListener('mousedown', onDown)
