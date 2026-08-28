@@ -21,7 +21,7 @@ const CASES = [
   },
   {
     slug: 'biryani-house',
-    brand: 'Dada Bodhi Biryani',
+    brand: 'Dada Boudi Biryani',
     title: 'Turning a biryani specialist into a full-menu powerhouse',
     tags: ['Revenue', 'Menu'],
     metrics: [['40%', 'increase in combo-led orders'], ['5 min', 'faster average prep time']],

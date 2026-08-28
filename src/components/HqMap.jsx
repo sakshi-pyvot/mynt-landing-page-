@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 // the bundler breaks its sibling-file worker bootstrap, so it must stay out of
 // the build graph (files copied from node_modules/maplibre-gl/dist).
 
-const HQ = { lng: 88.4311, lat: 22.577 }
+const HQ = { lng: 88.43273, lat: 22.57092 } // Ergo Tower, Plot A1-4, Block EP & GP
 const STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
 
 let libPromise = null
@@ -34,7 +34,7 @@ export default function HqMap({ className }) {
         container: box.current,
         style: STYLE,
         center: [HQ.lng, HQ.lat],
-        zoom: 14.4,
+        zoom: 15.2,
         attributionControl: { compact: true },
         scrollZoom: false,
         dragRotate: false,
