@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './funnel.css';
 
 @theme {
   --color-bg: #0a0d13;

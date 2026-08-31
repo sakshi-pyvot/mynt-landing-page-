@@ -19,7 +19,7 @@ export const SOCIALS = [
 
 // CTA targets used by CtaPair everywhere. "Get started" goes straight to Mynt signup (same tab).
 export const CTA = {
-  start: 'https://pyvotmynt.in/signup',
+  start: '/signup',
   expert: '/contact?intent=expert',
 }
 
