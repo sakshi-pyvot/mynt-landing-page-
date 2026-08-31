@@ -4,8 +4,18 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
+// Local testing only: same-origin /api calls are forwarded server-side to the
+// production customer-backend, so the browser never makes a cross-origin
+// request (its CORS allowlist only carries the deployed origins). ws covers
+// the onboarding progress socket.
+const apiProxy = {
+  '/api': { target: 'https://api.pyvotmynt.in', changeOrigin: true, ws: true },
+}
+
 // https://vite.dev/config/
 export default defineConfig({
+  server: { proxy: apiProxy },
+  preview: { proxy: apiProxy },
   plugins: [
     react(),
     tailwindcss(),
