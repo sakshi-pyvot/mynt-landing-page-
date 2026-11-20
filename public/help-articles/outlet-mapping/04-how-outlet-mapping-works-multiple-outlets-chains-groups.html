@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How Outlet Mapping Works for Multiple Outlets, Brands and Groups</h1>
-  <p class="meta">Outlet Mapping · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Outlet Mapping · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Running more than one shop, or more than one brand out of them? Mynt organises outlets in three layers. Only the first affects your data; the other two make filtering easier.</div>
 
@@ -293,7 +289,7 @@
     <tr><th>Brand Mapping</th><td>Says which brand an outlet trades as. Example: Curry Story — Indiranagar → <strong>Curry Story</strong></td></tr>
     <tr><th>Group Mapping</th><td>Clusters outlets however you like. Example: Curry Story — Indiranagar → <strong>South Bengaluru</strong></td></tr>
   </table>
-  <p>Platform Mapping is required for data. Brand and Group are optional, but they are what let you filter Reports and Dashboard views later.</p>
+  <p>Platform Mapping is required for data. Brand and Group are optional, but they are what let you view Overview by brand or by group later.</p>
 
   <h2>Summary cards at the top</h2>
   <table class="glossary">
@@ -303,23 +299,23 @@
     <tr><th>Brands</th><td>Brands in your list</td></tr>
     <tr><th>Groups</th><td>Groups you have created</td></tr>
   </table>
-  <figure><img src="assets/multiple-outlets-chains-groups/step-01-overview-stats.png" alt="Summary cards and quick-jump buttons" /><figcaption>Summary cards and quick-jump buttons</figcaption></figure>
+  <figure><img src="assets/multiple-outlets-chains-groups/step-01-overview-stats.png?v=20261022" alt="Summary cards and quick-jump buttons" /><figcaption>Summary cards and quick-jump buttons</figcaption></figure>
 
   <h2>Brand Mapping</h2>
   <p>Brands are managed in two parts: build the list first, then assign outlets to it.</p>
   <h3>1. The brand list</h3>
-  <p>Type a name into <strong>New brand name</strong> and tap <strong>+ Add brand</strong>. Each brand then appears as a chip showing how many outlets use it.</p>
-  <p>Hover a chip to <strong>Rename</strong> or <strong>Delete</strong> it. A brand can only be deleted once no outlets are assigned to it — otherwise Mynt tells you how many still need reassigning.</p>
-  <figure><img src="assets/multiple-outlets-chains-groups/step-02-brand-mapping.png" alt="Brand Mapping — the brand list and outlet buckets" /><figcaption>Brand list, with one bucket of outlets per brand</figcaption></figure>
+  <p>Tap <strong>Add brand</strong>. A <strong>New brand name</strong> box opens; type the name and tap <strong>Save</strong>. Each brand then appears as a chip showing how many outlets use it.</p>
+  <p>Each chip has <strong>Edit</strong> to rename it and <strong>×</strong> to delete it. <strong>Edit</strong> turns the chip into a name box; tap <strong>Save</strong> to keep the new name. A brand can only be deleted once no outlets are assigned to it — otherwise Mynt tells you how many still need reassigning.</p>
+  <figure><img src="assets/multiple-outlets-chains-groups/step-02-brand-mapping.png?v=20261022" alt="Brand Mapping — the brand list and outlet buckets" /><figcaption>Brand list, with one bucket of outlets per brand</figcaption></figure>
   <h3>2. Assign outlets to brands</h3>
   <p>Below the list, outlets are grouped into a bucket per brand, plus an <strong>Unassigned</strong> bucket. To move one, tap <strong>Edit</strong> on its row, pick a brand from the <strong>Assigned Brand</strong> dropdown, and save.</p>
-  <figure><img src="assets/multiple-outlets-chains-groups/step-03-assign-brand.png" alt="Choosing a brand for an outlet" /><figcaption>Picking a brand from the Assigned Brand dropdown</figcaption></figure>
+  <figure><img src="assets/multiple-outlets-chains-groups/step-03-assign-brand.png?v=20261022" alt="Choosing a brand for an outlet" /><figcaption>Picking a brand from the Assigned Brand dropdown</figcaption></figure>
   <p>One outlet belongs to exactly one brand — never two.</p>
 
   <h2>Group Mapping</h2>
   <p>Groups work the same way, for whatever grouping suits you — region, cluster, franchisee.</p>
-  <p>Add one with <strong>New group name</strong> → <strong>+ Add group</strong>. Outlets with no group sit under <strong>Ungrouped</strong>. To move an outlet, tap <strong>Edit</strong> on its row and pick a group.</p>
-  <figure><img src="assets/multiple-outlets-chains-groups/step-04-group-mapping.png" alt="Group Mapping — clustering outlets" /><figcaption>Group Mapping — cluster by region, franchise, or anything else</figcaption></figure>
+  <p>Tap <strong>Add group</strong>, type into <strong>New group name</strong> and tap <strong>Save</strong>. Rename and delete work as for brands. Outlets with no group sit under <strong>Ungrouped</strong>. To move an outlet, tap <strong>Edit</strong> on its row, pick a group and tap <strong>Save</strong>.</p>
+  <figure><img src="assets/multiple-outlets-chains-groups/step-04-group-mapping.png?v=20261022" alt="Group Mapping — clustering outlets" /><figcaption>Group Mapping — cluster by region, franchise, or anything else</figcaption></figure>
 
   <h2>Example: a six-outlet business</h2>
   <table class="glossary">
@@ -331,12 +327,13 @@
     <tr><th>HSR Layout</th><td>Zomato + Swiggy · Bake House · South Bengaluru</td></tr>
     <tr><th>Hebbal</th><td>Zomato · Bake House · North Bengaluru</td></tr>
   </table>
-  <p>Reports can then be filtered to one brand ("Curry Story only") or one group ("North Bengaluru").</p>
+  <p>On Overview you can then view figures by brand ("Curry Story") or by group ("North Bengaluru") with <strong>View By</strong> in the filter panel.</p>
+  <p>Reports work differently. The <strong>Outlets</strong> picker lists outlets under their brand name, and typing a brand name in its search narrows the list. There is no brand or group filter in Reports.</p>
 
   <h2>Common questions</h2>
-  <div class="faq-item"><div class="faq-q">Does brand or group mapping affect my data?</div><div class="faq-a">No. Only Platform Mapping decides whether payouts are collected. Brands and groups only affect filtering.</div></div>
+  <div class="faq-item"><div class="faq-q">Does brand or group mapping affect my data?</div><div class="faq-a">No. Of the three layers, only Platform Mapping affects whether payouts are collected. Brands and groups only affect how outlets are grouped and filtered.</div></div>
   <div class="faq-item"><div class="faq-q">Can one outlet be in two brands?</div><div class="faq-a">No. One outlet, one brand.</div></div>
-  <div class="faq-item"><div class="faq-q">Can I rename a brand later?</div><div class="faq-a">Yes, hover its chip and tap Rename. Every outlet assigned to it follows automatically.</div></div>
+  <div class="faq-item"><div class="faq-q">Can I rename a brand later?</div><div class="faq-a">Yes. Tap <strong>Edit</strong> on its chip. Every outlet assigned to it follows automatically.</div></div>
   <div class="faq-item"><div class="faq-q">What if I delete a group?</div><div class="faq-a">Mynt blocks it while outlets are still assigned, and tells you how many to reassign first.</div></div>
 
   <h2>Related guides</h2>

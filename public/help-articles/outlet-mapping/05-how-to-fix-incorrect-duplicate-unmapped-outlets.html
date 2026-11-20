@@ -274,22 +274,18 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Fix Incorrect, Duplicate or Unmapped Outlets</h1>
-  <p class="meta">Outlet Mapping · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Outlet Mapping · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Missing numbers on your dashboard usually trace back to mapping. Five things commonly go wrong, and each has a fix.</div>
 
   <h2>Problem 1 — Unmapped outlets</h2>
   <p><strong>Symptom:</strong> the <strong>Unmapped</strong> card at the top is orange and above zero, and one or more rows show <strong>Not mapped</strong>.</p>
-  <figure><img src="assets/fix-incorrect-duplicate-unmapped-outlets/step-01-unmapped-outlets.png" alt="An unmapped outlet, shown in orange" /><figcaption>Unmapped outlets show in orange</figcaption></figure>
+  <figure><img src="assets/fix-incorrect-duplicate-unmapped-outlets/step-01-unmapped-outlets.png?v=20261022" alt="An unmapped outlet, shown as Not mapped" /><figcaption>Unmapped outlets show in orange</figcaption></figure>
   <p><strong>Fix:</strong></p>
   <ol>
     <li>Go to <strong>Settings → Outlet Mapping → Platform Mapping</strong>.</li>
@@ -298,19 +294,20 @@
     <li>Tap <strong>+ Zomato</strong> or <strong>+ Swiggy</strong>.</li>
     <li>Pick the right ID from the dropdown, then tap <strong>Save</strong>.</li>
   </ol>
-  <figure><img src="assets/fix-incorrect-duplicate-unmapped-outlets/step-02-fix-unmapped.png" alt="The unmapped row opened for editing" /><figcaption>The unmapped row, opened for editing</figcaption></figure>
-  <div class="tip">If the dropdown is empty, Mynt has not detected that ID yet. Check <strong>Settings → Email Integration</strong> shows <strong>Connected</strong>, and give it time to read your payout mail.</div>
+  <figure><img src="assets/fix-incorrect-duplicate-unmapped-outlets/step-02-fix-unmapped.png?v=20261022" alt="The unmapped row opened for editing" /><figcaption>The unmapped row, opened for editing</figcaption></figure>
+  <div class="tip">If the dropdown shows <strong>No detected IDs available</strong>, Mynt has not detected an unused ID for that platform yet. Check <strong>Settings → Email Integration</strong> shows <strong>Connected</strong>, and give it time to read your payout mail.</div>
 
   <h2>Problem 2 — The right ID on the wrong outlet</h2>
   <p><strong>Symptom:</strong> one outlet shows another shop's sales.</p>
   <p><strong>Fix:</strong> open the row that wrongly holds the ID, tap <strong>×</strong> to remove it, then <strong>Save</strong>. Now open the correct outlet, add the platform, pick that ID and save.</p>
   <p>Each platform ID can belong to only one outlet in your account, so it must be removed from the wrong one before it can be added to the right one.</p>
 
-  <h2>Problem 3 — "Outlet platform res-id conflict"</h2>
-  <p><strong>Symptom:</strong> you tap <strong>Save</strong> and this appears at the top of the page:</p>
-  <div class="tip">Outlet platform res-id conflict</div>
-  <figure><img src="assets/fix-incorrect-duplicate-unmapped-outlets/step-03-duplicate-id-error.png" alt="The duplicate platform ID error" /><figcaption>The error Mynt shows when an ID belongs to another account</figcaption></figure>
-  <p><strong>What it means:</strong> Mynt words this one for engineers, not for you. It means the restaurant ID is already linked to a <em>different Mynt account</em>, not just a different outlet of yours. This happens after an ownership change, or if the outlet was set up under another login.</p>
+  <h2>Problem 3 — "Already registered to another account"</h2>
+  <p><strong>Symptom:</strong> you tap <strong>Save</strong> and this red line appears at the top of the panel:</p>
+  <div class="tip">That platform ID is already registered to another account — contact support to move it.</div>
+  <p>A shorter technical notice may also pop up at the same moment. It means the same thing.</p>
+  <figure><img src="assets/fix-incorrect-duplicate-unmapped-outlets/step-03-duplicate-id-error.png?v=20261022" alt="The duplicate platform ID error" /><figcaption>The error Mynt shows when an ID belongs to another account</figcaption></figure>
+  <p><strong>What it means:</strong> the restaurant ID is already linked to a <em>different Mynt account</em>. It is never a clash between your own outlets — IDs your outlets already use are left out of the dropdown. This happens after an ownership change, or if the outlet was set up under another login.</p>
   <p><strong>Fix:</strong> you cannot move it yourself. Contact support with the platform, the restaurant ID and which outlet it should belong to, and they will move it across.</p>
 
   <h2>Problem 4 — Some outlets blank on the dashboard</h2>
@@ -318,7 +315,7 @@
   <p><strong>Check, in order:</strong></p>
   <ol>
     <li>Is the outlet <strong>mapped</strong>? An unmapped outlet contributes nothing.</li>
-    <li>Is the dot beside its licence ID <strong>green</strong>? Grey means Mynt is not collecting for it — often because it has no platform IDs, or is not covered by your plan.</li>
+    <li>Is the dot beside its licence ID <strong>green</strong>? Grey means Mynt is not ingesting the outlet — usually because no licence on your plan covers it, or it has not been activated yet. Hover the dot to check: it reads <strong>Ingesting</strong> or <strong>Not ingesting — covered by your plan?</strong></li>
     <li>Is <strong>Email Integration</strong> showing <strong>Connected</strong>?</li>
     <li>Is the dashboard date range one where that outlet actually traded?</li>
   </ol>
@@ -329,11 +326,11 @@
 
   <h2>Quick reference</h2>
   <table class="glossary">
-    <tr><th>Not mapped in orange</th><td>Edit row → add platform → pick ID → Save</td></tr>
+    <tr><th>Not mapped in grey</th><td>Edit row → add platform → pick ID → Save</td></tr>
     <tr><th>Wrong outlet's sales showing</th><td>Remove the ID from the wrong row, add it to the right one</td></tr>
-    <tr><th>"Outlet platform res-id conflict"</th><td>Contact support — only they can move it</td></tr>
+    <tr><th>"Already registered to another account"</th><td>Contact support — only they can move it</td></tr>
     <tr><th>Wrong outlet name</th><td>Edit row → change the name → Save</td></tr>
-    <tr><th>Grey dot beside the licence ID</th><td>Outlet not collecting — check mapping and your plan</td></tr>
+    <tr><th>Grey dot beside the licence ID</th><td>Outlet not ingesting — check a licence on your plan covers it</td></tr>
     <tr><th>Duplicate outlet rows</th><td>Map one, contact support about the other</td></tr>
   </table>
 

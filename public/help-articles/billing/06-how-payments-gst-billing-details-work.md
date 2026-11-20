@@ -1,15 +1,23 @@
 # How Payments, GST and Billing Details Work
 
-*Billing · Read time: 4 minutes · Article only · Last updated 25 August 2026*
+*Billing · Read time: 4 minutes · Includes a short video · Last updated 22 October 2026*
 
 What Mynt accepts, how GST is applied, and which details end up printed on your invoice.
 
 ---
 
+## Watch it done
+
+**Video:** [Where the GST number and billing details are entered, and saving them](assets/payments-gst-billing-details-work/demo.mp4?v=20261022)
+
+![Video preview](assets/payments-gst-billing-details-work/demo-poster.jpg?v=20261022)
+
 ## What you can pay with
 
-![Accepted payment methods: UPI, credit card, net banking and auto debit](assets/payments-gst-billing-details-work/step-01-accepted-methods.png)
+![Accepted payment methods: UPI, credit card, net banking and auto debit](assets/payments-gst-billing-details-work/step-01-accepted-methods.png?v=20261022)
 *Shown above the payment history, so you can check before starting a purchase*
+
+You choose how to pay on Razorpay&rsquo;s secure page, which opens in a new tab when you pay. The **ACCEPTED** strip above the payment history lists the methods:
 
 - **UPI** &mdash; any UPI app.
 - **Credit card**.
@@ -18,24 +26,24 @@ What Mynt accepts, how GST is applied, and which details end up printed on your 
 
 ## How GST is applied
 
-GST is added on top of the listed price and always itemised, never folded into a single figure. The token packs show this most clearly:
+Prices are shown including GST. Nothing is added at checkout. Token packs also show the base price and GST on a line beneath the price:
 
-![Token packs showing base price, GST and the GST-inclusive total for each](assets/payments-gst-billing-details-work/step-02-gst-breakdown.png)
-*Each pack shows the base price, the GST added, and the effective per-token cost including GST*
+![Token packs showing base price, GST and the GST-inclusive total for each](assets/payments-gst-billing-details-work/step-02-gst-breakdown.png?v=20261022)
+*Each pack shows its price including GST, the base price plus GST beneath it, and the per-token cost including GST*
 
 | | |
 |---|---|
-| **Listed price** | The base amount, before tax. |
-| **GST** | Added on top and shown as its own line. |
-| **Total** | What is actually charged &mdash; the figure the pay button repeats. |
+| **Price** | What you pay, GST included &mdash; the figure the pay button repeats. |
+| **Base + GST** | The base amount and the GST within that price. |
+| **Per token** | The price divided by the tokens in the pack, including GST. |
 
-Licence purchases work the same way: the purchase card shows the pre-GST total, and GST is itemised at checkout.
+Licence prices work the same way: the price per licence and the total on the purchase card already include GST.
 
 ## The details printed on your invoice
 
 Invoices are raised against what is stored in **Settings → Account**. Check these before your first purchase.
 
-![The account details form with company name, GST number, billing state and billing address](assets/payments-gst-billing-details-work/step-03-billing-details.png)
+![The account details form with company name, GST number, billing state and billing address](assets/payments-gst-billing-details-work/step-03-billing-details.png?v=20261022)
 *GST number, billing state and billing address all appear on the invoice*
 
 | | |
@@ -47,7 +55,7 @@ Invoices are raised against what is stored in **Settings → Account**. Check th
 | **Account Owner Name / Phone** | Contact details for the account. |
 | **Email ID** | Your login address. Contact support to change it &mdash; it cannot be edited here. |
 
-> **Tip:** Fill in the GST number *before* you buy. An invoice already raised cannot have a GSTIN added to it afterwards &mdash; that needs support.
+> **Tip:** Fill in the GST number *before* you buy, so the invoice carries it. If an invoice was raised without it, contact support.
 
 ## Common questions
 
@@ -55,7 +63,7 @@ Invoices are raised against what is stored in **Settings → Account**. Check th
 
 **Can I change my login email here?** — No. The Email ID field is read-only &mdash; contact support to change the address you sign in with.
 
-**I paid without a GSTIN. Can it be added?** — Not to an invoice already issued. Add the GSTIN now so future invoices carry it, and contact support about the earlier one.
+**I paid without a GSTIN. Can it be added?** — Add the GSTIN now so future invoices carry it, and contact support about the earlier invoice.
 
 ## Related guides
 

@@ -274,43 +274,50 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Schedule Automatic Reports</h1>
-  <p class="meta">Reports · Read time: 3 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Reports · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">The same builder can deliver a report on a recurring basis instead of once. Set it up in the same place.</div>
 
+  <h2>Watch it done</h2>
+
+  <div class="video-box">
+    <video controls preload="metadata" poster="assets/schedule-automatic-reports/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/schedule-automatic-reports/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/schedule-automatic-reports/demo.mp4?v=20261022">Download it instead</a>.
+    </video>
+    <p class="video-caption">Setting up a weekly schedule with email and WhatsApp delivery, then finding it under Scheduled Reports</p>
+  </div>
+
   <h2>One-Time or Schedule</h2>
 
-  <figure><img src="assets/schedule-automatic-reports/step-01-delivery-type.png" alt="The delivery type control offering One-Time or Schedule Report" /><figcaption>Switch <strong>Delivery Type</strong> to <strong>Schedule Report</strong> to make it recurring</figcaption></figure>
+  <figure><img src="assets/schedule-automatic-reports/step-01-delivery-type.png?v=20261022" alt="The delivery type control offering One-Time or Schedule Report" /><figcaption>Switch <strong>Delivery Type</strong> to <strong>Schedule Report</strong> to make it recurring</figcaption></figure>
 
   <ol>
-    <li>Fill in the report as you would for a one-off: type, platform, outlets, period.</li>
-    <li>Choose the <strong>Delivery Channel</strong>.</li>
-    <li>Set <strong>Delivery Type</strong> to <strong>Schedule Report</strong>.</li>
-    <li>Set how often it should run.</li>
-    <li>Save the schedule.</li>
+    <li>Fill in the report as you would for a one-off: <strong>Report Type</strong>, <strong>Platform</strong> and <strong>Outlets</strong>.</li>
+    <li>Set <strong>Delivery Type</strong> to <strong>Schedule Report</strong>. <strong>Download</strong> disappears from the channels, because a schedule cannot be downloaded.</li>
+    <li>Choose the <strong>Delivery Channel</strong> &mdash; <strong>Email</strong>, <strong>WhatsApp</strong> or both &mdash; and type the recipients.</li>
+    <li>Choose the <strong>Frequency</strong>: <strong>Weekly</strong>, <strong>Monthly</strong> or <strong>Quarterly</strong>. <strong>Report Period</strong> then locks to match, for example <strong>Auto &mdash; Previous Week</strong>.</li>
+    <li>Fill in <strong>Start Date</strong>. You do not pick a day or time: Mynt sends each report after the Wednesday payout statements that follow the period, from 8 pm IST. <strong>When will I get my report?</strong> on the form explains this.</li>
+    <li>Press <strong>Schedule Report</strong>. Mynt confirms with <strong>Schedule created</strong>.</li>
   </ol>
 
   <h2>Tokens are spent per run</h2>
 
-  <p>A schedule spends its token cost <em>every time it runs</em>, not once when you create it. A daily WhatsApp report costs roughly thirty times what a monthly one does. Check the cost summary before saving, and keep an eye on your balance &mdash; see <a href="../tokens/03-how-to-check-token-usage-balance-get-more.html">checking your balance</a>.</p>
+  <p>A schedule spends its token cost <em>every time it runs</em>, not once when you create it. A weekly schedule runs about four times a month, so it costs about four times what the same monthly one does. Check the cost summary before saving, and keep an eye on your balance &mdash; see <a href="../tokens/03-how-to-check-token-usage-balance-get-more.html">checking your balance</a>.</p>
 
-  <div class="tip">Choose <strong>Download</strong> or <strong>Email</strong> for anything that runs daily. WhatsApp is the most expensive channel per run.</div>
+  <div class="tip">Email and WhatsApp are priced per recipient, so every extra recipient adds to the cost of every run.</div>
 
   <h2>Choosing a sensible frequency</h2>
 
   <table class="glossary">
-    <tr><th>Daily</th><td>Operational review. Use the cheapest channel.</td></tr>
-    <tr><th>Weekly</th><td>Matches most payout cycles, so the data is usually complete.</td></tr>
-    <tr><th>Monthly</th><td>Accounting and reconciliation.</td></tr>
+    <tr><th>Weekly</th><td>Covers the previous week. Matches most payout cycles, so the data is usually complete.</td></tr>
+    <tr><th>Monthly</th><td>Covers the previous month. Accounting and reconciliation.</td></tr>
+    <tr><th>Quarterly</th><td>Covers the previous quarter. Quarterly reviews.</td></tr>
   </table>
 
   <p>Weekly generally lines up best with when platforms actually settle &mdash; see <a href="../email-integration/05-how-often-sync.html">how often Mynt syncs</a>.</p>

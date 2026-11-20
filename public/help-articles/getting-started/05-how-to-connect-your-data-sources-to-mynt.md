@@ -1,6 +1,6 @@
 # How to Connect Your Data Sources to Mynt
 
-*Getting Started · Read time: 3 minutes · Article only · Last updated 25 August 2026*
+*Getting Started · Read time: 3 minutes · Article only · Last updated 22 October 2026*
 
 Mynt has one data source: the payout emails the platforms send you. Connecting the right mailbox is the step everything else waits on.
 
@@ -10,15 +10,17 @@ Mynt has one data source: the payout emails the platforms send you. Connecting t
 
 Go to **Settings → Email Integration**.
 
-![The Email Integration panel header describing payout emails as the core data source](assets/connect-data-sources/step-01-email-integration.png)
+![The Email Integration panel header describing payout emails as the core data source](assets/connect-data-sources/step-01-email-integration.png?v=20261022)
 *The panel says it plainly: payout emails are the core data source*
 
 ## Connecting a mailbox
 
 1. Press **Add SOA Email**.
-2. Choose the Google account that *receives payout emails*.
-3. Approve the read-only Gmail permission on Google&rsquo;s own screen.
-4. Confirm the mailbox appears with a green **Connected** badge.
+2. In the **SOA email** box, type the address that *receives payout emails*.
+3. Press **Connect Email**. Google opens in the same tab.
+4. Choose that Google account. On Google&rsquo;s screen, tick **View your email messages and settings** and continue. Without that tick, nothing is connected.
+5. Back in Mynt, a box asks **Connect &lt;mailbox&gt; to &lt;your business&gt;?** Press **Connect**.
+6. Check the mailbox appears with a green **Connected** badge. Mynt then scans it straight away.
 
 Full walkthrough: [connecting your Gmail account](../email-integration/01-connect-gmail-account.md).
 

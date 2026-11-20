@@ -1,6 +1,6 @@
 # How to Disconnect Integrations, Sign Out or Remove Account Access
 
-*Security · Read time: 4 minutes · Includes a short video · Last updated 25 August 2026*
+*Security · Read time: 4 minutes · Includes a short video · Last updated 22 October 2026*
 
 ---
 
@@ -12,9 +12,9 @@
 
 ## Watch this first
 
-**[▶ Watch demo video](assets/disconnect-sign-out-remove-access/demo.mp4)**
+**[▶ Watch video](assets/disconnect-sign-out-remove-access/demo.mp4?v=20261022)**
 
-![Video poster](assets/disconnect-sign-out-remove-access/demo-poster.jpg)
+![Video poster](assets/disconnect-sign-out-remove-access/demo-poster.jpg?v=20261022)
 
 *Where to find Reconnect and Logout All Devices inside Settings.*
 
@@ -48,7 +48,7 @@ Use this if you lost a laptop or phone, or think someone else has your session.
 
 In the left menu, tap **Settings**.
 
-![Settings in the sidebar](assets/disconnect-sign-out-remove-access/step-01-settings-sidebar.png)
+![Settings in the sidebar](assets/disconnect-sign-out-remove-access/step-01-settings-sidebar.png?v=20261022)
 
 ---
 
@@ -56,7 +56,7 @@ In the left menu, tap **Settings**.
 
 In the settings menu, tap **Security**.
 
-![Security Settings panel](assets/disconnect-sign-out-remove-access/step-02-security-panel.png)
+![Security Settings panel](assets/disconnect-sign-out-remove-access/step-02-security-panel.png?v=20261022)
 
 ---
 
@@ -66,13 +66,13 @@ Scroll down to **Active Sessions** and tap **Logout All Devices**.
 
 > **This signs out every browser and phone using your Mynt account — including the one you are on right now.** You will be returned to the login screen and will need to sign in again.
 
-![Active Sessions and the Logout All Devices button](assets/disconnect-sign-out-remove-access/step-03-logout-all-devices.png)
+![Active Sessions and the Logout All Devices button](assets/disconnect-sign-out-remove-access/step-03-logout-all-devices.png?v=20261022)
 
 ---
 
 ## Change your password while you are here
 
-The same **Security** page has **Change Password** at the top. You need your current password to set a new one. Below it, **Authentication** lets you add an authenticator app, a passkey, or recovery codes.
+The same **Security** page has a **Password** card at the top. **Change password** opens Mynt&rsquo;s secure sign-in page, where you set the new one &mdash; Mynt never asks for a password inside the app. Below it, **Authentication** lets you add an authenticator app, a passkey, or recovery codes.
 
 See [How sign-in and account access work](01-how-sign-in-account-access-work.md).
 
@@ -80,16 +80,16 @@ See [How sign-in and account access work](01-how-sign-in-account-access-work.md)
 
 ## Gmail: change or remove access
 
-Mynt does **not** have a self-serve **Disconnect** button today.
+Each mailbox row has its own **Disconnect** button (or **Delete**, if nothing was ever imported from it).
 
 | Goal | Action |
 |------|--------|
 | **Use a different payout mailbox** | Settings → Email Integration → **Reconnect** on that row → pick the other Google account → confirm |
 | **Add another mailbox** | Settings → Email Integration → **Add SOA Email** |
 | **Re-check a mailbox for new restaurant IDs** | Settings → Email Integration → **Rescan mailboxes** |
-| **Fully remove Gmail from Mynt** | Contact support **and** revoke Mynt in [Google Account permissions](https://myaccount.google.com/permissions) |
+| **Fully remove Gmail from Mynt** | Settings → Email Integration → **Disconnect** on that row, **and** revoke Mynt in [Google Account permissions](https://myaccount.google.com/permissions) |
 
-![Email Integration — the Connected Emails table](assets/disconnect-sign-out-remove-access/step-04-email-reconnect-note.png)
+![Email Integration — the Connected Emails table](assets/disconnect-sign-out-remove-access/step-04-email-reconnect-note.png?v=20261022)
 
 Each connected mailbox has its own **Reconnect** button. A mailbox still waiting for permission shows **Authorize** instead.
 

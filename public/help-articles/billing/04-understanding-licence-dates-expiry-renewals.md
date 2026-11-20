@@ -1,6 +1,6 @@
 # Understanding Licence Dates, Expiry and Renewals
 
-*Billing · Read time: 4 minutes · Article only · Last updated 25 August 2026*
+*Billing · Read time: 4 minutes · Article only · Last updated 22 October 2026*
 
 Every licence carries its own dates. The licence table shows what each one covers, how long it has left, and what happens when it runs out.
 
@@ -10,7 +10,7 @@ Every licence carries its own dates. The licence table shows what each one cover
 
 Billing lists every licence with the outlet it is assigned to and the exact window it covers.
 
-![The Active Licenses table with licence ID, outlet, platforms mapped, start, expiry and days left](assets/licence-dates-expiry-renewals/step-01-license-table.png)
+![The Active Licenses table with licence ID, outlet, platforms mapped, start, expiry and days left](assets/licence-dates-expiry-renewals/step-01-license-table.png?v=20261022)
 *One row per licence &mdash; each with its own start, expiry and days remaining*
 
 | | |
@@ -19,11 +19,11 @@ Billing lists every licence with the outlet it is assigned to and the exact wind
 | **Outlet** | Which outlet the licence is assigned to. **Unassigned** means it is paid for but not yet in use. |
 | **Platforms Mapped** | The platform IDs linked to that outlet. **Not mapped** means it is not collecting. |
 | **Start / Expiry** | The twelve-month window this licence covers. |
-| **Days Left** | Days until expiry. It turns amber, then red, as the date approaches. |
+| **Days Left** | Days until expiry. Shown in mint while 180 or more days remain, and in orange below that. |
 
 ## Why your licences expire on different days
 
-A licence runs twelve months *from its own purchase date*, not from a shared annual anniversary. Buy three outlets in January and two in June, and you have two renewal dates. The **Annual Licensing** card at the top always names the earliest one.
+A licence runs twelve months *from its own purchase date*, not from a shared annual anniversary. Buy three outlets in January and two in June, and you have two renewal dates. Check **Days Left** on each row to see them.
 
 ## What happens at expiry
 
@@ -31,11 +31,15 @@ A licence runs twelve months *from its own purchase date*, not from a shared ann
 - Data already collected stays in your dashboards; you do not lose history.
 - Renewing restarts collection. Ask support to reprocess the gap if emails arrived while it was lapsed.
 
-> **Tip:** Watch **Days Left** rather than waiting for a reminder. The Annual Licensing card shows the next expiry across every outlet in one line.
+> **Tip:** Watch **Days Left**. When any licence is expired or within 30 days of expiry, Billing shows a banner with **Renew now**, and the **Renew licences** button is highlighted.
 
 ## Renewing
 
-Renewal is a purchase: open **Billing**, buy the number of licences you need and pay. The renewed licence starts on the day you buy it. See [how to purchase licences](02-how-to-purchase-mynt-licences.md).
+Press **Renew licences** at the top of **Billing**, or **Renew now** on the banner. In the dialog, choose how many licences to renew and which outlets the renewal covers. The total is shown including GST. Press **Pay &#8377;&hellip; via Razorpay** to pay in a new tab. Each renewed licence is extended by 12 months.
+
+Outlets you leave unchecked keep their expired licences and stop ingesting new statements. Their history stays visible.
+
+If your account has an active auto-renew mandate, your plan renews automatically and you do not need to buy a renewal.
 
 ## Related guides
 

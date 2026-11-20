@@ -1,6 +1,6 @@
 # How Incorrect Outlet Mapping Affects Your Data
 
-*Data Issues · Read time: 5 minutes · Article only · Last updated 25 August 2026*
+*Data Issues · Read time: 5 minutes · Article only · Last updated 22 October 2026*
 
 Outlet mapping decides which orders belong to which shop. Get it wrong and the numbers are not slightly off &mdash; they are attributed to the wrong outlet, or dropped entirely.
 
@@ -14,19 +14,19 @@ Zomato and Swiggy identify each shop by a **restaurant ID**. Mynt matches those 
 
 The top of **Settings → Outlet Mapping** tells you the state of every outlet at a glance.
 
-![Outlet mapping counters: outlets, mapped, unmapped, brands and groups](assets/incorrect-outlet-mapping/step-01-unmapped-stat.png)
-*<strong>UNMAPPED</strong> above zero means orders are being dropped right now*
+![Outlet mapping counters: outlets, mapped, unmapped, brands and groups](assets/incorrect-outlet-mapping/step-01-unmapped-stat.png?v=20261022)
+*<strong>Unmapped</strong> above zero means orders are being dropped right now*
 
 ## Symptom 1 — an outlet is unmapped
 
-An unmapped outlet shows **Not mapped** in orange and contributes nothing to any total.
+An unmapped outlet shows **Not mapped** in grey and contributes nothing to any total.
 
-![An outlet row reading Not mapped in orange](assets/incorrect-outlet-mapping/step-02-not-mapped-row.png)
+![An outlet row reading Not mapped in grey](assets/incorrect-outlet-mapping/step-02-not-mapped-row.png?v=20261022)
 *This outlet contributes nothing to any dashboard figure*
 
 Press **Edit** on the row, add the platform, pick the restaurant ID and press **Save**.
 
-![The same row in edit mode with the Zomato ID picker open](assets/incorrect-outlet-mapping/step-03-fix-in-edit-mode.png)
+![The same row in edit mode with the Zomato ID picker open](assets/incorrect-outlet-mapping/step-03-fix-in-edit-mode.png?v=20261022)
 *Mynt only offers IDs it has actually seen in your payout mail*
 
 ## Symptom 2 — one outlet shows another shop&rsquo;s sales
@@ -39,12 +39,12 @@ The ID is on the wrong outlet. A restaurant ID can belong to only one outlet in 
 
 Past periods stay attributed to the old outlet until support reprocesses them. Fixing the mapping corrects what comes next, not what is already filed.
 
-## Symptom 3 — "Outlet platform res-id conflict"
+## Symptom 3 — "Already registered to another account"
 
-You press **Save** and this appears at the top of the screen:
+You press **Save** and this appears in red at the top of the Outlet Mapping panel: **That platform ID is already registered to another account — contact support to move it.**
 
-![The error shown when a restaurant ID already belongs to another account](assets/incorrect-outlet-mapping/step-04-duplicate-id-error.png)
-*Mynt rejects the save and shows <strong>Outlet platform res-id conflict</strong>*
+![The error shown when a restaurant ID already belongs to another account](assets/incorrect-outlet-mapping/step-04-duplicate-id-error.png?v=20261022)
+*Mynt rejects the save and says the platform ID is already registered to another account*
 
 It means that restaurant ID is already registered to a *different Mynt account* &mdash; not just a different outlet of yours. It happens after an ownership change, or when the outlet was first set up under another login.
 
@@ -52,7 +52,7 @@ You cannot move it yourself. [Raise a ticket](06-how-to-raise-data-issue-support
 
 ## Symptom 4 — totals lower than they should be
 
-1. Is **UNMAPPED** above zero?
+1. Is **Unmapped** above zero?
 2. Does every outlet show an ID for *every* platform it trades on?
 3. Is **Settings → Email Integration** showing **Connected**?
 4. Is the dashboard date range one where those outlets actually traded?
@@ -61,9 +61,9 @@ You cannot move it yourself. [Raise a ticket](06-how-to-raise-data-issue-support
 
 | | |
 |---|---|
-| **Orange **Not mapped**** | Edit the row, add the platform, pick the ID, Save. |
+| **Orange Not mapped** | Edit the row, add the platform, pick the ID, Save. |
 | **Wrong outlet&rsquo;s sales showing** | Remove the ID from the wrong outlet first, then add it to the right one. |
-| ****Outlet platform res-id conflict**** | The ID belongs to another account &mdash; only support can move it. |
+| **&ldquo;Already registered to another account&rdquo;** | The ID belongs to another account &mdash; only support can move it. |
 | **ID missing from the dropdown** | Mynt has not seen it in your mail yet. Check the mailbox, then Rescan mailboxes. |
 | **Past periods still wrong after a fix** | Ask support to reprocess that date range. |
 

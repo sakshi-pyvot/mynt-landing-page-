@@ -1,0 +1,11 @@
+# The Help page opens these articles in a same-origin <iframe> (src/help/ArticleDialog.tsx).
+# The server sends X-Frame-Options: DENY on every response, which blanks that iframe
+# ("refused to connect"). Relax framing to same-origin for the articles only; the rest
+# of the site keeps DENY.
+# `unset` clears a server-level `Header set` (onsuccess table); `always set` replaces a
+# server-level `Header always set`. Together they win whichever form the box uses.
+<IfModule mod_headers.c>
+  Header unset X-Frame-Options
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Content-Security-Policy "frame-ancestors 'self'"
+</IfModule>

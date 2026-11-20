@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Why Today's or Recent Data Is Not Showing Yet</h1>
-  <p class="meta">Data Issues · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Data Issues · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">You opened Mynt expecting yesterday&rsquo;s sales and the dashboard looks a few days behind. Most of the time this is normal. Here is why it happens and what to check.</div>
 
@@ -297,19 +293,19 @@
 
   <p>Every dashboard page carries three chips under the title. Read them before assuming data is missing.</p>
 
-  <figure><img src="assets/why-todays-recent/step-01-date-range-header.png" alt="Dashboard header showing Last updated, the selected period, and the comparison period" /><figcaption>LAST UPDATED is the newest day Mynt holds. The next two chips are the period you are viewing and the one it is compared against.</figcaption></figure>
+  <figure><img src="assets/why-todays-recent/step-01-date-range-header.png?v=20261022" alt="Overview header showing Last updated, the selected period, and the comparison period" /><figcaption>Last updated is the newest day Mynt holds. The next two chips are the period you are viewing and the one it is compared against.</figcaption></figure>
 
   <table class="glossary">
-    <tr><th>LAST UPDATED</th><td>The most recent day Mynt has data for. If this is three days old, no newer payout email has arrived.</td></tr>
+    <tr><th>Last updated</th><td>The most recent day Mynt has data for. If this is three days old, no newer payout email has arrived.</td></tr>
     <tr><th>Latest Week / Latest Month</th><td>The period currently on screen, with its exact dates.</td></tr>
-    <tr><th>LAST PERIOD</th><td>The earlier period every <em>vs last period</em> figure is measured against.</td></tr>
+    <tr><th>Last Period</th><td>The earlier period every <em>vs last period</em> figure is measured against.</td></tr>
   </table>
 
   <h2>Confirm your inbox is still connected</h2>
 
-  <p>Go to <strong>Settings &rarr; Email Integration</strong>. Every mailbox should show a green <strong>Connected</strong> badge. If one shows anything else, Mynt has stopped reading it and no new data can arrive from it.</p>
+  <p>Go to <strong>Settings &rarr; Email Integration</strong>. Every mailbox should show a green <strong>Connected</strong> badge. If one shows anything else, Mynt cannot read it and no new data can arrive from it. Press <strong>Authorize</strong> on that row.</p>
 
-  <figure><img src="assets/why-todays-recent/step-02-gmail-connected.png" alt="The Connected Emails table with a green Connected badge on each mailbox" /><figcaption>Settings &rarr; Email Integration &mdash; each mailbox should read Connected</figcaption></figure>
+  <figure><img src="assets/why-todays-recent/step-02-gmail-connected.png?v=20261022" alt="The Connected Emails table with a green Connected badge on each mailbox" /><figcaption>Settings &rarr; Email Integration &mdash; each mailbox should read Connected</figcaption></figure>
 
   <div class="tip">The <strong>Rescan mailboxes</strong> button re-checks your connected inboxes for new restaurant IDs. Use it after adding an outlet on Zomato or Swiggy.</div>
 
@@ -317,23 +313,23 @@
 
   <p>Open <strong>Help &amp; Support</strong> and look at the <strong>System Status</strong> card. <strong>Email Fetch</strong> and the platform processing rows should all read <strong>Working</strong>.</p>
 
-  <figure><img src="assets/why-todays-recent/step-03-system-status.png" alt="System Status card showing Email Fetch and platform processing all Working" /><figcaption>All Working means the pipeline is running normally</figcaption></figure>
+  <figure><img src="assets/why-todays-recent/step-03-system-status.png?v=20261022" alt="System Status card showing Email Fetch and platform processing all Working" /><figcaption>All Working means the pipeline is running normally</figcaption></figure>
 
   <h2>Common reasons recent data is missing</h2>
 
   <table class="glossary">
     <tr><th>The platform has not sent the email yet</th><td>Zomato and Swiggy send settlement mail on a payout cycle, often weekly. Today&rsquo;s orders may not appear until the next cycle.</td></tr>
-    <tr><th>Mynt is still reading a new email</th><td>Give it a few minutes after a payout email lands, and a little longer right after you first connect a mailbox.</td></tr>
-    <tr><th>The date range excludes those days</th><td>Widen it to <strong>Latest Week</strong> or <strong>Latest Month</strong>.</td></tr>
-    <tr><th>A filter is hiding the outlet</th><td>Check the platform and outlet filters in the left panel.</td></tr>
+    <tr><th>Mynt is still reading a new email</th><td>Mynt checks connected mailboxes on a schedule, so new payout emails can take up to about 12 hours to appear after they arrive. A newly connected mailbox may also need <strong>Activate</strong> under <strong>Historic ingestion</strong> in <strong>Settings &rarr; Outlet Mapping</strong> before Mynt reads it.</td></tr>
+    <tr><th>The date range excludes those days</th><td>Widen it: in the filter panel choose <strong>Week</strong> or <strong>Month</strong> under <strong>Date</strong>, then press <strong>Apply</strong>.</td></tr>
+    <tr><th>A filter is hiding the outlet</th><td>Check the platform and outlet filters in the left panel, then press <strong>Apply</strong>.</td></tr>
     <tr><th>The outlet is not mapped</th><td>An unmapped restaurant ID is skipped entirely. See the outlet mapping guide below.</td></tr>
   </table>
 
   <h2>What to do, in order</h2>
 
   <ol>
-    <li>Widen the <strong>DATE</strong> filter and confirm the period includes the days you expect.</li>
-    <li>Check <strong>LAST UPDATED</strong> &mdash; that is the newest day Mynt actually holds.</li>
+    <li>Widen the <strong>Date</strong> filter, press <strong>Apply</strong>, and confirm the period includes the days you expect.</li>
+    <li>Check <strong>Last updated</strong> &mdash; that is the newest day Mynt actually holds.</li>
     <li>Confirm <strong>Settings &rarr; Email Integration</strong> shows <strong>Connected</strong>.</li>
     <li>Check <strong>Help &amp; Support &rarr; System Status</strong> reads <strong>All Working</strong>.</li>
     <li>Confirm the outlet is mapped in <strong>Settings &rarr; Outlet Mapping</strong>.</li>
@@ -343,7 +339,7 @@
   <h2>Common questions</h2>
 
   <div class="faq-item"><div class="faq-q">Should I see today&rsquo;s live orders?</div><div class="faq-a">No. Mynt reports on payout and settlement emails, not live order feeds. There is no real-time order count.</div></div>
-  <div class="faq-item"><div class="faq-q">I connected my inbox yesterday &mdash; why is last month empty?</div><div class="faq-a">How far back Mynt can fill depends on your plan and on how far back payout emails still exist in that mailbox.</div></div>
+  <div class="faq-item"><div class="faq-q">I connected my inbox yesterday &mdash; why is last month empty?</div><div class="faq-a">A newly connected mailbox may need <strong>Activate</strong> under <strong>Historic ingestion</strong> in <strong>Settings &rarr; Outlet Mapping</strong> before Mynt reads its history. After that, how far back Mynt can fill depends on how far back payout emails still exist in that mailbox.</div></div>
   <div class="faq-item"><div class="faq-q">One outlet updated, another did not.</div><div class="faq-a">Check that outlet&rsquo;s mapping first &mdash; that is the usual cause.</div></div>
 
   <h2>Related guides</h2>

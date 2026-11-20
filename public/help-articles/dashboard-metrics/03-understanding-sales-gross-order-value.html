@@ -274,46 +274,42 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Understanding Sales and Gross Order Value</h1>
-  <p class="meta">Dashboard & Metrics · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Dashboard & Metrics · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
-  <div class="hello">Gross Order Value is the top line: what customers were billed, before the platforms take anything out. It is not what you get paid.</div>
+  <div class="hello">Gross Order Value is the top line: the value of the items customers ordered, including packaging, before discounts and platform deductions. It is not what you get paid.</div>
 
   <h2>What the card shows</h2>
 
-  <figure><img src="assets/understanding-sales-gross-order-value/step-01-gov-card.png" alt="The Gross Order Value card with its change against the last period" /><figcaption>The total customers were billed, and how that moved against the previous period</figcaption></figure>
+  <figure><img src="assets/understanding-sales-gross-order-value/step-01-gov-card.png?v=20261022" alt="The Gross Order Value card with its change against the last period" /><figcaption>The gross order value for the period, and how it moved against the last period</figcaption></figure>
 
   <table class="glossary">
     <tr><th>The figure</th><td>Total order value for the selected period and filters, before platform deductions.</td></tr>
-    <tr><th>The percentage</th><td>Change against the <strong>LAST PERIOD</strong> range in the header.</td></tr>
-    <tr><th>The arrow</th><td>Green up, red down &mdash; direction only; whether that is good depends on the metric.</td></tr>
+    <tr><th>The percentage</th><td>Change against the <strong>Last Period</strong> range in the header.</td></tr>
+    <tr><th>The arrow</th><td>Shows whether the change is good for you. Green and up is good; red and down is bad. A rise in GOV is good. On cost cards such as <strong>Ad Spend (incl. GST)</strong> a fall is good, so it shows green. The percentage keeps its real sign.</td></tr>
   </table>
 
   <h2>What GOV includes and excludes</h2>
 
   <table class="glossary">
-    <tr><th>Included</th><td>Item value and charges billed to the customer on completed orders.</td></tr>
+    <tr><th>Included</th><td>Item value, including packaging charges, on delivered orders.</td></tr>
     <tr><th>Not deducted</th><td>Commission, payment gateway fees, delivery charges, ad spend, discounts &mdash; those come out further down.</td></tr>
-    <tr><th>Excluded</th><td>Orders the platform never settled.</td></tr>
+    <tr><th>Excluded</th><td>Orders that were not delivered, such as cancelled or rejected orders.</td></tr>
   </table>
 
   <p>Because nothing is deducted, GOV is always the largest number on the dashboard. The gap between it and <strong>Net Payout</strong> is the cost of trading on the platforms &mdash; see <a href="07-understanding-platform-charges-commissions-payouts.html">platform charges and payouts</a>.</p>
 
   <h2>Cancellations and refunds</h2>
 
-  <p>Cancelled orders are tracked separately rather than being silently netted off. The Refunds page shows how many orders were cancelled, what proportion of orders that is, and what you were still paid for them.</p>
+  <p>Cancelled orders are tracked separately rather than being silently netted off. The <strong>Refunds</strong> page shows how many orders were cancelled, what you were still paid for them, and that payout as a share of gross order value (<strong>Cancelled payout % of sales</strong>).</p>
 
-  <figure><img src="assets/understanding-sales-gross-order-value/step-02-refunds-page.png" alt="The Refunds page showing cancelled orders, cancellation percentage and payout for cancelled orders" /><figcaption>Cancellations, as a count and as a share of total orders</figcaption></figure>
+  <figure><img src="assets/understanding-sales-gross-order-value/step-02-refunds-page.png?v=20261022" alt="The Refunds page showing cancelled orders, Cancelled payout % of sales and payout for cancelled orders" /><figcaption>Cancelled orders, what you were still paid for them, and that payout as a share of gross order value</figcaption></figure>
 
-  <div class="tip">Every percentage on the dashboard compares against the <strong>LAST PERIOD</strong> chip in the header &mdash; the period immediately before the one you are viewing. It is not a year-on-year comparison.</div>
+  <div class="tip">Every percentage on the dashboard compares against the <strong>Last Period</strong> chip in the header &mdash; the period immediately before the one you are viewing. It is not a year-on-year comparison.</div>
 
   <h2>Common questions</h2>
 
@@ -326,7 +322,7 @@
   <ul>
     <li><a href="04-understanding-orders-and-average-order-value.html" style="color:var(--mint)">Orders and average order value</a></li>
     <li><a href="07-understanding-platform-charges-commissions-payouts.html" style="color:var(--mint)">Charges, commissions and payouts</a></li>
-    <li><a href="08-understanding-net-margin-and-profitability.html" style="color:var(--mint)">Net margin</a></li>
+    <li><a href="08-understanding-net-margin-and-profitability.html" style="color:var(--mint)">Net Payout and Payout %</a></li>
   </ul>
 
   <h2>Need help?</h2>

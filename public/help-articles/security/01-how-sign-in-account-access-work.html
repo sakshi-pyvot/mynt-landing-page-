@@ -274,42 +274,39 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How Sign-In and Account Access Work in Mynt</h1>
-  <p class="meta">Security · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Security · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
-  <div class="hello">Mynt signs you in with an email and password, or with Google. Your session stays open on that browser until you sign out or it expires.</div>
+  <div class="hello">Mynt signs you in with your email address, or with Google. Your password is only ever typed on Mynt’s secure sign-in page. Your session stays open on that browser until you sign out or it expires.</div>
 
   <h2>How to sign in</h2>
   <ol>
     <li>Go to your Mynt login page.</li>
-    <li>Enter your <strong>Email</strong> and <strong>Password</strong>, then tap <strong>Sign in</strong>.</li>
-    <li>Mynt opens your dashboard.</li>
+    <li>Enter your <strong>Email</strong> and tap <strong>Continue</strong>.</li>
+    <li>Mynt’s secure sign-in page opens. Enter your password, or use your passkey.</li>
+    <li>If you have set up a second step, enter that code too.</li>
+    <li>Mynt opens <strong>Overview</strong>.</li>
   </ol>
   <p>You can also tap <strong>Continue with Google</strong>. That works only if a Mynt account already exists for that Google address — it signs you in, it does not create an account.</p>
-  <figure><img src="assets/sign-in-account-access/step-01-login-page.png" alt="Mynt login page" /><figcaption>Mynt login — Continue with Google, or email and password</figcaption></figure>
+  <figure><img src="assets/sign-in-account-access/step-01-login-page.png?v=20261022" alt="Mynt login page" /><figcaption>Mynt login — Continue with Google, or your email and Continue</figcaption></figure>
   <p>New user? See <a href="../getting-started/02-how-to-create-your-mynt-account-and-sign-in.html" style="color:var(--mint)">How to create your Mynt account and sign in</a>.</p>
 
   <h2>What happens after sign-in</h2>
   <table class="glossary">
     <tr><th>Session</th><td>You stay signed in on that browser until you sign out or the session expires</td></tr>
-    <tr><th>Your business</th><td>The top of every page shows your business name, so you always know which account you are looking at</td></tr>
-    <tr><th>Dashboard access</th><td>Only people invited to your Mynt account can see your business data</td></tr>
+    <tr><th>Your business</th><td>The top of every page shows your name followed by “’s Business”</td></tr>
+    <tr><th>Dashboard access</th><td>People who can sign in to your Mynt account see your business data. You can also let Mynt support view it, read-only, under <strong>Settings → Security → Support access</strong></td></tr>
   </table>
   <p>Mynt never asks for your Zomato or Swiggy passwords — only your Mynt login and, separately, permission to read your payout emails.</p>
 
   <h2>Forgot your password?</h2>
-  <p>Tap <strong>Forgot?</strong> next to the Password box on the login screen. Mynt tells you to use the password that was emailed to you by your admin when your account was set up.</p>
-  <figure><img src="assets/sign-in-account-access/step-02-forgot-password.png" alt="Forgot password message on the Mynt login screen" /><figcaption>Tapping Forgot? points you to the password your admin emailed during onboarding</figcaption></figure>
-  <p>There is no self-service reset link today. If you cannot find that email, contact support and they will verify you own the account before helping.</p>
-  <p>Once you are signed in, you can change your password yourself at <strong>Settings → Security → Change Password</strong>. You need your current password to set a new one.</p>
+  <p>Enter your email and tap <strong>Continue</strong>. On Mynt’s secure sign-in page, use the forgot-password option. If you cannot reset it there, contact support and they will verify you own the account before helping.</p>
+  <figure><img src="assets/sign-in-account-access/step-02-forgot-password.png?v=20261022" alt="The password step on Mynt’s secure sign-in page" /><figcaption>Password help is on Mynt’s secure sign-in page</figcaption></figure>
+  <p>Once you are signed in, you can change your password at <strong>Settings → Security</strong>. In the <strong>Password</strong> card, tap <strong>Change password</strong>. Mynt’s secure sign-in page opens and you set the new password there — Mynt never asks for a password inside the app. Your other devices are signed out unless you untick that box on the page. If you only sign in with Google, there is no password to change and the card is not shown.</p>
 
   <h2>Making your sign-in stronger</h2>
   <p>Under <strong>Settings → Security → Authentication</strong> you can add a second step to your sign-in. All three are optional and you set them up yourself:</p>
@@ -318,7 +315,7 @@
     <tr><th>Passkey</th><td>Sign in with Face ID, Touch ID or a security key — no password at all</td></tr>
     <tr><th>Recovery codes</th><td>One-time codes to use if you lose your phone or security key</td></tr>
   </table>
-  <p>Adding or removing any of these asks you to confirm your password first. See <a href="03-how-mynt-protects-business-data.html" style="color:var(--mint)">How Mynt protects your business data</a>.</p>
+  <p>Adding one may first ask you to confirm it’s you on Mynt’s secure sign-in page, and removing one always happens on that page. Your only authenticator app or passkey can’t be removed — add another one first, then remove the old one. See <a href="03-how-mynt-protects-business-data.html" style="color:var(--mint)">How Mynt protects your business data</a>.</p>
 
   <h2>Signing in on a new device</h2>
   <ul>
@@ -328,9 +325,9 @@
   </ul>
 
   <h2>Common questions</h2>
-  <div class="faq-item"><div class="faq-q">Can my team share one login?</div><div class="faq-a">Each person should have their own account. Sharing one password means you cannot tell who changed what, and signing out one person signs out everybody.</div></div>
+  <div class="faq-item"><div class="faq-q">Can my team share one login?</div><div class="faq-a">Each person should have their own account. Sharing one password means you cannot tell who changed what, and <strong>Logout All Devices</strong> signs out everybody.</div></div>
   <div class="faq-item"><div class="faq-q">Google sign-in or email and password?</div><div class="faq-a">Both open the same Mynt account, as long as the Google address matches the email your account was created with.</div></div>
-  <div class="faq-item"><div class="faq-q">The business name at the top looks wrong</div><div class="faq-a">Contact support. A Mynt login opens one business account; there is no account switcher on the customer dashboard.</div></div>
+  <div class="faq-item"><div class="faq-q">The business name at the top looks wrong</div><div class="faq-a">The title is built from your own name (for example, “Asha’s Business”), not your company name. Your company name lives in <strong>Settings → Account</strong>. If the name itself is wrong, contact support. A Mynt login opens one business account; there is no account switcher on the customer dashboard.</div></div>
 
   <h2>Related guides</h2>
   <ul>

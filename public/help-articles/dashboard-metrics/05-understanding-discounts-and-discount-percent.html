@@ -274,35 +274,31 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Understanding Discounts and Discount Percent</h1>
-  <p class="meta">Dashboard & Metrics · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Dashboard & Metrics · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Discounts are the easiest cost to underestimate, because they never appear as a bill. Mynt reports them as a value and as a share of sales.</div>
 
   <h2>The headline card</h2>
 
-  <figure><img src="assets/understanding-discounts-and-discount-percent/step-01-discounts-card.png" alt="The Discounts card on the dashboard" /><figcaption>The value of discounts and coupons applied in the period</figcaption></figure>
+  <figure><img src="assets/understanding-discounts-and-discount-percent/step-01-discounts-card.png?v=20261022" alt="The Discounts card on Overview" /><figcaption>The value of discounts and coupons you funded in the period</figcaption></figure>
 
   <h2>The Discounts dashboard</h2>
 
   <p>Choose <strong>Discounts</strong> in the left menu for the full picture &mdash; coupon performance, burn analysis and the funding split.</p>
 
-  <figure><img src="assets/understanding-discounts-and-discount-percent/step-02-discounts-page.png" alt="The Discounts dashboard with gross order value, total discount burn and discount percent" /><figcaption>Discount burn against gross order value, and what that is as a percentage</figcaption></figure>
+  <figure><img src="assets/understanding-discounts-and-discount-percent/step-02-discounts-page.png?v=20261022" alt="The Discounts dashboard with gross order value, total discount burn and discount percent" /><figcaption>Discount burn against gross order value, and what that is as a percentage</figcaption></figure>
 
   <table class="glossary">
-    <tr><th>Total Discount Burn</th><td>The rupee value of discounts applied.</td></tr>
+    <tr><th>Total Discount Burn</th><td>The rupee value of discounts you funded.</td></tr>
     <tr><th>Discount %</th><td>Discount burn as a share of gross order value &mdash; the number to watch.</td></tr>
-    <tr><th>Discount Sales Contribution</th><td>How much of your sales came from discounted orders.</td></tr>
+    <tr><th>Discount Sales Contribution</th><td>Sales from discounted orders as a share of gross order value.</td></tr>
     <tr><th>Discounted Orders</th><td>How many orders carried a discount.</td></tr>
-    <tr><th>Avg Discount / Order</th><td>Average discount on the orders that had one.</td></tr>
+    <tr><th>Avg Discount/Order</th><td>Total discounts divided by all orders, including orders with no discount.</td></tr>
     <tr><th>Discount Trend</th><td>Burn over time, daily, weekly or monthly.</td></tr>
   </table>
 
@@ -310,21 +306,21 @@
 
   <p>Discount value rises naturally as sales rise. The percentage tells you whether you are buying growth or simply growing. A rising Discount % with flat orders means you are paying more for the same volume.</p>
 
-  <div class="tip">Every percentage on the dashboard compares against the <strong>LAST PERIOD</strong> chip in the header &mdash; the period immediately before the one you are viewing. It is not a year-on-year comparison.</div>
+  <div class="tip">Every percentage on the dashboard compares against the <strong>Last Period</strong> chip in the header &mdash; the period immediately before the one you are viewing. It is not a year-on-year comparison.</div>
 
   <h2>Reading it against the other cards</h2>
 
   <table class="glossary">
-    <tr><th>Discounts up, orders up, AOV down</th><td>The discount is working, at a cost. Compare against net margin.</td></tr>
+    <tr><th>Discounts up, orders up, AOV down</th><td>The discount is working, at a cost. Compare against Payout %.</td></tr>
     <tr><th>Discounts up, orders flat</th><td>You are discounting without buying volume.</td></tr>
-    <tr><th>Discounts up, net margin down</th><td>The discount is coming straight out of profit.</td></tr>
+    <tr><th>Discounts up, Payout % down</th><td>The discount is coming straight out of profit.</td></tr>
   </table>
 
   <h2>Related guides</h2>
 
   <ul>
     <li><a href="04-understanding-orders-and-average-order-value.html" style="color:var(--mint)">Orders and average order value</a></li>
-    <li><a href="08-understanding-net-margin-and-profitability.html" style="color:var(--mint)">Net margin and profitability</a></li>
+    <li><a href="08-understanding-net-margin-and-profitability.html" style="color:var(--mint)">Net Payout and Payout %</a></li>
     <li><a href="06-understanding-advertising-spend-and-ad-performance.html" style="color:var(--mint)">Advertising spend</a></li>
   </ul>
 

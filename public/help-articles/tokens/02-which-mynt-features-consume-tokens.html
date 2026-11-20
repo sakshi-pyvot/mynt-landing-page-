@@ -274,34 +274,30 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Which Mynt Features Consume Tokens?</h1>
-  <p class="meta">Tokens · Read time: 3 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Tokens · Read time: 3 minutes · Article only · Last updated 22 October 2026</p>
 
-  <div class="hello">Three things spend tokens: AI Assistant queries, report runs and notifications. Reports are usually the largest by far.</div>
+  <div class="hello">Tokens are spent by PIA (AI Assistant) queries, reports and other exports, and notifications. Reports are usually the largest.</div>
 
-  <h2>Reports — the cost is per run, per channel</h2>
+  <h2>Reports — the cost depends on channel and recipients</h2>
 
-  <figure><img src="assets/which-mynt-features-consume-tokens/step-01-report-token-costs.png" alt="Report delivery channels showing their individual token costs" /><figcaption>The cost is on the option itself &mdash; WhatsApp costs the most per run</figcaption></figure>
+  <figure><img src="assets/which-mynt-features-consume-tokens/step-01-report-token-costs.png?v=20261022" alt="Report delivery channels showing their individual token costs" /><figcaption>Each delivery option shows its price &mdash; Email and WhatsApp are priced per participant</figcaption></figure>
 
   <table class="glossary">
-    <tr><th>Download</th><td>The cheapest channel.</td></tr>
-    <tr><th>Email</th><td>Slightly more than download.</td></tr>
-    <tr><th>WhatsApp</th><td>The most expensive of the three.</td></tr>
+    <tr><th>Download</th><td>Charged once per file.</td></tr>
+    <tr><th>Email</th><td>Charged per participant &mdash; every To and CC address.</td></tr>
+    <tr><th>WhatsApp</th><td>Charged per participant &mdash; every WhatsApp number.</td></tr>
   </table>
 
-  <p>A <em>scheduled</em> report spends that cost every time it runs. A daily WhatsApp schedule is the single fastest way to spend a balance &mdash; see <a href="../reports/03-schedule-automatic-reports.html">scheduling automatic reports</a>.</p>
+  <p>The builder shows <strong>Tokens / run</strong> for the report as it stands, so the figure changes as you add or remove recipients. A <em>scheduled</em> report spends that cost every time it runs. A weekly schedule sent to many recipients is the fastest way to spend a balance &mdash; see <a href="../reports/03-schedule-automatic-reports.html">scheduling automatic reports</a>.</p>
 
-  <h2>AI Assistant</h2>
+  <h2>PIA (AI Assistant)</h2>
 
-  <p>Each question you ask the assistant spends tokens, because each one runs a real query over your data.</p>
+  <p>Each answer is priced after it runs, from what it actually cost to produce. You can ask a question as long as your balance is above zero. An answer that costs more than what is left can take your balance below zero. Questions the assistant refuses are not charged.</p>
 
   <h2>Notifications</h2>
 
@@ -316,7 +312,7 @@
     <li>Reading invoices and licence information.</li>
   </ul>
 
-  <div class="tip">If your balance falls without anyone using the assistant, look for a forgotten report schedule before anything else &mdash; see <a href="../reports/04-how-to-manage-report-schedules.html">managing schedules</a>.</div>
+  <div class="tip">If your balance falls without anyone using PIA, look for a forgotten report schedule before anything else &mdash; see <a href="../reports/04-how-to-manage-report-schedules.html">managing schedules</a>.</div>
 
   <h2>Related guides</h2>
 

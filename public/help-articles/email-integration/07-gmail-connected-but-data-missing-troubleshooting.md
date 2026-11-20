@@ -1,6 +1,6 @@
 # Gmail Is Connected but My Data Is Missing
 
-*Email Integration · Read time: 5 minutes · Article only · Last updated 25 August 2026*
+*Email Integration · Read time: 5 minutes · Article only · Last updated 22 October 2026*
 
 The badge is green and the dashboard is still empty. Work through these four checks in order &mdash; the cause is almost always one of them.
 
@@ -8,9 +8,9 @@ The badge is green and the dashboard is still empty. Work through these four che
 
 ## Check 1 — is the platform stage healthy?
 
-Email arriving is only the first stage. **Help & Support → System Status** lists each platform separately, so one can be degraded while the other is fine.
+Email arriving is only the first stage. **Help & Support → System Status** lists each platform separately, so one can be **Delayed** or **Down** while the other reads **Working**.
 
-![Zomato Processing and Swiggy Processing rows in System Status](assets/gmail-connected-but-data-missing-troubleshooting/step-01-platform-processing.png)
+![Zomato Processing and Swiggy Processing rows in System Status](assets/gmail-connected-but-data-missing-troubleshooting/step-01-platform-processing.png?v=20261022)
 *Zomato and Swiggy are processed separately &mdash; check both*
 
 ## Check 2 — is the outlet mapped?
@@ -23,10 +23,12 @@ This is the most common cause of all. Mynt can be connected perfectly to a mailb
 
 ## Check 4 — are the filters hiding it?
 
-1. Set **DATE** to a range that definitely covers the period.
-2. Set **PLATFORM** to **All Platforms**.
+1. Set **Date** to a range that definitely covers the period.
+2. Set **Platform** to **All Platforms**.
 3. Use **Select all** in the outlet list.
-4. Press **Reset** to clear every filter and look again.
+4. Press **Apply**. Nothing changes until you do.
+
+Do not press **Reset** afterwards &mdash; it returns the dates to **Week**, with all platforms and all outlets.
 
 ## Still nothing?
 

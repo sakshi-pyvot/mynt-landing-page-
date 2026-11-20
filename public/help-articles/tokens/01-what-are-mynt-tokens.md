@@ -1,6 +1,6 @@
 # What Are Mynt Tokens?
 
-*Tokens · Read time: 3 minutes · Article only · Last updated 25 August 2026*
+*Tokens · Read time: 3 minutes · Article only · Last updated 22 October 2026*
 
 Tokens are Mynt&rsquo;s pay-as-you-go currency for the features that cost something to run. They are separate from your outlet licences.
 
@@ -8,21 +8,21 @@ Tokens are Mynt&rsquo;s pay-as-you-go currency for the features that cost someth
 
 ## What they are for
 
-![The Token Purchase card explaining what tokens power](assets/what-are-mynt-tokens/step-01-token-purchase.png)
-*Tokens power AI Assistant queries, exports and notifications*
+![The Token Purchase card explaining what tokens power](assets/what-are-mynt-tokens/step-01-token-purchase.png?v=20261022)
+*Tokens power PIA (AI Assistant) queries, exports and notifications*
 
 ## Tokens and licences are different things
 
 | | |
 |---|---|
 | **Outlet licence** | Annual, per outlet. Activates data collection for that location. |
-| **Tokens** | Pay as you go. Spent by AI Assistant queries, report runs and notifications. |
+| **Tokens** | Pay as you go. Spent by PIA (AI Assistant) queries, report runs and notifications. |
 
 Running out of tokens does not switch off your dashboards, and buying tokens does not add an outlet. See [pricing and annual licences](../billing/01-understanding-mynt-pricing-annual-outlet-licences.md).
 
 ## How they are bought
 
-Tokens come in packs, bought from **Billing**. Larger packs cost less per token, and GST is itemised on each pack before you buy. See [checking your balance and getting more](03-how-to-check-token-usage-balance-get-more.md).
+Tokens come in packs, bought from **Billing**. Each pack shows its price including GST, with the base price and GST on a line beneath. No GST is added at checkout. See [checking your balance and getting more](03-how-to-check-token-usage-balance-get-more.md).
 
 ## Do they expire?
 

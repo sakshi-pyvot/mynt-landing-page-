@@ -274,43 +274,49 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>What Reports Are Available in Mynt</h1>
-  <p class="meta">Reports · Read time: 3 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Reports · Read time: 3 minutes · Article only · Last updated 18 November 2026</p>
 
   <div class="hello">One builder covers every report. You choose what it contains, which outlets and period it covers, and how it reaches you.</div>
 
   <h2>The report builder</h2>
 
-  <figure><img src="assets/what-reports-are-available/step-01-report-builder.png" alt="The Create or Schedule Report card with report type, platform, outlets and period" /><figcaption>Four choices define the report; two more define how it is delivered</figcaption></figure>
+  <figure><img src="assets/what-reports-are-available/step-01-report-builder.png?v=20261022" alt="The Create or Schedule Report card with report type, platform, outlets and period" /><figcaption>Four choices define the report; two more define how it is delivered</figcaption></figure>
 
   <table class="glossary">
     <tr><th>Report Type</th><td>What the report contains.</td></tr>
-    <tr><th>Platform</th><td>Zomato, Swiggy, Toing, or all of them.</td></tr>
+    <tr><th>Platform</th><td>One or more platforms, or <strong>All Platforms</strong>.</td></tr>
     <tr><th>Outlets</th><td>Which locations to include.</td></tr>
     <tr><th>Report Period</th><td>The date range the report covers.</td></tr>
-    <tr><th>Delivery Channel</th><td>Download, email or WhatsApp.</td></tr>
+    <tr><th>Delivery Channel</th><td><strong>Download</strong>, <strong>Email</strong> or <strong>WhatsApp</strong>. You can pick more than one.</td></tr>
     <tr><th>Delivery Type</th><td>One-time, or a recurring schedule.</td></tr>
   </table>
 
-  <p>The page also offers raw platform data, so you can take the underlying figures into your own spreadsheet rather than only the summarised view.</p>
+  <h2>The six reports</h2>
+  <table class="glossary">
+    <tr><th>Owner's Business Pulse</th><td>Monthly executive summary for restaurant business performance</td></tr>
+    <tr><th>Sales &amp; Demand Intelligence</th><td>Demand, sales mix, timing patterns, and outlet performance</td></tr>
+    <tr><th>Marketing &amp; Promotion ROI</th><td>Ad efficiency, offer performance, and profitable sales lift</td></tr>
+    <tr><th>Payout and Settlement Summary</th><td>Profitability and payout-leakage breakdown for restaurant settlements</td></tr>
+    <tr><th>Operational Loss &amp; Recovery</th><td>Refunds, cancellations, and operational issue prioritization</td></tr>
+    <tr><th>Accounting Summary</th><td>Sales, output GST, platform deductions, ads, TCS / TDS and net payout, outlet by outlet. See <a href="05-accounting-summary-gst-report.html" style="color:var(--mint)">The Accounting Summary (GST report)</a>.</td></tr>
+  </table>
+  <p>Owner's Business Pulse and Payout and Settlement Summary always cover whole months: pick a week and the form tells you, before you generate, which month the figures cover.</p>
+  <p>The page also offers <b>Download Raw Data</b>, so you can take the underlying order, ads and accounting figures into your own spreadsheet rather than only the summarised view. See <a href="06-how-to-download-raw-data.html" style="color:var(--mint)">How to download raw data</a>.</p>
 
   <h2>Reports cost tokens</h2>
 
-  <p>Each run spends tokens, and the amount depends on the delivery channel. The cost is shown before you generate anything &mdash; see <a href="02-how-to-generate-and-download-report.html">generating a report</a> and <a href="../tokens/02-which-mynt-features-consume-tokens.html">what consumes tokens</a>.</p>
+  <p>Each run spends tokens. <strong>Download</strong> is priced per file. <strong>Email</strong> and <strong>WhatsApp</strong> are priced per recipient, shown on the option as "N tokens/participant". The cost is shown before you generate anything &mdash; see <a href="02-how-to-generate-and-download-report.html">generating a report</a> and <a href="../tokens/02-which-mynt-features-consume-tokens.html">what consumes tokens</a>.</p>
 
   <h2>One-time or recurring</h2>
 
   <ul>
     <li><strong>One-Time</strong> &mdash; generate it now.</li>
-    <li><strong>Schedule Report</strong> &mdash; have it delivered on a recurring basis. See <a href="03-schedule-automatic-reports.html">scheduling reports</a>.</li>
+    <li><strong>Schedule Report</strong> &mdash; have it delivered weekly, monthly or quarterly by email or WhatsApp. See <a href="03-schedule-automatic-reports.html">scheduling reports</a>.</li>
   </ul>
 
   <h2>Related guides</h2>

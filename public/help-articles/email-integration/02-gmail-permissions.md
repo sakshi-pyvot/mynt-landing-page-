@@ -1,6 +1,6 @@
 # What Gmail Permissions Does Mynt Require?
 
-*Email Integration · Read time: 3 minutes · Article only · Last updated 25 August 2026*
+*Email Integration · Read time: 3 minutes · Article only · Last updated 22 October 2026*
 
 Mynt asks Google for read-only access to your Gmail. That is the whole ask, and it is the minimum that makes the product work.
 
@@ -10,7 +10,7 @@ Mynt asks Google for read-only access to your Gmail. That is the whole ask, and 
 
 | | |
 |---|---|
-| **Read your Gmail messages** | To find and read the payout and settlement emails Zomato and Swiggy send you. |
+| **View your email messages and settings** | To find and read the payout and settlement emails Zomato and Swiggy send you. Google shows this as a box you must tick; if it is left unticked, nothing is connected. |
 | **Your email address** | So Mynt can show you which mailbox is connected. |
 
 The Gmail permission is **read-only**. That is enforced by Google, not merely promised by us &mdash; the token Mynt holds cannot send, delete or alter anything in your mailbox.
@@ -28,7 +28,7 @@ The Gmail permission is **read-only**. That is enforced by Google, not merely pr
 
 In **Settings → Email Integration**, a connected mailbox carries a green badge.
 
-![A green Connected badge in the Status column](assets/gmail-permissions/step-01-connected-status.png)
+![A green Connected badge in the Status column](assets/gmail-permissions/step-01-connected-status.png?v=20261022)
 *Green <strong>Connected</strong> means Mynt currently holds a valid read-only token for that mailbox*
 
 ## Withdrawing access

@@ -274,24 +274,20 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Why Zomato or Swiggy Data Is Missing or Incomplete</h1>
-  <p class="meta">Data Issues · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Data Issues · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Zomato is there and Swiggy is blank, or the other way round. When only one platform is affected, the cause is nearly always that platform&rsquo;s ID or that platform&rsquo;s emails.</div>
 
   <h2>Confirm it really is one platform</h2>
 
-  <p>Open the filter panel and set <strong>PLATFORM</strong> to one platform at a time. Mynt supports <strong>Zomato</strong>, <strong>Swiggy</strong> and <strong>Toing</strong>.</p>
+  <p>Open the filter panel, set <strong>Platform</strong> to one platform at a time and press <strong>Apply</strong>. <strong>Zomato</strong> and <strong>Swiggy</strong> are always listed; <strong>Toing</strong> appears only if your account has Toing outlets.</p>
 
-  <figure><img src="assets/zomato-swiggy-missing/step-01-platform-filter.png" alt="The platform filter showing All Platforms, Zomato, Swiggy and Toing" /><figcaption>Select one platform at a time to see which is actually empty</figcaption></figure>
+  <figure><img src="assets/zomato-swiggy-missing/step-01-platform-filter.png?v=20261022" alt="The platform filter showing All Platforms, Zomato, Swiggy and Toing" /><figcaption>Select one platform at a time to see which is actually empty</figcaption></figure>
 
   <div class="tip">Toing mirrors your Swiggy restaurant ID and is filled in automatically. There is nothing to map for it by hand.</div>
 
@@ -301,7 +297,7 @@
 
   <p>Go to <strong>Settings &rarr; Outlet Mapping &rarr; Platform Mapping</strong> and press <strong>Edit</strong> on the outlet.</p>
 
-  <figure><img src="assets/zomato-swiggy-missing/step-02-platform-ids.png" alt="An outlet in edit mode with a Zomato ID filled in and Swiggy not yet added" /><figcaption>This outlet has a Zomato ID but no Swiggy ID &mdash; every Swiggy order for it is skipped</figcaption></figure>
+  <figure><img src="assets/zomato-swiggy-missing/step-02-platform-ids.png?v=20261022" alt="An outlet in edit mode with a Zomato ID filled in and Swiggy not yet added" /><figcaption>This outlet has a Zomato ID but no Swiggy ID &mdash; every Swiggy order for it is skipped</figcaption></figure>
 
   <ol>
     <li>Press <strong>Edit</strong> on the outlet&rsquo;s row.</li>
@@ -320,13 +316,13 @@
     <li>The outlet is brand new on that platform. Press <strong>Rescan mailboxes</strong> once mail has arrived.</li>
   </ul>
 
-  <h2>Cause 3 — that platform&rsquo;s processing is degraded</h2>
+  <h2>Cause 3 — that platform&rsquo;s processing is delayed</h2>
 
-  <p>Open <strong>Help &amp; Support</strong> and check <strong>System Status</strong>. <strong>Zomato Processing</strong> and <strong>Swiggy Processing</strong> are listed separately, so one can be degraded while the other is fine.</p>
+  <p>Open <strong>Help &amp; Support</strong> and check <strong>System Status</strong>. <strong>Zomato Processing</strong> and <strong>Swiggy Processing</strong> are listed separately, so one can be <strong>Delayed</strong> or <strong>Down</strong> while the other reads <strong>Working</strong>.</p>
 
   <h2>Cause 4 — the period predates the link</h2>
 
-  <p>Linking an ID today does not retroactively rebuild every past week on its own. If a platform was linked late, ask support to reprocess the earlier period.</p>
+  <p>Linking an ID today does not rebuild past weeks on its own. A newly linked outlet may wait under <strong>Historic ingestion</strong> in <strong>Settings &rarr; Outlet Mapping</strong> until you press <strong>Activate</strong>, which backfills its historic orders. If the earlier period is still empty after that, raise a ticket.</p>
 
   <h2>Related guides</h2>
 

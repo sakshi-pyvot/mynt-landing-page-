@@ -1,39 +1,39 @@
 # How to Disconnect or Change the Gmail Account Connected to Mynt
 
-*Email Integration · Read time: 4 minutes · Article only · Last updated 25 August 2026*
+*Email Integration · Read time: 4 minutes · Article only · Last updated 22 October 2026*
 
-There is no self-serve disconnect button in Mynt today. Here is what you can do yourself, and what needs support.
+You can disconnect, delete, add or reconnect a mailbox yourself from **Settings &rarr; Email Integration**.
 
 ---
 
 ## What the panel offers
 
-![The Connected Emails header with the Add SOA Email action](assets/disconnect-or-change-gmail/step-01-add-soa-email.png)
-*You can <strong>add</strong> a mailbox here, and <strong>reconnect</strong> one &mdash; there is no remove action*
+![The Connected Emails header with the Add SOA Email action](assets/disconnect-or-change-gmail/step-01-add-soa-email.png?v=20261022)
+*Add a mailbox here; each row has its own <strong>Reconnect</strong> or <strong>Authorize</strong>, and <strong>Disconnect</strong> or <strong>Delete</strong>*
 
 | | |
 |---|---|
 | **Add another mailbox** | Yes &mdash; **Add SOA Email**. |
-| **Reconnect an existing mailbox** | Yes &mdash; **Reconnect** on that row. |
-| **Remove a mailbox** | Not from this screen. Contact support. |
+| **Reconnect an existing mailbox** | Yes &mdash; **Authorize** on a lapsed row, or **Reconnect** on a **Connected** one. |
+| **Remove a mailbox** | Yes &mdash; **Disconnect** on a mailbox that has imported data, or **Delete** on one that never imported anything. Mynt asks you to confirm first. |
 
 ## To change which mailbox Mynt reads
 
 1. Add the correct mailbox with **Add SOA Email**.
-2. Confirm it shows **Connected** and that data starts arriving from it.
-3. Ask support to remove the old one once you are satisfied.
+2. Confirm it shows **Connected**. If **Settings → Outlet Mapping** shows it under **Historic ingestion**, press **Activate**, then check that data starts arriving from it.
+3. Press **Disconnect** on the old mailbox and confirm.
 
-Adding first and removing second means you are never disconnected from both at once.
+Adding first and disconnecting second means you are never without a connected mailbox.
 
 ## To cut access off immediately
 
 Revoke Mynt from Google directly at [Google Account → Third-party access](https://myaccount.google.com/permissions). That takes effect at once &mdash; Mynt can no longer read that mailbox.
 
-> **Tip:** After revoking at Google, tell support so the Mynt side is cleaned up too. Otherwise the mailbox stays listed and simply stops working, which looks like a fault later.
+> **Tip:** After revoking at Google, also press **Disconnect** on that row in Mynt. Otherwise the mailbox stays listed and simply stops working, which looks like a fault later.
 
 ## What happens to data already collected
 
-It stays. Disconnecting stops new email being read; it does not erase your dashboards or history. If you want the collected data removed as well, say so explicitly when you contact support &mdash; see [disconnecting and removing access](../security/04-how-to-disconnect-sign-out-remove-access.md).
+It stays. As the confirmation says: &ldquo;Ingestion stops. Data already imported stays. Reconnecting later imports only new statements.&rdquo; If you want the collected data removed as well, contact support &mdash; see [disconnecting and removing access](../security/04-how-to-disconnect-sign-out-remove-access.md).
 
 ## Related guides
 

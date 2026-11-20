@@ -274,25 +274,21 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Raise a Data Issue Support Ticket</h1>
-  <p class="meta">Data Issues · Read time: 3 minutes · Includes a short video · Last updated 25 August 2026</p>
+  <p class="meta">Data Issues · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">When the checks have not solved it, raise a ticket from inside Mynt. A ticket with the right details is usually answered in one reply instead of three.</div>
 
   <h2>Watch it done</h2>
 
   <div class="video-box">
-    <video controls preload="metadata" poster="assets/raise-data-issue-ticket/demo-poster.jpg" style="width:100%;border-radius:8px">
-      <source src="assets/raise-data-issue-ticket/demo.mp4" type="video/mp4" />
-      Your browser cannot play this video. <a href="assets/raise-data-issue-ticket/demo.mp4">Download it instead</a>.
+    <video controls preload="metadata" poster="assets/raise-data-issue-ticket/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/raise-data-issue-ticket/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/raise-data-issue-ticket/demo.mp4?v=20261022">Download it instead</a>.
     </video>
     <p class="video-caption">Choosing an issue type, describing the problem and submitting the ticket</p>
   </div>
@@ -301,20 +297,21 @@
 
   <p>Open <strong>Help &amp; Support</strong> from the left menu and scroll to <strong>Raise a Ticket</strong>. Your name and email are filled in for you.</p>
 
-  <figure><img src="assets/raise-data-issue-ticket/step-01-ticket-form.png" alt="The Raise a Ticket form with name and email already filled in" /><figcaption>Only <strong>Issue Type</strong> and <strong>Description</strong> need your input</figcaption></figure>
+  <figure><img src="assets/raise-data-issue-ticket/step-01-ticket-form.png?v=20261022" alt="The Raise a Ticket form with name and email already filled in" /><figcaption>Only <strong>Issue Type</strong> and <strong>Description</strong> need your input</figcaption></figure>
 
   <h2>Pick the right issue type</h2>
 
   <p>The issue type decides who picks the ticket up, so it is worth getting right.</p>
 
-  <figure><img src="assets/raise-data-issue-ticket/step-02-issue-types.png" alt="The Issue Type list with all nine options" /><figcaption>Nine issue types &mdash; pick the closest one</figcaption></figure>
+  <figure><img src="assets/raise-data-issue-ticket/step-02-issue-types.png?v=20261022" alt="The Issue Type list with all nine options" /><figcaption>Nine issue types &mdash; pick the closest one</figcaption></figure>
 
   <table class="glossary">
     <tr><th>Missing Data</th><td>A period, outlet or platform shows nothing.</td></tr>
     <tr><th>Wrong Calculation</th><td>A figure is present but looks incorrect.</td></tr>
     <tr><th>Email Connection</th><td>A mailbox will not connect, or has stopped syncing.</td></tr>
     <tr><th>Outlet Mapping</th><td>A restaurant ID is on the wrong outlet, or will not save.</td></tr>
-    <tr><th>Billing / Payment</th><td>Invoices, licences, renewals or a failed payment.</td></tr>
+    <tr><th>Billing</th><td>Invoices, licences or renewals.</td></tr>
+    <tr><th>Payment</th><td>A failed or missing payment.</td></tr>
     <tr><th>Report</th><td>A report will not generate, download or arrive on schedule.</td></tr>
     <tr><th>Bug</th><td>Something in the app is broken or behaving oddly.</td></tr>
     <tr><th>Other</th><td>Anything that does not fit the list.</td></tr>
@@ -322,7 +319,7 @@
 
   <h2>Write a description support can act on</h2>
 
-  <p>Description takes up to 2,000 characters and a counter tracks what you have used. Include all five:</p>
+  <p>Description needs at least 10 characters and takes up to 2,000; a counter tracks what you have used. Include all five:</p>
 
   <ol>
     <li><strong>Which outlet</strong> &mdash; the outlet name or its licence ID.</li>
@@ -332,13 +329,17 @@
     <li><strong>What you already checked</strong> &mdash; filters, mapping, Email Integration status.</li>
   </ol>
 
-  <figure><img src="assets/raise-data-issue-ticket/step-03-filled-form.png" alt="A completed ticket with issue type Missing Data and a specific description" /><figcaption>Specific dates, one platform, one outlet &mdash; enough to investigate without a follow-up question</figcaption></figure>
+  <figure><img src="assets/raise-data-issue-ticket/step-03-filled-form.png?v=20261022" alt="A completed ticket with issue type Missing Data and a specific description" /><figcaption>Specific dates, one platform, one outlet &mdash; enough to investigate without a follow-up question</figcaption></figure>
 
   <div class="tip">Say what you already ruled out. It stops the first reply being a list of checks you have already done.</div>
 
   <h2>After you submit</h2>
 
-  <p>Press <strong>Submit Ticket</strong>. The form clears, and the ticket appears under <strong>Your Tickets</strong> below, where you can carry on the conversation and attach files. Replies sync there live.</p>
+  <p>If support needs to see what you see, turn on the <strong>Allow Mynt support to view my dashboards</strong> switch before you submit. Access is read-only and lasts 72 hours; you can turn it off at any time in <strong>Settings → Security</strong>.</p>
+
+  <p>Press <strong>Submit Ticket</strong>. Mynt confirms with <strong>Ticket <em>reference</em> created. Our team will contact you within 24 hours.</strong> The form clears, and the ticket appears under <strong>Your Tickets</strong> below, where support&rsquo;s replies appear.</p>
+
+  <p>You can reply, or attach files, only while the ticket&rsquo;s status is <strong>Waiting for Customer</strong>. You can attach up to 3 files &mdash; JPEG, PNG, WebP, GIF or PDF &mdash; each under 2 MB.</p>
 
   <h2>Reaching support directly</h2>
 

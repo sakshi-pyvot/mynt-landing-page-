@@ -1,6 +1,6 @@
 # Getting Started with Mynt: The Complete Setup Guide
 
-*Getting Started · Read time: 5 minutes · Article only · Last updated 25 August 2026*
+*Getting Started · Read time: 5 minutes · Article only · Last updated 22 October 2026*
 
 Five steps take you from a new account to a dashboard with your own numbers in it. Each step has its own guide.
 
@@ -31,7 +31,10 @@ A licence activates one outlet for twelve months and covers every platform that 
 
 ## When it is working
 
-The dashboard shows a **LAST UPDATED** date and figures against every headline card, and **Settings → Outlet Mapping** shows **Unmapped: 0**. See [finding your way around](06-understanding-mynt-navigation-date-filters-platform-filters-views.md).
+![Mynt Overview after setup: headline cards, filters and the sidebar](assets/getting-started-with-mynt-complete-setup-guide/step-01-overview.png?v=20261022)
+*Once data is flowing, every headline card on <strong>Overview</strong> has a figure*
+
+**Overview** shows a **Last updated** date and figures against every headline card, and **Settings → Outlet Mapping** shows **Unmapped: 0**. See [finding your way around](06-understanding-mynt-navigation-date-filters-platform-filters-views.md).
 
 ## If something is missing
 

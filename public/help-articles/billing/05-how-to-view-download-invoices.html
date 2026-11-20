@@ -274,25 +274,21 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to View and Download Invoices</h1>
-  <p class="meta">Billing · Read time: 3 minutes · Includes a short video · Last updated 25 August 2026</p>
+  <p class="meta">Billing · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">Every payment on your account has an invoice you can open on screen or download as a PDF for your accountant.</div>
 
   <h2>Watch it done</h2>
 
   <div class="video-box">
-    <video controls preload="metadata" poster="assets/view-download-invoices/demo-poster.jpg" style="width:100%;border-radius:8px">
-      <source src="assets/view-download-invoices/demo.mp4" type="video/mp4" />
-      Your browser cannot play this video. <a href="assets/view-download-invoices/demo.mp4">Download it instead</a>.
+    <video controls preload="metadata" poster="assets/view-download-invoices/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/view-download-invoices/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/view-download-invoices/demo.mp4?v=20261022">Download it instead</a>.
     </video>
     <p class="video-caption">Finding a payment in the history and downloading its invoice</p>
   </div>
@@ -301,25 +297,25 @@
 
   <p>Open <strong>Billing</strong> and scroll to <strong>Invoices &amp; Payment History</strong>. Every licence purchase and token top-up is listed, newest first.</p>
 
-  <figure><img src="assets/view-download-invoices/step-01-invoices-table.png" alt="The Invoices and Payment History table listing licence and token purchases" /><figcaption>Licence purchases and token top-ups, newest first, each with its status and actions</figcaption></figure>
+  <figure><img src="assets/view-download-invoices/step-01-invoices-table.png?v=20261022" alt="The Invoices and Payment History table listing licence and token purchases" /><figcaption>Licence purchases and token top-ups, newest first, each with its status and actions</figcaption></figure>
 
   <table class="glossary">
     <tr><th>Date</th><td>When the payment was made.</td></tr>
     <tr><th>Description</th><td>What was bought &mdash; an annual licence, or a token pack.</td></tr>
-    <tr><th>Licenses</th><td>How many licences that payment covered.</td></tr>
+    <tr><th>Licenses</th><td>How many licences that payment covered. Token top-ups show the number of tokens instead.</td></tr>
     <tr><th>Amount</th><td>What was charged, GST included.</td></tr>
     <tr><th>Invoice</th><td>The invoice number, e.g. MYNT-2026/00020. Quote this to support or your accountant.</td></tr>
     <tr><th>Status</th><td><strong>Paid</strong>, <strong>Pending</strong>, <strong>Failed</strong> or <strong>Cancelled</strong>.</td></tr>
-    <tr><th>Actions</th><td><strong>View</strong> opens the invoice; <strong>PDF</strong> downloads it.</td></tr>
+    <tr><th>Actions</th><td><strong>View</strong> opens the invoice PDF in a new tab; <strong>PDF</strong> downloads it.</td></tr>
   </table>
 
   <h2>Opening or downloading one</h2>
 
-  <figure><img src="assets/view-download-invoices/step-02-invoice-row.png" alt="A single invoice row showing its invoice number" /><figcaption>Every paid row carries an invoice number and both actions</figcaption></figure>
+  <figure><img src="assets/view-download-invoices/step-02-invoice-row.png?v=20261022" alt="A single invoice row showing its invoice number" /><figcaption>Every paid row carries an invoice number and both actions</figcaption></figure>
 
   <ol>
     <li>Find the payment by date or amount.</li>
-    <li>Press <strong>View</strong> to read it on screen.</li>
+    <li>Press <strong>View</strong> to open it in a new tab.</li>
     <li>Press <strong>PDF</strong> to download it &mdash; that is the copy to send to your accountant.</li>
   </ol>
 
@@ -327,7 +323,7 @@
 
   <h2>Rows without an invoice</h2>
 
-  <p>A <strong>Cancelled</strong> row shows <strong>&mdash;</strong> instead of actions: no money changed hands, so there is nothing to invoice. A <strong>Pending</strong> row shows <strong>Retry</strong> instead &mdash; the payment has not completed yet. See <a href="07-troubleshooting-failed-payments-renewals.html">failed payments and renewals</a>.</p>
+  <p>A <strong>Failed</strong> or <strong>Cancelled</strong> row shows <strong>&mdash;</strong> instead of actions: the payment did not complete, so there is nothing to invoice. A <strong>Pending</strong> row shows <strong>Retry</strong> instead &mdash; the payment has not completed yet. See <a href="07-troubleshooting-failed-payments-renewals.html">failed payments and renewals</a>.</p>
 
   <h2>Related guides</h2>
 

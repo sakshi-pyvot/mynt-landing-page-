@@ -274,59 +274,55 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Understanding the Mynt Dashboard</h1>
-  <p class="meta">Dashboard & Metrics · Read time: 5 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Dashboard & Metrics · Read time: 5 minutes · Article only · Last updated 22 October 2026</p>
 
-  <div class="hello">The dashboard answers one question: how did the business do over a chosen period? Everything on it is either the period you picked, a number for that period, or a comparison against the period before.</div>
+  <div class="hello">Overview answers one question: how did the business do over a chosen period? Everything on it is either the period you picked, a number for that period, or a comparison against the period before.</div>
 
   <h2>Read the header first</h2>
 
-  <figure><img src="assets/understanding-the-mynt-dashboard/step-01-header-and-period.png" alt="The dashboard header with last updated, the selected period and the comparison period" /><figcaption>Three chips: how fresh the data is, what you are looking at, and what it is measured against</figcaption></figure>
+  <figure><img src="assets/understanding-the-mynt-dashboard/step-01-header-and-period.png?v=20261022" alt="The Overview header with last updated, the selected period and the comparison period" /><figcaption>Three chips: how fresh the data is, what you are looking at, and what it is measured against</figcaption></figure>
 
   <table class="glossary">
-    <tr><th>LAST UPDATED</th><td>The most recent day Mynt holds data for. If it is stale, no newer payout email has arrived.</td></tr>
+    <tr><th>Last updated</th><td>The most recent day Mynt holds data for. If it is stale, no newer payout email has arrived.</td></tr>
     <tr><th>The period chip</th><td>The range currently on screen &mdash; the label plus its exact dates.</td></tr>
-    <tr><th>LAST PERIOD</th><td>The range every <em>vs last period</em> figure is compared against.</td></tr>
+    <tr><th>Last Period</th><td>The range every <em>vs last period</em> figure is compared against.</td></tr>
   </table>
 
   <h2>The headline cards</h2>
 
   <p>Ten cards summarise the period. They fall into three groups: what customers spent, what it cost you, and what you kept.</p>
 
-  <figure><img src="assets/understanding-the-mynt-dashboard/step-02-headline-cards.png" alt="The ten headline metric cards on the dashboard" /><figcaption>Sales at the top, costs in the middle, what you keep at the end</figcaption></figure>
+  <figure><img src="assets/understanding-the-mynt-dashboard/step-02-headline-cards.png?v=20261022" alt="The ten headline metric cards on Overview" /><figcaption>Sales at the top, costs in the middle, what you keep at the end</figcaption></figure>
 
   <table class="glossary">
     <tr><th>Gross Order Value</th><td>What customers were billed, before any platform deduction.</td></tr>
     <tr><th>Total Orders</th><td>Orders in the period.</td></tr>
     <tr><th>Average Order Value</th><td>Gross order value divided by orders.</td></tr>
-    <tr><th>Net Payout</th><td>What actually reaches your bank after everything is deducted.</td></tr>
-    <tr><th>Ad Spend</th><td>What you spent on platform advertising.</td></tr>
-    <tr><th>Platform Charges</th><td>Commission, payment gateway, delivery and other platform fees.</td></tr>
+    <tr><th>Net Payout</th><td>What is payable to you: gross order value minus ad spend, discounts, platform charges and complaint refunds, plus any payout for cancelled orders.</td></tr>
+    <tr><th>Ad Spend (incl. GST)</th><td>What you spent on platform advertising.</td></tr>
+    <tr><th>Platform Charges</th><td>Commission, payment gateway, long distance, government and other platform charges, net of any TDS 194H commission refund.</td></tr>
     <tr><th>Discounts</th><td>The value of discounts and coupons applied.</td></tr>
     <tr><th>Refund for Complaint</th><td>Refunds issued against customer complaints.</td></tr>
-    <tr><th>Payout for Cancelled Orders</th><td>What you were still paid on cancelled orders.</td></tr>
-    <tr><th>Net Margin</th><td>Net payout as a percentage of gross order value.</td></tr>
+    <tr><th>Payout for Cancelled Orders</th><td>What you were still paid on cancelled orders. It is added to Net Payout.</td></tr>
+    <tr><th>Payout %</th><td>Net Payout as a percentage of gross order value. A payout ratio, not your final profit.</td></tr>
   </table>
 
-  <div class="tip">Every percentage on the dashboard compares against the <strong>LAST PERIOD</strong> chip in the header &mdash; the period immediately before the one you are viewing. It is not a year-on-year comparison.</div>
+  <div class="tip">Every percentage on the dashboard compares against the <strong>Last Period</strong> chip in the header &mdash; the period immediately before the one you are viewing. It is not a year-on-year comparison.</div>
 
   <h2>Below the cards</h2>
 
   <ul>
-    <li><strong>Platform Comparison</strong> &mdash; the same metrics split by Zomato, Swiggy and Toing.</li>
-    <li><strong>Trends</strong> &mdash; sales, payout or orders plotted over the period.</li>
-    <li><strong>AI Insights</strong> &mdash; short prompts about what moved and what to look at.</li>
+    <li><strong>Platform Comparison</strong> &mdash; the same metrics split by Zomato and Swiggy, plus Toing if your account has Toing data.</li>
+    <li><strong>Trends</strong> &mdash; one chart with Orders as bars and Sales and Payout as lines, in <strong>Daily</strong>, <strong>Hourly</strong>, <strong>Mealtime</strong> or <strong>Day Type</strong> view.</li>
+    <li><strong>PIA's Insights</strong> &mdash; short prompts about what moved and what to look at.</li>
   </ul>
 
-  <p>See <a href="09-how-to-read-growth-trends-comparisons-ai-insights.html">reading trends, comparisons and AI insights</a>.</p>
+  <p>See <a href="09-how-to-read-growth-trends-comparisons-ai-insights.html">reading trends, comparisons and PIA's Insights</a>.</p>
 
   <h2>Everything is filtered</h2>
 

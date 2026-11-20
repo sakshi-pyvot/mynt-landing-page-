@@ -274,33 +274,39 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>What to Do When Data Is Missing for Certain Dates</h1>
-  <p class="meta">Data Issues · Read time: 5 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Data Issues · Read time: 5 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">Most weeks look right, but one specific stretch is blank. Four things cause that, in the order worth checking them.</div>
 
+  <h2>Watch it done</h2>
+
+  <div class="video-box">
+    <video controls preload="metadata" poster="assets/missing-certain-dates/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/missing-certain-dates/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/missing-certain-dates/demo.mp4?v=20261022">Download it instead</a>.
+    </video>
+    <p class="video-caption">Picking a date range in the calendar, checking one platform at a time, then the outlet mapping</p>
+  </div>
+
   <h2>Step 1 — Rule out the filters first</h2>
 
-  <p>A wrong filter looks exactly like missing data. Open the filter panel on the left and set <strong>DATE</strong> to a range that definitely covers the gap.</p>
+  <p>A wrong filter looks exactly like missing data. Open the filter panel on the left and set <strong>Date</strong> to a range that definitely covers the gap.</p>
 
-  <figure><img src="assets/missing-certain-dates/step-01-date-presets.png" alt="The DATE filter open, showing Latest Week, Latest Month, Previous Month and Custom Range" /><figcaption>Use Custom Range to target the exact dates you think are missing</figcaption></figure>
+  <figure><img src="assets/missing-certain-dates/step-01-date-presets.png?v=20261022" alt="The Date filter with Week, Month and Prev. month, and the date-range field open on its calendar" /><figcaption>Click the date-range field and pick the start and end of the dates you think are missing</figcaption></figure>
 
   <table class="glossary">
-    <tr><th>Latest Week</th><td>The most recent full week Mynt holds.</td></tr>
-    <tr><th>Latest Month</th><td>The most recent full month.</td></tr>
-    <tr><th>Previous Month</th><td>The month before that.</td></tr>
-    <tr><th>Custom Range</th><td>Any two dates you choose &mdash; the one to use when chasing a specific gap.</td></tr>
+    <tr><th>Week</th><td>The 7 days ending on the latest date Mynt has data for.</td></tr>
+    <tr><th>Month</th><td>From the 1st of that month up to the latest date Mynt has data for.</td></tr>
+    <tr><th>Prev. month</th><td>The whole calendar month before that one.</td></tr>
+    <tr><th>The date range</th><td>Click the field under the three options to open a calendar, then pick any two dates &mdash; the one to use when chasing a specific gap.</td></tr>
   </table>
 
-  <p>While you are there, set <strong>PLATFORM</strong> to <strong>All Platforms</strong> and <strong>SELECT OUTLET</strong> to <strong>Select all</strong>. Narrow filters are the single most common cause of a &ldquo;missing&rdquo; week.</p>
+  <p>While you are there, set <strong>Platform</strong> to <strong>All Platforms</strong> and <strong>Select Outlet</strong> to <strong>Select all</strong>, then press <strong>Apply</strong> &mdash; nothing changes until you do. Narrow filters are the single most common cause of a &ldquo;missing&rdquo; week.</p>
 
   <h2>Step 2 — Check the payout email exists</h2>
 
@@ -317,11 +323,11 @@
 
   <p>If a restaurant ID was not mapped when Mynt processed that week&rsquo;s email, that outlet&rsquo;s numbers for that week are missing or under-reported. Go to <strong>Settings &rarr; Outlet Mapping</strong> and check the <strong>Platform Mapping</strong> table.</p>
 
-  <figure><img src="assets/missing-certain-dates/step-02-mapping-status.png" alt="The Platform Mapping table listing each outlet, its licence ID and its linked platform IDs" /><figcaption>Every outlet should show at least one platform ID. Orange <strong>Not mapped</strong> means it is being skipped.</figcaption></figure>
+  <figure><img src="assets/missing-certain-dates/step-02-mapping-status.png?v=20261022" alt="The Platform Mapping table listing each outlet, its licence ID and its linked platform IDs" /><figcaption>Every outlet should show at least one platform ID. Orange <strong>Not mapped</strong> means it is being skipped.</figcaption></figure>
 
   <h2>Step 4 — Check whether it is one platform or both</h2>
 
-  <p>Set <strong>PLATFORM</strong> to <strong>Zomato</strong> alone, then <strong>Swiggy</strong> alone. If only one is blank, the problem is that platform&rsquo;s ID or its emails, not Mynt as a whole. See <a href="04-why-zomato-swiggy-data-missing-incomplete.html">why one platform can be missing</a>.</p>
+  <p>Set <strong>Platform</strong> to <strong>Zomato</strong> alone and press <strong>Apply</strong>, then do the same for <strong>Swiggy</strong>. If only one is blank, the problem is that platform&rsquo;s ID or its emails, not Mynt as a whole. See <a href="04-why-zomato-swiggy-data-missing-incomplete.html">why one platform can be missing</a>.</p>
 
   <h2>Step 5 — Raise a ticket with the right details</h2>
 

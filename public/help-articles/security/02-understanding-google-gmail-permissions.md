@@ -1,6 +1,6 @@
 # Understanding Google and Gmail Permissions
 
-*Security · Read time: 3 minutes · Article only · Last updated 25 August 2026*
+*Security · Read time: 3 minutes · Article only · Last updated 22 October 2026*
 
 ---
 
@@ -16,7 +16,7 @@
 
 | Login | Purpose |
 |-------|---------|
-| **Mynt sign-in** (email + password) | Opens your Mynt dashboard — sales, reports, settings |
+| **Mynt sign-in** (your email, then Mynt&rsquo;s secure sign-in page &mdash; or Google) | Opens your Mynt dashboard — sales, reports, settings |
 | **Google permission** | Lets Mynt **read your payout emails** to build your dashboards |
 
 You can be signed in to Mynt without Gmail connected, and connecting Gmail does not change your Mynt password.
@@ -29,25 +29,24 @@ See [How sign-in works](01-how-sign-in-account-access-work.md).
 
 When you connect or reconnect a mailbox, Mynt sends you to Google. Google — not Mynt — asks which account you want to use.
 
-![Google account chooser](assets/understanding-google-gmail-permissions/google-choose-account.png)
+![Google account chooser](assets/understanding-google-gmail-permissions/google-choose-account.png?v=20261022)
 
-Then Google asks you to confirm. If you have connected this mailbox before, Google shows a short "signing back in" screen with a **Continue** button. The first time you connect, Google instead lists each permission Mynt is asking for before you approve.
+Then Google lists each permission Mynt is asking for. You see this full screen every time you connect or reconnect, not just the first time. Tick **View your email messages and settings** (or **Select all**) &mdash; without it, nothing is connected.
 
-![Google permission screen for Mynt](assets/understanding-google-gmail-permissions/google-consent-screen.png)
+![Google permission screen for Mynt](assets/understanding-google-gmail-permissions/google-consent-screen.png?v=20261022)
 
-Nothing is shared with Mynt until you tap **Continue** (or **Allow** on the first-time screen). Tapping **Cancel** leaves your mailbox untouched.
+Back in Mynt, a box asks **Connect &lt;mailbox&gt; to &lt;your business&gt;?** Nothing is connected until you press **Connect** there. Pressing **Cancel**, on Google&rsquo;s screen or in Mynt, leaves your mailbox untouched.
 
 ---
 
 ## What Mynt asks for
 
-Mynt requests exactly three things from Google:
+The permission that matters is read-only Gmail. Google may also list basic account details alongside it.
 
 | Permission | Why |
 |------------|-----|
-| **Your email address** | To know which mailbox is connected |
-| **Basic sign-in identity** | To match the mailbox to your Mynt account |
 | **Read-only access to Gmail** | To find and read payout emails from Zomato, Swiggy and other platforms |
+| **Basic account details** (such as your email address) | To know which mailbox is connected |
 
 The Gmail permission is **read-only**. That is a restriction Google enforces, not just a promise from us.
 

@@ -1,6 +1,6 @@
 # How to Edit an Existing Outlet Mapping
 
-*Outlet Mapping · Read time: 3 minutes · Includes a short video · Last updated 25 August 2026*
+*Outlet Mapping · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026*
 
 ---
 
@@ -12,9 +12,9 @@
 
 ## Watch this first
 
-**[▶ Watch demo video](assets/edit-existing-outlet-mapping/demo.mp4)**
+**[▶ Watch video](assets/edit-existing-outlet-mapping/demo.mp4?v=20261022)**
 
-![Video poster](assets/edit-existing-outlet-mapping/demo-poster.jpg)
+![Video poster](assets/edit-existing-outlet-mapping/demo-poster.jpg?v=20261022)
 
 *Renaming an outlet and removing a platform link.*
 
@@ -30,9 +30,9 @@ Have the correct restaurant ID to hand — from your payout email, or from the l
 
 ### Step 1 — Find the outlet
 
-Go to **Settings → Outlet Mapping** and scroll to **Platform Mapping**. Mapped outlets show a tag per platform, such as **Zomato · 20942752**. Unmapped ones show **Not mapped** in orange.
+Go to **Settings → Outlet Mapping** and scroll to **Platform Mapping**. Mapped outlets show a tag per platform, such as **Zomato · 20942752**. Unmapped ones show **Not mapped** in grey.
 
-![Existing platform mappings](assets/edit-existing-outlet-mapping/step-01-existing-mappings.png)
+![Existing platform mappings](assets/edit-existing-outlet-mapping/step-01-existing-mappings.png?v=20261022)
 
 ---
 
@@ -40,7 +40,7 @@ Go to **Settings → Outlet Mapping** and scroll to **Platform Mapping**. Mapped
 
 Tap **Edit** on that outlet's row. The row highlights and opens with **Cancel** and **Save** buttons.
 
-![Row opened for editing](assets/edit-existing-outlet-mapping/step-02-tap-edit.png)
+![Row opened for editing](assets/edit-existing-outlet-mapping/step-02-tap-edit.png?v=20261022)
 
 ---
 
@@ -51,7 +51,7 @@ Tap **Edit** on that outlet's row. The row highlights and opens with **Cancel** 
 - **Add a platform** — tap **+ Zomato** or **+ Swiggy**.
 - **Remove a platform** — tap the **×** beside it.
 
-![Editing the outlet fields](assets/edit-existing-outlet-mapping/step-03-edit-fields.png)
+![Editing the outlet fields](assets/edit-existing-outlet-mapping/step-03-edit-fields.png?v=20261022)
 
 > **Toing** cannot be edited here. It follows your Swiggy ID automatically.
 
@@ -61,9 +61,9 @@ Tap **Edit** on that outlet's row. The row highlights and opens with **Cancel** 
 
 Tap **Save** to apply, or **Cancel** to discard.
 
-![Saving the changes](assets/edit-existing-outlet-mapping/step-04-tap-save.png)
+![Saving the changes](assets/edit-existing-outlet-mapping/step-04-tap-save.png?v=20261022)
 
-Changes apply immediately. Historic data stays with the outlet; new payouts follow the updated ID.
+The new link is saved straight away, and payouts for that restaurant ID count against this outlet.
 
 ---
 
@@ -81,11 +81,11 @@ See [Brands, groups and multiple outlets](04-how-outlet-mapping-works-multiple-o
 
 ## Common questions
 
-**Will editing break my past data?** — No. Mynt keeps what it already collected and applies the new link going forward.
+**Will editing break my past data?** — Editing changes which outlet a restaurant ID counts against. If an outlet's past figures look wrong after a change, raise a ticket and we will check it.
 
 **Can I remove a platform link entirely?** — Yes. Tap **×** next to it, then **Save**. That outlet stops counting payouts from that platform.
 
-**How soon do dashboards update?** — Usually within a few minutes.
+**How soon do dashboards update?** — When Mynt next processes your payout emails. See [How often Mynt syncs](../email-integration/05-how-often-sync.md).
 
 **Why can't I edit Toing?** — Toing shares Swiggy's ID, so Mynt fills it in for you.
 

@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Troubleshooting Failed Payments and Renewals</h1>
-  <p class="meta">Billing · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Billing · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">A payment did not go through, or a renewal is due. Here is how to tell which, and what to do about it.</div>
 
@@ -291,34 +287,34 @@
 
   <p>Every row in <strong>Invoices &amp; Payment History</strong> carries a status, and the status tells you whether money moved.</p>
 
-  <figure><img src="assets/troubleshooting-failed-payments-renewals/step-01-payment-status.png" alt="A pending payment row with a Retry action" /><figcaption>A <strong>Pending</strong> row keeps a <strong>Retry</strong> link &mdash; the payment can be completed from here</figcaption></figure>
+  <figure><img src="assets/troubleshooting-failed-payments-renewals/step-01-payment-status.png?v=20261022" alt="A pending payment row with a Retry action" /><figcaption>A <strong>Pending</strong> row keeps a <strong>Retry</strong> link &mdash; the payment can be completed from here</figcaption></figure>
 
   <table class="glossary">
     <tr><th>Paid</th><td>Complete. The invoice is available under Actions.</td></tr>
     <tr><th>Pending</th><td>Started but not completed. A <strong>Retry</strong> link reopens the payment.</td></tr>
-    <tr><th>Failed</th><td>The payment did not go through. Nothing was charged.</td></tr>
+    <tr><th>Failed</th><td>The payment did not go through. There is no Retry: start the purchase again.</td></tr>
     <tr><th>Cancelled</th><td>Abandoned before payment. No invoice, and <strong>&mdash;</strong> under Actions.</td></tr>
   </table>
 
   <h2>If a payment failed</h2>
 
   <ol>
-    <li>Check your bank or UPI app for a debit. A <strong>Failed</strong> or <strong>Cancelled</strong> row means nothing was charged.</li>
+    <li>Check your bank or UPI app for a debit. A <strong>Failed</strong> or <strong>Cancelled</strong> row means the payment did not complete.</li>
     <li>If a <strong>Retry</strong> link is showing, use it &mdash; it reopens the original payment rather than creating a second one.</li>
-    <li>If there is no Retry link, start the purchase again from <strong>Purchase Outlet Licenses</strong>.</li>
-    <li>Try a different method &mdash; UPI, credit card, net banking and auto debit are all accepted.</li>
+    <li>If there is no Retry link, start again: <strong>Purchase Outlet Licenses</strong> for licences, <strong>Buy Now</strong> under <strong>Token Purchase</strong> for tokens, or <strong>Renew licences</strong> for a renewal.</li>
+    <li>Try a different method on Razorpay&rsquo;s payment page.</li>
     <li>If you were charged but the row is not <strong>Paid</strong>, contact support with the date, amount and your bank reference. Do not pay twice.</li>
   </ol>
 
-  <div class="tip">Never start a second payment for the same licence because the first looked stuck. Use <strong>Retry</strong>, or check with support first.</div>
+  <div class="tip">Never start a second payment for the same licence because the first looked stuck. Use <strong>Retry</strong>, or check with support first. If you close a payment dialog while a payment is in progress, Mynt asks <strong>Cancel this payment?</strong> &mdash; <strong>Keep paying</strong> leaves it running, <strong>Yes, cancel</strong> cancels it.</div>
 
   <h2>If a renewal is due</h2>
 
-  <p>Licences do not renew silently &mdash; each one runs twelve months from its own purchase date and then stops. Watch the countdown on the <strong>Annual Licensing</strong> card.</p>
+  <p>If your account has an active auto-renew mandate, your plan renews automatically. Otherwise each licence runs twelve months and then stops. When any licence is expired or due within 30 days, Billing shows a banner with <strong>Renew now</strong>, and the <strong>Renew licences</strong> button is highlighted.</p>
 
-  <figure><img src="assets/troubleshooting-failed-payments-renewals/step-02-days-left.png" alt="The Annual Licensing summary showing active licences and days until the next expiry" /><figcaption>The earliest expiry across every outlet, in one line</figcaption></figure>
+  <figure><img src="assets/troubleshooting-failed-payments-renewals/step-02-days-left.png?v=20261022" alt="The Annual Licensing summary showing active licences and the next expiry date" /><figcaption>Active licences and the date your next licence expires</figcaption></figure>
 
-  <p>To renew, buy the licences you need from <strong>Purchase Outlet Licenses</strong>. The new licence starts on the day you buy it.</p>
+  <p>To renew, press <strong>Renew licences</strong> or <strong>Renew now</strong>, choose how many licences and which outlets, and pay via Razorpay. Each renewed licence is extended by 12 months. See <a href="04-understanding-licence-dates-expiry-renewals.html">licence dates, expiry and renewals</a>.</p>
 
   <h2>If an outlet stopped collecting after a renewal</h2>
 

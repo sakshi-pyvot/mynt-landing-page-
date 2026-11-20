@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How Incorrect Outlet Mapping Affects Your Data</h1>
-  <p class="meta">Data Issues · Read time: 5 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Data Issues · Read time: 5 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Outlet mapping decides which orders belong to which shop. Get it wrong and the numbers are not slightly off &mdash; they are attributed to the wrong outlet, or dropped entirely.</div>
 
@@ -295,17 +291,17 @@
 
   <p>The top of <strong>Settings &rarr; Outlet Mapping</strong> tells you the state of every outlet at a glance.</p>
 
-  <figure><img src="assets/incorrect-outlet-mapping/step-01-unmapped-stat.png" alt="Outlet mapping counters: outlets, mapped, unmapped, brands and groups" /><figcaption><strong>UNMAPPED</strong> above zero means orders are being dropped right now</figcaption></figure>
+  <figure><img src="assets/incorrect-outlet-mapping/step-01-unmapped-stat.png?v=20261022" alt="Outlet mapping counters: outlets, mapped, unmapped, brands and groups" /><figcaption><strong>Unmapped</strong> above zero means orders are being dropped right now</figcaption></figure>
 
   <h2>Symptom 1 — an outlet is unmapped</h2>
 
-  <p>An unmapped outlet shows <strong>Not mapped</strong> in orange and contributes nothing to any total.</p>
+  <p>An unmapped outlet shows <strong>Not mapped</strong> in grey and contributes nothing to any total.</p>
 
-  <figure><img src="assets/incorrect-outlet-mapping/step-02-not-mapped-row.png" alt="An outlet row reading Not mapped in orange" /><figcaption>This outlet contributes nothing to any dashboard figure</figcaption></figure>
+  <figure><img src="assets/incorrect-outlet-mapping/step-02-not-mapped-row.png?v=20261022" alt="An outlet row reading Not mapped in grey" /><figcaption>This outlet contributes nothing to any dashboard figure</figcaption></figure>
 
   <p>Press <strong>Edit</strong> on the row, add the platform, pick the restaurant ID and press <strong>Save</strong>.</p>
 
-  <figure><img src="assets/incorrect-outlet-mapping/step-03-fix-in-edit-mode.png" alt="The same row in edit mode with the Zomato ID picker open" /><figcaption>Mynt only offers IDs it has actually seen in your payout mail</figcaption></figure>
+  <figure><img src="assets/incorrect-outlet-mapping/step-03-fix-in-edit-mode.png?v=20261022" alt="The same row in edit mode with the Zomato ID picker open" /><figcaption>Mynt only offers IDs it has actually seen in your payout mail</figcaption></figure>
 
   <h2>Symptom 2 — one outlet shows another shop&rsquo;s sales</h2>
 
@@ -319,11 +315,11 @@
 
   <p>Past periods stay attributed to the old outlet until support reprocesses them. Fixing the mapping corrects what comes next, not what is already filed.</p>
 
-  <h2>Symptom 3 — "Outlet platform res-id conflict"</h2>
+  <h2>Symptom 3 — "Already registered to another account"</h2>
 
-  <p>You press <strong>Save</strong> and this appears at the top of the screen:</p>
+  <p>You press <strong>Save</strong> and this appears in red at the top of the Outlet Mapping panel: <strong>That platform ID is already registered to another account &mdash; contact support to move it.</strong></p>
 
-  <figure><img src="assets/incorrect-outlet-mapping/step-04-duplicate-id-error.png" alt="The error shown when a restaurant ID already belongs to another account" /><figcaption>Mynt rejects the save and shows <strong>Outlet platform res-id conflict</strong></figcaption></figure>
+  <figure><img src="assets/incorrect-outlet-mapping/step-04-duplicate-id-error.png?v=20261022" alt="The error shown when a restaurant ID already belongs to another account" /><figcaption>Mynt rejects the save and says the platform ID is already registered to another account</figcaption></figure>
 
   <p>It means that restaurant ID is already registered to a <em>different Mynt account</em> &mdash; not just a different outlet of yours. It happens after an ownership change, or when the outlet was first set up under another login.</p>
 
@@ -332,7 +328,7 @@
   <h2>Symptom 4 — totals lower than they should be</h2>
 
   <ol>
-    <li>Is <strong>UNMAPPED</strong> above zero?</li>
+    <li>Is <strong>Unmapped</strong> above zero?</li>
     <li>Does every outlet show an ID for <em>every</em> platform it trades on?</li>
     <li>Is <strong>Settings &rarr; Email Integration</strong> showing <strong>Connected</strong>?</li>
     <li>Is the dashboard date range one where those outlets actually traded?</li>
@@ -343,7 +339,7 @@
   <table class="glossary">
     <tr><th>Orange <strong>Not mapped</strong></th><td>Edit the row, add the platform, pick the ID, Save.</td></tr>
     <tr><th>Wrong outlet&rsquo;s sales showing</th><td>Remove the ID from the wrong outlet first, then add it to the right one.</td></tr>
-    <tr><th><strong>Outlet platform res-id conflict</strong></th><td>The ID belongs to another account &mdash; only support can move it.</td></tr>
+    <tr><th>&ldquo;Already registered to another account&rdquo;</th><td>The ID belongs to another account &mdash; only support can move it.</td></tr>
     <tr><th>ID missing from the dropdown</th><td>Mynt has not seen it in your mail yet. Check the mailbox, then Rescan mailboxes.</td></tr>
     <tr><th>Past periods still wrong after a fix</th><td>Ask support to reprocess that date range.</td></tr>
   </table>

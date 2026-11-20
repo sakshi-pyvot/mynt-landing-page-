@@ -1,6 +1,6 @@
 # What Is Outlet Mapping and Why Is It Required?
 
-*Outlet Mapping · Read time: 3 minutes · Article only · Last updated 25 August 2026*
+*Outlet Mapping · Read time: 3 minutes · Article only · Last updated 22 October 2026*
 
 ---
 
@@ -24,7 +24,7 @@ Outlet mapping is where you link those numbers to the outlet in Mynt. Once linke
 |-----------------|--------------|
 | Payout emails arrive but Mynt cannot tell which outlet they belong to | Every payout lands against the right outlet |
 | Dashboard shows blanks or lumps everything together | Sales, charges and payouts split correctly per outlet |
-| Reports cannot be filtered by outlet, brand or group | Filters work properly |
+| Dashboard and report filters cannot pick that outlet out | Filters work properly |
 
 ---
 
@@ -32,7 +32,7 @@ Outlet mapping is where you link those numbers to the outlet in Mynt. Once linke
 
 Open **Settings** from the left menu, then tap **Outlet Mapping**.
 
-![Settings with Outlet Mapping open](assets/what-is-outlet-mapping-and-why-required/step-01-settings-sidebar.png)
+![Settings with Outlet Mapping open](assets/what-is-outlet-mapping-and-why-required/step-01-settings-sidebar.png?v=20261022)
 
 ---
 
@@ -50,7 +50,7 @@ The top of the page summarises where you stand:
 
 Below the cards, three buttons — **Platform Mapping**, **Brand Mapping**, **Group Mapping** — jump straight to each section.
 
-![Outlet Mapping overview with summary cards](assets/what-is-outlet-mapping-and-why-required/step-02-outlet-mapping-overview.png)
+![Outlet Mapping overview with summary cards](assets/what-is-outlet-mapping-and-why-required/step-02-outlet-mapping-overview.png?v=20261022)
 
 ---
 
@@ -65,11 +65,13 @@ This is the section that actually matters for your data. Its table has four colu
 | **Platform Mappings** | One tag per linked platform, e.g. `Zomato · 20942752` |
 | **Action** | The **Edit** button for that row |
 
-A **green dot** beside the licence ID means Mynt is collecting data for that outlet. A **grey dot** means it is not — usually because the outlet has no platform IDs linked yet.
+A **green dot** beside the licence ID means Mynt is ingesting data for that outlet. A **grey dot** means it is not ingesting — usually because no licence on your plan covers the outlet, or it has not been activated yet. Hover the dot to see **Ingesting** or **Not ingesting — covered by your plan?**
 
-An outlet with nothing linked shows **Not mapped** in orange.
+The dot does not tell you whether IDs are linked. That is what the **Platform Mappings** column shows.
 
-![Platform Mapping table](assets/what-is-outlet-mapping-and-why-required/step-03-platform-mapping-section.png)
+An outlet with nothing linked shows **Not mapped** in grey.
+
+![Platform Mapping table](assets/what-is-outlet-mapping-and-why-required/step-03-platform-mapping-section.png?v=20261022)
 
 ---
 
@@ -79,7 +81,7 @@ An outlet with nothing linked shows **Not mapped** in orange.
 - **After connecting your payout email** — Mynt detects IDs from your emails, so the list to choose from fills up once mail is flowing.
 - **Whenever you add an outlet** — a new outlet starts unmapped.
 
-> **Tip:** Brand and Group mapping are optional and do not affect whether data arrives. Only **Platform Mapping** does that.
+> **Tip:** Brand and Group mapping are optional and do not affect whether data arrives. Of the three sections, only **Platform Mapping** does that.
 
 ---
 
@@ -89,7 +91,7 @@ An outlet with nothing linked shows **Not mapped** in orange.
 
 **What if I map the wrong ID?** — Open the row, change it, save. See [How to edit an existing outlet mapping](03-how-to-edit-existing-outlet-mapping.md).
 
-**Does mapping change past data?** — Historic data stays where it is. New payouts follow the updated link.
+**Does mapping change past data?** — A link decides which outlet a restaurant ID's payouts count against. If an outlet's past figures look wrong after a change, raise a ticket and we will check it.
 
 ---
 

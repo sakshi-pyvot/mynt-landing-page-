@@ -1,6 +1,6 @@
 # How to Check Your Email Sync Status
 
-*Email Integration · Read time: 3 minutes · Includes a short video · Last updated 25 August 2026*
+*Email Integration · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026*
 
 Two places tell you whether email is flowing: how fresh your data is, and whether the fetch stage is healthy. Check both before assuming something is broken.
 
@@ -8,27 +8,27 @@ Two places tell you whether email is flowing: how fresh your data is, and whethe
 
 ## Watch it done
 
-**Video:** [The three-stop check: data freshness, the mailbox, then the fetch stage](assets/check-email-sync-status/demo.mp4)
+**Video:** [The three-stop check: data freshness, the mailbox, then the fetch stage](assets/check-email-sync-status/demo.mp4?v=20261022)
 
-![Video preview](assets/check-email-sync-status/demo-poster.jpg)
+![Video preview](assets/check-email-sync-status/demo-poster.jpg?v=20261022)
 
 ## Check 1 — how fresh the data is
 
-The **LAST UPDATED** chip on the dashboard names the most recent day Mynt holds data for.
+The **Last updated** chip on **Overview** names the most recent day Mynt holds data for.
 
-![The LAST UPDATED chip showing the newest day Mynt has data for](assets/check-email-sync-status/step-01-last-updated.png)
+![The Last updated chip showing the newest day Mynt has data for](assets/check-email-sync-status/step-01-last-updated.png?v=20261022)
 *If this is several days old, no newer payout email has been processed*
 
 ## Check 2 — is the fetch stage working
 
 Open **Help & Support** and look at **System Status**. **Email Fetch** is the stage that reads your mailboxes.
 
-![The Email Fetch row of System Status reading Working](assets/check-email-sync-status/step-02-email-fetch-status.png)
-*<strong>Working</strong> means Mynt is reading mailboxes normally*
+![The Email Fetch row of System Status reading Working](assets/check-email-sync-status/step-02-email-fetch-status.png?v=20261022)
+*<strong>Working</strong> means Mynt is reading mailboxes normally. <strong>Delayed</strong> or <strong>Down</strong> means it is not.*
 
 ## Check 3 — is the mailbox still connected
 
-In **Settings → Email Integration**, every mailbox should carry a green **Connected** badge. Anything else means Mynt has lost access &mdash; see [reconnecting](06-how-to-reconnect-gmail-when-connection-expires.md).
+In **Settings → Email Integration**, every mailbox should carry a green **Connected** badge. Anything else, such as **Needs Reauth**, **Error** or **Pending Connection**, means Mynt cannot read that mailbox. Press **Authorize** on its row &mdash; see [reconnecting](06-how-to-reconnect-gmail-when-connection-expires.md).
 
 ## Reading the three together
 
@@ -36,8 +36,8 @@ In **Settings → Email Integration**, every mailbox should carry a green **Conn
 |---|---|
 | **Fresh data, Working, Connected** | Nothing wrong. Any gap is on the platform&rsquo;s side, or a filter. |
 | **Stale data, Working, Connected** | No new payout email has arrived. Check the mailbox directly. |
-| **Stale data, Working, not Connected** | Access lapsed. Reconnect the mailbox. |
-| **Stale data, Email Fetch not Working** | A Mynt-side issue. Raise a ticket with the time you noticed it. |
+| **Stale data, Working, not Connected** | Access lapsed. Press **Authorize** on the mailbox. |
+| **Stale data, Email Fetch Delayed or Down** | A Mynt-side issue. Raise a ticket with the time you noticed it. |
 
 ## Related guides
 

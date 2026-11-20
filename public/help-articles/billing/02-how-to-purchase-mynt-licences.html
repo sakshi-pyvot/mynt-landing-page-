@@ -274,25 +274,21 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Purchase Mynt Licences</h1>
-  <p class="meta">Billing · Read time: 3 minutes · Includes a short video · Last updated 25 August 2026</p>
+  <p class="meta">Billing · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">Buying licences takes about a minute. Everything is priced on screen before you pay, and nothing is charged until you confirm.</div>
 
   <h2>Watch it done</h2>
 
   <div class="video-box">
-    <video controls preload="metadata" poster="assets/how-to-purchase-mynt-licences/demo-poster.jpg" style="width:100%;border-radius:8px">
-      <source src="assets/how-to-purchase-mynt-licences/demo.mp4" type="video/mp4" />
-      Your browser cannot play this video. <a href="assets/how-to-purchase-mynt-licences/demo.mp4">Download it instead</a>.
+    <video controls preload="metadata" poster="assets/how-to-purchase-mynt-licences/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/how-to-purchase-mynt-licences/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/how-to-purchase-mynt-licences/demo.mp4?v=20261022">Download it instead</a>.
     </video>
     <p class="video-caption">Setting the number of outlets and reading the total before paying</p>
   </div>
@@ -301,36 +297,38 @@
 
   <p>Choose <strong>Billing</strong> in the left menu. The <strong>Purchase Outlet Licenses</strong> card is on the right.</p>
 
-  <figure><img src="assets/how-to-purchase-mynt-licences/step-01-purchase-card.png" alt="The Purchase Outlet Licenses card with the quantity set to one" /><figcaption>Each licence activates one outlet for 12 months from today</figcaption></figure>
+  <figure><img src="assets/how-to-purchase-mynt-licences/step-01-purchase-card.png?v=20261022" alt="The Purchase Outlet Licenses card with the quantity set to one" /><figcaption>Each licence activates one outlet for 12 months from today</figcaption></figure>
 
   <h2>Step 2 — Choose how many outlets</h2>
 
   <p>Use <strong>&minus;</strong> and <strong>+</strong> under <strong>How many outlets?</strong>, or type the number. The card re-prices as you change it.</p>
 
-  <figure><img src="assets/how-to-purchase-mynt-licences/step-02-quantity-and-total.png" alt="The purchase card with three licences selected and the total updated" /><figcaption>Three licences &mdash; price per licence, quantity, start, expiry and total, all before paying</figcaption></figure>
+  <figure><img src="assets/how-to-purchase-mynt-licences/step-02-quantity-and-total.png?v=20261022" alt="The purchase card with three licences selected and the total updated" /><figcaption>Three licences &mdash; price per licence, quantity, start, expiry and total, all before paying</figcaption></figure>
 
   <table class="glossary">
-    <tr><th>Price per license</th><td>The annual per-outlet price.</td></tr>
+    <tr><th>Price per license</th><td>The annual per-outlet price, including GST.</td></tr>
     <tr><th>Licenses</th><td>How many you are buying, as a multiplier.</td></tr>
     <tr><th>Start / Expiry</th><td>Today, and twelve months from today.</td></tr>
-    <tr><th>Total</th><td>One-time, valid 12 months. This is the figure the payment button repeats.</td></tr>
+    <tr><th>Total</th><td>One-time, valid 12 months, including GST. This is the figure the payment button repeats.</td></tr>
   </table>
 
   <h2>Step 3 — Pay</h2>
 
-  <p>The button restates the amount &mdash; <strong>Purchase &mdash; Pay &#8377;&hellip;</strong> &mdash; so you confirm a number, not a promise. Mynt accepts UPI, credit card, net banking and auto debit.</p>
+  <p>The button restates the amount &mdash; <strong>Purchase &mdash; Pay &#8377;&hellip;</strong> &mdash; so you confirm a number, not a promise. A dialog opens with the total. Press <strong>Pay &#8377;&hellip; via Razorpay</strong> and Razorpay opens in a new tab, where you choose how to pay. When the payment settles, Mynt shows <strong>Payment Confirmed</strong>, <strong>Payment Pending</strong> or <strong>Payment Failed</strong>. If you close the dialog while a payment is in progress, Mynt asks <strong>Cancel this payment?</strong></p>
+
+  <p>You can buy additional licences only once your base subscription is paid. Until then the card shows <strong>Complete your base subscription before purchasing additional outlet licenses.</strong></p>
 
   <div class="tip">Buying more licences never disturbs the ones you already hold. Each new licence starts today and carries its own expiry; existing licences keep their original dates.</div>
 
   <h2>Step 4 — Assign the licence to an outlet</h2>
 
-  <p>A licence is bought first and assigned second. After payment, open <strong>Settings &rarr; Outlet Mapping</strong> and map the outlet&rsquo;s platform IDs so Mynt starts collecting for it. See <a href="../outlet-mapping/02-how-to-map-zomato-swiggy-platform-outlets.html">how to map platform outlets</a>.</p>
+  <p>A licence is bought first and assigned second. After payment, open <strong>Billing</strong> and press <strong>View &amp; Edit Mapping</strong> on the <strong>Outlet Licenses</strong> card. Press <strong>Edit</strong> on an <strong>Unassigned</strong> licence, choose the outlet, link its platform IDs and press <strong>Save</strong>. Saving links the licence to that outlet permanently: you cannot change the outlet or platform IDs later, only the outlet name. For finding your platform IDs, see <a href="../outlet-mapping/02-how-to-map-zomato-swiggy-platform-outlets.html">how to map platform outlets</a>.</p>
 
   <h2>Common questions</h2>
 
   <div class="faq-item"><div class="faq-q">Can I buy for an outlet I have not added yet?</div><div class="faq-a">Yes. Licences are counted, not named. Assign it when you add the outlet.</div></div>
-  <div class="faq-item"><div class="faq-q">Is the price shown with GST?</div><div class="faq-a">The card shows the pre-GST total; GST is itemised at checkout.</div></div>
-  <div class="faq-item"><div class="faq-q">The payment failed &mdash; have I been charged?</div><div class="faq-a">A failed payment leaves the invoice as Pending with a Retry link. See the troubleshooting guide.</div></div>
+  <div class="faq-item"><div class="faq-q">Is the price shown with GST?</div><div class="faq-a">Yes. The price per licence and the total include GST. Nothing is added at checkout.</div></div>
+  <div class="faq-item"><div class="faq-q">The payment failed &mdash; have I been charged?</div><div class="faq-a">A failed payment shows as <strong>Failed</strong> in the payment history. It has no Retry link: start the purchase again. Only a <strong>Pending</strong> row has <strong>Retry</strong>. See the troubleshooting guide.</div></div>
 
   <h2>Related guides</h2>
 

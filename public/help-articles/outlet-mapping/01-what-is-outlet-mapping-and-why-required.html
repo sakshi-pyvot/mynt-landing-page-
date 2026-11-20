@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>What Is Outlet Mapping and Why Is It Required?</h1>
-  <p class="meta">Outlet Mapping · Read time: 3 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Outlet Mapping · Read time: 3 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Zomato and Swiggy each give your restaurant their own ID number. Outlet mapping tells Mynt which of those IDs belong to which of your outlets, so your payout emails land against the right shop.</div>
 
@@ -293,13 +289,13 @@
 
   <h2>Why is it required?</h2>
   <table class="glossary">
-    <tr><th>Without mapping</th><td>Payout emails arrive but Mynt cannot tell which outlet they belong to; the dashboard shows blanks or lumps everything together; reports cannot be filtered by outlet, brand or group.</td></tr>
+    <tr><th>Without mapping</th><td>Payout emails arrive but Mynt cannot tell which outlet they belong to; the dashboard shows blanks or lumps everything together; dashboard and report filters cannot pick that outlet out.</td></tr>
     <tr><th>With mapping</th><td>Every payout lands against the right outlet, sales and charges split correctly per outlet, and filters work properly.</td></tr>
   </table>
 
   <h2>Where to find it</h2>
   <p>Open <strong>Settings</strong> from the left menu, then tap <strong>Outlet Mapping</strong>.</p>
-  <figure><img src="assets/what-is-outlet-mapping-and-why-required/step-01-settings-sidebar.png" alt="Settings with Outlet Mapping open" /><figcaption>Settings → Outlet Mapping</figcaption></figure>
+  <figure><img src="assets/what-is-outlet-mapping-and-why-required/step-01-settings-sidebar.png?v=20261022" alt="Settings with Outlet Mapping open" /><figcaption>Settings → Outlet Mapping</figcaption></figure>
 
   <h2>What you see on the page</h2>
   <p>The top of the page summarises where you stand:</p>
@@ -311,7 +307,7 @@
     <tr><th>Groups</th><td>How many groups you have created</td></tr>
   </table>
   <p>Below the cards, three buttons — <strong>Platform Mapping</strong>, <strong>Brand Mapping</strong>, <strong>Group Mapping</strong> — jump straight to each section.</p>
-  <figure><img src="assets/what-is-outlet-mapping-and-why-required/step-02-outlet-mapping-overview.png" alt="Outlet Mapping overview with summary cards" /><figcaption>Outlet Mapping overview with summary cards</figcaption></figure>
+  <figure><img src="assets/what-is-outlet-mapping-and-why-required/step-02-outlet-mapping-overview.png?v=20261022" alt="Outlet Mapping overview with summary cards" /><figcaption>Outlet Mapping overview with summary cards</figcaption></figure>
 
   <h2>Platform Mapping in brief</h2>
   <p>This is the section that actually matters for your data. Its table has four columns:</p>
@@ -321,8 +317,9 @@
     <tr><th>Platform Mappings</th><td>One tag per linked platform, e.g. <strong>Zomato · 20942752</strong></td></tr>
     <tr><th>Action</th><td>The <strong>Edit</strong> button for that row</td></tr>
   </table>
-  <p>A <strong>green dot</strong> beside the licence ID means Mynt is collecting data for that outlet. A <strong>grey dot</strong> means it is not — usually because the outlet has no platform IDs linked yet. An outlet with nothing linked shows <strong>Not mapped</strong> in orange.</p>
-  <figure><img src="assets/what-is-outlet-mapping-and-why-required/step-03-platform-mapping-section.png" alt="Platform Mapping table" /><figcaption>Platform Mapping table — green dots for outlets that are collecting data</figcaption></figure>
+  <p>A <strong>green dot</strong> beside the licence ID means Mynt is ingesting data for that outlet. A <strong>grey dot</strong> means it is not ingesting — usually because no licence on your plan covers the outlet, or it has not been activated yet. Hover the dot to see <strong>Ingesting</strong> or <strong>Not ingesting — covered by your plan?</strong></p>
+  <p>The dot does not tell you whether IDs are linked. That is what the <strong>Platform Mappings</strong> column shows. An outlet with nothing linked shows <strong>Not mapped</strong> in grey.</p>
+  <figure><img src="assets/what-is-outlet-mapping-and-why-required/step-03-platform-mapping-section.png?v=20261022" alt="Platform Mapping table" /><figcaption>Platform Mapping table — green dots for outlets Mynt is ingesting</figcaption></figure>
 
   <h2>When should you map?</h2>
   <ul>
@@ -330,12 +327,12 @@
     <li><strong>After connecting your payout email</strong> — Mynt detects IDs from your emails, so the list to choose from fills up once mail is flowing.</li>
     <li><strong>Whenever you add an outlet</strong> — a new outlet starts unmapped.</li>
   </ul>
-  <div class="tip">Brand and Group mapping are optional and do not affect whether data arrives. Only <strong>Platform Mapping</strong> does that.</div>
+  <div class="tip">Brand and Group mapping are optional and do not affect whether data arrives. Of the three sections, only <strong>Platform Mapping</strong> does that.</div>
 
   <h2>Common questions</h2>
   <div class="faq-item"><div class="faq-q">Do I have to map every platform?</div><div class="faq-a">Only the ones you actually trade on. An outlet on Zomato but not Swiggy just gets the Zomato link.</div></div>
   <div class="faq-item"><div class="faq-q">What if I map the wrong ID?</div><div class="faq-a">Open the row, change it, save. See <a href="03-how-to-edit-existing-outlet-mapping.html" style="color:var(--mint)">How to edit an existing outlet mapping</a>.</div></div>
-  <div class="faq-item"><div class="faq-q">Does mapping change past data?</div><div class="faq-a">Historic data stays where it is. New payouts follow the updated link.</div></div>
+  <div class="faq-item"><div class="faq-q">Does mapping change past data?</div><div class="faq-a">A link decides which outlet a restaurant ID's payouts count against. If an outlet's past figures look wrong after a change, raise a ticket and we will check it.</div></div>
 
   <h2>Related guides</h2>
   <ul>

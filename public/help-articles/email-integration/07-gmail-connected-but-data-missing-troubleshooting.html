@@ -274,24 +274,20 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Gmail Is Connected but My Data Is Missing</h1>
-  <p class="meta">Email Integration · Read time: 5 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Email Integration · Read time: 5 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">The badge is green and the dashboard is still empty. Work through these four checks in order &mdash; the cause is almost always one of them.</div>
 
   <h2>Check 1 — is the platform stage healthy?</h2>
 
-  <p>Email arriving is only the first stage. <strong>Help &amp; Support &rarr; System Status</strong> lists each platform separately, so one can be degraded while the other is fine.</p>
+  <p>Email arriving is only the first stage. <strong>Help &amp; Support &rarr; System Status</strong> lists each platform separately, so one can be <strong>Delayed</strong> or <strong>Down</strong> while the other reads <strong>Working</strong>.</p>
 
-  <figure><img src="assets/gmail-connected-but-data-missing-troubleshooting/step-01-platform-processing.png" alt="Zomato Processing and Swiggy Processing rows in System Status" /><figcaption>Zomato and Swiggy are processed separately &mdash; check both</figcaption></figure>
+  <figure><img src="assets/gmail-connected-but-data-missing-troubleshooting/step-01-platform-processing.png?v=20261022" alt="Zomato Processing and Swiggy Processing rows in System Status" /><figcaption>Zomato and Swiggy are processed separately &mdash; check both</figcaption></figure>
 
   <h2>Check 2 — is the outlet mapped?</h2>
 
@@ -304,11 +300,13 @@
   <h2>Check 4 — are the filters hiding it?</h2>
 
   <ol>
-    <li>Set <strong>DATE</strong> to a range that definitely covers the period.</li>
-    <li>Set <strong>PLATFORM</strong> to <strong>All Platforms</strong>.</li>
+    <li>Set <strong>Date</strong> to a range that definitely covers the period.</li>
+    <li>Set <strong>Platform</strong> to <strong>All Platforms</strong>.</li>
     <li>Use <strong>Select all</strong> in the outlet list.</li>
-    <li>Press <strong>Reset</strong> to clear every filter and look again.</li>
+    <li>Press <strong>Apply</strong>. Nothing changes until you do.</li>
   </ol>
+
+  <p>Do not press <strong>Reset</strong> afterwards &mdash; it returns the dates to <strong>Week</strong>, with all platforms and all outlets.</p>
 
   <h2>Still nothing?</h2>
 

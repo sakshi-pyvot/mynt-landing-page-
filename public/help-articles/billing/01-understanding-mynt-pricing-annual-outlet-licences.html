@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Understanding Mynt Pricing and Annual Outlet Licences</h1>
-  <p class="meta">Billing · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Billing · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Mynt is priced per outlet, per year. One licence covers one outlet for twelve months. Here is exactly what that buys and what it costs.</div>
 
@@ -293,35 +289,35 @@
 
   <p>One licence covers that outlet on <strong>every platform</strong>. You do not buy a separate licence for Zomato and Swiggy: one outlet can link one account per platform under the same licence.</p>
 
-  <figure><img src="assets/pricing-annual-outlet-licences/step-01-annual-licensing.png" alt="The Annual Licensing card showing active licences, price per licence, next expiry and token balance" /><figcaption>Billing opens on Annual Licensing &mdash; how many licences are active, what each costs, and when the next one expires</figcaption></figure>
+  <figure><img src="assets/pricing-annual-outlet-licences/step-01-annual-licensing.png?v=20261022" alt="The Annual Licensing card showing active licences, price per licence, next expiry and available tokens" /><figcaption>Billing opens on Annual Licensing &mdash; how many licences are active, what each costs, and when the next licence expires</figcaption></figure>
 
   <table class="glossary">
     <tr><th>Active licenses</th><td>How many outlets you are currently paying for.</td></tr>
-    <tr><th>Annual price / license</th><td>The per-outlet, per-year price on your account.</td></tr>
-    <tr><th>Next expiry</th><td>The earliest licence expiry date across all your outlets.</td></tr>
-    <tr><th>Token balance</th><td>Tokens left for AI Assistant queries, exports and notifications &mdash; bought separately.</td></tr>
+    <tr><th>Annual price / license</th><td>The per-outlet, per-year price of your base subscription. It can differ from <strong>Price per license</strong> on the purchase card, which is the current price including GST.</td></tr>
+    <tr><th>Next expiry</th><td>The earliest expiry date among your active licences, and how many licences expire that day. Each licence&rsquo;s own expiry is under <strong>Days Left</strong> in the licence table.</td></tr>
+    <tr><th>Available tokens</th><td>Tokens left for PIA (AI Assistant) queries, exports and notifications &mdash; bought separately.</td></tr>
   </table>
 
   <h2>What a licence costs</h2>
 
   <p>The price per licence is shown on the purchase card before you commit to anything.</p>
 
-  <figure><img src="assets/pricing-annual-outlet-licences/step-02-price-per-license.png" alt="Price per license shown as a yearly figure" /><figcaption>The per-licence annual price, before GST</figcaption></figure>
+  <figure><img src="assets/pricing-annual-outlet-licences/step-02-price-per-license.png?v=20261022" alt="Price per license shown as a yearly figure" /><figcaption>The per-licence annual price, including GST</figcaption></figure>
 
-  <p>GST is added on top at checkout and shown as a separate line, so the total you pay is always itemised before you confirm. See <a href="06-how-payments-gst-billing-details-work.html">how payments and GST work</a>.</p>
+  <p>The price already includes GST, and so does the total. No GST is added at checkout: the amount on the pay button is what you pay. See <a href="06-how-payments-gst-billing-details-work.html">how payments and GST work</a>.</p>
 
   <h2>Licences and tokens are separate</h2>
 
   <table class="glossary">
     <tr><th>Outlet licence</th><td>Annual. Activates one outlet so Mynt collects and reports its data.</td></tr>
-    <tr><th>Tokens</th><td>Pay as you go. Consumed by AI Assistant queries, exports and notifications.</td></tr>
+    <tr><th>Tokens</th><td>Pay as you go. Consumed by PIA (AI Assistant) queries, exports and notifications.</td></tr>
   </table>
 
   <p>Running out of tokens does not switch off your dashboards, and buying tokens does not add an outlet. See <a href="../tokens/01-what-are-mynt-tokens.html">what Mynt tokens are</a>.</p>
 
   <h2>Common questions</h2>
 
-  <div class="faq-item"><div class="faq-q">Do all my licences renew on the same day?</div><div class="faq-a">No. Each licence runs 12 months from its own purchase date. The Annual Licensing card shows the earliest upcoming expiry.</div></div>
+  <div class="faq-item"><div class="faq-q">Do all my licences renew on the same day?</div><div class="faq-a">No. Each licence runs 12 months from its own purchase date. Check <strong>Days Left</strong> in the licence table to see when each one expires.</div></div>
   <div class="faq-item"><div class="faq-q">Does one licence cover Zomato and Swiggy?</div><div class="faq-a">Yes. One outlet, one licence, all platforms that outlet trades on.</div></div>
   <div class="faq-item"><div class="faq-q">What happens if a licence expires?</div><div class="faq-a">That outlet stops being collected for. Renew it and collection resumes &mdash; see the expiry guide below.</div></div>
 

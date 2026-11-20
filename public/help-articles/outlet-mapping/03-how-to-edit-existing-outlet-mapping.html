@@ -274,24 +274,20 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Edit an Existing Outlet Mapping</h1>
-  <p class="meta">Outlet Mapping · Read time: 3 minutes · Includes a short video · Last updated 25 August 2026</p>
+  <p class="meta">Outlet Mapping · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">Renamed a shop, or linked the wrong restaurant ID? Everything in Platform Mapping can be changed from the same Edit button.</div>
 
   <h2>Watch this first</h2>
   <div class="video-box">
-    <video controls playsinline preload="metadata" poster="assets/edit-existing-outlet-mapping/demo-poster.jpg">
-      <source src="assets/edit-existing-outlet-mapping/demo.mp4" type="video/mp4" />
-      <a href="assets/edit-existing-outlet-mapping/demo.mp4">Download the video</a>
+    <video controls playsinline preload="metadata" poster="assets/edit-existing-outlet-mapping/demo-poster.jpg?v=20261022">
+      <source src="assets/edit-existing-outlet-mapping/demo.mp4?v=20261022" type="video/mp4" />
+      <a href="assets/edit-existing-outlet-mapping/demo.mp4?v=20261022">Download the video</a>
     </video>
     <p class="video-caption">Renaming an outlet and removing a platform link</p>
   </div>
@@ -300,12 +296,12 @@
   <p>Have the correct restaurant ID to hand — from your payout email, or from the list Mynt has already detected.</p>
 
   <h2>Step-by-step</h2>
-  <div class="step"><h3><span class="step-num">1</span> Find the outlet</h3><p>Go to <strong>Settings → Outlet Mapping</strong> and scroll to <strong>Platform Mapping</strong>. Mapped outlets show a tag per platform, such as <strong>Zomato · 20942752</strong>. Unmapped ones show <strong>Not mapped</strong> in orange.</p><figure><img src="assets/edit-existing-outlet-mapping/step-01-existing-mappings.png" alt="Existing platform mappings" /><figcaption>Step 1 — Existing mappings</figcaption></figure></div>
-  <div class="step"><h3><span class="step-num">2</span> Tap Edit</h3><p>Tap <strong>Edit</strong> on that outlet's row. The row highlights and opens with <strong>Cancel</strong> and <strong>Save</strong> buttons.</p><figure><img src="assets/edit-existing-outlet-mapping/step-02-tap-edit.png" alt="Row opened for editing" /><figcaption>Step 2 — Tap Edit</figcaption></figure></div>
-  <div class="step"><h3><span class="step-num">3</span> Change what you need</h3><p>Tap the name box to rename the outlet, pick a different ID from a platform's dropdown, tap <strong>+ Zomato</strong> or <strong>+ Swiggy</strong> to add a platform, or <strong>×</strong> to remove one.</p><figure><img src="assets/edit-existing-outlet-mapping/step-03-edit-fields.png" alt="Editing the outlet fields" /><figcaption>Step 3 — Edit the fields</figcaption></figure></div>
+  <div class="step"><h3><span class="step-num">1</span> Find the outlet</h3><p>Go to <strong>Settings → Outlet Mapping</strong> and scroll to <strong>Platform Mapping</strong>. Mapped outlets show a tag per platform, such as <strong>Zomato · 20942752</strong>. Unmapped ones show <strong>Not mapped</strong> in grey.</p><figure><img src="assets/edit-existing-outlet-mapping/step-01-existing-mappings.png?v=20261022" alt="Existing platform mappings" /><figcaption>Step 1 — Existing mappings</figcaption></figure></div>
+  <div class="step"><h3><span class="step-num">2</span> Tap Edit</h3><p>Tap <strong>Edit</strong> on that outlet's row. The row highlights and opens with <strong>Cancel</strong> and <strong>Save</strong> buttons.</p><figure><img src="assets/edit-existing-outlet-mapping/step-02-tap-edit.png?v=20261022" alt="Row opened for editing" /><figcaption>Step 2 — Tap Edit</figcaption></figure></div>
+  <div class="step"><h3><span class="step-num">3</span> Change what you need</h3><p>Tap the name box to rename the outlet, pick a different ID from a platform's dropdown, tap <strong>+ Zomato</strong> or <strong>+ Swiggy</strong> to add a platform, or <strong>×</strong> to remove one.</p><figure><img src="assets/edit-existing-outlet-mapping/step-03-edit-fields.png?v=20261022" alt="Editing the outlet fields" /><figcaption>Step 3 — Edit the fields</figcaption></figure></div>
   <div class="tip"><strong>Toing</strong> cannot be edited here. It follows your Swiggy ID automatically.</div>
-  <div class="step"><h3><span class="step-num">4</span> Save</h3><p>Tap <strong>Save</strong> to apply, or <strong>Cancel</strong> to discard.</p><figure><img src="assets/edit-existing-outlet-mapping/step-04-tap-save.png" alt="Saving the changes" /><figcaption>Step 4 — Save</figcaption></figure></div>
-  <p>Changes apply immediately. Historic data stays with the outlet; new payouts follow the updated ID.</p>
+  <div class="step"><h3><span class="step-num">4</span> Save</h3><p>Tap <strong>Save</strong> to apply, or <strong>Cancel</strong> to discard.</p><figure><img src="assets/edit-existing-outlet-mapping/step-04-tap-save.png?v=20261022" alt="Saving the changes" /><figcaption>Step 4 — Save</figcaption></figure></div>
+  <p>The new link is saved straight away, and payouts for that restaurant ID count against this outlet.</p>
 
   <h2>What you change elsewhere</h2>
   <table class="glossary">
@@ -316,9 +312,9 @@
   <p>See <a href="04-how-outlet-mapping-works-multiple-outlets-chains-groups.html" style="color:var(--mint)">Brands, groups and multiple outlets</a>.</p>
 
   <h2>Common questions</h2>
-  <div class="faq-item"><div class="faq-q">Will editing break my past data?</div><div class="faq-a">No. Mynt keeps what it already collected and applies the new link going forward.</div></div>
+  <div class="faq-item"><div class="faq-q">Will editing break my past data?</div><div class="faq-a">Editing changes which outlet a restaurant ID counts against. If an outlet's past figures look wrong after a change, raise a ticket and we will check it.</div></div>
   <div class="faq-item"><div class="faq-q">Can I remove a platform link entirely?</div><div class="faq-a">Yes. Tap <strong>×</strong> next to it, then <strong>Save</strong>. That outlet stops counting payouts from that platform.</div></div>
-  <div class="faq-item"><div class="faq-q">How soon do dashboards update?</div><div class="faq-a">Usually within a few minutes.</div></div>
+  <div class="faq-item"><div class="faq-q">How soon do dashboards update?</div><div class="faq-a">When Mynt next processes your payout emails. See <a href="../email-integration/05-how-often-sync.html" style="color:var(--mint)">How often Mynt syncs</a>.</div></div>
   <div class="faq-item"><div class="faq-q">Why can't I edit Toing?</div><div class="faq-a">Toing shares Swiggy's ID, so Mynt fills it in for you.</div></div>
 
   <h2>Related guides</h2>

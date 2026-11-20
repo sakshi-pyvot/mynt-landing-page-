@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Understanding Refunds and Cancellations — Mynt Help Guide</title>
+  <style>
+    :root {
+      --mint: #3ecf8e;
+      --bg: #0f1419;
+      --card: #1a222d;
+      --text: #e8edf2;
+      --muted: #8b9aab;
+      --border: #2a3544;
+      --tip-bg: rgba(62, 207, 142, 0.08);
+      --tip-border: rgba(62, 207, 142, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      margin: 0 0 0.5rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2rem 0 1rem;
+      color: var(--mint);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    a {
+      color: var(--mint);
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+
+    .hello {
+      background: linear-gradient(135deg, rgba(62, 207, 142, 0.12), transparent);
+      border: 1px solid var(--tip-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .video-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+      display: block;
+    }
+
+    .video-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .tip strong {
+      color: var(--mint);
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--mint);
+      color: #0a0f14;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    figure {
+      margin: 1rem 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    figure img {
+      max-height: min(70vh, 720px);
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      text-align: center;
+    }
+
+    .glossary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 1rem 0;
+    }
+
+    .glossary th,
+    .glossary td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .glossary th {
+      background: var(--card);
+      color: var(--mint);
+      width: 32%;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .support-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .support-card .value {
+      font-weight: 600;
+      margin-top: 0.2rem;
+      color: var(--mint);
+      font-size: 0.95rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      h2 {
+        color: #0a7;
+      }
+
+      .step,
+      .tip,
+      .hello,
+      .support-card {
+        background: #f8f9fa;
+      }
+    }
+  
+    html.embed .wrap {
+      padding-top: 1.25rem;
+    }
+</style>
+
+  <script src="../embed.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <h1>Understanding Refunds and Cancellations</h1>
+  <p class="meta">Dashboard & Metrics · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
+
+  <div class="hello">Not every order ends as a clean sale. Some are delivered and then refunded; others are cancelled and never reach the customer. The Refunds page shows both, as Zomato, Swiggy and Toing settle them with you.</div>
+
+  <h2>Refunds and cancellations are different things</h2>
+
+  <table class="glossary">
+    <tr><th>Refund</th><td>A delivered order where the platform deducted money from you &mdash; for a customer complaint, a refund, compensation or a recoupment.</td></tr>
+    <tr><th>Cancellation</th><td>An order that was not delivered. It is not part of gross order value, but the platform may still pay you something for it.</td></tr>
+  </table>
+
+  <p>This page is about the platforms&rsquo; refunds to your customers. It is not about Mynt&rsquo;s own refund policy.</p>
+
+  <p>Mynt only sees what the platforms put in their settlement emails. If a cancellation came with no payout, it never reaches Mynt, so it is not counted.</p>
+
+  <h2>The cards</h2>
+
+  <p>Choose <strong>Refunds</strong> in the left menu. The two rows of cards at the top follow the period and filters you have selected.</p>
+
+  <figure><img src="assets/understanding-refunds-and-cancellations/step-01-refund-cards.png?v=20261022" alt="The Refunds dashboard's eight headline cards: Refund Amount, Refund value % of sales, Refunded Orders, Gross Order Value, Cancelled Orders, Cancelled payout % of sales, Payout for Cancelled Orders and Total Orders" /><figcaption>Refunds on the top row, cancellations on the bottom row</figcaption></figure>
+
+  <table class="glossary">
+    <tr><th>Refund Amount</th><td>The rupee value deducted for complaints, refunds, compensation and recoupment.</td></tr>
+    <tr><th>Refund value % of sales</th><td>Refund Amount as a share of gross order value. It measures value, not how many orders.</td></tr>
+    <tr><th>Refunded Orders</th><td>How many delivered orders had a refund or complaint deduction.</td></tr>
+    <tr><th>Gross Order Value</th><td>Sales on delivered orders, shown for reference.</td></tr>
+    <tr><th>Cancelled Orders</th><td>How many cancelled orders the platforms reported.</td></tr>
+    <tr><th>Cancelled payout % of sales</th><td>Payout for Cancelled Orders as a share of gross order value. It measures value, not the share of orders that were cancelled.</td></tr>
+    <tr><th>Payout for Cancelled Orders</th><td>What the platforms still paid you for cancelled orders. It is added to Net Payout.</td></tr>
+    <tr><th>Total Orders</th><td>Delivered orders in the period.</td></tr>
+  </table>
+
+  <div class="tip"><strong>Cancelled payout % of sales</strong> is not a cancellation rate. It goes up when you are paid more for cancelled orders. To see how many orders were cancelled, use <strong>Cancelled orders %</strong> on the platform cards or in the outlet table.</div>
+
+  <h2>Refund &amp; Cancellation Trends</h2>
+
+  <p>The chart plots one series at a time. Pick <strong>Refund Amt</strong>, <strong>Refund value % of sales</strong>, <strong>Refunded Orders</strong>, <strong>Cancelled Orders</strong> or <strong>Cancelled order value % of sales</strong>. The two percentages are values as a share of gross order value, and they are drawn as bars. <strong>Cancelled order value % of sales</strong> is the value of cancelled orders &divide; gross order value. It is not the same figure as <strong>Cancelled payout % of sales</strong>, which uses what you were paid for those orders.</p>
+
+  <table class="glossary">
+    <tr><th>Daily</th><td>Follows the date range you have selected.</td></tr>
+    <tr><th>Weekly</th><td>Always the latest 4 weeks of data, whatever date range you have selected.</td></tr>
+    <tr><th>Monthly</th><td>Always the latest 4 months of data, whatever date range you have selected.</td></tr>
+  </table>
+
+  <figure><img src="assets/understanding-refunds-and-cancellations/step-02-refund-trends.png?v=20261022" alt="The Refund &amp; Cancellation Trends chart with Daily, Weekly and Monthly views and metric tabs, beside the Platform Refund Split showing refund and cancellation rates for Zomato, Swiggy and Toing" /><figcaption>Trends over time on the left, each platform&rsquo;s refund and cancellation rates on the right</figcaption></figure>
+
+  <h2>Platform Refund Split</h2>
+
+  <p>There is one card per platform. Zomato and Swiggy are always there; Toing appears only if your account has Toing data. The cards show every platform even when the platform filter is set, so you can always compare them side by side.</p>
+
+  <table class="glossary">
+    <tr><th>Refund value % of sales</th><td>Refund value as a share of that platform&rsquo;s gross order value.</td></tr>
+    <tr><th>refunded of</th><td>Refunded orders out of that platform&rsquo;s delivered orders.</td></tr>
+    <tr><th>Cancelled orders %</th><td>Cancelled orders as a share of that platform&rsquo;s delivered orders. This one counts orders, not value.</td></tr>
+  </table>
+
+  <p>Both rates are usually under 1%, so the bars treat 1% as full. Read the number next to each bar for the exact figure.</p>
+
+  <h2>Outlet Refunds</h2>
+
+  <p>Each outlet gets one row. Sort by <strong>Highest Refund Amount</strong> or <strong>Highest Cancelled orders %</strong>.</p>
+
+  <table class="glossary">
+    <tr><th>Refund Amount</th><td>The rupee value of refunds at that outlet.</td></tr>
+    <tr><th>Refund value % of sales</th><td>Refund value as a share of the outlet&rsquo;s gross order value.</td></tr>
+    <tr><th>Cancelled orders %</th><td>Cancelled orders as a share of the outlet&rsquo;s delivered orders.</td></tr>
+  </table>
+
+  <p>The colour on <strong>Cancelled orders %</strong> ranks your outlets against each other. The top third show red, the middle third amber and the bottom third green.</p>
+
+  <h2>Policies and insights</h2>
+
+  <p>The <strong>Cancellation &amp; refund policy</strong> button, top right, opens the Zomato and Swiggy cancellation and refund policies. <strong>PIA&rsquo;s Insights</strong>, bottom right, points out what moved in the period.</p>
+
+  <div class="tip">Every percentage on the dashboard compares against the <strong>Last Period</strong> chip in the header &mdash; the period immediately before the one you are viewing. It is not a year-on-year comparison.</div>
+
+  <h2>Common questions</h2>
+
+  <div class="faq-item"><div class="faq-q">Why does Cancelled Orders not match the platform app?</div><div class="faq-a">Mynt counts the cancellations the platforms report in their settlement emails. A cancellation with no payout is not in those emails.</div></div>
+  <div class="faq-item"><div class="faq-q">Why did a refund show up in an older period?</div><div class="faq-a">A later settlement email can add a refund or recoupment to a period you have already looked at.</div></div>
+  <div class="faq-item"><div class="faq-q">Is a high Cancelled payout % of sales bad?</div><div class="faq-a">Not on its own. It means you were paid more for cancelled orders. To see how many orders were cancelled, look at <strong>Cancelled Orders</strong> and <strong>Cancelled orders %</strong>.</div></div>
+
+  <h2>Related guides</h2>
+
+  <ul>
+    <li><a href="03-understanding-sales-gross-order-value.html" style="color:var(--mint)">Sales and gross order value</a></li>
+    <li><a href="07-understanding-platform-charges-commissions-payouts.html" style="color:var(--mint)">Charges, commissions and payouts</a></li>
+    <li><a href="08-understanding-net-margin-and-profitability.html" style="color:var(--mint)">Net Payout and Payout %</a></li>
+  </ul>
+
+  <h2>Need help?</h2>
+  <div class="support-grid">
+    <div class="support-card"><div class="label">Email</div><div class="value">contact@pyvot.in</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 98366 66745</div></div>
+    <div class="support-card"><div class="label">Phone</div><div class="value">+91 82407 91854</div></div>
+  </div>
+  <p style="margin-top:1rem;font-size:.95rem;">Or open <strong>Help &amp; Support</strong> in Mynt and raise a ticket.</p>
+</div>
+</body>
+</html>

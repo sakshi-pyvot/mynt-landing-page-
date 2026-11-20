@@ -1,8 +1,8 @@
 # How to Create Your Mynt Account and Sign In
 
-*Getting Started · Read time: 3 minutes · Article only · Last updated 25 August 2026*
+*Getting Started · Read time: 3 minutes · Article only · Last updated 22 October 2026*
 
-Two ways in: an email address and password, or Continue with Google. One of them only works if an account already exists.
+Two ways in: your email address, or Continue with Google. One of them only works if an account already exists.
 
 ---
 
@@ -10,32 +10,40 @@ Two ways in: an email address and password, or Continue with Google. One of them
 
 From the sign-in page, choose **Create an account**.
 
-![The create account screen](assets/create-account-and-sign-in/step-02-create-account.png)
+1. Enter your **Name**, **Email** and a **Password** of at least 12 characters.
+2. Press **Create account**.
+3. Open the verification link Mynt emails you. You cannot sign in until you do.
+4. Come back and sign in.
+
+If the address is already registered, Mynt says so &mdash; sign in instead.
+
+![The create account screen](assets/create-account-and-sign-in/step-02-create-account.png?v=20261022)
 *Creating the account is the first of the five setup steps*
 
 ## Signing in
 
-![The sign-in form with Continue with Google and the email and password fields](assets/create-account-and-sign-in/step-01-sign-in-form.png)
-*Continue with Google, or an email address and password*
+![The sign-in form with Continue with Google and the Email field](assets/create-account-and-sign-in/step-01-sign-in-form.png?v=20261022)
+*Continue with Google, or your email address and **Continue***
 
 | | |
 |---|---|
 | **Continue with Google** | Works only if a Mynt account already exists for that Google address. It signs you in; it does not create an account. |
-| **Email and password** | The address you registered with, and your password. |
-| **Forgot?** | Sends a reset link to your registered address. |
+| **Email** | Enter the address you registered with and press **Continue**. Mynt&rsquo;s secure sign-in page then asks for your password, and your second step if you have set one up. |
+| **Forgotten password** | Use the forgot-password option on Mynt&rsquo;s secure sign-in page, or contact support. |
 
 > **Tip:** The address you sign in with does not have to be the mailbox Mynt reads payout emails from. They are separate, and it is normal for them to differ.
 
 ## After signing in
 
-You land on the dashboard. If your business profile is incomplete, finish that first &mdash; see [completing your business profile](03-how-to-complete-your-business-profile.md).
+You land on **Overview**. If your business profile is incomplete, finish that first &mdash; see [completing your business profile](03-how-to-complete-your-business-profile.md).
 
 ## Trouble signing in
 
 1. Check you are using the registered address, not the payout mailbox.
-2. Use **Forgot?** to reset the password.
-3. If **Continue with Google** fails, the account may have been created with an email and password instead &mdash; use that.
-4. Still stuck? Contact support.
+2. Just signed up? Open the verification link in your inbox first.
+3. Forgotten your password? Use the forgot-password option on Mynt&rsquo;s secure sign-in page, or contact support.
+4. If **Continue with Google** fails, the account may have been created with an email and password instead &mdash; use that.
+5. Still stuck? Contact support.
 
 ## Related guides
 

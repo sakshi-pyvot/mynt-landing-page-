@@ -53,10 +53,12 @@ for (const { id, category, htmlPath } of entries) {
   const html = readFileSync(join(PUB, htmlPath), 'utf8')
   const base = dirname(htmlPath) // /help-articles/<folder>
   const abs = (rel) => `${base}/${rel}`
+  // on disk, without a cache-buster (?v=…) the CFD articles add to asset URLs
+  const file = (rel) => join(PUB, abs(rel).replace(/[?#].*$/, ''))
   const imgs = [...html.matchAll(/<img[^>]+src="([^"]+)"/g)].map((m) => m[1])
   const vid = html.match(/<video[^>]*>[\s\S]*?<\/video>/)
   const poster = vid?.[0].match(/poster="([^"]+)"/)?.[1]
-  const src = vid?.[0].match(/src="([^"]+\.mp4)"/)?.[1]
+  const src = vid?.[0].match(/src="([^"]+\.mp4(?:\?[^"]*)?)"/)?.[1]
   const mins = Number(html.match(/Read time: (\d+) minute/)?.[1]) || null
 
   let cover = null
@@ -64,11 +66,11 @@ for (const { id, category, htmlPath } of entries) {
   let ch = 0
   if (poster) {
     cover = poster
-    ;({ w: cw, h: ch } = dims(join(PUB, abs(poster))) || {})
+    ;({ w: cw, h: ch } = dims(file(poster)) || {})
   } else {
     let best = 0
     for (const rel of imgs) {
-      const d = dims(join(PUB, abs(rel)))
+      const d = dims(file(rel))
       if (!d || d.w < 300 || d.h < 40) continue // skip tiny badges; the UI letterboxes strips
       const score = d.w * d.h
       if (score > best) {
@@ -83,7 +85,7 @@ for (const { id, category, htmlPath } of entries) {
   let thumb = null
   if (cover) {
     thumb = `/help-thumbs/${id}.jpg`
-    execFileSync('sips', ['-Z', '640', '-s', 'format', 'jpeg', '-s', 'formatOptions', '78', join(PUB, abs(cover)), '--out', join(THUMBS, `${id}.jpg`)], { stdio: 'ignore' })
+    execFileSync('sips', ['-Z', '640', '-s', 'format', 'jpeg', '-s', 'formatOptions', '78', file(cover), '--out', join(THUMBS, `${id}.jpg`)], { stdio: 'ignore' })
   }
 
   articles[id] = {
@@ -95,7 +97,7 @@ for (const { id, category, htmlPath } of entries) {
     ratio: cover ? +(cw / ch).toFixed(3) : null,
     video: src ? abs(src) : null,
     poster: poster ? abs(poster) : null,
-    secs: src ? seconds(join(PUB, abs(src))) : null,
+    secs: src ? seconds(file(src)) : null,
     mins,
     imgs: imgs.length,
   }

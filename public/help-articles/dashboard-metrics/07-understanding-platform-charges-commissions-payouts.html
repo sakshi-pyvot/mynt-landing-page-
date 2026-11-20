@@ -274,44 +274,40 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Understanding Platform Charges, Commissions and Payouts</h1>
-  <p class="meta">Dashboard & Metrics · Read time: 5 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Dashboard & Metrics · Read time: 5 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">The gap between what customers paid and what reaches your bank. This is where it goes.</div>
 
   <h2>Platform Charges</h2>
 
-  <figure><img src="assets/understanding-platform-charges-commissions-payouts/step-01-charges-card.png" alt="The Platform Charges card on the dashboard" /><figcaption>Everything the platforms deducted in the period</figcaption></figure>
+  <figure><img src="assets/understanding-platform-charges-commissions-payouts/step-01-charges-card.png?v=20261022" alt="The Platform Charges card on Overview" /><figcaption>Commission, payment gateway, long distance, government and other charges, net of any TDS 194H commission refund</figcaption></figure>
 
   <h2>Net Payout</h2>
 
-  <figure><img src="assets/understanding-platform-charges-commissions-payouts/step-02-net-payout-card.png" alt="The Net Payout card on the dashboard" /><figcaption>What actually reaches you &mdash; this is the figure to compare against your bank</figcaption></figure>
+  <figure><img src="assets/understanding-platform-charges-commissions-payouts/step-02-net-payout-card.png?v=20261022" alt="The Net Payout card on Overview" /><figcaption>What actually reaches you &mdash; this is the figure to compare against your bank</figcaption></figure>
 
-  <p>If you are reconciling against a bank statement, <strong>Net Payout</strong> is the number to use, not Gross Order Value.</p>
+  <p>If you are reconciling against a bank statement, <strong>Net Payout</strong> is the number to use, not Gross Order Value. It is gross order value minus ad spend, discounts, platform charges and complaint refunds, plus any payout for cancelled orders.</p>
 
   <h2>What makes up the charges</h2>
 
-  <p>Choose <strong>Charges</strong> in the left menu for the breakdown, outlet by outlet.</p>
+  <p>Choose <strong>Charges</strong> in the left menu for the breakdown. The table follows <strong>View By</strong>, so rows are outlets, brands or groups.</p>
 
-  <figure><img src="assets/understanding-platform-charges-commissions-payouts/step-03-charges-page.png" alt="The Outlet Charges table breaking charges down per outlet" /><figcaption>Per outlet: gross order value, then each charge type, and the effective percentage</figcaption></figure>
+  <figure><img src="assets/understanding-platform-charges-commissions-payouts/step-03-charges-page.png?v=20261022" alt="The Outlet Charges table breaking charges down per outlet" /><figcaption>Per outlet: gross order value, each charge type, the total, and <strong>Eff. %</strong> &mdash; Platform Charges as a share of gross order value</figcaption></figure>
 
   <table class="glossary">
     <tr><th>Commission</th><td>The platform&rsquo;s cut of each order &mdash; usually the largest single line.</td></tr>
-    <tr><th>PG</th><td>Payment gateway charges for collecting the money.</td></tr>
-    <tr><th>Long distance</th><td>Delivery surcharges on orders beyond the standard radius.</td></tr>
-    <tr><th>Government</th><td>Taxes and statutory deductions.</td></tr>
-    <tr><th>Other</th><td>Packaging and remaining platform fees.</td></tr>
+    <tr><th>PG Charges</th><td>Payment gateway charges for collecting the money.</td></tr>
+    <tr><th>Long Distance Fee</th><td>Delivery surcharges on orders beyond the standard radius.</td></tr>
+    <tr><th>Government Charges</th><td>Government charges: taxes and statutory deductions.</td></tr>
+    <tr><th>Other Charges</th><td>Remaining platform fees that are not commission, payment gateway, long distance or government charges. Packaging is not here: it is part of gross order value.</td></tr>
   </table>
 
-  <p>The table can be sorted by highest effective percentage, which surfaces the outlets giving away the most per rupee of sales.</p>
+  <p>The table can be sorted by <strong>Highest Platform Charges %</strong>, <strong>Highest Commission</strong> or <strong>Highest Platform Charges</strong>. Sorting by Platform Charges % (the <strong>Eff. %</strong> column) surfaces the outlets giving away the most per rupee of sales.</p>
 
   <h2>Why two outlets pay different rates</h2>
 
@@ -334,7 +330,7 @@
 
   <ul>
     <li><a href="03-understanding-sales-gross-order-value.html" style="color:var(--mint)">Gross order value</a></li>
-    <li><a href="08-understanding-net-margin-and-profitability.html" style="color:var(--mint)">Net margin and profitability</a></li>
+    <li><a href="08-understanding-net-margin-and-profitability.html" style="color:var(--mint)">Net Payout and Payout %</a></li>
     <li><a href="../data-issues/03-what-to-do-when-dashboard-numbers-incorrect.html" style="color:var(--mint)">When numbers look wrong</a></li>
   </ul>
 

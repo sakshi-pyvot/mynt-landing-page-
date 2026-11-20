@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Understanding Licence Dates, Expiry and Renewals</h1>
-  <p class="meta">Billing · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Billing · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Every licence carries its own dates. The licence table shows what each one covers, how long it has left, and what happens when it runs out.</div>
 
@@ -291,19 +287,19 @@
 
   <p>Billing lists every licence with the outlet it is assigned to and the exact window it covers.</p>
 
-  <figure><img src="assets/licence-dates-expiry-renewals/step-01-license-table.png" alt="The Active Licenses table with licence ID, outlet, platforms mapped, start, expiry and days left" /><figcaption>One row per licence &mdash; each with its own start, expiry and days remaining</figcaption></figure>
+  <figure><img src="assets/licence-dates-expiry-renewals/step-01-license-table.png?v=20261022" alt="The Active Licenses table with licence ID, outlet, platforms mapped, start, expiry and days left" /><figcaption>One row per licence &mdash; each with its own start, expiry and days remaining</figcaption></figure>
 
   <table class="glossary">
     <tr><th>License ID</th><td>The licence&rsquo;s reference, e.g. LIC-2026-001. Quote this when contacting support.</td></tr>
     <tr><th>Outlet</th><td>Which outlet the licence is assigned to. <strong>Unassigned</strong> means it is paid for but not yet in use.</td></tr>
     <tr><th>Platforms Mapped</th><td>The platform IDs linked to that outlet. <strong>Not mapped</strong> means it is not collecting.</td></tr>
     <tr><th>Start / Expiry</th><td>The twelve-month window this licence covers.</td></tr>
-    <tr><th>Days Left</th><td>Days until expiry. It turns amber, then red, as the date approaches.</td></tr>
+    <tr><th>Days Left</th><td>Days until expiry. Shown in mint while 180 or more days remain, and in orange below that.</td></tr>
   </table>
 
   <h2>Why your licences expire on different days</h2>
 
-  <p>A licence runs twelve months <em>from its own purchase date</em>, not from a shared annual anniversary. Buy three outlets in January and two in June, and you have two renewal dates. The <strong>Annual Licensing</strong> card at the top always names the earliest one.</p>
+  <p>A licence runs twelve months <em>from its own purchase date</em>, not from a shared annual anniversary. Buy three outlets in January and two in June, and you have two renewal dates. Check <strong>Days Left</strong> on each row to see them.</p>
 
   <h2>What happens at expiry</h2>
 
@@ -313,11 +309,15 @@
     <li>Renewing restarts collection. Ask support to reprocess the gap if emails arrived while it was lapsed.</li>
   </ul>
 
-  <div class="tip">Watch <strong>Days Left</strong> rather than waiting for a reminder. The Annual Licensing card shows the next expiry across every outlet in one line.</div>
+  <div class="tip">Watch <strong>Days Left</strong>. When any licence is expired or within 30 days of expiry, Billing shows a banner with <strong>Renew now</strong>, and the <strong>Renew licences</strong> button is highlighted.</div>
 
   <h2>Renewing</h2>
 
-  <p>Renewal is a purchase: open <strong>Billing</strong>, buy the number of licences you need and pay. The renewed licence starts on the day you buy it. See <a href="02-how-to-purchase-mynt-licences.html">how to purchase licences</a>.</p>
+  <p>Press <strong>Renew licences</strong> at the top of <strong>Billing</strong>, or <strong>Renew now</strong> on the banner. In the dialog, choose how many licences to renew and which outlets the renewal covers. The total is shown including GST. Press <strong>Pay &#8377;&hellip; via Razorpay</strong> to pay in a new tab. Each renewed licence is extended by 12 months.</p>
+
+  <p>Outlets you leave unchecked keep their expired licences and stop ingesting new statements. Their history stays visible.</p>
+
+  <p>If your account has an active auto-renew mandate, your plan renews automatically and you do not need to buy a renewal.</p>
 
   <h2>Related guides</h2>
 

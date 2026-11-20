@@ -274,48 +274,44 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Disconnect or Change the Gmail Account Connected to Mynt</h1>
-  <p class="meta">Email Integration · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Email Integration · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
-  <div class="hello">There is no self-serve disconnect button in Mynt today. Here is what you can do yourself, and what needs support.</div>
+  <div class="hello">You can disconnect, delete, add or reconnect a mailbox yourself from <strong>Settings &rarr; Email Integration</strong>.</div>
 
   <h2>What the panel offers</h2>
 
-  <figure><img src="assets/disconnect-or-change-gmail/step-01-add-soa-email.png" alt="The Connected Emails header with the Add SOA Email action" /><figcaption>You can <strong>add</strong> a mailbox here, and <strong>reconnect</strong> one &mdash; there is no remove action</figcaption></figure>
+  <figure><img src="assets/disconnect-or-change-gmail/step-01-add-soa-email.png?v=20261022" alt="The Connected Emails header with the Add SOA Email action" /><figcaption>Add a mailbox here; each row has its own <strong>Reconnect</strong> or <strong>Authorize</strong>, and <strong>Disconnect</strong> or <strong>Delete</strong></figcaption></figure>
 
   <table class="glossary">
     <tr><th>Add another mailbox</th><td>Yes &mdash; <strong>Add SOA Email</strong>.</td></tr>
-    <tr><th>Reconnect an existing mailbox</th><td>Yes &mdash; <strong>Reconnect</strong> on that row.</td></tr>
-    <tr><th>Remove a mailbox</th><td>Not from this screen. Contact support.</td></tr>
+    <tr><th>Reconnect an existing mailbox</th><td>Yes &mdash; <strong>Authorize</strong> on a lapsed row, or <strong>Reconnect</strong> on a <strong>Connected</strong> one.</td></tr>
+    <tr><th>Remove a mailbox</th><td>Yes &mdash; <strong>Disconnect</strong> on a mailbox that has imported data, or <strong>Delete</strong> on one that never imported anything. Mynt asks you to confirm first.</td></tr>
   </table>
 
   <h2>To change which mailbox Mynt reads</h2>
 
   <ol>
     <li>Add the correct mailbox with <strong>Add SOA Email</strong>.</li>
-    <li>Confirm it shows <strong>Connected</strong> and that data starts arriving from it.</li>
-    <li>Ask support to remove the old one once you are satisfied.</li>
+    <li>Confirm it shows <strong>Connected</strong>. If <strong>Settings &rarr; Outlet Mapping</strong> shows it under <strong>Historic ingestion</strong>, press <strong>Activate</strong>, then check that data starts arriving from it.</li>
+    <li>Press <strong>Disconnect</strong> on the old mailbox and confirm.</li>
   </ol>
 
-  <p>Adding first and removing second means you are never disconnected from both at once.</p>
+  <p>Adding first and disconnecting second means you are never without a connected mailbox.</p>
 
   <h2>To cut access off immediately</h2>
 
   <p>Revoke Mynt from Google directly at <a href="https://myaccount.google.com/permissions">Google Account &rarr; Third-party access</a>. That takes effect at once &mdash; Mynt can no longer read that mailbox.</p>
 
-  <div class="tip">After revoking at Google, tell support so the Mynt side is cleaned up too. Otherwise the mailbox stays listed and simply stops working, which looks like a fault later.</div>
+  <div class="tip">After revoking at Google, also press <strong>Disconnect</strong> on that row in Mynt. Otherwise the mailbox stays listed and simply stops working, which looks like a fault later.</div>
 
   <h2>What happens to data already collected</h2>
 
-  <p>It stays. Disconnecting stops new email being read; it does not erase your dashboards or history. If you want the collected data removed as well, say so explicitly when you contact support &mdash; see <a href="../security/04-how-to-disconnect-sign-out-remove-access.html">disconnecting and removing access</a>.</p>
+  <p>It stays. As the confirmation says: &ldquo;Ingestion stops. Data already imported stays. Reconnecting later imports only new statements.&rdquo; If you want the collected data removed as well, contact support &mdash; see <a href="../security/04-how-to-disconnect-sign-out-remove-access.html">disconnecting and removing access</a>.</p>
 
   <h2>Related guides</h2>
 

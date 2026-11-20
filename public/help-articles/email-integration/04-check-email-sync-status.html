@@ -274,52 +274,48 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Check Your Email Sync Status</h1>
-  <p class="meta">Email Integration · Read time: 3 minutes · Includes a short video · Last updated 25 August 2026</p>
+  <p class="meta">Email Integration · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">Two places tell you whether email is flowing: how fresh your data is, and whether the fetch stage is healthy. Check both before assuming something is broken.</div>
 
   <h2>Watch it done</h2>
 
   <div class="video-box">
-    <video controls preload="metadata" poster="assets/check-email-sync-status/demo-poster.jpg" style="width:100%;border-radius:8px">
-      <source src="assets/check-email-sync-status/demo.mp4" type="video/mp4" />
-      Your browser cannot play this video. <a href="assets/check-email-sync-status/demo.mp4">Download it instead</a>.
+    <video controls preload="metadata" poster="assets/check-email-sync-status/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/check-email-sync-status/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/check-email-sync-status/demo.mp4?v=20261022">Download it instead</a>.
     </video>
     <p class="video-caption">The three-stop check: data freshness, the mailbox, then the fetch stage</p>
   </div>
 
   <h2>Check 1 — how fresh the data is</h2>
 
-  <p>The <strong>LAST UPDATED</strong> chip on the dashboard names the most recent day Mynt holds data for.</p>
+  <p>The <strong>Last updated</strong> chip on <strong>Overview</strong> names the most recent day Mynt holds data for.</p>
 
-  <figure><img src="assets/check-email-sync-status/step-01-last-updated.png" alt="The LAST UPDATED chip showing the newest day Mynt has data for" /><figcaption>If this is several days old, no newer payout email has been processed</figcaption></figure>
+  <figure><img src="assets/check-email-sync-status/step-01-last-updated.png?v=20261022" alt="The Last updated chip showing the newest day Mynt has data for" /><figcaption>If this is several days old, no newer payout email has been processed</figcaption></figure>
 
   <h2>Check 2 — is the fetch stage working</h2>
 
   <p>Open <strong>Help &amp; Support</strong> and look at <strong>System Status</strong>. <strong>Email Fetch</strong> is the stage that reads your mailboxes.</p>
 
-  <figure><img src="assets/check-email-sync-status/step-02-email-fetch-status.png" alt="The Email Fetch row of System Status reading Working" /><figcaption><strong>Working</strong> means Mynt is reading mailboxes normally</figcaption></figure>
+  <figure><img src="assets/check-email-sync-status/step-02-email-fetch-status.png?v=20261022" alt="The Email Fetch row of System Status reading Working" /><figcaption><strong>Working</strong> means Mynt is reading mailboxes normally. <strong>Delayed</strong> or <strong>Down</strong> means it is not.</figcaption></figure>
 
   <h2>Check 3 — is the mailbox still connected</h2>
 
-  <p>In <strong>Settings &rarr; Email Integration</strong>, every mailbox should carry a green <strong>Connected</strong> badge. Anything else means Mynt has lost access &mdash; see <a href="06-how-to-reconnect-gmail-when-connection-expires.html">reconnecting</a>.</p>
+  <p>In <strong>Settings &rarr; Email Integration</strong>, every mailbox should carry a green <strong>Connected</strong> badge. Anything else, such as <strong>Needs Reauth</strong>, <strong>Error</strong> or <strong>Pending Connection</strong>, means Mynt cannot read that mailbox. Press <strong>Authorize</strong> on its row &mdash; see <a href="06-how-to-reconnect-gmail-when-connection-expires.html">reconnecting</a>.</p>
 
   <h2>Reading the three together</h2>
 
   <table class="glossary">
     <tr><th>Fresh data, Working, Connected</th><td>Nothing wrong. Any gap is on the platform&rsquo;s side, or a filter.</td></tr>
     <tr><th>Stale data, Working, Connected</th><td>No new payout email has arrived. Check the mailbox directly.</td></tr>
-    <tr><th>Stale data, Working, not Connected</th><td>Access lapsed. Reconnect the mailbox.</td></tr>
-    <tr><th>Stale data, Email Fetch not Working</th><td>A Mynt-side issue. Raise a ticket with the time you noticed it.</td></tr>
+    <tr><th>Stale data, Working, not Connected</th><td>Access lapsed. Press <strong>Authorize</strong> on the mailbox.</td></tr>
+    <tr><th>Stale data, Email Fetch Delayed or Down</th><td>A Mynt-side issue. Raise a ticket with the time you noticed it.</td></tr>
   </table>
 
   <h2>Related guides</h2>

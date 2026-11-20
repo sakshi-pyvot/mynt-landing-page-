@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to Read Growth Trends, Comparisons and AI Insights — Mynt Help Guide</title>
+  <title>How to Read Growth Trends, Comparisons and PIA's Insights — Mynt Help Guide</title>
   <style>
     :root {
       --mint: #3ecf8e;
@@ -274,33 +274,39 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
-  <h1>How to Read Growth Trends, Comparisons and AI Insights</h1>
-  <p class="meta">Dashboard & Metrics · Read time: 5 minutes · Article only · Last updated 25 August 2026</p>
+  <h1>How to Read Growth Trends, Comparisons and PIA's Insights</h1>
+  <p class="meta">Dashboard & Metrics · Read time: 5 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">Below the headline cards sit the three tools for working out <em>why</em> a number moved: the platform split, the trend line, and the insights panel.</div>
 
+  <h2>Watch it done</h2>
+
+  <div class="video-box">
+    <video controls preload="metadata" poster="assets/how-to-read-growth-trends-comparisons-ai-insights/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/how-to-read-growth-trends-comparisons-ai-insights/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/how-to-read-growth-trends-comparisons-ai-insights/demo.mp4?v=20261022">Download it instead</a>.
+    </video>
+    <p class="video-caption">Platform Comparison, every Trends view, and opening PIA&rsquo;s Insights</p>
+  </div>
+
   <h2>Platform Comparison</h2>
 
-  <figure><img src="assets/how-to-read-growth-trends-comparisons-ai-insights/step-01-platform-comparison.png" alt="Platform comparison showing Zomato, Swiggy and Toing side by side" /><figcaption>The same metrics per platform, with each platform&rsquo;s share of gross order value</figcaption></figure>
+  <figure><img src="assets/how-to-read-growth-trends-comparisons-ai-insights/step-01-platform-comparison.png?v=20261022" alt="Platform comparison showing Zomato, Swiggy and Toing side by side" /><figcaption>The same metrics per platform, with each platform&rsquo;s share of gross order value</figcaption></figure>
 
-  <p>Each platform card repeats the headline metrics &mdash; gross order value, orders, ads, charges, discounts, refunds, net payout and margin &mdash; so you can see which platform moved the group figure. A share bar at the top shows the split at a glance.</p>
+  <p>Each platform card repeats the headline metrics &mdash; gross order value, orders, ads, Platform Charges, discounts, refunds, Net Payout and Payout % &mdash; so you can see which platform moved the group figure. Toing appears only if your account has Toing data. A share bar at the top shows the split at a glance.</p>
 
-  <div class="tip">Margin often differs by several points between platforms on the same menu. If group margin fell, check whether the mix shifted rather than assuming rates changed.</div>
+  <div class="tip">Payout % often differs by several points between platforms on the same menu. If the group Payout % fell, check whether the mix shifted rather than assuming rates changed.</div>
 
   <h2>Trends</h2>
 
-  <figure><img src="assets/how-to-read-growth-trends-comparisons-ai-insights/step-02-trends.png" alt="The Trends chart plotting sales over the selected period" /><figcaption>Sales, payout or orders &mdash; daily, hourly, by mealtime or by day type</figcaption></figure>
+  <figure><img src="assets/how-to-read-growth-trends-comparisons-ai-insights/step-02-trends.png?v=20261022" alt="The Trends chart with Orders as bars and Sales and Payout as lines over the selected period" /><figcaption>Orders, Sales and Payout on one chart &mdash; daily, hourly, by mealtime or by day type</figcaption></figure>
 
   <table class="glossary">
-    <tr><th>Sales / Payout / Orders</th><td>Which measure to plot.</td></tr>
+    <tr><th>Orders / Sales / Payout</th><td>All three on one chart: Orders as bars, Sales and Payout as lines. Click a name in the legend above the chart to hide or show it.</td></tr>
     <tr><th>Daily</th><td>Day by day across the period &mdash; best for spotting a single bad day.</td></tr>
     <tr><th>Hourly</th><td>By hour of day &mdash; best for staffing and kitchen capacity.</td></tr>
     <tr><th>Mealtime</th><td>Grouped into meal windows.</td></tr>
@@ -309,15 +315,17 @@
 
   <p>A card tells you <em>that</em> something moved; the trend tells you <em>when</em>. A week that is down because of one closed day reads very differently from one that is down every day.</p>
 
-  <h2>AI Insights</h2>
+  <h2>PIA's Insights</h2>
 
-  <figure><img src="assets/how-to-read-growth-trends-comparisons-ai-insights/step-03-ai-insights.png" alt="The AI Insights panel with prioritised observations" /><figcaption>Each insight is tagged by priority &mdash; act now, review, or opportunity</figcaption></figure>
+  <figure><img src="assets/how-to-read-growth-trends-comparisons-ai-insights/step-03-ai-insights.png?v=20261022" alt="The PIA's Insights panel with prioritised observations" /><figcaption>Each insight is tagged by priority. The chips at the top filter the list and show how many of each there are.</figcaption></figure>
 
   <table class="glossary">
-    <tr><th>Act now</th><td>Something is costing money today.</td></tr>
+    <tr><th>Act now</th><td>The most urgent: something needs attention now.</td></tr>
     <tr><th>Review</th><td>Worth a look, not urgent.</td></tr>
     <tr><th>Opportunity</th><td>A positive movement worth building on.</td></tr>
   </table>
+
+  <p>The chips beside the title &mdash; <strong>All</strong>, <strong>Act now</strong>, <strong>Review</strong> and <strong>Opportunity</strong> &mdash; each show a count. Pick one to see only that priority; <strong>All</strong> shows everything. A priority with no insights has no chip.</p>
 
   <p>Insights are generated from the same filtered data as the cards, so changing the filters changes the insights. They point at where to look; the trend and comparison views tell you what actually happened.</p>
 
@@ -327,8 +335,8 @@
     <li>Read the headline card that moved.</li>
     <li>Check <strong>Platform Comparison</strong> &mdash; is it one platform or both?</li>
     <li>Check <strong>Trends</strong> &mdash; is it one day or the whole period?</li>
-    <li>Read <strong>AI Insights</strong> for what the data itself flags.</li>
-    <li>Narrow with <strong>VIEW BY &rarr; Outlet</strong> to find the specific location.</li>
+    <li>Read <strong>PIA's Insights</strong> for what the data itself flags.</li>
+    <li>Narrow <strong>Select Outlet</strong> to one outlet at a time to find the specific location.</li>
   </ol>
 
   <h2>Related guides</h2>
@@ -336,7 +344,7 @@
   <ul>
     <li><a href="01-understanding-the-mynt-dashboard.html" style="color:var(--mint)">Understanding the dashboard</a></li>
     <li><a href="02-how-to-use-filters-date-platform-restaurant-chain-group.html" style="color:var(--mint)">Using the filters</a></li>
-    <li><a href="08-understanding-net-margin-and-profitability.html" style="color:var(--mint)">Net margin and profitability</a></li>
+    <li><a href="08-understanding-net-margin-and-profitability.html" style="color:var(--mint)">Net Payout and Payout %</a></li>
   </ul>
 
   <h2>Need help?</h2>

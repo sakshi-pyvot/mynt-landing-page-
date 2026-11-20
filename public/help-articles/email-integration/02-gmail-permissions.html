@@ -274,23 +274,19 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>What Gmail Permissions Does Mynt Require?</h1>
-  <p class="meta">Email Integration · Read time: 3 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Email Integration · Read time: 3 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Mynt asks Google for read-only access to your Gmail. That is the whole ask, and it is the minimum that makes the product work.</div>
 
   <h2>What Mynt asks for</h2>
 
   <table class="glossary">
-    <tr><th>Read your Gmail messages</th><td>To find and read the payout and settlement emails Zomato and Swiggy send you.</td></tr>
+    <tr><th>View your email messages and settings</th><td>To find and read the payout and settlement emails Zomato and Swiggy send you. Google shows this as a box you must tick; if it is left unticked, nothing is connected.</td></tr>
     <tr><th>Your email address</th><td>So Mynt can show you which mailbox is connected.</td></tr>
   </table>
 
@@ -309,7 +305,7 @@
 
   <p>In <strong>Settings &rarr; Email Integration</strong>, a connected mailbox carries a green badge.</p>
 
-  <figure><img src="assets/gmail-permissions/step-01-connected-status.png" alt="A green Connected badge in the Status column" /><figcaption>Green <strong>Connected</strong> means Mynt currently holds a valid read-only token for that mailbox</figcaption></figure>
+  <figure><img src="assets/gmail-permissions/step-01-connected-status.png?v=20261022" alt="A green Connected badge in the Status column" /><figcaption>Green <strong>Connected</strong> means Mynt currently holds a valid read-only token for that mailbox</figcaption></figure>
 
   <h2>Withdrawing access</h2>
 

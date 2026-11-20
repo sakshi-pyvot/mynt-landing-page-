@@ -274,28 +274,24 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Understanding Orders and Average Order Value</h1>
-  <p class="meta">Dashboard & Metrics · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Dashboard & Metrics · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Two cards that only make sense together: how many orders came in, and how much each was worth.</div>
 
   <h2>Total Orders</h2>
 
-  <figure><img src="assets/understanding-orders-and-average-order-value/step-01-orders-card.png" alt="The Total Orders card" /><figcaption>Orders in the selected period, for the current filters</figcaption></figure>
+  <figure><img src="assets/understanding-orders-and-average-order-value/step-01-orders-card.png?v=20261022" alt="The Total Orders card" /><figcaption>Orders in the selected period, for the current filters</figcaption></figure>
 
-  <p>Counts settled orders across the platforms you have selected. Cancelled orders are reported separately on the Refunds page rather than being folded in here.</p>
+  <p>Counts delivered orders across the platforms you have selected. Cancelled orders are reported separately on the Refunds page rather than being folded in here.</p>
 
   <h2>Average Order Value</h2>
 
-  <figure><img src="assets/understanding-orders-and-average-order-value/step-02-aov-card.png" alt="The Average Order Value card" /><figcaption>Gross order value divided by total orders</figcaption></figure>
+  <figure><img src="assets/understanding-orders-and-average-order-value/step-02-aov-card.png?v=20261022" alt="The Average Order Value card" /><figcaption>Gross order value divided by total orders</figcaption></figure>
 
   <p>AOV is arithmetic, not a separate measurement: <strong>Gross Order Value &divide; Total Orders</strong>. Narrow the filters and both halves change, so AOV can move without either underlying number looking odd.</p>
 
@@ -308,14 +304,14 @@
     <tr><th>Both down</th><td>Check the date range covers a full period before reading anything into it.</td></tr>
   </table>
 
-  <div class="tip">A partial week always drags both figures down. Confirm the period chip covers a complete week before comparing.</div>
+  <div class="tip">A shorter period has fewer orders, but that does not lower AOV. The <strong>Last Period</strong> chip is always the same length as your period, so the comparison is like for like.</div>
 
   <h2>Where to dig further</h2>
 
   <ul>
     <li>Split by platform to see which one moved &mdash; see <a href="02-how-to-use-filters-date-platform-restaurant-chain-group.html">the filters</a>.</li>
     <li>Check discounts: heavy discounting lifts orders and lowers AOV &mdash; see <a href="05-understanding-discounts-and-discount-percent.html">discounts</a>.</li>
-    <li>Check the hourly breakdown on the Earnings page for when orders actually arrive.</li>
+    <li>Check the hourly breakdown on the Topline page for when orders actually arrive.</li>
   </ul>
 
   <h2>Related guides</h2>

@@ -1,6 +1,6 @@
 # How to Map Zomato and Swiggy Outlets
 
-*Outlet Mapping · Read time: 5 minutes · Includes a short video · Last updated 25 August 2026*
+*Outlet Mapping · Read time: 5 minutes · Includes a short video · Last updated 22 October 2026*
 
 ---
 
@@ -12,9 +12,9 @@
 
 ## Watch this first
 
-**[▶ Watch demo video](assets/map-zomato-swiggy-platform-outlets/demo.mp4)**
+**[▶ Watch video](assets/map-zomato-swiggy-platform-outlets/demo.mp4?v=20261022)**
 
-![Video poster](assets/map-zomato-swiggy-platform-outlets/demo-poster.jpg)
+![Video poster](assets/map-zomato-swiggy-platform-outlets/demo-poster.jpg?v=20261022)
 
 *Linking a Zomato ID to an outlet in Platform Mapping.*
 
@@ -33,15 +33,15 @@
 
 Left menu → **Settings** → **Outlet Mapping**.
 
-![Outlet Mapping overview](assets/map-zomato-swiggy-platform-outlets/step-01-outlet-mapping-overview.png)
+![Outlet Mapping overview](assets/map-zomato-swiggy-platform-outlets/step-01-outlet-mapping-overview.png?v=20261022)
 
 ---
 
 ### Step 2 — Go to Platform Mapping
 
-Tap **Platform Mapping** in the row of buttons, or scroll down to the Platform Mapping card. Outlets with nothing linked show **Not mapped** in orange.
+Tap **Platform Mapping** in the row of buttons, or scroll down to the Platform Mapping card. Outlets with nothing linked show **Not mapped** in grey.
 
-![Platform Mapping table](assets/map-zomato-swiggy-platform-outlets/step-02-platform-mapping-table.png)
+![Platform Mapping table](assets/map-zomato-swiggy-platform-outlets/step-02-platform-mapping-table.png?v=20261022)
 
 ---
 
@@ -49,15 +49,15 @@ Tap **Platform Mapping** in the row of buttons, or scroll down to the Platform M
 
 Find the outlet's row and tap **Edit**. The row highlights and its fields become editable, with **Cancel** and **Save** on the right.
 
-![Outlet row in edit mode](assets/map-zomato-swiggy-platform-outlets/step-03-edit-row.png)
+![Outlet row in edit mode](assets/map-zomato-swiggy-platform-outlets/step-03-edit-row.png?v=20261022)
 
 ---
 
 ### Step 4 — Add the platform
 
-Tap **+ Zomato** or **+ Swiggy** to add a platform link. Only platforms you have not already linked appear here.
+Tap **+ Zomato** or **+ Swiggy** to add a platform link. A platform's button is hidden once that platform is already in the row.
 
-![Add a platform to the outlet](assets/map-zomato-swiggy-platform-outlets/step-04-add-zomato.png)
+![Add a platform to the outlet](assets/map-zomato-swiggy-platform-outlets/step-04-add-zomato.png?v=20261022)
 
 > **Toing** is shown too, but you cannot edit it. Toing uses the same ID as Swiggy, so it fills in by itself once Swiggy is linked.
 
@@ -67,9 +67,9 @@ Tap **+ Zomato** or **+ Swiggy** to add a platform link. Only platforms you have
 
 Tap the dropdown next to the platform name and choose the right ID. Where Mynt found a restaurant name in your payout email, the option reads **ID · restaurant name** to help you tell them apart.
 
-![Choosing the restaurant ID from the dropdown](assets/map-zomato-swiggy-platform-outlets/step-05-select-id.png)
+![Choosing the restaurant ID from the dropdown](assets/map-zomato-swiggy-platform-outlets/step-05-select-id.png?v=20261022)
 
-If the dropdown is empty, Mynt has not detected any unused IDs for that platform yet. Check that your payout email is connected and give it time to sync.
+If the dropdown shows **No detected IDs available**, Mynt has not detected any unused IDs for that platform yet. IDs already linked to an outlet are left out of the list. Check that your payout email is connected and give it time to sync.
 
 ---
 
@@ -77,7 +77,7 @@ If the dropdown is empty, Mynt has not detected any unused IDs for that platform
 
 Tap **Save**. The link is stored and Mynt starts counting that platform's payouts against this outlet. Repeat for each outlet, and for each platform separately.
 
-![Saving the mapping](assets/map-zomato-swiggy-platform-outlets/step-06-save-mapping.png)
+![Saving the mapping](assets/map-zomato-swiggy-platform-outlets/step-06-save-mapping.png?v=20261022)
 
 ---
 
@@ -85,8 +85,9 @@ Tap **Save**. The link is stored and Mynt starts counting that platform's payout
 
 - The row now shows a tag such as **Zomato · 20942752** instead of **Not mapped**.
 - The **Mapped** count at the top goes up and **Unmapped** goes down.
-- The dot beside the licence ID turns green once data starts arriving.
-- Dashboard numbers for that outlet update within a few minutes.
+- Dashboard numbers for that outlet fill in as Mynt processes payouts for the new link.
+
+The dot beside the licence ID is not a mapping check. It shows whether Mynt is ingesting the outlet, which depends on your licence and activation. It can stay grey after you save.
 
 ---
 
@@ -94,9 +95,9 @@ Tap **Save**. The link is stored and Mynt starts counting that platform's payout
 
 | Problem | What it means |
 |---------|---------------|
-| **+ Zomato / + Swiggy missing** | You have already linked that platform for this outlet, or Mynt has not detected any ID for it |
-| **Dropdown is empty** | No unused IDs detected yet — check Email Integration shows Connected |
-| **"That platform ID is already registered"** | The ID belongs to another outlet. See [Fixing incorrect, duplicate or unmapped outlets](05-how-to-fix-incorrect-duplicate-unmapped-outlets.md) |
+| **+ Zomato / + Swiggy missing** | That platform is already in this outlet's row |
+| **Dropdown shows "No detected IDs available"** | No unused IDs detected yet — check Email Integration shows Connected |
+| **"That platform ID is already registered to another account — contact support to move it."** | The ID belongs to a different Mynt account. IDs your own outlets use are already left out of the dropdown. Contact support to move it. See [Fixing incorrect, duplicate or unmapped outlets](05-how-to-fix-incorrect-duplicate-unmapped-outlets.md) |
 | **Toing cannot be edited** | Correct — it follows your Swiggy ID automatically |
 
 ---

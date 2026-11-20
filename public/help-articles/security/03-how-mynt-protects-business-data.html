@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How Mynt Protects Your Business Data</h1>
-  <p class="meta">Security · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Security · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Your payout data is sensitive: sales, commissions, bank settlements. Passwords are hashed, traffic runs over HTTPS, card details are handled by a PCI-compliant payment company rather than stored by Mynt, and Gmail access is read-only.</div>
 
@@ -306,8 +302,8 @@
 
   <h3>Secure sign-in</h3>
   <p>Passwords are <strong>hashed</strong> — stored scrambled, so Mynt staff cannot read yours. Sessions use tokens that expire.</p>
-  <p>You can also add a second step yourself at <strong>Settings → Security → Authentication</strong>: an authenticator app, a passkey (Face ID, Touch ID or a security key), or one-time recovery codes. Adding or removing any of them asks you to confirm your password first.</p>
-  <figure><img src="assets/how-mynt-protects-business-data/authentication-options.png" alt="Authentication options in Settings Security" /><figcaption>Settings → Security → Authentication — all three are optional and self-serve</figcaption></figure>
+  <p>You can also add a second step yourself at <strong>Settings → Security → Authentication</strong>: an authenticator app, a passkey (Face ID, Touch ID or a security key), or one-time recovery codes. Adding one may first ask you to confirm it’s you on Mynt’s secure sign-in page, and removing one always happens on that page. Mynt never asks for your password inside the app.</p>
+  <figure><img src="assets/how-mynt-protects-business-data/authentication-options.png?v=20261022" alt="Authentication options in Settings Security" /><figcaption>Settings → Security → Authentication — all three are optional and self-serve</figcaption></figure>
   <p>See <a href="01-how-sign-in-account-access-work.html" style="color:var(--mint)">How sign-in works</a>.</p>
 
   <h3>Read-only access to your email</h3>
@@ -317,14 +313,15 @@
   <p>All traffic between your browser and Mynt uses <strong>HTTPS</strong>, so it is scrambled in transit. Stored data sits in secured cloud infrastructure with restricted access.</p>
 
   <h3>Account isolation</h3>
-  <p>Each business's data is kept separate. People see only the account they were invited to. Support staff access is limited to resolving tickets you raise.</p>
+  <p>Each business's data is kept separate, and a Mynt login opens one business account.</p>
+  <p>You can let Mynt support see your dashboards while they help you. Turn on <strong>Support access</strong> in <strong>Settings → Security</strong> (choose 24 hours, 72 hours or 7 days under <strong>Allow for</strong>), or turn on the <strong>Allow Mynt support to view my dashboards</strong> switch when you raise a support ticket (72 hours). Access is read-only, ends by itself, and you can switch it off or press <strong>Revoke</strong> at any time.</p>
 
   <h3>Payment security</h3>
   <p>Card payments go through a <strong>PCI-compliant</strong> payment partner. Mynt does not store your full card number. See <a href="../billing/06-how-payments-gst-billing-details-work.html" style="color:var(--mint)">How payments, GST and billing details work</a>.</p>
 
   <h3>You can end every session yourself</h3>
   <p><strong>Settings → Security → Active Sessions → Logout All Devices</strong> signs out every browser and phone using your account, including the one you are on.</p>
-  <figure><img src="assets/how-mynt-protects-business-data/active-sessions.png" alt="Active Sessions with Logout All Devices" /><figcaption>Active Sessions — one tap signs out every device</figcaption></figure>
+  <figure><img src="assets/how-mynt-protects-business-data/active-sessions.png?v=20261022" alt="Active Sessions with Logout All Devices" /><figcaption>Active Sessions — one tap signs out every device</figcaption></figure>
 
   <h2>Your responsibilities</h2>
   <table class="glossary">
@@ -338,7 +335,7 @@
 
   <h2>If you suspect a problem</h2>
   <ol>
-    <li><strong>Change your password</strong> — Settings → Security → Change Password</li>
+    <li><strong>Change your password</strong> — Settings → Security → <strong>Change password</strong></li>
     <li><strong>Sign out everywhere</strong> — Settings → Security → Logout All Devices</li>
     <li><strong>Revoke Gmail access</strong> — <a href="https://myaccount.google.com/permissions" style="color:var(--mint)">Google Account permissions</a></li>
     <li><strong>Contact support</strong> — contact@pyvot.in, or raise a ticket in Help &amp; Support</li>

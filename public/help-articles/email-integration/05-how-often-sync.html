@@ -274,23 +274,19 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How Often Does Mynt Sync New Email Data?</h1>
-  <p class="meta">Email Integration · Read time: 3 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Email Integration · Read time: 3 minutes · Article only · Last updated 22 October 2026</p>
 
-  <div class="hello">Mynt checks continuously, but it can only find what the platforms have sent. That distinction explains almost every "why is it not updated yet" question.</div>
+  <div class="hello">Mynt checks your mailboxes on a schedule, but it can only find what the platforms have sent. That distinction explains almost every "why is it not updated yet" question.</div>
 
   <h2>Two different clocks</h2>
 
   <table class="glossary">
-    <tr><th>How often Mynt reads your mailbox</th><td>Continuously. A new payout email is normally processed within minutes of arriving.</td></tr>
+    <tr><th>How often Mynt reads your mailbox</th><td>On a schedule. Mynt checks connected mailboxes on a schedule, so new payout emails can take up to about 12 hours to appear after they arrive.</td></tr>
     <tr><th>How often the platform sends one</th><td>On its own payout cycle &mdash; commonly weekly, not daily and never per order.</td></tr>
   </table>
 
@@ -300,7 +296,7 @@
 
   <p>If you have just started trading at a new location, Mynt may not have noticed its restaurant ID yet. <strong>Rescan mailboxes</strong> re-reads your connected inboxes looking for new IDs.</p>
 
-  <figure><img src="assets/how-often-sync/step-01-rescan-mailboxes.png" alt="The Rescan mailboxes control in Settings, Email Integration" /><figcaption>Re-checks your mailboxes for restaurant IDs Mynt has not seen before</figcaption></figure>
+  <figure><img src="assets/how-often-sync/step-01-rescan-mailboxes.png?v=20261022" alt="The Rescan mailboxes control in Settings, Email Integration" /><figcaption>Re-checks your mailboxes for restaurant IDs Mynt has not seen before</figcaption></figure>
 
   <ol>
     <li>Go to <strong>Settings &rarr; Email Integration</strong>.</li>
@@ -312,7 +308,7 @@
 
   <h2>After first connecting</h2>
 
-  <p>The first read covers the payout emails already in the mailbox, so history appears in one go rather than trickling in. How far back it reaches depends on your plan and on how far back those emails still exist.</p>
+  <p>After you connect a new mailbox, Mynt scans it for restaurant IDs straight away. Reading its payout emails may wait until you press <strong>Activate</strong> under <strong>Historic ingestion</strong> in <strong>Settings &rarr; Outlet Mapping</strong>. How far back the history reaches depends on how far back those emails still exist in the mailbox.</p>
 
   <h2>Related guides</h2>
 

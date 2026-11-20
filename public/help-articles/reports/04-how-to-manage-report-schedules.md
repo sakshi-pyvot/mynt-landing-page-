@@ -1,41 +1,47 @@
 # How to Manage Your Report Schedules
 
-*Reports · Read time: 3 minutes · Article only · Last updated 25 August 2026*
+*Reports · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026*
 
 Every recurring report you have set up is listed in one place, with filters for finding the one you want.
 
 ---
 
+## Watch it done
+
+**Video:** [Searching, viewing, pausing, resuming, running and deleting a schedule](assets/how-to-manage-report-schedules/demo.mp4?v=20261022)
+
+![Video preview](assets/how-to-manage-report-schedules/demo-poster.jpg?v=20261022)
+
 ## Where they live
 
 Open **Reports** and scroll to **Scheduled Reports**.
 
-![The Scheduled Reports section for viewing and managing recurring schedules](assets/how-to-manage-report-schedules/step-01-scheduled-reports.png)
+![The Scheduled Reports section for viewing and managing recurring schedules](assets/how-to-manage-report-schedules/step-01-scheduled-reports.png?v=20261022)
 *All recurring schedules, with filters for platform, frequency, channel and status*
 
 | | |
 |---|---|
 | **All Platforms** | Narrow to schedules for one platform. |
-| **All Frequencies** | Daily, weekly or monthly. |
-| **All Channels** | Download, email or WhatsApp. |
-| **All Status** | Active or paused. |
+| **All Frequencies** | Weekly, Monthly or Quarterly. |
+| **All Channels** | Email or WhatsApp. |
+| **All Status** | Active, Paused, Failed or Expired. |
 
-With no schedules yet, the section reads **No scheduled reports yet** and offers to create one &mdash; see [scheduling automatic reports](03-schedule-automatic-reports.md).
+With no schedules yet, the section reads **No scheduled reports yet. Create one above to get started.** &mdash; see [scheduling automatic reports](03-schedule-automatic-reports.md).
 
 ## Keeping the list under control
 
 1. Review the list when your token balance drops faster than expected &mdash; every schedule spends tokens per run.
-2. Filter by **All Channels** to find WhatsApp schedules, the most expensive per run.
+2. Use the **All Channels** filter to see Email and WhatsApp schedules separately. Both are priced per recipient, so a long recipient list costs more on every run.
 3. Pause or remove anything nobody reads.
-4. Check frequency matches the payout cycle &mdash; a daily report of weekly-settled data mostly repeats itself.
+4. Check the frequency matches how often the report is read &mdash; a weekly report nobody opens until month-end could be monthly.
 
-> **Tip:** A forgotten daily schedule is the most common reason a token balance falls without anyone using the AI Assistant.
+> **Tip:** A forgotten weekly schedule with many recipients is a common reason a token balance falls without anyone using **PIA (AI Assistant)**.
 
 ## If a scheduled report stops arriving
 
-1. Check the schedule is still active in this list.
+1. Check the schedule is still **Active** in this list, not **Paused**, **Failed** or **Expired**.
 2. Check your token balance &mdash; a run with insufficient tokens cannot complete.
-3. Check **Help & Support → System Status** for **Report Generation**.
+3. Check **Help & Support → System Status** for any service marked **Delayed** or **Down**.
 4. [Raise a ticket](../data-issues/06-how-to-raise-data-issue-support-ticket.md) with issue type **Report**.
 
 ## Related guides

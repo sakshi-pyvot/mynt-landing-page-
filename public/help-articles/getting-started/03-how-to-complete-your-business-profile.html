@@ -274,40 +274,46 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Complete Your Business Profile</h1>
-  <p class="meta">Getting Started · Read time: 3 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Getting Started · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">Your profile is what appears on every invoice Mynt raises. Get it right before your first purchase &mdash; an issued invoice cannot be changed afterwards.</div>
+
+  <h2>Watch it done</h2>
+
+  <div class="video-box">
+    <video controls preload="metadata" poster="assets/complete-business-profile/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/complete-business-profile/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/complete-business-profile/demo.mp4?v=20261022">Download it instead</a>.
+    </video>
+    <p class="video-caption">Filling in the account details and saving them</p>
+  </div>
 
   <h2>Where it lives</h2>
 
   <p>Go to <strong>Settings &rarr; Account</strong>.</p>
 
-  <figure><img src="assets/complete-business-profile/step-01-account-details.png" alt="The account details form with company name, GST number, billing state and address" /><figcaption>GST number first &mdash; company name and billing state follow from it</figcaption></figure>
+  <figure><img src="assets/complete-business-profile/step-01-account-details.png?v=20261022" alt="The account details form with company name, GST number, billing state and address" /><figcaption>GST number first &mdash; company name, billing state and address follow from it</figcaption></figure>
 
   <h2>Fill it in this order</h2>
 
   <ol>
     <li>Enter your <strong>GST Number</strong> and press <strong>Verify</strong>.</li>
-    <li>Check the <strong>Company Name</strong> and <strong>Billing State</strong> that appear &mdash; both are taken from the verified GSTIN.</li>
-    <li>Add your <strong>Billing Address</strong>.</li>
+    <li>A <strong>GSTIN Verified</strong> box shows the details on the GST register. Check them and press <strong>Use these details</strong>.</li>
+    <li>Mynt fills in your <strong>Company Name</strong>, <strong>Billing State</strong> and <strong>Billing Address</strong> from the register. If the register has no address, type your <strong>Billing Address</strong> yourself.</li>
     <li>Add the <strong>Account Owner Name</strong> and <strong>Phone Number</strong>.</li>
-    <li>Press <strong>Save Changes</strong>.</li>
+    <li>Press <strong>Save Changes</strong>. If you have typed a GST number, you must verify it (or clear it) before you can save.</li>
   </ol>
 
   <table class="glossary">
     <tr><th>Company Name</th><td>Read-only once a GSTIN is verified. Change or clear the GST number to edit it.</td></tr>
     <tr><th>Billing State</th><td>Also derived from the GSTIN. It determines how GST is applied to your invoices.</td></tr>
     <tr><th>Email ID</th><td>Your login address. Read-only &mdash; contact support to change it.</td></tr>
-    <tr><th>Billing Address</th><td>Printed on every invoice.</td></tr>
+    <tr><th>Billing Address</th><td>Filled from the GST register when it has one. Printed on every invoice.</td></tr>
   </table>
 
   <div class="tip">Enter the GSTIN <em>before</em> buying anything. A GSTIN cannot be added to an invoice that has already been issued.</div>

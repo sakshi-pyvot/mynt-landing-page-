@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Connect Your Gmail Account to Mynt</h1>
-  <p class="meta">Email Integration · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Email Integration · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Mynt builds your dashboards from the payout emails Zomato and Swiggy send you. Connecting the mailbox those emails arrive in is the one step everything else depends on.</div>
 
@@ -298,15 +294,17 @@
 
   <p>Go to <strong>Settings</strong>, then <strong>Email Integration</strong>. The panel explains its own job: payout emails are the core data source, and this is where the connection is managed.</p>
 
-  <figure><img src="assets/connect-gmail-account/step-01-email-panel.png" alt="The Email Integration panel with the Connected Emails table" /><figcaption>Settings &rarr; Email Integration &mdash; every mailbox Mynt reads, and its status</figcaption></figure>
+  <figure><img src="assets/connect-gmail-account/step-01-email-panel.png?v=20261022" alt="The Email Integration panel with the Connected Emails table" /><figcaption>Settings &rarr; Email Integration &mdash; every mailbox Mynt reads, and its status</figcaption></figure>
 
   <h2>Step 2 — Add the mailbox</h2>
 
   <ol>
     <li>Press <strong>Add SOA Email</strong>.</li>
-    <li>Google asks which account to use. Pick the mailbox that receives payout emails.</li>
-    <li>Google then lists what Mynt is asking for. Read it, then approve.</li>
-    <li>You are returned to Mynt, and the mailbox appears in <strong>Connected Emails</strong>.</li>
+    <li>Type the mailbox address in the <strong>SOA email</strong> field, then press <strong>Connect Email</strong>.</li>
+    <li>Google opens in the same tab and asks which account to use. Pick the mailbox that receives payout emails.</li>
+    <li>Google then lists what Mynt is asking for. Tick <strong>View your email messages and settings</strong> (or <strong>Select all</strong>), then continue. If that box is left unticked, nothing is connected.</li>
+    <li>You are returned to Mynt, which asks <strong>Connect <em>mailbox</em> to <em>account</em>?</strong> Check the mailbox is the one you meant, then press <strong>Connect</strong>.</li>
+    <li>The mailbox appears in <strong>Connected Emails</strong>.</li>
   </ol>
 
   <p>The Google screens are Google&rsquo;s own, not Mynt&rsquo;s &mdash; your password is never typed into Mynt. See <a href="../security/02-understanding-google-gmail-permissions.html">understanding Google and Gmail permissions</a> for what those screens look like and what each permission means.</p>
@@ -315,21 +313,21 @@
 
   <p>The mailbox should show <strong>Gmail</strong> as its provider and a green <strong>Connected</strong> badge. If it does not, see <a href="06-how-to-reconnect-gmail-when-connection-expires.html">reconnecting a mailbox</a>.</p>
 
-  <div class="tip">You can connect <strong>more than one</strong> mailbox. If Zomato mail goes to one address and Swiggy mail to another, add both &mdash; Mynt reads all of them.</div>
+  <div class="tip">You can connect <strong>more than one</strong> mailbox. If Zomato mail goes to one address and Swiggy mail to another, add both.</div>
 
   <h2>What happens next</h2>
 
   <ol>
-    <li>Mynt reads the payout emails already sitting in that mailbox.</li>
-    <li>It picks out the restaurant IDs it finds and offers them for mapping.</li>
+    <li>Mynt scans the mailbox for restaurant IDs and offers the ones it finds for mapping.</li>
     <li>You map each ID to an outlet in <strong>Settings &rarr; Outlet Mapping</strong>.</li>
+    <li>A new mailbox may wait under <strong>Historic ingestion</strong> in <strong>Settings &rarr; Outlet Mapping</strong> until you press <strong>Activate</strong>. Mynt does not read its payout emails before then.</li>
     <li>Dashboards fill in. See <a href="05-how-often-sync.html">how often Mynt syncs</a>.</li>
   </ol>
 
   <h2>Common questions</h2>
 
   <div class="faq-item"><div class="faq-q">Does Mynt read all my email?</div><div class="faq-a">The Gmail permission is read-only and Mynt looks for payout and settlement mail from the delivery platforms.</div></div>
-  <div class="faq-item"><div class="faq-q">Can I connect a non-Gmail mailbox?</div><div class="faq-a">The connector is built for Gmail. If your payout mail arrives elsewhere, forward it to a connected Gmail address.</div></div>
+  <div class="faq-item"><div class="faq-q">Can I connect a non-Gmail mailbox?</div><div class="faq-a">The connector is built for Gmail. If your payout mail arrives elsewhere, contact support before setting up forwarding &mdash; forwarded mail may not be picked up.</div></div>
   <div class="faq-item"><div class="faq-q">I connected the wrong mailbox.</div><div class="faq-a">Add the right one. See <a href="08-how-to-disconnect-or-change-gmail-account.html">changing the connected account</a>.</div></div>
 
   <h2>Related guides</h2>

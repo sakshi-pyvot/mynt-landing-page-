@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How Mynt Uses Your Emails to Build Your Dashboards</h1>
-  <p class="meta">Email Integration · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Email Integration · Read time: 4 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Every figure in Mynt traces back to an email a platform sent you. Knowing that chain explains most of what people find surprising about the numbers.</div>
 
@@ -298,18 +294,18 @@
 
   <h2>Which mailboxes are in play</h2>
 
-  <figure><img src="assets/how-mynt-uses-emails/step-01-mailbox-list.png" alt="The Connected Emails table listing each mailbox, its provider and its status" /><figcaption>Mynt reads every mailbox listed here &mdash; more than one is normal</figcaption></figure>
+  <figure><img src="assets/how-mynt-uses-emails/step-01-mailbox-list.png?v=20261022" alt="The Connected Emails table listing each mailbox, its provider and its status" /><figcaption>Every mailbox connected to Mynt is listed here with its status &mdash; more than one is normal</figcaption></figure>
 
   <h2>What you get out of it</h2>
 
-  <figure><img src="assets/how-mynt-uses-emails/step-02-dashboard-from-email.png" alt="Dashboard headline cards produced from the payout emails" /><figcaption>Gross order value, orders, average order value and net payout &mdash; all derived from settlement emails</figcaption></figure>
+  <figure><img src="assets/how-mynt-uses-emails/step-02-dashboard-from-email.png?v=20261022" alt="Overview headline cards produced from the payout emails" /><figcaption>Gross order value, orders, average order value and net payout &mdash; all derived from settlement emails</figcaption></figure>
 
   <h2>What this explains</h2>
 
   <table class="glossary">
     <tr><th>Why data is not live</th><td>A platform sends settlement mail on its payout cycle, often weekly &mdash; not per order.</td></tr>
     <tr><th>Why an unmapped outlet shows nothing</th><td>Its restaurant ID has no outlet to file figures under, so they are skipped.</td></tr>
-    <tr><th>Why Mynt and the platform app disagree</th><td>Platforms report by order date; settlements are by payout cycle, net of refunds and fees.</td></tr>
+    <tr><th>Why Mynt and the platform app disagree</th><td>Mynt shows what the settlement emails report, net of refunds and fees. The platform app can count the same orders differently.</td></tr>
     <tr><th>Why a missing email means missing data</th><td>There is no other source. If the email never arrived, the period cannot be reconstructed.</td></tr>
   </table>
 

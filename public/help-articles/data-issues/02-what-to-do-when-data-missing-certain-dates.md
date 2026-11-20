@@ -1,26 +1,32 @@
 # What to Do When Data Is Missing for Certain Dates
 
-*Data Issues · Read time: 5 minutes · Article only · Last updated 25 August 2026*
+*Data Issues · Read time: 5 minutes · Includes a short video · Last updated 22 October 2026*
 
 Most weeks look right, but one specific stretch is blank. Four things cause that, in the order worth checking them.
 
 ---
 
+## Watch it done
+
+**Video:** [Picking a date range in the calendar, checking one platform at a time, then the outlet mapping](assets/missing-certain-dates/demo.mp4?v=20261022)
+
+![Video preview](assets/missing-certain-dates/demo-poster.jpg?v=20261022)
+
 ## Step 1 — Rule out the filters first
 
-A wrong filter looks exactly like missing data. Open the filter panel on the left and set **DATE** to a range that definitely covers the gap.
+A wrong filter looks exactly like missing data. Open the filter panel on the left and set **Date** to a range that definitely covers the gap.
 
-![The DATE filter open, showing Latest Week, Latest Month, Previous Month and Custom Range](assets/missing-certain-dates/step-01-date-presets.png)
-*Use Custom Range to target the exact dates you think are missing*
+![The Date filter with Week, Month and Prev. month, and the date-range field open on its calendar](assets/missing-certain-dates/step-01-date-presets.png?v=20261022)
+*Click the date-range field and pick the start and end of the dates you think are missing*
 
 | | |
 |---|---|
-| **Latest Week** | The most recent full week Mynt holds. |
-| **Latest Month** | The most recent full month. |
-| **Previous Month** | The month before that. |
-| **Custom Range** | Any two dates you choose &mdash; the one to use when chasing a specific gap. |
+| **Week** | The 7 days ending on the latest date Mynt has data for. |
+| **Month** | From the 1st of that month up to the latest date Mynt has data for. |
+| **Prev. month** | The whole calendar month before that one. |
+| **The date range** | Click the field under the three options to open a calendar, then pick any two dates &mdash; the one to use when chasing a specific gap. |
 
-While you are there, set **PLATFORM** to **All Platforms** and **SELECT OUTLET** to **Select all**. Narrow filters are the single most common cause of a &ldquo;missing&rdquo; week.
+While you are there, set **Platform** to **All Platforms** and **Select Outlet** to **Select all**, then press **Apply** &mdash; nothing changes until you do. Narrow filters are the single most common cause of a &ldquo;missing&rdquo; week.
 
 ## Step 2 — Check the payout email exists
 
@@ -35,12 +41,12 @@ Mynt can only show what arrived by email. Open the mailbox connected in **Settin
 
 If a restaurant ID was not mapped when Mynt processed that week&rsquo;s email, that outlet&rsquo;s numbers for that week are missing or under-reported. Go to **Settings → Outlet Mapping** and check the **Platform Mapping** table.
 
-![The Platform Mapping table listing each outlet, its licence ID and its linked platform IDs](assets/missing-certain-dates/step-02-mapping-status.png)
+![The Platform Mapping table listing each outlet, its licence ID and its linked platform IDs](assets/missing-certain-dates/step-02-mapping-status.png?v=20261022)
 *Every outlet should show at least one platform ID. Orange <strong>Not mapped</strong> means it is being skipped.*
 
 ## Step 4 — Check whether it is one platform or both
 
-Set **PLATFORM** to **Zomato** alone, then **Swiggy** alone. If only one is blank, the problem is that platform&rsquo;s ID or its emails, not Mynt as a whole. See [why one platform can be missing](04-why-zomato-swiggy-data-missing-incomplete.md).
+Set **Platform** to **Zomato** alone and press **Apply**, then do the same for **Swiggy**. If only one is blank, the problem is that platform&rsquo;s ID or its emails, not Mynt as a whole. See [why one platform can be missing](04-why-zomato-swiggy-data-missing-incomplete.md).
 
 ## Step 5 — Raise a ticket with the right details
 

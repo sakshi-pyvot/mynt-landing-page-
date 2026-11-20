@@ -1,6 +1,6 @@
 # How to Add More Outlet Licences
 
-*Billing · Read time: 3 minutes · Article only · Last updated 25 August 2026*
+*Billing · Read time: 3 minutes · Article only · Last updated 22 October 2026*
 
 Opened a new location? Add a licence for it. The process is the same as your first purchase, and your existing licences are untouched.
 
@@ -10,7 +10,7 @@ Opened a new location? Add a licence for it. The process is the same as your fir
 
 The **Outlet Licenses** card on Billing counts your licences and how many are actually collecting data.
 
-![The Outlet Licenses card explaining that one licence equals one outlet](assets/add-more-outlet-licences/step-01-licensed-outlets.png)
+![The Outlet Licenses card explaining that one licence equals one outlet](assets/add-more-outlet-licences/step-01-licensed-outlets.png?v=20261022)
 *One licence = one outlet. Each outlet can link one account per platform.*
 
 | | |
@@ -26,10 +26,10 @@ The **Outlet Licenses** card on Billing counts your licences and how many are ac
 
 1. Open **Billing**.
 2. In **Purchase Outlet Licenses**, set **How many outlets?** to the number you are adding.
-3. Check the total, then press **Purchase &mdash; Pay**.
-4. Open **Settings → Outlet Mapping** and link the new outlet&rsquo;s platform IDs.
+3. Check the total, then press **Purchase &mdash; Pay** and complete the payment on Razorpay. You can buy additional licences only once your base subscription is paid.
+4. On the **Outlet Licenses** card, press **View &amp; Edit Mapping** and assign each new licence to its outlet and platform IDs. The link is permanent: only the outlet name can be changed later.
 
-![The quantity stepper set to three outlets](assets/add-more-outlet-licences/step-02-quantity-stepper.png)
+![The quantity stepper set to three outlets](assets/add-more-outlet-licences/step-02-quantity-stepper.png?v=20261022)
 *Set the count &mdash; the price, start date, expiry and total all follow it*
 
 ## What happens to your existing licences

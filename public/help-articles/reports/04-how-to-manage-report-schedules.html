@@ -274,51 +274,57 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Manage Your Report Schedules</h1>
-  <p class="meta">Reports · Read time: 3 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Reports · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">Every recurring report you have set up is listed in one place, with filters for finding the one you want.</div>
+
+  <h2>Watch it done</h2>
+
+  <div class="video-box">
+    <video controls preload="metadata" poster="assets/how-to-manage-report-schedules/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/how-to-manage-report-schedules/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/how-to-manage-report-schedules/demo.mp4?v=20261022">Download it instead</a>.
+    </video>
+    <p class="video-caption">Searching, viewing, pausing, resuming, running and deleting a schedule</p>
+  </div>
 
   <h2>Where they live</h2>
 
   <p>Open <strong>Reports</strong> and scroll to <strong>Scheduled Reports</strong>.</p>
 
-  <figure><img src="assets/how-to-manage-report-schedules/step-01-scheduled-reports.png" alt="The Scheduled Reports section for viewing and managing recurring schedules" /><figcaption>All recurring schedules, with filters for platform, frequency, channel and status</figcaption></figure>
+  <figure><img src="assets/how-to-manage-report-schedules/step-01-scheduled-reports.png?v=20261022" alt="The Scheduled Reports section for viewing and managing recurring schedules" /><figcaption>All recurring schedules, with filters for platform, frequency, channel and status</figcaption></figure>
 
   <table class="glossary">
     <tr><th>All Platforms</th><td>Narrow to schedules for one platform.</td></tr>
-    <tr><th>All Frequencies</th><td>Daily, weekly or monthly.</td></tr>
-    <tr><th>All Channels</th><td>Download, email or WhatsApp.</td></tr>
-    <tr><th>All Status</th><td>Active or paused.</td></tr>
+    <tr><th>All Frequencies</th><td>Weekly, Monthly or Quarterly.</td></tr>
+    <tr><th>All Channels</th><td>Email or WhatsApp.</td></tr>
+    <tr><th>All Status</th><td>Active, Paused, Failed or Expired.</td></tr>
   </table>
 
-  <p>With no schedules yet, the section reads <strong>No scheduled reports yet</strong> and offers to create one &mdash; see <a href="03-schedule-automatic-reports.html">scheduling automatic reports</a>.</p>
+  <p>With no schedules yet, the section reads <strong>No scheduled reports yet. Create one above to get started.</strong> &mdash; see <a href="03-schedule-automatic-reports.html">scheduling automatic reports</a>.</p>
 
   <h2>Keeping the list under control</h2>
 
   <ol>
     <li>Review the list when your token balance drops faster than expected &mdash; every schedule spends tokens per run.</li>
-    <li>Filter by <strong>All Channels</strong> to find WhatsApp schedules, the most expensive per run.</li>
+    <li>Use the <strong>All Channels</strong> filter to see Email and WhatsApp schedules separately. Both are priced per recipient, so a long recipient list costs more on every run.</li>
     <li>Pause or remove anything nobody reads.</li>
-    <li>Check frequency matches the payout cycle &mdash; a daily report of weekly-settled data mostly repeats itself.</li>
+    <li>Check the frequency matches how often the report is read &mdash; a weekly report nobody opens until month-end could be monthly.</li>
   </ol>
 
-  <div class="tip">A forgotten daily schedule is the most common reason a token balance falls without anyone using the AI Assistant.</div>
+  <div class="tip">A forgotten weekly schedule with many recipients is a common reason a token balance falls without anyone using <strong>PIA (AI Assistant)</strong>.</div>
 
   <h2>If a scheduled report stops arriving</h2>
 
   <ol>
-    <li>Check the schedule is still active in this list.</li>
+    <li>Check the schedule is still <strong>Active</strong> in this list, not <strong>Paused</strong>, <strong>Failed</strong> or <strong>Expired</strong>.</li>
     <li>Check your token balance &mdash; a run with insufficient tokens cannot complete.</li>
-    <li>Check <strong>Help &amp; Support &rarr; System Status</strong> for <strong>Report Generation</strong>.</li>
+    <li>Check <strong>Help &amp; Support &rarr; System Status</strong> for any service marked <strong>Delayed</strong> or <strong>Down</strong>.</li>
     <li><a href="../data-issues/06-how-to-raise-data-issue-support-ticket.html">Raise a ticket</a> with issue type <strong>Report</strong>.</li>
   </ol>
 

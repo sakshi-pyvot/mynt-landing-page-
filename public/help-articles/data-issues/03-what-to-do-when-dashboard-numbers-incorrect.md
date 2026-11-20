@@ -1,6 +1,6 @@
 # What to Do When Dashboard Numbers Look Incorrect
 
-*Data Issues · Read time: 5 minutes · Article only · Last updated 25 August 2026*
+*Data Issues · Read time: 5 minutes · Article only · Last updated 22 October 2026*
 
 A figure looks too high, too low, or does not match what the platform app says. Nine times out of ten the number is right and the two of you are counting different things.
 
@@ -10,8 +10,8 @@ A figure looks too high, too low, or does not match what the platform app says. 
 
 Each headline card shows a value and a change against the comparison period &mdash; not against the same period last year.
 
-![The four headline cards: Gross Order Value, Total Orders, Average Order Value and Net Payout](assets/dashboard-numbers-incorrect/step-01-kpi-cards.png)
-*Every card compares against the LAST PERIOD chip in the header, not against last year*
+![The four headline cards: Gross Order Value, Total Orders, Average Order Value and Net Payout](assets/dashboard-numbers-incorrect/step-01-kpi-cards.png?v=20261022)
+*Every card compares against the Last Period chip in the header, not against last year*
 
 | | |
 |---|---|
@@ -26,22 +26,22 @@ Each headline card shows a value and a change against the comparison period &mda
 
 The left panel decides what is counted. A number that looks wrong is very often a number for a narrower slice than you meant.
 
-![The filter panel showing DATE, PLATFORM, VIEW BY and the outlet selector](assets/dashboard-numbers-incorrect/step-02-filter-panel.png)
-*DATE, PLATFORM, VIEW BY and the outlet list all narrow what the cards count*
+![The filter panel showing Date, Platform, View By and the outlet selector](assets/dashboard-numbers-incorrect/step-02-filter-panel.png?v=20261022)
+*Date, Platform, View By and the outlet list all narrow what the cards count*
 
-1. **DATE** &mdash; is the period the one you meant? Check the dates on the chip, not just the label.
-2. **PLATFORM** &mdash; **All Platforms**, or is one selected?
-3. **VIEW BY** &mdash; **Outlet**, **Brand** or **Group** changes how rows are aggregated.
-4. **SELECT OUTLET** &mdash; use **Select all** to be certain nothing is excluded.
-5. Press **Reset** to clear everything and read the number again.
+1. **Date** &mdash; is the period the one you meant? Check the dates on the chip, not just the label.
+2. **Platform** &mdash; **All Platforms**, or is one selected?
+3. **View By** &mdash; **Outlet**, **Brand** or **Group** changes how rows are aggregated.
+4. **Select Outlet** &mdash; use **Select all** to be certain nothing is excluded.
+5. Press **Apply** after any change &mdash; the cards do not update until you do. **Reset** returns to **Week**, all platforms and all outlets.
 
 ## Why Mynt and the platform dashboard disagree
 
 | | |
 |---|---|
-| **Different date basis** | Platforms report by order date; settlement emails report by payout cycle. Week boundaries rarely line up. |
+| **Different date basis** | The platform app and its settlement emails can group the same orders under different dates, so week boundaries may not line up. |
 | **Refunds and cancellations** | These are netted out in the settlement, so Mynt shows the settled figure. |
-| **Taxes and TDS** | Deducted before payout, so they lower Net Payout but not Gross Order Value. |
+| **Taxes and TDS** | Deductions in the settlement lower Net Payout. Gross Order Value is counted before deductions. |
 | **One outlet unmapped** | Its orders are skipped entirely, which shows as a low total. |
 | **Partially processed week** | A payout email that has not arrived yet leaves the period incomplete. |
 

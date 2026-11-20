@@ -274,49 +274,45 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Use the Filters: Date, Platform, Outlet, Brand and Group</h1>
-  <p class="meta">Dashboard & Metrics · Read time: 4 minutes · Includes a short video · Last updated 25 August 2026</p>
+  <p class="meta">Dashboard & Metrics · Read time: 4 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">The filter panel decides what every number on the page counts. Four controls, and they apply everywhere.</div>
 
   <h2>Watch it done</h2>
 
   <div class="video-box">
-    <video controls preload="metadata" poster="assets/how-to-use-filters-date-platform-restaurant-chain-group/demo-poster.jpg" style="width:100%;border-radius:8px">
-      <source src="assets/how-to-use-filters-date-platform-restaurant-chain-group/demo.mp4" type="video/mp4" />
-      Your browser cannot play this video. <a href="assets/how-to-use-filters-date-platform-restaurant-chain-group/demo.mp4">Download it instead</a>.
+    <video controls preload="metadata" poster="assets/how-to-use-filters-date-platform-restaurant-chain-group/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/how-to-use-filters-date-platform-restaurant-chain-group/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/how-to-use-filters-date-platform-restaurant-chain-group/demo.mp4?v=20261022">Download it instead</a>.
     </video>
     <p class="video-caption">Changing the period, the platform and the outlet selection, and applying them</p>
   </div>
 
   <h2>The panel</h2>
 
-  <figure><img src="assets/how-to-use-filters-date-platform-restaurant-chain-group/step-01-filter-panel.png" alt="The filter panel with date, platform, view by and the outlet selector" /><figcaption>Four controls, then <strong>Apply</strong> &mdash; nothing changes until you apply</figcaption></figure>
+  <figure><img src="assets/how-to-use-filters-date-platform-restaurant-chain-group/step-01-filter-panel.png?v=20261022" alt="The filter panel: Date (Week, Month, Prev. month and the date range), Platform, View By and Select Outlet, with Apply and Reset at the bottom" /><figcaption>Four controls, then <strong>Apply</strong> &mdash; nothing changes until you apply</figcaption></figure>
 
-  <h2>DATE</h2>
+  <h2>Date</h2>
 
   <table class="glossary">
-    <tr><th>Latest Week</th><td>The most recent full week Mynt holds.</td></tr>
-    <tr><th>Latest Month</th><td>The most recent full month.</td></tr>
-    <tr><th>Previous Month</th><td>The month before that.</td></tr>
-    <tr><th>Custom Range</th><td>Any two dates &mdash; use this to chase a specific period.</td></tr>
+    <tr><th>Week</th><td>The 7 days ending on the latest date Mynt holds data for.</td></tr>
+    <tr><th>Month</th><td>From the 1st of the latest month up to the latest date with data.</td></tr>
+    <tr><th>Prev. month</th><td>The full calendar month before the latest month.</td></tr>
+    <tr><th>The date range</th><td>The field under the three options. Click it to open a calendar and pick a start and an end date &mdash; any range of up to 90 days, between your first and latest data dates. Use this to chase a specific period.</td></tr>
   </table>
 
-  <p>Whatever you pick, the header chip shows the exact dates. Read those rather than trusting the label.</p>
+  <p>Whatever you pick, the date-range field and the header chip show the exact dates. Read those rather than trusting the label.</p>
 
-  <h2>PLATFORM</h2>
+  <h2>Platform</h2>
 
-  <p>Choose <strong>All Platforms</strong>, or narrow to <strong>Zomato</strong>, <strong>Swiggy</strong> or <strong>Toing</strong>. Selecting one platform is the quickest way to tell whether a problem is platform-specific &mdash; see <a href="../data-issues/04-why-zomato-swiggy-data-missing-incomplete.html">why one platform can be missing</a>.</p>
+  <p><strong>All Platforms</strong> is the default. Open the list and tick one or more platforms to narrow it. <strong>Zomato</strong> and <strong>Swiggy</strong> are always listed; <strong>Toing</strong> appears only if your outlets have Toing data. Selecting one platform is the quickest way to tell whether a problem is platform-specific &mdash; see <a href="../data-issues/04-why-zomato-swiggy-data-missing-incomplete.html">why one platform can be missing</a>.</p>
 
-  <h2>VIEW BY</h2>
+  <h2>View By</h2>
 
   <table class="glossary">
     <tr><th>Outlet</th><td>Each licensed location on its own.</td></tr>
@@ -324,18 +320,18 @@
     <tr><th>Group</th><td>Outlets grouped by the operational groups you defined.</td></tr>
   </table>
 
-  <p>This changes how rows are aggregated, not what is included. See <a href="../outlet-mapping/04-how-outlet-mapping-works-multiple-outlets-chains-groups.html">brands and groups</a>.</p>
+  <p>This changes how things are grouped, not what is included. On Overview it changes what the selector below lists. On pages with tables, such as <strong>Topline</strong>, <strong>Advertisements</strong> and <strong>Charges</strong>, it also groups the table rows. See <a href="../outlet-mapping/04-how-outlet-mapping-works-multiple-outlets-chains-groups.html">brands and groups</a>.</p>
 
-  <h2>SELECT OUTLET</h2>
+  <h2>Select Outlet</h2>
 
-  <p>Search, tick the outlets you want, or use <strong>Select all</strong> and <strong>Clear</strong>. A part-selected outlet list is the most common reason a total looks too low.</p>
+  <p>The label follows <strong>View By</strong>: <strong>Select Outlet</strong>, <strong>Select Brand</strong> or <strong>Select Group</strong>. Search, tick the ones you want, or use <strong>Select all</strong> and <strong>Clear</strong>. A part-selected outlet list is the most common reason a total looks too low.</p>
 
   <h2>Apply and Reset</h2>
 
   <ol>
     <li>Set the controls you want.</li>
     <li>Press <strong>Apply</strong>. The page reloads its figures.</li>
-    <li>Press <strong>Reset</strong> to clear everything back to the default view.</li>
+    <li>Press <strong>Reset</strong> to go straight back to the default: <strong>Week</strong>, all platforms, all outlets and the first <strong>View By</strong> option. Reset takes effect at once, without <strong>Apply</strong>.</li>
   </ol>
 
   <div class="tip">When a number looks wrong, press <strong>Reset</strong> first and read it again. It rules out the most likely cause in one click.</div>

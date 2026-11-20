@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Understanding Google and Gmail Permissions</h1>
-  <p class="meta">Security · Read time: 3 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Security · Read time: 3 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Connecting Gmail is separate from signing in to Mynt. Google shows its own screen when you connect, and what it grants Mynt is read-only access to your inbox.</div>
 
@@ -291,22 +287,23 @@
 
   <h2>Two different logins</h2>
   <table class="glossary">
-    <tr><th>Mynt sign-in</th><td>Email and password — opens your Mynt dashboard: sales, reports, settings</td></tr>
+    <tr><th>Mynt sign-in</th><td>Your email, then Mynt’s secure sign-in page (or Google) — opens your Mynt dashboard: sales, reports, settings</td></tr>
     <tr><th>Google permission</th><td>Lets Mynt <strong>read your payout emails</strong> to build your dashboards</td></tr>
   </table>
   <p>You can be signed in to Mynt without Gmail connected, and connecting Gmail does not change your Mynt password. See <a href="01-how-sign-in-account-access-work.html" style="color:var(--mint)">How sign-in works</a>.</p>
 
   <h2>What Google asks you</h2>
   <p>When you connect or reconnect a mailbox, Mynt sends you to Google. Google — not Mynt — asks which account you want to use.</p>
-  <figure><img src="assets/understanding-google-gmail-permissions/google-choose-account.png" alt="Google account chooser for Mynt" /><figcaption>Google asks which account to use — this screen is Google's, not Mynt's</figcaption></figure>
-  <p>Then Google asks you to confirm. If you have connected this mailbox before, Google shows a short "signing back in" screen with a <strong>Continue</strong> button. The first time you connect, Google instead lists each permission Mynt is asking for before you approve.</p>
-  <figure><img src="assets/understanding-google-gmail-permissions/google-consent-screen.png" alt="Google permission screen for Mynt" /><figcaption>Nothing reaches Mynt until you tap Continue — Cancel leaves your mailbox untouched</figcaption></figure>
+  <figure><img src="assets/understanding-google-gmail-permissions/google-choose-account.png?v=20261022" alt="Google account chooser for Mynt" /><figcaption>Google asks which account to use — this screen is Google's, not Mynt's</figcaption></figure>
+  <p>Then Google lists each permission Mynt is asking for. You see this full screen every time you connect or reconnect, not just the first time. Tick <strong>View your email messages and settings</strong> (or <strong>Select all</strong>) — without it, nothing is connected.</p>
+  <figure><img src="assets/understanding-google-gmail-permissions/google-consent-screen.png?v=20261022" alt="Google permission screen for Mynt" /><figcaption>Tick the Gmail box, continue, then press Connect back in Mynt — Cancel leaves your mailbox untouched</figcaption>
+  <p>Back in Mynt, a box asks <strong>Connect &lt;mailbox&gt; to &lt;your business&gt;?</strong> Nothing is connected until you press <strong>Connect</strong> there. Pressing <strong>Cancel</strong>, on Google’s screen or in Mynt, leaves your mailbox untouched.</p></figure>
 
   <h2>What Mynt asks for</h2>
+  <p>The permission that matters is read-only Gmail. Google may also list basic account details alongside it.</p>
   <table class="glossary">
-    <tr><th>Your email address</th><td>To know which mailbox is connected</td></tr>
-    <tr><th>Basic sign-in identity</th><td>To match the mailbox to your Mynt account</td></tr>
     <tr><th>Read-only Gmail</th><td>To find and read payout emails from Zomato, Swiggy and other platforms</td></tr>
+    <tr><th>Basic account details</th><td>Such as your email address — to know which mailbox is connected</td></tr>
   </table>
   <p>The Gmail permission is <strong>read-only</strong>. That is a restriction Google enforces, not just a promise from us.</p>
 

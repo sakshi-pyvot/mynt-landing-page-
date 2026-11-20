@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Connect Your Data Sources to Mynt</h1>
-  <p class="meta">Getting Started · Read time: 3 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Getting Started · Read time: 3 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">Mynt has one data source: the payout emails the platforms send you. Connecting the right mailbox is the step everything else waits on.</div>
 
@@ -291,15 +287,17 @@
 
   <p>Go to <strong>Settings &rarr; Email Integration</strong>.</p>
 
-  <figure><img src="assets/connect-data-sources/step-01-email-integration.png" alt="The Email Integration panel header describing payout emails as the core data source" /><figcaption>The panel says it plainly: payout emails are the core data source</figcaption></figure>
+  <figure><img src="assets/connect-data-sources/step-01-email-integration.png?v=20261022" alt="The Email Integration panel header describing payout emails as the core data source" /><figcaption>The panel says it plainly: payout emails are the core data source</figcaption></figure>
 
   <h2>Connecting a mailbox</h2>
 
   <ol>
     <li>Press <strong>Add SOA Email</strong>.</li>
-    <li>Choose the Google account that <em>receives payout emails</em>.</li>
-    <li>Approve the read-only Gmail permission on Google&rsquo;s own screen.</li>
-    <li>Confirm the mailbox appears with a green <strong>Connected</strong> badge.</li>
+    <li>In the <strong>SOA email</strong> box, type the address that <em>receives payout emails</em>.</li>
+    <li>Press <strong>Connect Email</strong>. Google opens in the same tab.</li>
+    <li>Choose that Google account. On Google&rsquo;s screen, tick <strong>View your email messages and settings</strong> and continue. Without that tick, nothing is connected.</li>
+    <li>Back in Mynt, a box asks <strong>Connect &lt;mailbox&gt; to &lt;your business&gt;?</strong> Press <strong>Connect</strong>.</li>
+    <li>Check the mailbox appears with a green <strong>Connected</strong> badge. Mynt then scans it straight away.</li>
   </ol>
 
   <p>Full walkthrough: <a href="../email-integration/01-connect-gmail-account.html">connecting your Gmail account</a>.</p>

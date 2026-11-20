@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>What to Do When Dashboard Numbers Look Incorrect</h1>
-  <p class="meta">Data Issues · Read time: 5 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Data Issues · Read time: 5 minutes · Article only · Last updated 22 October 2026</p>
 
   <div class="hello">A figure looks too high, too low, or does not match what the platform app says. Nine times out of ten the number is right and the two of you are counting different things.</div>
 
@@ -291,7 +287,7 @@
 
   <p>Each headline card shows a value and a change against the comparison period &mdash; not against the same period last year.</p>
 
-  <figure><img src="assets/dashboard-numbers-incorrect/step-01-kpi-cards.png" alt="The four headline cards: Gross Order Value, Total Orders, Average Order Value and Net Payout" /><figcaption>Every card compares against the LAST PERIOD chip in the header, not against last year</figcaption></figure>
+  <figure><img src="assets/dashboard-numbers-incorrect/step-01-kpi-cards.png?v=20261022" alt="The four headline cards: Gross Order Value, Total Orders, Average Order Value and Net Payout" /><figcaption>Every card compares against the Last Period chip in the header, not against last year</figcaption></figure>
 
   <table class="glossary">
     <tr><th>Gross Order Value</th><td>What customers were billed, before platform deductions.</td></tr>
@@ -306,22 +302,22 @@
 
   <p>The left panel decides what is counted. A number that looks wrong is very often a number for a narrower slice than you meant.</p>
 
-  <figure><img src="assets/dashboard-numbers-incorrect/step-02-filter-panel.png" alt="The filter panel showing DATE, PLATFORM, VIEW BY and the outlet selector" /><figcaption>DATE, PLATFORM, VIEW BY and the outlet list all narrow what the cards count</figcaption></figure>
+  <figure><img src="assets/dashboard-numbers-incorrect/step-02-filter-panel.png?v=20261022" alt="The filter panel showing Date, Platform, View By and the outlet selector" /><figcaption>Date, Platform, View By and the outlet list all narrow what the cards count</figcaption></figure>
 
   <ol>
-    <li><strong>DATE</strong> &mdash; is the period the one you meant? Check the dates on the chip, not just the label.</li>
-    <li><strong>PLATFORM</strong> &mdash; <strong>All Platforms</strong>, or is one selected?</li>
-    <li><strong>VIEW BY</strong> &mdash; <strong>Outlet</strong>, <strong>Brand</strong> or <strong>Group</strong> changes how rows are aggregated.</li>
-    <li><strong>SELECT OUTLET</strong> &mdash; use <strong>Select all</strong> to be certain nothing is excluded.</li>
-    <li>Press <strong>Reset</strong> to clear everything and read the number again.</li>
+    <li><strong>Date</strong> &mdash; is the period the one you meant? Check the dates on the chip, not just the label.</li>
+    <li><strong>Platform</strong> &mdash; <strong>All Platforms</strong>, or is one selected?</li>
+    <li><strong>View By</strong> &mdash; <strong>Outlet</strong>, <strong>Brand</strong> or <strong>Group</strong> changes how rows are aggregated.</li>
+    <li><strong>Select Outlet</strong> &mdash; use <strong>Select all</strong> to be certain nothing is excluded.</li>
+    <li>Press <strong>Apply</strong> after any change &mdash; the cards do not update until you do. <strong>Reset</strong> returns to <strong>Week</strong>, all platforms and all outlets.</li>
   </ol>
 
   <h2>Why Mynt and the platform dashboard disagree</h2>
 
   <table class="glossary">
-    <tr><th>Different date basis</th><td>Platforms report by order date; settlement emails report by payout cycle. Week boundaries rarely line up.</td></tr>
+    <tr><th>Different date basis</th><td>The platform app and its settlement emails can group the same orders under different dates, so week boundaries may not line up.</td></tr>
     <tr><th>Refunds and cancellations</th><td>These are netted out in the settlement, so Mynt shows the settled figure.</td></tr>
-    <tr><th>Taxes and TDS</th><td>Deducted before payout, so they lower Net Payout but not Gross Order Value.</td></tr>
+    <tr><th>Taxes and TDS</th><td>Deductions in the settlement lower Net Payout. Gross Order Value is counted before deductions.</td></tr>
     <tr><th>One outlet unmapped</th><td>Its orders are skipped entirely, which shows as a low total.</td></tr>
     <tr><th>Partially processed week</th><td>A payout email that has not arrived yet leaves the period incomplete.</td></tr>
   </table>

@@ -274,65 +274,63 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Generate and Download a Report</h1>
-  <p class="meta">Reports · Read time: 3 minutes · Includes a short video · Last updated 25 August 2026</p>
+  <p class="meta">Reports · Read time: 3 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">Fill in four fields, check the token cost, and generate. The cost is always shown before you commit.</div>
 
   <h2>Watch it done</h2>
 
   <div class="video-box">
-    <video controls preload="metadata" poster="assets/how-to-generate-and-download-report/demo-poster.jpg" style="width:100%;border-radius:8px">
-      <source src="assets/how-to-generate-and-download-report/demo.mp4" type="video/mp4" />
-      Your browser cannot play this video. <a href="assets/how-to-generate-and-download-report/demo.mp4">Download it instead</a>.
+    <video controls preload="metadata" poster="assets/how-to-generate-and-download-report/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/how-to-generate-and-download-report/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/how-to-generate-and-download-report/demo.mp4?v=20261022">Download it instead</a>.
     </video>
-    <p class="video-caption">Filling in the builder and watching the token cost change with the delivery channel</p>
+    <p class="video-caption">Generating a report, sending it by email and WhatsApp, then scheduling it weekly</p>
   </div>
 
   <h2>Step 1 — define the report</h2>
 
   <ol>
     <li>Choose a <strong>Report Type</strong>.</li>
-    <li>Choose the <strong>Platform</strong> &mdash; one, or all.</li>
+    <li>Choose the <strong>Platform</strong> &mdash; one or more, or <strong>All Platforms</strong>.</li>
     <li>Choose the <strong>Outlets</strong> to include.</li>
     <li>Choose the <strong>Report Period</strong>.</li>
   </ol>
 
   <h2>Step 2 — choose how it reaches you</h2>
 
-  <figure><img src="assets/how-to-generate-and-download-report/step-01-delivery-channel.png" alt="The delivery channel options with their token costs" /><figcaption>Each channel has its own token cost, shown on the option itself</figcaption></figure>
+  <figure><img src="assets/how-to-generate-and-download-report/step-01-delivery-channel.png?v=20261022" alt="The delivery channel options with their token costs" /><figcaption>Each channel has its own token cost, shown on the option itself</figcaption></figure>
 
   <table class="glossary">
-    <tr><th>Download</th><td>Cheapest &mdash; the file comes straight back to you.</td></tr>
-    <tr><th>Email</th><td>Delivered to your registered address.</td></tr>
-    <tr><th>WhatsApp</th><td>Delivered to your registered number, and the most expensive of the three.</td></tr>
+    <tr><th>Download</th><td>The file comes straight back to you. Priced per file.</td></tr>
+    <tr><th>Email</th><td>Sent to the addresses you type under <strong>Email Recipients</strong> (at least one), plus any <strong>CC Recipients (optional)</strong>. Priced per recipient.</td></tr>
+    <tr><th>WhatsApp</th><td>Sent to the numbers you type under <strong>WhatsApp Recipients</strong> (at least one). Priced per recipient.</td></tr>
   </table>
+
+  <p>You can pick more than one channel. Each option shows its price, for example "N tokens/participant" for Email and WhatsApp. Prices are set by Mynt and can change, so go by what the option shows.</p>
 
   <h2>Step 3 — check the cost</h2>
 
-  <figure><img src="assets/how-to-generate-and-download-report/step-02-cost-summary.png" alt="The cost summary showing tokens per run and the current balance" /><figcaption>Tokens per run against your current balance &mdash; visible before you generate</figcaption></figure>
+  <figure><img src="assets/how-to-generate-and-download-report/step-02-cost-summary.png?v=20261022" alt="The cost summary showing tokens per run and the current balance" /><figcaption>Tokens per run against your current balance &mdash; visible before you generate</figcaption></figure>
 
-  <p>If the balance is too low, top up first &mdash; see <a href="../tokens/03-how-to-check-token-usage-balance-get-more.html">checking your balance and getting more</a>.</p>
+  <p>If the balance is too low, the summary shows <strong>Insufficient balance</strong> and you cannot generate. Top up first &mdash; see <a href="../tokens/03-how-to-check-token-usage-balance-get-more.html">checking your balance and getting more</a>.</p>
 
   <h2>Step 4 — generate</h2>
 
-  <p>Press <strong>Generate Report</strong>. With <strong>Download</strong> selected the file comes back to you; with email or WhatsApp it is sent to your registered address or number. <strong>Reset</strong> clears the form and starts again.</p>
+  <p>Press the button at the bottom. It reads <strong>Generate Report</strong> until you pick a channel, then follows the channel you chose: <strong>Generate and Download</strong>, <strong>Generate and Email</strong>, or <strong>Generate and Send</strong> (WhatsApp, or several channels at once). With Download the file comes back to you; with Email or WhatsApp it goes to the recipients you entered. If one is missing, Mynt asks you to add it, for example "Add an email recipient to continue." <strong>Reset</strong> clears the form and starts again.</p>
 
   <div class="tip">Generate one small report first to confirm the type and period are what you expect. Tokens are spent per run, so a wrong setting costs a second run.</div>
 
   <h2>If a report does not arrive</h2>
 
   <ol>
-    <li>Check <strong>Help &amp; Support &rarr; System Status</strong> &mdash; <strong>Report Generation</strong> is listed there.</li>
-    <li>For email delivery, check the spam folder of your registered address.</li>
+    <li>Check <strong>Help &amp; Support &rarr; System Status</strong> for any service marked <strong>Delayed</strong> or <strong>Down</strong>.</li>
+    <li>For email delivery, ask each recipient to check their spam folder.</li>
     <li>Confirm the token balance was sufficient at the time.</li>
     <li>Still missing? <a href="../data-issues/06-how-to-raise-data-issue-support-ticket.html">Raise a ticket</a> with issue type <strong>Report</strong>.</li>
   </ol>

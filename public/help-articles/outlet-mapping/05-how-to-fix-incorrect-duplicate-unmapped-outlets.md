@@ -1,6 +1,6 @@
 # How to Fix Incorrect, Duplicate or Unmapped Outlets
 
-*Outlet Mapping · Read time: 4 minutes · Article only · Last updated 25 August 2026*
+*Outlet Mapping · Read time: 4 minutes · Article only · Last updated 22 October 2026*
 
 ---
 
@@ -14,7 +14,7 @@
 
 **Symptom:** the **Unmapped** card at the top is orange and above zero, and one or more rows show **Not mapped**.
 
-![An unmapped outlet, shown in orange](assets/fix-incorrect-duplicate-unmapped-outlets/step-01-unmapped-outlets.png)
+![An unmapped outlet, shown as Not mapped](assets/fix-incorrect-duplicate-unmapped-outlets/step-01-unmapped-outlets.png?v=20261022)
 
 **Fix:**
 
@@ -24,9 +24,9 @@
 4. Tap **+ Zomato** or **+ Swiggy**.
 5. Pick the right ID from the dropdown, then tap **Save**.
 
-![The unmapped row opened for editing](assets/fix-incorrect-duplicate-unmapped-outlets/step-02-fix-unmapped.png)
+![The unmapped row opened for editing](assets/fix-incorrect-duplicate-unmapped-outlets/step-02-fix-unmapped.png?v=20261022)
 
-> **Tip:** If the dropdown is empty, Mynt has not detected that ID yet. Check **Settings → Email Integration** shows **Connected**, and give it time to read your payout mail.
+> **Tip:** If the dropdown shows **No detected IDs available**, Mynt has not detected an unused ID for that platform yet. Check **Settings → Email Integration** shows **Connected**, and give it time to read your payout mail.
 
 ---
 
@@ -40,15 +40,17 @@ Each platform ID can belong to only one outlet in your account, so it must be re
 
 ---
 
-## Problem 3 — "Outlet platform res-id conflict"
+## Problem 3 — "Already registered to another account"
 
-**Symptom:** you tap **Save** and this appears at the top of the page:
+**Symptom:** you tap **Save** and this red line appears at the top of the panel:
 
-> Outlet platform res-id conflict
+> That platform ID is already registered to another account — contact support to move it.
 
-![The duplicate platform ID error](assets/fix-incorrect-duplicate-unmapped-outlets/step-03-duplicate-id-error.png)
+A shorter technical notice may also pop up at the same moment. It means the same thing.
 
-**What it means:** Mynt words this one for engineers, not for you. It means the restaurant ID is already linked to a *different Mynt account*, not just a different outlet of yours. This happens after an ownership change, or if the outlet was set up under another login.
+![The duplicate platform ID error](assets/fix-incorrect-duplicate-unmapped-outlets/step-03-duplicate-id-error.png?v=20261022)
+
+**What it means:** the restaurant ID is already linked to a *different Mynt account*. It is never a clash between your own outlets — IDs your outlets already use are left out of the dropdown. This happens after an ownership change, or if the outlet was set up under another login.
 
 **Fix:** you cannot move it yourself. Contact support with the platform, the restaurant ID and which outlet it should belong to, and they will move it across.
 
@@ -61,7 +63,7 @@ Each platform ID can belong to only one outlet in your account, so it must be re
 **Check, in order:**
 
 1. Is the outlet **mapped**? An unmapped outlet contributes nothing.
-2. Is the dot beside its licence ID **green**? Grey means Mynt is not collecting for it — often because it has no platform IDs, or is not covered by your plan.
+2. Is the dot beside its licence ID **green**? Grey means Mynt is not ingesting the outlet — usually because no licence on your plan covers it, or it has not been activated yet. Hover the dot to check: it reads **Ingesting** or **Not ingesting — covered by your plan?**
 3. Is **Email Integration** showing **Connected**?
 4. Is the dashboard date range one where that outlet actually traded?
 
@@ -79,11 +81,11 @@ Outlets cannot be deleted from this screen. Map the platform IDs to whichever ro
 
 | Symptom | Fix |
 |---------|-----|
-| **Not mapped** in orange | Edit row → add platform → pick ID → Save |
+| **Not mapped** in grey | Edit row → add platform → pick ID → Save |
 | Wrong outlet's sales showing | Remove the ID from the wrong row, add it to the right one |
-| "Outlet platform res-id conflict" | Contact support — only they can move it |
+| "Already registered to another account" | Contact support — only they can move it |
 | Wrong outlet name | Edit row → change the name → Save |
-| Grey dot beside the licence ID | Outlet not collecting — check mapping and your plan |
+| Grey dot beside the licence ID | Outlet not ingesting — check a licence on your plan covers it |
 | Duplicate outlet rows | Map one, contact support about the other |
 
 ---

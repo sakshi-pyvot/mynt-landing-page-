@@ -274,50 +274,56 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>Finding Your Way Around Mynt: Navigation, Filters and Views</h1>
-  <p class="meta">Getting Started · Read time: 4 minutes · Article only · Last updated 25 August 2026</p>
+  <p class="meta">Getting Started · Read time: 4 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">Mynt is one sidebar and one filter panel. Learn those two and every page makes sense.</div>
 
+  <h2>Watch it done</h2>
+
+  <div class="video-box">
+    <video controls preload="metadata" poster="assets/understanding-mynt-navigation/demo-poster.jpg?v=20261022" style="width:100%;border-radius:8px">
+      <source src="assets/understanding-mynt-navigation/demo.mp4?v=20261022" type="video/mp4" />
+      Your browser cannot play this video. <a href="assets/understanding-mynt-navigation/demo.mp4?v=20261022">Download it instead</a>.
+    </video>
+    <p class="video-caption">A tour of every sidebar page, the three chips, and the filter panel</p>
+  </div>
+
   <h2>The sidebar</h2>
 
-  <figure><img src="assets/understanding-mynt-navigation/step-01-sidebar.png" alt="The left sidebar listing the main and account sections" /><figcaption>MAIN is your numbers; ACCOUNT is everything about the account itself</figcaption></figure>
+  <figure><img src="assets/understanding-mynt-navigation/step-01-sidebar.png?v=20261022" alt="The left sidebar listing the main and account sections" /><figcaption>MAIN is your numbers; ACCOUNT is everything about the account itself</figcaption></figure>
 
   <table class="glossary">
-    <tr><th>Dashboard</th><td>The overview &mdash; every headline metric for the selected period.</td></tr>
-    <tr><th>Earnings</th><td>Performance by hour, mealtime and day type.</td></tr>
+    <tr><th>Overview</th><td>Every headline metric for the selected period.</td></tr>
+    <tr><th>Topline</th><td>Performance by hour, mealtime and day type.</td></tr>
     <tr><th>Advertisements</th><td>Ad spend and its sales impact.</td></tr>
     <tr><th>Charges</th><td>Platform charges broken down per outlet.</td></tr>
     <tr><th>Discounts</th><td>Coupon performance and discount burn.</td></tr>
     <tr><th>Refunds</th><td>Cancellations and what you were still paid.</td></tr>
     <tr><th>Compare</th><td>Side-by-side comparisons.</td></tr>
-    <tr><th>AI Assistant</th><td>Ask questions of your own data.</td></tr>
+    <tr><th>PIA (AI Assistant)</th><td>Ask questions of your own data.</td></tr>
     <tr><th>Reports</th><td>Generate, schedule and download reports.</td></tr>
     <tr><th>Notifications / Billing / Settings / Help &amp; Support</th><td>Account, licences, configuration and support.</td></tr>
   </table>
 
   <h2>The filter panel</h2>
 
-  <p>Every metric page carries the same four controls: <strong>DATE</strong>, <strong>PLATFORM</strong>, <strong>VIEW BY</strong> and the outlet selector. They apply to everything on the page, and nothing changes until you press <strong>Apply</strong>.</p>
+  <p>Metric pages carry the same controls: <strong>Date</strong>, <strong>Platform</strong>, <strong>View By</strong> and the outlet selector. <strong>Platform</strong> only appears if your account has more than one platform, and <strong>Compare</strong> hides the controls it does not use. They apply to everything on the page, and nothing changes until you press <strong>Apply</strong>.</p>
 
-  <figure><img src="assets/understanding-mynt-navigation/step-02-views.png" alt="The VIEW BY control offering outlet, brand and group" /><figcaption><strong>VIEW BY</strong> decides whether rows are outlets, brands or groups</figcaption></figure>
+  <figure><img src="assets/understanding-mynt-navigation/step-02-views.png?v=20261022" alt="The View By control offering outlet, brand and group" /><figcaption><strong>View By</strong> decides whether rows are outlets, brands or groups</figcaption></figure>
 
   <p>Full detail: <a href="../dashboard-metrics/02-how-to-use-filters-date-platform-restaurant-chain-group.html">using the filters</a>.</p>
 
-  <h2>The three chips under every title</h2>
+  <h2>The three chips under the title</h2>
 
   <table class="glossary">
-    <tr><th>LAST UPDATED</th><td>The newest day Mynt holds data for.</td></tr>
+    <tr><th>Last updated</th><td>The newest day Mynt holds data for.</td></tr>
     <tr><th>The period chip</th><td>What you are looking at, with exact dates.</td></tr>
-    <tr><th>LAST PERIOD</th><td>What every percentage is measured against.</td></tr>
+    <tr><th>Last Period</th><td>What every percentage is measured against.</td></tr>
   </table>
 
   <div class="tip">When a page looks wrong, press <strong>Reset</strong> in the filter panel and read it again. It clears the most likely cause in one click.</div>

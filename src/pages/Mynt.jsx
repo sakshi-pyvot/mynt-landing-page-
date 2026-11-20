@@ -30,6 +30,7 @@ const FLOW_SOURCES = ['Statements', 'Reports', 'Outlet Data']
 const FLOW_OUTPUTS = ['Dashboards', 'Compare', 'AI', 'Reports']
 
 const DASHBOARDS = [
+  { key: 'briefing', label: 'Briefing', title: 'Start the week knowing what came back to you.', body: 'Of every ₹100 your customers ordered, how much is coming back, where the rest went, and what stands out since last period.', shot: 'briefing', accent: '#2fd39a' },
   { key: 'overview', label: 'Overview', title: 'See the business in one screen.', body: 'Gross Order Value, orders, AOV, net payout, net margin, ads, discounts, charges, refunds and platform performance — together.', shot: 'overview', accent: '#2fd39a' },
   { key: 'revenue', label: 'Revenue', title: 'Understand where growth is coming from.', body: 'Track orders, Gross Order Value, AOV and revenue movement across brands, outlets, platforms and periods.', shot: 'revenue', accent: '#2fd39a' },
   { key: 'payouts', label: 'Payouts', title: 'Know what you earned and what you actually received.', body: 'Understand settlements, deductions, adjustments and payout differences without manually reconciling statements.', shot: 'payouts', accent: '#2fd39a' },
@@ -37,6 +38,8 @@ const DASHBOARDS = [
   { key: 'discounts', label: 'Discounts', title: 'Understand what every discount is costing you.', body: 'Track discount burn, coupon performance and contribution so growth is not bought at the expense of profitability.', shot: 'discounts', accent: '#2dd4bf' },
   { key: 'charges', label: 'Charges', title: 'See exactly what platforms are deducting.', body: 'Break down platform charges and understand how each deduction affects the final payout.', shot: 'charges', accent: '#38bdf8' },
   { key: 'refunds', label: 'Refunds', title: 'Spot leakage before it becomes normal.', body: 'Track refund and cancellation rates, reasons, trends and their financial impact.', shot: 'refunds', accent: '#f87171' },
+  { key: 'pl', label: 'P&L', title: 'See profit, not just payouts.', body: 'Online sales come in automatically. Add dine-in sales, food cost, rent and salaries once, and Mynt keeps a full profit and loss statement by outlet.', shot: 'pl', accent: '#fbbf24' },
+  { key: 'accounting', label: 'Accounting Summary', title: 'Hand your accountant the GST picture.', body: 'Gross sales, GST collected and paid by platforms, GST on fees and ads, TCS and TDS withheld and net payout, outlet by outlet, for any month.', shot: 'accounting', accent: '#60a5fa' },
 ]
 
 const TEAMS = [
@@ -112,7 +115,7 @@ const AI_CHART = [
 ]
 
 const REPORT_STEPS = [
-  { t: 'Choose what to report', d: 'Select the brand, outlet, platform, period and metrics.' },
+  { t: 'Choose what to report', d: 'Select the brand, outlet, platform, period and metrics, or download the raw platform data behind them.' },
   { t: 'Generate automatically', d: 'Mynt converts the selected data into a clean, structured business report.' },
   { t: 'Share with the right team', d: 'Create owner summaries, finance reviews, growth reports or outlet-level performance reports.' },
   { t: 'Repeat without repeating the work', d: 'Schedule recurring reports where supported so the same review reaches the right people automatically.' },
@@ -256,7 +259,7 @@ function FlowDiagram() {
 /* --------------------------------------------- section 3: dashboard tabs -- */
 
 // Pinned scroll showcase (same mechanics as the landing ProductCanvas): scrolling
-// steps through the seven dashboards, wiping each screenshot into a glass slab.
+// steps through the dashboards, wiping each screenshot into a glass slab.
 // The capsule rail doubles as navigation — it scrolls with the active step and
 // clicking a capsule jumps the page to that step inside the pinned range.
 function DashboardShowcase() {

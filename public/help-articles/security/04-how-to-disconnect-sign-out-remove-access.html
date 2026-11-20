@@ -274,16 +274,12 @@
     }
 </style>
 
-  <script>
-    if (new URLSearchParams(location.search).has('embed')) {
-      document.documentElement.classList.add('embed');
-    }
-  </script>
+  <script src="../embed.js"></script>
 </head>
 <body>
 <div class="wrap">
   <h1>How to Disconnect Integrations, Sign Out or Remove Account Access</h1>
-  <p class="meta">Security · Read time: 4 minutes · Includes a short video · Last updated 25 August 2026</p>
+  <p class="meta">Security · Read time: 4 minutes · Includes a short video · Last updated 22 October 2026</p>
 
   <div class="hello">Signing out of Mynt, ending every session on every device, and changing which Gmail is connected are three different actions with three different effects.</div>
 
@@ -291,9 +287,9 @@
 
   <h2>Watch this first</h2>
   <div class="video-box">
-    <video controls playsinline preload="metadata" poster="assets/disconnect-sign-out-remove-access/demo-poster.jpg">
-      <source src="assets/disconnect-sign-out-remove-access/demo.mp4" type="video/mp4" />
-      <a href="assets/disconnect-sign-out-remove-access/demo.mp4">Download the video</a>
+    <video controls playsinline preload="metadata" poster="assets/disconnect-sign-out-remove-access/demo-poster.jpg?v=20261022">
+      <source src="assets/disconnect-sign-out-remove-access/demo.mp4?v=20261022" type="video/mp4" />
+      <a href="assets/disconnect-sign-out-remove-access/demo.mp4?v=20261022">Download the video</a>
     </video>
     <p class="video-caption">Where to find Reconnect and Logout All Devices inside Settings</p>
   </div>
@@ -315,23 +311,23 @@
 
   <h2>Sign out of all devices</h2>
   <p>Use this if you lost a laptop or phone, or think someone else has your session.</p>
-  <div class="step"><h3><span class="step-num">1</span> Open Settings</h3><p>In the left menu, tap <strong>Settings</strong>.</p><figure><img src="assets/disconnect-sign-out-remove-access/step-01-settings-sidebar.png" alt="Settings in the sidebar" /><figcaption>Step 1 — Settings</figcaption></figure></div>
-  <div class="step"><h3><span class="step-num">2</span> Open Security</h3><p>In the settings menu, tap <strong>Security</strong>.</p><figure><img src="assets/disconnect-sign-out-remove-access/step-02-security-panel.png" alt="Security Settings panel" /><figcaption>Step 2 — Security Settings</figcaption></figure></div>
-  <div class="step"><h3><span class="step-num">3</span> Logout All Devices</h3><p>Scroll down to <strong>Active Sessions</strong> and tap <strong>Logout All Devices</strong>.</p><figure><img src="assets/disconnect-sign-out-remove-access/step-03-logout-all-devices.png" alt="Active Sessions and the Logout All Devices button" /><figcaption>Step 3 — Active Sessions</figcaption></figure></div>
+  <div class="step"><h3><span class="step-num">1</span> Open Settings</h3><p>In the left menu, tap <strong>Settings</strong>.</p><figure><img src="assets/disconnect-sign-out-remove-access/step-01-settings-sidebar.png?v=20261022" alt="Settings in the sidebar" /><figcaption>Step 1 — Settings</figcaption></figure></div>
+  <div class="step"><h3><span class="step-num">2</span> Open Security</h3><p>In the settings menu, tap <strong>Security</strong>.</p><figure><img src="assets/disconnect-sign-out-remove-access/step-02-security-panel.png?v=20261022" alt="Security Settings panel" /><figcaption>Step 2 — Security Settings</figcaption></figure></div>
+  <div class="step"><h3><span class="step-num">3</span> Logout All Devices</h3><p>Scroll down to <strong>Active Sessions</strong> and tap <strong>Logout All Devices</strong>.</p><figure><img src="assets/disconnect-sign-out-remove-access/step-03-logout-all-devices.png?v=20261022" alt="Active Sessions and the Logout All Devices button" /><figcaption>Step 3 — Active Sessions</figcaption></figure></div>
   <div class="tip"><strong>This signs out every browser and phone using your Mynt account — including the one you are on right now.</strong> You will be returned to the login screen and will need to sign in again.</div>
 
   <h2>Change your password while you are here</h2>
-  <p>The same <strong>Security</strong> page has <strong>Change Password</strong> at the top. You need your current password to set a new one. Below it, <strong>Authentication</strong> lets you add an authenticator app, a passkey, or recovery codes. See <a href="01-how-sign-in-account-access-work.html" style="color:var(--mint)">How sign-in and account access work</a>.</p>
+  <p>The same <strong>Security</strong> page has a <strong>Password</strong> card at the top. <strong>Change password</strong> opens Mynt’s secure sign-in page, where you set the new one — Mynt never asks for a password inside the app. Below it, <strong>Authentication</strong> lets you add an authenticator app, a passkey, or recovery codes. See <a href="01-how-sign-in-account-access-work.html" style="color:var(--mint)">How sign-in and account access work</a>.</p>
 
   <h2>Gmail: change or remove access</h2>
-  <p>Mynt does <strong>not</strong> have a self-serve <strong>Disconnect</strong> button today.</p>
+  <p>Each mailbox row has its own <strong>Disconnect</strong> button (or <strong>Delete</strong>, if nothing was ever imported from it).</p>
   <table class="glossary">
     <tr><th>Use a different payout mailbox</th><td>Settings → Email Integration → <strong>Reconnect</strong> on that row → pick the other Google account → confirm</td></tr>
     <tr><th>Add another mailbox</th><td>Settings → Email Integration → <strong>Add SOA Email</strong></td></tr>
     <tr><th>Re-check for new restaurant IDs</th><td>Settings → Email Integration → <strong>Rescan mailboxes</strong></td></tr>
-    <tr><th>Fully remove Gmail from Mynt</th><td>Contact support <strong>and</strong> revoke Mynt in <a href="https://myaccount.google.com/permissions" style="color:var(--mint)">Google Account permissions</a></td></tr>
+    <tr><th>Fully remove Gmail from Mynt</th><td>Settings → Email Integration → <strong>Disconnect</strong> on that row, <strong>and</strong> revoke Mynt in <a href="https://myaccount.google.com/permissions" style="color:var(--mint)">Google Account permissions</a></td></tr>
   </table>
-  <figure><img src="assets/disconnect-sign-out-remove-access/step-04-email-reconnect-note.png" alt="Email Integration Connected Emails table" /><figcaption>Each connected mailbox has its own Reconnect button</figcaption></figure>
+  <figure><img src="assets/disconnect-sign-out-remove-access/step-04-email-reconnect-note.png?v=20261022" alt="Email Integration Connected Emails table" /><figcaption>Each connected mailbox has its own Reconnect button</figcaption></figure>
   <p>A mailbox still waiting for permission shows <strong>Authorize</strong> instead of Reconnect.</p>
   <div class="tip"><strong>Note:</strong> Reconnecting replaces the Google authorisation for that mailbox. Dashboard data already collected from it stays unless support removes it.</div>
   <p>Full guide: <a href="../email-integration/08-how-to-disconnect-or-change-gmail-account.html" style="color:var(--mint)">How to disconnect or change Gmail</a>.</p>

@@ -1,6 +1,6 @@
 # How Mynt Protects Your Business Data
 
-*Security · Read time: 4 minutes · Article only · Last updated 25 August 2026*
+*Security · Read time: 4 minutes · Article only · Last updated 22 October 2026*
 
 ---
 
@@ -35,9 +35,9 @@
 
 Passwords are **hashed** — stored scrambled, so Mynt staff cannot read yours. Sessions use tokens that expire.
 
-You can also add a second step yourself at **Settings → Security → Authentication**: an authenticator app, a passkey (Face ID, Touch ID or a security key), or one-time recovery codes. Adding or removing any of them asks you to confirm your password first.
+You can also add a second step yourself at **Settings → Security → Authentication**: an authenticator app, a passkey (Face ID, Touch ID or a security key), or one-time recovery codes. Adding one may first ask you to confirm it&rsquo;s you on Mynt&rsquo;s secure sign-in page, and removing one always happens on that page. Mynt never asks for your password inside the app.
 
-![Authentication options in Settings → Security](assets/how-mynt-protects-business-data/authentication-options.png)
+![Authentication options in Settings → Security](assets/how-mynt-protects-business-data/authentication-options.png?v=20261022)
 
 See [How sign-in works](01-how-sign-in-account-access-work.md).
 
@@ -53,7 +53,9 @@ All traffic between your browser and Mynt uses **HTTPS**, so it is scrambled in 
 
 ### Account isolation
 
-Each business's data is kept separate. People see only the account they were invited to. Support staff access is limited to resolving tickets you raise.
+Each business's data is kept separate, and a Mynt login opens one business account.
+
+You can let Mynt support see your dashboards while they help you. Turn on **Support access** in **Settings → Security** (choose 24 hours, 72 hours or 7 days under **Allow for**), or turn on the **Allow Mynt support to view my dashboards** switch when you raise a support ticket (72 hours). Access is read-only, ends by itself, and you can switch it off or press **Revoke** at any time.
 
 ### Payment security
 
@@ -63,7 +65,7 @@ Card payments go through a **PCI-compliant** payment partner. Mynt does not stor
 
 **Settings → Security → Active Sessions → Logout All Devices** signs out every browser and phone using your account, including the one you are on.
 
-![Active Sessions with Logout All Devices](assets/how-mynt-protects-business-data/active-sessions.png)
+![Active Sessions with Logout All Devices](assets/how-mynt-protects-business-data/active-sessions.png?v=20261022)
 
 ---
 
@@ -81,7 +83,7 @@ Card payments go through a **PCI-compliant** payment partner. Mynt does not stor
 
 ## If you suspect a problem
 
-1. **Change your password** — Settings → Security → Change Password
+1. **Change your password** — Settings → Security → **Change password**
 2. **Sign out everywhere** — Settings → Security → Logout All Devices
 3. **Revoke Gmail access** — [Google Account permissions](https://myaccount.google.com/permissions)
 4. **Contact support** — contact@pyvot.in, or raise a ticket in Help & Support

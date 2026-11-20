@@ -1,10 +1,16 @@
 # How to Add Your First Brand and Outlet
 
-*Getting Started · Read time: 4 minutes · Article only · Last updated 25 August 2026*
+*Getting Started · Read time: 4 minutes · Includes a short video · Last updated 22 October 2026*
 
 Outlets are your physical locations. Brands and groups are the two ways to organise them &mdash; useful the moment you have more than one.
 
 ---
+
+## Watch it done
+
+**Video:** [Adding a brand and a group, then assigning an outlet to each](assets/add-first-brand-and-outlet/demo.mp4?v=20261022)
+
+![Video preview](assets/add-first-brand-and-outlet/demo-poster.jpg?v=20261022)
 
 ## The three levels
 
@@ -18,20 +24,20 @@ Outlets are your physical locations. Brands and groups are the two ways to organ
 
 In **Settings → Outlet Mapping → Brand Mapping**, create the brand, then assign each outlet to it.
 
-![An outlet row showing its assigned brand](assets/add-first-brand-and-outlet/step-02-assign-brand.png)
+![An outlet row showing its assigned brand](assets/add-first-brand-and-outlet/step-02-assign-brand.png?v=20261022)
 *Each outlet carries one brand*
 
-1. Type the brand name and press **Add brand**.
+1. Press **Add brand**, type the brand name into **New brand name** and press **Save**.
 2. Find the outlet in the list below.
 3. Press **Edit** on that row and pick the brand.
 4. Press **Save**.
 
 ## Assigning a group
 
-![The Group Mapping section listing groups and their outlets](assets/add-first-brand-and-outlet/step-03-group-mapping.png)
+![The Group Mapping section listing groups and their outlets](assets/add-first-brand-and-outlet/step-03-group-mapping.png?v=20261022)
 *Groups are yours to define &mdash; by city, region, or however you actually run the business*
 
-Brands and groups are independent: an outlet can be *Curry Story* by brand and *South Bengaluru* by group at the same time. Both appear in **VIEW BY** on the dashboard, so the way you organise here is the way you can slice your numbers later.
+Brands and groups are independent: an outlet can be *Curry Story* by brand and *South Bengaluru* by group at the same time. Both appear in **View By** on Overview, so the way you organise here is the way you can slice your numbers later.
 
 ## Then map the platform IDs
 
